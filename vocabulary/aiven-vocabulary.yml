@@ -1,0 +1,180 @@
+vocabulary:
+  name: Aiven API Vocabulary
+  description: >
+    Domain vocabulary for the Aiven managed open-source data infrastructure platform,
+    covering key concepts, service types, and operational terms used across the Aiven REST API.
+  version: "1.0"
+  baseURL: https://api.aiven.io/v1
+  source: https://api.aiven.io/doc/
+
+concepts:
+  - term: project
+    definition: >
+      A logical grouping of Aiven services and resources, associated with billing
+      and access controls. Projects are the primary organizational unit for provisioning services.
+    relatedPaths:
+      - /project
+      - /project/{project}
+
+  - term: service
+    definition: >
+      A managed open-source data service provisioned and operated by Aiven on cloud infrastructure.
+      Services include databases, streaming platforms, search engines, and analytics tools.
+    relatedPaths:
+      - /project/{project}/service
+      - /project/{project}/service/{service_name}
+
+  - term: plan
+    definition: >
+      A pricing and resource tier that determines compute, memory, and storage allocation for
+      a service. Plans range from Free and Developer to Business and Premium tiers.
+
+  - term: cloud
+    definition: >
+      A cloud provider region identifier where Aiven provisions and operates service infrastructure.
+      Follows the pattern provider-region (e.g., aws-us-east-1, google-europe-west1).
+
+  - term: vpc
+    definition: >
+      A virtual private cloud network for isolating Aiven service traffic within a cloud provider.
+      Enables private connectivity between services and customer infrastructure.
+    relatedPaths:
+      - /project/{project}/vpcs
+      - /organization/{organization_id}/vpcs
+
+  - term: integration
+    definition: >
+      A configured connection between two Aiven services or external systems enabling data
+      flow, metrics shipping, or log forwarding between components.
+    relatedPaths:
+      - /project/{project}/service/{service_name}/integration
+      - /project/{project}/integration
+
+  - term: billing_group
+    definition: >
+      A billing entity that groups multiple projects for consolidated invoicing and
+      payment management. Supports organization-level cost aggregation.
+    relatedPaths:
+      - /billing-group
+      - /billing-group/{billing_group_id}
+
+  - term: organization
+    definition: >
+      A top-level administrative entity in Aiven that owns projects, users, billing
+      groups, and organizational policies. Introduced as the modern replacement for accounts.
+    relatedPaths:
+      - /organization
+      - /organization/{organization_id}
+
+  - term: account
+    definition: >
+      A legacy administrative grouping in Aiven for managing teams, users, and projects.
+      Being superseded by organizations in newer API versions.
+    relatedPaths:
+      - /account
+      - /account/{account_id}
+
+  - term: access_token
+    definition: >
+      A personal or application-level authentication bearer token used to authorize
+      requests to the Aiven API. Tokens can be scoped to specific actions.
+    relatedPaths:
+      - /userauth
+      - /organization/{organization_id}/application-users/{user_id}/access-tokens
+
+  - term: backup
+    definition: >
+      An automated or manual point-in-time snapshot of service data for disaster recovery
+      and data durability. Managed automatically by Aiven for all services.
+
+  - term: connection_pool
+    definition: >
+      A database connection pooling configuration for PostgreSQL services that manages
+      client connections efficiently using PgBouncer.
+    relatedPaths:
+      - /project/{project}/service/{service_name}/connection_pool
+
+  - term: topic
+    definition: >
+      An Apache Kafka messaging channel for publishing and consuming data streams.
+      Topics are partitioned, replicated log structures.
+    relatedPaths:
+      - /project/{project}/service/{service_name}/topic
+
+  - term: consumer_group
+    definition: >
+      A named set of Apache Kafka consumers that coordinate to consume messages from
+      one or more topics, tracking offsets for message processing.
+
+  - term: schema_registry
+    definition: >
+      A centralized repository for managing Apache Kafka message schemas (Avro, JSON Schema,
+      Protobuf) and enforcing schema compatibility rules between producers and consumers.
+
+  - term: service_user
+    definition: >
+      A database or service-level user account with specific access permissions created
+      within an Aiven service. Distinct from platform-level user accounts.
+    relatedPaths:
+      - /project/{project}/service/{service_name}/user
+
+  - term: tag
+    definition: >
+      A key-value label applied to Aiven resources such as services and projects for
+      organizational grouping, filtering, and cost allocation.
+
+  - term: maintenance_window
+    definition: >
+      A scheduled time window during which Aiven may apply system updates, security patches,
+      and maintenance operations to managed services.
+
+  - term: node
+    definition: >
+      An individual server instance within an Aiven service cluster. Node count and
+      type determine service availability and performance characteristics.
+
+  - term: replica
+    definition: >
+      A read-only copy of a primary database instance for distributing read load
+      and providing failover capability in PostgreSQL and MySQL services.
+
+service_types:
+  - id: kafka
+    name: Apache Kafka
+    description: Managed distributed event streaming platform for high-throughput data pipelines
+
+  - id: pg
+    name: PostgreSQL
+    description: Managed open-source relational database with full SQL compliance and ACID guarantees
+
+  - id: opensearch
+    name: OpenSearch
+    description: Managed distributed search and analytics engine based on the OpenSearch project
+
+  - id: redis
+    name: Redis
+    description: Managed in-memory data structure store used as a cache, message broker, and database
+
+  - id: mysql
+    name: MySQL
+    description: Managed open-source relational database management system
+
+  - id: clickhouse
+    name: ClickHouse
+    description: Managed columnar analytics database optimized for real-time analytical queries
+
+  - id: cassandra
+    name: Apache Cassandra
+    description: Managed distributed NoSQL database for high-availability write-heavy workloads
+
+  - id: flink
+    name: Apache Flink
+    description: Managed stateful stream processing framework for real-time data transformations
+
+  - id: m3db
+    name: M3DB
+    description: Managed distributed time-series database and Prometheus-compatible metrics storage
+
+  - id: grafana
+    name: Grafana
+    description: Managed visualization and observability platform for metrics and log dashboards

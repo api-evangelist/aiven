@@ -1,0 +1,196 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "aiven": "https://api.aiven.io/v1/vocab#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "identifier": "schema:identifier",
+    "dateCreated": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "dateModified": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+
+    "Project": {
+      "@id": "aiven:Project",
+      "@type": "schema:Project",
+      "@context": {
+        "project_name": "schema:name",
+        "account_id": "aiven:accountId",
+        "cloud_name": "aiven:cloudName",
+        "billing_group_id": "aiven:billingGroupId",
+        "estimated_balance_usd": {
+          "@id": "aiven:estimatedBalance",
+          "@type": "xsd:decimal"
+        },
+        "available_credits": {
+          "@id": "aiven:availableCredits",
+          "@type": "xsd:decimal"
+        },
+        "tags": "schema:keywords"
+      }
+    },
+
+    "Service": {
+      "@id": "aiven:Service",
+      "@type": "schema:SoftwareApplication",
+      "@context": {
+        "service_name": "schema:name",
+        "service_type": "aiven:serviceType",
+        "state": "aiven:serviceState",
+        "plan": "aiven:servicePlan",
+        "cloud_name": "aiven:cloudName",
+        "node_count": "aiven:nodeCount",
+        "disk_space_mb": {
+          "@id": "aiven:diskSpaceMB",
+          "@type": "xsd:integer"
+        },
+        "connection_info": "aiven:connectionInfo",
+        "components": "aiven:components",
+        "maintenance": "aiven:maintenanceWindow",
+        "backups": "aiven:backups"
+      }
+    },
+
+    "Organization": {
+      "@id": "aiven:Organization",
+      "@type": "schema:Organization",
+      "@context": {
+        "organization_id": "schema:identifier",
+        "organization_name": "schema:name",
+        "create_time": "schema:dateCreated",
+        "update_time": "schema:dateModified",
+        "tier": "aiven:organizationTier"
+      }
+    },
+
+    "BillingGroup": {
+      "@id": "aiven:BillingGroup",
+      "@type": "schema:Invoice",
+      "@context": {
+        "billing_group_id": "schema:identifier",
+        "billing_group_name": "schema:name",
+        "billing_currency": "aiven:billingCurrency",
+        "company": "schema:legalName",
+        "billing_emails": "schema:email"
+      }
+    },
+
+    "VPC": {
+      "@id": "aiven:VPC",
+      "@type": "schema:Place",
+      "@context": {
+        "project_vpc_id": "schema:identifier",
+        "cloud_name": "aiven:cloudName",
+        "network_cidr": "aiven:networkCIDR",
+        "state": "aiven:vpcState",
+        "peering_connections": "aiven:peeringConnections"
+      }
+    },
+
+    "Integration": {
+      "@id": "aiven:Integration",
+      "@type": "schema:Action",
+      "@context": {
+        "service_integration_id": "schema:identifier",
+        "integration_type": "aiven:integrationType",
+        "source_service": "schema:source",
+        "dest_service": "schema:target",
+        "enabled": "aiven:enabled",
+        "active": "aiven:active"
+      }
+    },
+
+    "KafkaTopic": {
+      "@id": "aiven:KafkaTopic",
+      "@type": "schema:DataFeed",
+      "@context": {
+        "topic_name": "schema:name",
+        "partitions": "aiven:partitionCount",
+        "replication": "aiven:replicationFactor",
+        "retention_hours": {
+          "@id": "aiven:retentionHours",
+          "@type": "xsd:integer"
+        },
+        "retention_bytes": {
+          "@id": "aiven:retentionBytes",
+          "@type": "xsd:integer"
+        },
+        "cleanup_policy": "aiven:cleanupPolicy"
+      }
+    },
+
+    "ServiceUser": {
+      "@id": "aiven:ServiceUser",
+      "@type": "schema:Person",
+      "@context": {
+        "username": "schema:name",
+        "type": "aiven:userType",
+        "password": "aiven:password",
+        "authentication": "aiven:authenticationMethod"
+      }
+    },
+
+    "AccessToken": {
+      "@id": "aiven:AccessToken",
+      "@type": "schema:DigitalDocument",
+      "@context": {
+        "token_prefix": "schema:identifier",
+        "description": "schema:description",
+        "create_time": "schema:dateCreated",
+        "expiry_time": {
+          "@id": "aiven:expiryTime",
+          "@type": "xsd:dateTime"
+        },
+        "last_used_time": "schema:dateModified",
+        "last_used_ip": "aiven:lastUsedIP",
+        "scopes": "schema:additionalType"
+      }
+    },
+
+    "cloudName": {
+      "@id": "aiven:cloudName",
+      "@type": "xsd:string"
+    },
+    "serviceType": {
+      "@id": "aiven:serviceType",
+      "@type": "xsd:string"
+    },
+    "serviceState": {
+      "@id": "aiven:serviceState",
+      "@type": "xsd:string"
+    },
+    "servicePlan": {
+      "@id": "aiven:servicePlan",
+      "@type": "xsd:string"
+    },
+    "nodeCount": {
+      "@id": "aiven:nodeCount",
+      "@type": "xsd:integer"
+    },
+    "networkCIDR": {
+      "@id": "aiven:networkCIDR",
+      "@type": "xsd:string"
+    },
+    "integrationType": {
+      "@id": "aiven:integrationType",
+      "@type": "xsd:string"
+    },
+    "partitionCount": {
+      "@id": "aiven:partitionCount",
+      "@type": "xsd:integer"
+    },
+    "replicationFactor": {
+      "@id": "aiven:replicationFactor",
+      "@type": "xsd:integer"
+    }
+  }
+}

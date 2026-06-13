@@ -1,0 +1,230 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ServiceCreateRequestBody",
+  "description": "ServiceCreateRequestBody",
+  "type": "object",
+  "properties": {
+    "cloud": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Target cloud"
+    },
+    "cmk_id": {
+      "type": "string",
+      "minLength": 36,
+      "maxLength": 36,
+      "description": "Customer Managed Key identifier (CMK ID)"
+    },
+    "copy_tags": {
+      "type": "boolean",
+      "description": "If this is a forked service, copy tags from the source service. If request contains additional tags, the tags copied from source are updated with them.",
+      "default": false
+    },
+    "disk_space_mb": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Megabytes of disk space for data storage"
+    },
+    "group_name": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Service group name (DEPRECATED: do not use)"
+    },
+    "maintenance": {
+      "type": "object",
+      "description": "Automatic maintenance settings",
+      "properties": {
+        "dow": {
+          "type": "string",
+          "description": "Day of week for installing updates",
+          "enum": [
+            "monday",
+            "tuesday",
+            "wednesday",
+            "thursday",
+            "friday",
+            "saturday",
+            "sunday"
+          ]
+        },
+        "time": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 8,
+          "description": "Time for installing updates, UTC"
+        }
+      }
+    },
+    "plan": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "Subscription plan"
+    },
+    "project_vpc_id": {
+      "type": "string",
+      "minLength": 36,
+      "maxLength": 36,
+      "description": "Project VPC ID"
+    },
+    "service_integrations": {
+      "type": "array",
+      "maxItems": 64,
+      "description": "Service integrations to enable for the service. Some integration types affect how a service is created and they must be provided as part of the creation call instead of being defined later.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dest_endpoint_id": {
+            "type": "string",
+            "maxLength": 36,
+            "description": "Integration destination endpoint ID"
+          },
+          "dest_project": {
+            "type": "string",
+            "maxLength": 63,
+            "description": "Defaults to project in the request path",
+            "title": "Destination project name"
+          },
+          "dest_service": {
+            "type": "string",
+            "maxLength": 64,
+            "description": "Destination service name"
+          },
+          "integration_type": {
+            "type": "string",
+            "description": "Service integration type",
+            "enum": [
+              "alertmanager",
+              "application_service_credential",
+              "autoscaler",
+              "autoscaler_service",
+              "caching",
+              "clickhouse_credentials",
+              "clickhouse_kafka",
+              "clickhouse_postgresql",
+              "dashboard",
+              "datadog",
+              "datahub_metadata_ingestion",
+              "datasource",
+              "disaster_recovery",
+              "external_aws_cloudwatch_logs",
+              "external_aws_cloudwatch_metrics",
+              "external_elasticsearch_logs",
+              "external_google_cloud_logging",
+              "external_opensearch_logs",
+              "flink",
+              "flink_external_bigquery",
+              "flink_external_kafka",
+              "flink_external_postgresql",
+              "internal_connectivity",
+              "jolokia",
+              "kafka_connect",
+              "kafka_connect_postgresql",
+              "kafka_inkless_postgresql",
+              "kafka_logs",
+              "kafka_mirrormaker",
+              "logs",
+              "metrics",
+              "opensearch_cross_cluster_replication",
+              "opensearch_cross_cluster_search",
+              "prometheus",
+              "read_replica",
+              "rsyslog",
+              "schema_registry_proxy",
+              "service_composition",
+              "stresstester",
+              "thanos_distributed_query",
+              "thanos_migrate",
+              "thanos_object_storage",
+              "thanoscompactor",
+              "thanosquery",
+              "thanosruler",
+              "thanosstore",
+              "vector",
+              "vmalert"
+            ]
+          },
+          "source_endpoint_id": {
+            "type": "string",
+            "maxLength": 36,
+            "description": "Integration source endpoint ID"
+          },
+          "source_project": {
+            "type": "string",
+            "maxLength": 63,
+            "description": "Defaults to project in the request path",
+            "title": "Source project name"
+          },
+          "source_service": {
+            "type": "string",
+            "maxLength": 64,
+            "description": "Source service name"
+          },
+          "user_config": {
+            "type": "object",
+            "description": "Service type-specific settings",
+            "properties": {}
+          }
+        },
+        "required": [
+          "integration_type"
+        ]
+      }
+    },
+    "service_name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "Service name"
+    },
+    "service_type": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "Service type code"
+    },
+    "static_ips": {
+      "type": "array",
+      "maxItems": 128,
+      "description": "Static IP addresses to associate with the service",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "object",
+      "description": "Set of resource tags",
+      "properties": {}
+    },
+    "tech_emails": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "List of service technical email addresses",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "description": "User email address"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      }
+    },
+    "termination_protection": {
+      "type": "boolean",
+      "description": "Service is protected against termination and powering off"
+    },
+    "user_config": {
+      "type": "object",
+      "description": "Service type-specific settings",
+      "properties": {}
+    }
+  },
+  "required": [
+    "plan",
+    "service_name",
+    "service_type"
+  ]
+}

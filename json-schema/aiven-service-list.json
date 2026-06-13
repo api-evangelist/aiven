@@ -1,0 +1,1256 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ServiceListResponse",
+  "description": "ServiceListResponse",
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "array",
+      "description": "List of errors occurred during request processing",
+      "items": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Printable error message"
+          },
+          "more_info": {
+            "type": "string",
+            "description": "URL to the documentation of the error"
+          },
+          "status": {
+            "type": "integer",
+            "description": "HTTP error status code"
+          }
+        },
+        "required": [
+          "message",
+          "status"
+        ]
+      }
+    },
+    "message": {
+      "type": "string",
+      "description": "Printable result of the request"
+    },
+    "services": {
+      "type": "array",
+      "description": "List of services under the project",
+      "items": {
+        "type": "object",
+        "properties": {
+          "acl": {
+            "type": "array",
+            "description": "List of Aiven ACL entries for Kafka service",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "maxLength": 40,
+                  "description": "ID"
+                },
+                "permission": {
+                  "type": "string",
+                  "description": "Kafka permission",
+                  "enum": [
+                    "admin",
+                    "read",
+                    "readwrite",
+                    "write"
+                  ]
+                },
+                "topic": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 249,
+                  "description": "Topic name pattern"
+                },
+                "username": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64,
+                  "description": "Username"
+                }
+              },
+              "required": [
+                "permission",
+                "topic",
+                "username"
+              ]
+            }
+          },
+          "backups": {
+            "type": "array",
+            "description": "List of backups for the service",
+            "items": {
+              "type": "object",
+              "properties": {
+                "additional_regions": {
+                  "type": "array",
+                  "description": "Additional backup regions, if available",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cloud": {
+                        "type": "string",
+                        "maxLength": 256,
+                        "description": "Target cloud"
+                      },
+                      "pause_reason": {
+                        "type": "string",
+                        "description": "Reason for pausing the backup synchronization"
+                      },
+                      "paused": {
+                        "type": "boolean",
+                        "description": "Indicates additional backup synchronization is paused"
+                      },
+                      "region": {
+                        "type": "string",
+                        "description": "Cloud storage region name"
+                      }
+                    },
+                    "required": [
+                      "cloud"
+                    ]
+                  }
+                },
+                "backup_name": {
+                  "type": "string",
+                  "description": "Internal name of this backup"
+                },
+                "backup_time": {
+                  "type": "string",
+                  "maxLength": 36,
+                  "description": "Backup timestamp (ISO 8601)"
+                },
+                "data_size": {
+                  "type": "integer",
+                  "description": "Backup's original size before compression"
+                },
+                "incremental": {
+                  "type": "boolean",
+                  "description": "Indicates if this backup is a full or an incremental one (available only for MySQL)"
+                },
+                "storage_location": {
+                  "type": "string",
+                  "description": "Location where this backup is stored"
+                },
+                "tiered_storage_data_size": {
+                  "type": "integer",
+                  "description": "The amount of tiered storage data in bytes referenced by this backup."
+                }
+              },
+              "required": [
+                "backup_name",
+                "backup_time",
+                "data_size"
+              ]
+            }
+          },
+          "cloud_description": {
+            "type": "string",
+            "description": "Cloud provider and location"
+          },
+          "cloud_name": {
+            "type": "string",
+            "maxLength": 256,
+            "description": "Target cloud"
+          },
+          "cmk_id": {
+            "type": "string",
+            "description": "Active Customer Managed Key identifier (CMK ID)"
+          },
+          "components": {
+            "type": "array",
+            "description": "Service component information objects",
+            "items": {
+              "type": "object",
+              "properties": {
+                "component": {
+                  "type": "string",
+                  "description": "Service component name"
+                },
+                "host": {
+                  "type": "string",
+                  "description": "DNS name for connecting to the service component"
+                },
+                "kafka_authentication_method": {
+                  "type": "string",
+                  "description": "Kafka authentication method. This is a value specific to the 'kafka' service component",
+                  "enum": [
+                    "certificate",
+                    "sasl"
+                  ]
+                },
+                "kafka_ssl_ca": {
+                  "type": "string",
+                  "description": "Specifies if this port uses Project CA or Letsencrypt. If not specified, the default is using Project CA.This is a value specific to the 'kafka' service component.",
+                  "enum": [
+                    "project_ca",
+                    "letsencrypt"
+                  ]
+                },
+                "path": {
+                  "type": "string",
+                  "description": "Path component of the service URL (useful only if service component is HTTP or HTTPS endpoint)"
+                },
+                "port": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 65535,
+                  "description": "Port number for connecting to the service component"
+                },
+                "privatelink_connection_id": {
+                  "type": "string",
+                  "description": "Privatelink connection ID"
+                },
+                "route": {
+                  "type": "string",
+                  "description": "Network access route",
+                  "enum": [
+                    "dynamic",
+                    "public",
+                    "private",
+                    "privatelink"
+                  ]
+                },
+                "ssl": {
+                  "type": "boolean",
+                  "description": "Whether the endpoint is encrypted or accepts plaintext. By default endpoints are always encrypted andthis property is only included for service components that may disable encryption."
+                },
+                "usage": {
+                  "type": "string",
+                  "description": "DNS usage name",
+                  "enum": [
+                    "disaster_recovery",
+                    "primary",
+                    "replica",
+                    "ha_replica"
+                  ]
+                }
+              },
+              "required": [
+                "component",
+                "host",
+                "port",
+                "route",
+                "usage"
+              ]
+            }
+          },
+          "connection_info": {
+            "type": "object",
+            "description": "Service-specific connection information properties",
+            "properties": {}
+          },
+          "connection_pools": {
+            "type": "array",
+            "description": "PostgreSQL PGBouncer connection pools",
+            "items": {
+              "type": "object",
+              "properties": {
+                "connection_uri": {
+                  "type": "string",
+                  "description": "Connection URI for the DB pool"
+                },
+                "database": {
+                  "type": "string",
+                  "maxLength": 63,
+                  "description": "Database name"
+                },
+                "pool_mode": {
+                  "type": "string",
+                  "description": "PGBouncer pool mode",
+                  "enum": [
+                    "session",
+                    "transaction",
+                    "statement"
+                  ]
+                },
+                "pool_name": {
+                  "type": "string",
+                  "maxLength": 63,
+                  "description": "Connection pool name"
+                },
+                "pool_size": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000,
+                  "description": "Size of PGBouncer's PostgreSQL side connection pool"
+                },
+                "username": {
+                  "type": "string",
+                  "maxLength": 64,
+                  "description": "Pool username"
+                }
+              },
+              "required": [
+                "connection_uri",
+                "database",
+                "pool_mode",
+                "pool_name",
+                "pool_size"
+              ]
+            }
+          },
+          "create_time": {
+            "type": "string",
+            "maxLength": 36,
+            "description": "Service creation timestamp (ISO 8601)"
+          },
+          "databases": {
+            "type": "array",
+            "description": "List of service's user database names",
+            "items": {
+              "type": "string"
+            }
+          },
+          "disk_space_mb": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Megabytes of disk space for data storage"
+          },
+          "features": {
+            "type": "object",
+            "description": "Feature flags",
+            "properties": {}
+          },
+          "group_list": {
+            "type": "array",
+            "description": "List of service groups the service belongs to. This field is deprecated. It is always set to single element with value 'default'",
+            "items": {
+              "type": "string"
+            }
+          },
+          "is_cluster_plan": {
+            "type": "boolean",
+            "description": "True when the service uses a cluster plan with dedicated node groups"
+          },
+          "kafka_acl": {
+            "type": "array",
+            "description": "List of Kafka-native ACL entries",
+            "items": {
+              "type": "object",
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 256,
+                  "description": "the host or * for all hosts"
+                },
+                "id": {
+                  "type": "string",
+                  "maxLength": 40,
+                  "description": "ID"
+                },
+                "operation": {
+                  "type": "string",
+                  "description": "Kafka ACL operation represents an operation which an ACL grants or denies permission to perform",
+                  "enum": [
+                    "All",
+                    "Alter",
+                    "AlterConfigs",
+                    "ClusterAction",
+                    "Create",
+                    "CreateTokens",
+                    "Delete",
+                    "Describe",
+                    "DescribeConfigs",
+                    "DescribeTokens",
+                    "IdempotentWrite",
+                    "Read",
+                    "Write"
+                  ]
+                },
+                "pattern_type": {
+                  "type": "string",
+                  "description": "Kafka ACL pattern type of resource name",
+                  "enum": [
+                    "LITERAL",
+                    "PREFIXED"
+                  ]
+                },
+                "permission_type": {
+                  "type": "string",
+                  "description": "Kafka ACL permission type",
+                  "enum": [
+                    "ALLOW",
+                    "DENY"
+                  ]
+                },
+                "principal": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 256,
+                  "description": "principal is in 'principalType:name' format"
+                },
+                "resource_name": {
+                  "type": "string",
+                  "minLength": 0,
+                  "maxLength": 256,
+                  "description": "Resource pattern used to match specified resources"
+                },
+                "resource_type": {
+                  "type": "string",
+                  "description": "Kafka ACL resource type represents a type of resource which an ACL can be applied to",
+                  "enum": [
+                    "Cluster",
+                    "DelegationToken",
+                    "Group",
+                    "Topic",
+                    "TransactionalId",
+                    "User"
+                  ]
+                }
+              },
+              "required": [
+                "host",
+                "id",
+                "operation",
+                "pattern_type",
+                "permission_type",
+                "principal",
+                "resource_name",
+                "resource_type"
+              ]
+            }
+          },
+          "maintenance": {
+            "type": "object",
+            "description": "Automatic maintenance settings",
+            "properties": {
+              "controlled_switchover": {
+                "type": "object",
+                "description": "Controlled switchover status",
+                "properties": {
+                  "completed_at": {
+                    "type": "string",
+                    "description": "Time when the switchover completed, if it has completed"
+                  },
+                  "enabled": {
+                    "type": "boolean",
+                    "description": "Controlled switchover configured and enabled"
+                  },
+                  "scheduled_start_time": {
+                    "type": "string",
+                    "description": "Scheduled start time of the switchover window, if enabled and active"
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "Controlled switchover state",
+                    "enum": [
+                      "INACTIVE",
+                      "PENDING",
+                      "SCHEDULED",
+                      "RUNNING",
+                      "COMPLETED",
+                      "COMPLETED_EARLY"
+                    ]
+                  },
+                  "termination_reason": {
+                    "type": "string",
+                    "description": "Reason for switchover termination"
+                  }
+                },
+                "required": [
+                  "enabled",
+                  "scheduled_start_time",
+                  "state"
+                ]
+              },
+              "dow": {
+                "type": "string",
+                "description": "Day of week for installing updates",
+                "enum": [
+                  "monday",
+                  "tuesday",
+                  "wednesday",
+                  "thursday",
+                  "friday",
+                  "saturday",
+                  "sunday",
+                  "never"
+                ]
+              },
+              "enabled": {
+                "type": "boolean",
+                "description": "Service maintenance enabled"
+              },
+              "time": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 8,
+                "description": "Time for installing updates, UTC"
+              },
+              "updates": {
+                "type": "array",
+                "description": "List of updates waiting to be installed",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "deadline": {
+                      "type": "string",
+                      "description": "Deadline for installing the update"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the update"
+                    },
+                    "documentation_link": {
+                      "type": "string",
+                      "description": "Optional link"
+                    },
+                    "impact": {
+                      "type": "string",
+                      "description": "Impact statement of the update"
+                    },
+                    "impact_portable_text": {
+                      "type": "string",
+                      "description": "Impact statement in portable text format"
+                    },
+                    "start_after": {
+                      "type": "string",
+                      "description": "The earliest time the update will be automatically applied"
+                    },
+                    "start_at": {
+                      "type": "string",
+                      "description": "The time when the update will be automatically applied"
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "dow",
+              "enabled",
+              "time",
+              "updates"
+            ]
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Service type specific metadata",
+            "properties": {}
+          },
+          "node_count": {
+            "type": "integer",
+            "description": "Number of service nodes in the active plan"
+          },
+          "node_cpu_count": {
+            "type": "integer",
+            "description": "Number of CPUs for each node"
+          },
+          "node_memory_mb": {
+            "type": "number",
+            "description": "Megabytes of memory for each node"
+          },
+          "node_states": {
+            "type": "array",
+            "description": "State of individual service nodes",
+            "items": {
+              "type": "object",
+              "properties": {
+                "availability_zone": {
+                  "type": "string",
+                  "description": "The availability zone in which the node is place. If there is no availability zone available this field will be missing."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the service node"
+                },
+                "progress_updates": {
+                  "type": "array",
+                  "description": "Extra information regarding the progress for current state",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "completed": {
+                        "type": "boolean",
+                        "description": "Indicates whether this phase has been completed or not"
+                      },
+                      "current": {
+                        "type": "integer",
+                        "description": "Current progress for this phase. May be missing or null."
+                      },
+                      "max": {
+                        "type": "integer",
+                        "description": "Maximum progress value for this phase. May be missing or null. May change."
+                      },
+                      "min": {
+                        "type": "integer",
+                        "description": "Minimum progress value for this phase. May be missing or null."
+                      },
+                      "phase": {
+                        "type": "string",
+                        "description": "Key identifying this phase",
+                        "enum": [
+                          "prepare",
+                          "basebackup",
+                          "basebackup_prepare",
+                          "stream",
+                          "finalize"
+                        ]
+                      },
+                      "unit": {
+                        "type": "string",
+                        "description": "Unit for current/min/max values. New units may be added. If null should be treated as generic unit",
+                        "enum": [
+                          "binlogs",
+                          "bytes_compressed",
+                          "bytes_uncompressed",
+                          "prepare_percent",
+                          "wal_lsn"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "completed",
+                      "phase"
+                    ]
+                  }
+                },
+                "role": {
+                  "type": "string",
+                  "description": "Role of this node. Only returned for a subset of service types",
+                  "enum": [
+                    "master",
+                    "standby",
+                    "read-replica"
+                  ]
+                },
+                "roles": {
+                  "type": "string",
+                  "description": "A role string indicating the node's roles in the OpenSearch cluster. Only populated for OpenSearch services using cluster plans. Format: first character is '*' (elected cluster manager) or '-' (not elected), followed by role letters: 'd' (data), 'i' (ingest), 'm' (cluster_manager eligible), 'c' (coordinating), 'L' (ML), 'D' (Dashboards). Example: '*mc' means elected cluster manager with cluster_manager and coordinating roles.",
+                  "title": "Roles of this node. Only returned for OpenSearch services with cluster plans"
+                },
+                "shard": {
+                  "type": "object",
+                  "description": "Shard of this node. Only returned for a subset of service types",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the shard."
+                    },
+                    "position": {
+                      "type": "integer",
+                      "description": "Position of this shard within the service"
+                    }
+                  }
+                },
+                "state": {
+                  "type": "string",
+                  "description": "Current state of the service node",
+                  "enum": [
+                    "leaving",
+                    "running",
+                    "setting_up_vm",
+                    "syncing_data",
+                    "timing_out",
+                    "unknown"
+                  ]
+                }
+              },
+              "required": [
+                "availability_zone",
+                "name",
+                "state"
+              ]
+            }
+          },
+          "plan": {
+            "type": "string",
+            "maxLength": 128,
+            "description": "Subscription plan"
+          },
+          "project_vpc_id": {
+            "type": "string",
+            "minLength": 36,
+            "maxLength": 36,
+            "description": "Project VPC ID"
+          },
+          "schema_registry_acl": {
+            "type": "array",
+            "description": "List of Schema Registry ACL entries",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "maxLength": 40,
+                  "description": "ID"
+                },
+                "permission": {
+                  "type": "string",
+                  "description": "ACL entry for Schema Registry",
+                  "enum": [
+                    "schema_registry_read",
+                    "schema_registry_write"
+                  ]
+                },
+                "resource": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 249,
+                  "description": "Schema Registry ACL entry resource name pattern"
+                },
+                "username": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 64,
+                  "description": "Username"
+                }
+              },
+              "required": [
+                "permission",
+                "resource",
+                "username"
+              ]
+            }
+          },
+          "server_group": {
+            "type": "object",
+            "description": "Service IaaS server group",
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "Flag set if server group is in use for the service"
+              },
+              "type": {
+                "type": "string",
+                "description": "IaaS server group type"
+              }
+            }
+          },
+          "service_integrations": {
+            "type": "array",
+            "description": "Integrations with other services",
+            "items": {
+              "type": "object",
+              "properties": {
+                "active": {
+                  "type": "boolean",
+                  "description": "True when integration is active"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the integration"
+                },
+                "dest_endpoint": {
+                  "type": "string",
+                  "description": "Destination endpoint name"
+                },
+                "dest_endpoint_id": {
+                  "type": "string",
+                  "description": "Destination endpoint id"
+                },
+                "dest_project": {
+                  "type": "string",
+                  "maxLength": 63,
+                  "description": "Project name"
+                },
+                "dest_service": {
+                  "type": "string",
+                  "description": "Destination service name"
+                },
+                "dest_service_type": {
+                  "type": "string",
+                  "maxLength": 64,
+                  "description": "Service type code"
+                },
+                "enabled": {
+                  "type": "boolean",
+                  "description": "True when integration is enabled"
+                },
+                "integration_status": {
+                  "type": "object",
+                  "description": "Integration status",
+                  "properties": {
+                    "state": {
+                      "type": "object",
+                      "description": "Service integration state",
+                      "properties": {
+                        "errors": {
+                          "type": "array",
+                          "description": "Errors",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "likely_error_cause": {
+                          "type": "string",
+                          "description": "Most likely cause of the errors",
+                          "enum": [
+                            "null",
+                            "destination",
+                            "integration",
+                            "source",
+                            "unknown"
+                          ]
+                        },
+                        "nodes": {
+                          "type": "object",
+                          "description": "Nodes",
+                          "properties": {}
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "Service integration status",
+                          "enum": [
+                            "failed",
+                            "inactive",
+                            "running",
+                            "starting",
+                            "unknown"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "errors",
+                        "nodes",
+                        "status"
+                      ]
+                    },
+                    "status_user_desc": {
+                      "type": "string",
+                      "description": "Integration status description"
+                    }
+                  },
+                  "required": [
+                    "state",
+                    "status_user_desc"
+                  ]
+                },
+                "integration_type": {
+                  "type": "string",
+                  "description": "Type of the integration"
+                },
+                "service_integration_id": {
+                  "type": "string",
+                  "description": "Integration ID"
+                },
+                "source_endpoint": {
+                  "type": "string",
+                  "description": "Source endpoint name"
+                },
+                "source_endpoint_id": {
+                  "type": "string",
+                  "description": "Source endpoint ID"
+                },
+                "source_project": {
+                  "type": "string",
+                  "maxLength": 63,
+                  "description": "Project name"
+                },
+                "source_service": {
+                  "type": "string",
+                  "description": "Source service name"
+                },
+                "source_service_type": {
+                  "type": "string",
+                  "maxLength": 64,
+                  "description": "Service type code"
+                },
+                "user_config": {
+                  "type": "object",
+                  "description": "Service integration settings",
+                  "properties": {}
+                }
+              },
+              "required": [
+                "active",
+                "description",
+                "dest_project",
+                "dest_service_type",
+                "enabled",
+                "integration_type",
+                "service_integration_id",
+                "source_project",
+                "source_service",
+                "source_service_type"
+              ]
+            }
+          },
+          "service_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "description": "Service name"
+          },
+          "service_notifications": {
+            "type": "array",
+            "description": "Service notifications",
+            "items": {
+              "type": "object",
+              "properties": {
+                "level": {
+                  "type": "string",
+                  "description": "Notification level",
+                  "enum": [
+                    "notice",
+                    "warning"
+                  ]
+                },
+                "message": {
+                  "type": "string",
+                  "maxLength": 1024,
+                  "description": "Human notification message"
+                },
+                "metadata": {
+                  "type": "object",
+                  "description": "Notification metadata",
+                  "properties": {
+                    "end_of_life_help_article_url": {
+                      "type": "string",
+                      "description": "Link to the help article"
+                    },
+                    "end_of_life_policy_url": {
+                      "type": "string",
+                      "description": "Link to the help article"
+                    },
+                    "service_end_of_life_time": {
+                      "type": "string",
+                      "maxLength": 36,
+                      "description": "Timestamp in ISO 8601 format, always in UTC"
+                    },
+                    "upgrade_to_service_type": {
+                      "type": "string",
+                      "maxLength": 64,
+                      "description": "If the customer takes no action, the service is updated to this service type when end of life is reached on the Aiven platform. If it is the same as the service type, the platform only upgrades the version."
+                    },
+                    "upgrade_to_version": {
+                      "type": "string",
+                      "maxLength": 32,
+                      "description": "The version to which the service will be updated at the end of life on the Aiven platform if the user does not take any action"
+                    }
+                  }
+                },
+                "type": {
+                  "type": "string",
+                  "description": "Notification type",
+                  "enum": [
+                    "service_end_of_life",
+                    "service_powered_off_removal"
+                  ]
+                }
+              },
+              "required": [
+                "level",
+                "message",
+                "metadata",
+                "type"
+              ]
+            }
+          },
+          "service_type": {
+            "type": "string",
+            "maxLength": 64,
+            "description": "Service type code"
+          },
+          "service_type_description": {
+            "type": "string",
+            "description": "Single line description of the service"
+          },
+          "service_uri": {
+            "type": "string",
+            "description": "URI for connecting to the service (may be null)"
+          },
+          "service_uri_params": {
+            "type": "object",
+            "description": "service_uri parameterized into key-value pairs",
+            "properties": {}
+          },
+          "state": {
+            "type": "string",
+            "description": "State of the service",
+            "enum": [
+              "POWEROFF",
+              "REBALANCING",
+              "REBUILDING",
+              "RUNNING"
+            ]
+          },
+          "tags": {
+            "type": "object",
+            "description": "Set of resource tags",
+            "properties": {}
+          },
+          "tech_emails": {
+            "type": "array",
+            "maxItems": 10,
+            "description": "List of service technical email addresses",
+            "items": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "maxLength": 254,
+                  "description": "User email address"
+                }
+              },
+              "required": [
+                "email"
+              ]
+            }
+          },
+          "termination_protection": {
+            "type": "boolean",
+            "description": "Service is protected against termination and powering off"
+          },
+          "topics": {
+            "type": "array",
+            "description": "Kafka topics. DEPRECATED: Use /project/$project/service/$service/topic instead",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cleanup_policy": {
+                  "type": "string",
+                  "maxLength": 64,
+                  "description": "The retention policy to use on old segments. Possible values include 'delete', 'compact', or a comma-separated list of them. The default policy ('delete') will discard old segments when their retention time or size limit has been reached. The 'compact' setting will enable log compaction on the topic.",
+                  "title": "cleanup.policy"
+                },
+                "min_insync_replicas": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "When a producer sets acks to 'all' (or '-1'), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful. If this minimum cannot be met, then the producer will raise an exception (either NotEnoughReplicas or NotEnoughReplicasAfterAppend). When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and produce with acks of 'all'. This will ensure that the producer raises an exception if a majority of replicas do not receive a write.",
+                  "title": "min.insync.replicas"
+                },
+                "partitions": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000,
+                  "description": "Number of partitions"
+                },
+                "replication": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Number of replicas"
+                },
+                "retention_bytes": {
+                  "type": "integer",
+                  "description": "This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the 'delete' retention policy. By default there is no size limit only a time limit. Since this limit is enforced at the partition level, multiply it by the number of partitions to compute the topic retention in bytes.",
+                  "title": "retention.bytes"
+                },
+                "retention_hours": {
+                  "type": "integer",
+                  "maximum": 2562047788015,
+                  "description": "Retention period (hours)"
+                },
+                "state": {
+                  "type": "string",
+                  "description": "Topic state",
+                  "enum": [
+                    "ACTIVE",
+                    "CONFIGURING",
+                    "DELETING"
+                  ]
+                },
+                "topic_name": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 249,
+                  "description": "Topic name"
+                }
+              },
+              "required": [
+                "cleanup_policy",
+                "min_insync_replicas",
+                "partitions",
+                "replication",
+                "retention_bytes",
+                "retention_hours",
+                "topic_name"
+              ]
+            }
+          },
+          "update_time": {
+            "type": "string",
+            "maxLength": 36,
+            "description": "Service last update timestamp (ISO 8601)"
+          },
+          "user_config": {
+            "type": "object",
+            "description": "Service type-specific settings",
+            "properties": {}
+          },
+          "users": {
+            "type": "array",
+            "description": "List of service users",
+            "items": {
+              "type": "object",
+              "properties": {
+                "access_cert": {
+                  "type": "string",
+                  "description": "Access certificate for TLS client authentication"
+                },
+                "access_cert_not_valid_after_time": {
+                  "type": "string",
+                  "description": "Validity end time (ISO8601) for the current access certificate"
+                },
+                "access_control": {
+                  "type": "object",
+                  "description": "Service type specific access control rules for user. Currently only used for configuring user ACLs for Redis version 6 and above.",
+                  "title": "Service specific access controls for user",
+                  "properties": {
+                    "dragonfly_acl_categories": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Command category rules",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "dragonfly_acl_commands": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Rules for individual commands",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "dragonfly_acl_keys": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Key access rules",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "pg_allow_replication": {
+                      "type": "boolean",
+                      "description": "Enable REPLICATION role option"
+                    },
+                    "redis_acl_categories": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Command category rules",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "redis_acl_channels": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Glob-style patterns defining which pub/sub channels can be accessed. If array is not defined, the default policy is used (allchannels).",
+                      "title": "Permitted pub/sub channel patterns",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "redis_acl_commands": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Rules for individual commands",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "redis_acl_keys": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Key access rules",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "valkey_acl_categories": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Command category rules",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "valkey_acl_channels": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Glob-style patterns defining which pub/sub channels can be accessed. If array is not defined, the default policy is used (allchannels).",
+                      "title": "Permitted pub/sub channel patterns",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "valkey_acl_commands": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Rules for individual commands",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "valkey_acl_keys": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "description": "Key access rules",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "access_key": {
+                  "type": "string",
+                  "description": "Access key for TLS client authentication"
+                },
+                "authentication": {
+                  "type": "string",
+                  "description": "Service specific authentication details. Currently only used for MySQL where accepted options are 'mysql_native_password' and 'caching_sha2_password', latter being default when this is not explicitly set.",
+                  "title": "Authentication details",
+                  "enum": [
+                    "null",
+                    "caching_sha2_password",
+                    "mysql_native_password"
+                  ]
+                },
+                "expiring_cert_not_valid_after_time": {
+                  "type": "string",
+                  "description": "When the existing certificate is nearing expiration and a new certificate has been generated, the validity end time (ISO8601) for the expiring certificate",
+                  "title": "Validity end time (ISO8601) for the expiring access certificate"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "Account password. A null value indicates a user overridden password."
+                },
+                "password_updated_time": {
+                  "type": "string",
+                  "description": "Timestamp (ISO8601) of the last time this password was set."
+                },
+                "type": {
+                  "type": "string",
+                  "description": "Account type"
+                },
+                "username": {
+                  "type": "string",
+                  "description": "Account username"
+                }
+              },
+              "required": [
+                "password",
+                "type",
+                "username"
+              ]
+            }
+          }
+        },
+        "required": [
+          "cloud_name",
+          "create_time",
+          "group_list",
+          "plan",
+          "project_vpc_id",
+          "service_integrations",
+          "service_name",
+          "service_type",
+          "service_uri",
+          "state",
+          "termination_protection",
+          "update_time",
+          "user_config"
+        ]
+      }
+    }
+  },
+  "required": [
+    "services"
+  ]
+}

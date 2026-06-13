@@ -1,0 +1,38 @@
+{
+  "summary": "Create a managed PostgreSQL service",
+  "description": "Example request to provision a managed PostgreSQL database on Aiven",
+  "request": {
+    "method": "POST",
+    "url": "https://api.aiven.io/v1/project/{project}/service",
+    "headers": {
+      "Authorization": "Bearer {token}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "service_name": "my-postgres-db",
+      "service_type": "pg",
+      "cloud_name": "google-europe-west1",
+      "plan": "startup-4",
+      "pg": {
+        "pg_version": "15"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "service": {
+        "service_name": "my-postgres-db",
+        "service_type": "pg",
+        "state": "REBUILDING",
+        "plan": "startup-4",
+        "cloud_name": "google-europe-west1",
+        "connection_info": {
+          "pg": [
+            "postgres://avnadmin:password@my-postgres-db.aivencloud.com:13060/defaultdb?sslmode=require"
+          ]
+        }
+      }
+    }
+  }
+}

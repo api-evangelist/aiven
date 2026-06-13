@@ -1,0 +1,33 @@
+{
+  "summary": "Create a new Aiven project",
+  "description": "Example request to create a new Aiven project with billing and cloud settings",
+  "request": {
+    "method": "POST",
+    "url": "https://api.aiven.io/v1/project",
+    "headers": {
+      "Authorization": "Bearer {token}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "project": "my-production-project",
+      "cloud": "aws-us-east-1",
+      "billing_group_id": "b9c8a7f6-e5d4-c3b2-a1f0-e9d8c7b6a5f4",
+      "tag_list": [
+        "production",
+        "team-backend"
+      ]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "project": {
+        "account_id": "a1b2c3d4e5f6",
+        "cloud_name": "aws-us-east-1",
+        "project_name": "my-production-project",
+        "estimated_balance_usd": "0.00",
+        "available_credits": "0.00"
+      }
+    }
+  }
+}

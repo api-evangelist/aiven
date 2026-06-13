@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrganizationVpcCreateRequestBody",
+  "description": "OrganizationVpcCreateRequestBody",
+  "type": "object",
+  "properties": {
+    "clouds": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "description": "Clouds to create this VPC in",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cloud_name": {
+            "type": "string",
+            "maxLength": 256,
+            "description": "Target cloud"
+          },
+          "network_cidr": {
+            "type": "string",
+            "maxLength": 18,
+            "description": "IPv4 network range CIDR"
+          }
+        },
+        "required": [
+          "cloud_name",
+          "network_cidr"
+        ]
+      }
+    },
+    "display_name": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "User defined display name for this VPC"
+    },
+    "peering_connections": {
+      "type": "array",
+      "maxItems": 128,
+      "description": "List of peering connection requests for the VPC",
+      "items": {
+        "type": "object",
+        "properties": {
+          "peer_azure_app_id": {
+            "type": "string",
+            "maxLength": 1024,
+            "description": "Azure app registration id in UUID4 form that is allowed to create a peering to the peer vnet"
+          },
+          "peer_azure_tenant_id": {
+            "type": "string",
+            "maxLength": 1024,
+            "description": "Azure tenant id in UUID4 form"
+          },
+          "peer_cloud_account": {
+            "type": "string",
+            "maxLength": 1024,
+            "description": "AWS account ID, GCP project ID, Azure subscription ID of the peered VPC, or string &quot;upcloud&quot; for UpCloud peering connections"
+          },
+          "peer_region": {
+            "type": "string",
+            "maxLength": 1024,
+            "description": "The peer VPC's region on AWS. May be omitted or set to null if the peer is in the same region as the Aiven project VPC. Omit or set to null on GCP, Azure, or UpCloud."
+          },
+          "peer_resource_group": {
+            "type": "string",
+            "maxLength": 1024,
+            "description": "Azure resource group name of the peered VPC"
+          },
+          "peer_vpc": {
+            "type": "string",
+            "maxLength": 1024,
+            "description": "AWS VPC ID, GCP VPC network name, Azure Virtual network name of the peered VPC, or UpCloud VPC ID"
+          },
+          "user_peer_network_cidrs": {
+            "type": "array",
+            "maxItems": 128,
+            "description": "List of private IPv4 ranges to route through the peering connection",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "peer_cloud_account",
+          "peer_vpc"
+        ]
+      }
+    }
+  },
+  "required": [
+    "clouds",
+    "peering_connections"
+  ]
+}

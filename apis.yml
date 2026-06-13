@@ -53,6 +53,32 @@ apis:
         url: https://api.aiven.io/doc/
       - type: Authentication
         url: https://aiven.io/docs/platform/howto/create_authentication_token
+      - type: OpenAPI
+        url: openapi/aiven-aiven-api-openapi.yml
+      - type: JSONSchema
+        url: json-schema/aiven-service-create.json
+      - type: JSONSchema
+        url: json-schema/aiven-service-list.json
+      - type: JSONSchema
+        url: json-schema/aiven-project-create.json
+      - type: JSONSchema
+        url: json-schema/aiven-account-auth.json
+      - type: JSONSchema
+        url: json-schema/aiven-billing-group.json
+      - type: JSONSchema
+        url: json-schema/aiven-organization-create.json
+      - type: JSONSchema
+        url: json-schema/aiven-vpc-create.json
+      - type: JSONSchema
+        url: json-schema/aiven-user-info.json
+      - type: Examples
+        url: examples/aiven-create-project.json
+      - type: Examples
+        url: examples/aiven-create-kafka-service.json
+      - type: Examples
+        url: examples/aiven-create-postgresql-service.json
+      - type: Examples
+        url: examples/aiven-list-services.json
     contact:
       - FN: Aiven Support
         url: https://aiven.io/support
@@ -75,6 +101,10 @@ common:
     url: https://status.aiven.io
   - type: X
     url: https://x.com/aiven_io
+  - type: Vocabulary
+    url: vocabulary/aiven-vocabulary.yml
+  - type: JSONLDContext
+    url: json-ld/aiven-context.jsonld
   - type: Plans
     url: plans/aiven-plans-pricing.yml
   - type: RateLimits

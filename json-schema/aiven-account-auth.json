@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AccountAuthenticationMethodCreateRequestBody",
+  "description": "AccountAuthenticationMethodCreateRequestBody",
+  "type": "object",
+  "properties": {
+    "auth_token_extend_when_used": {
+      "type": "boolean",
+      "description": "Extend authentication token validity when used",
+      "default": true
+    },
+    "auth_token_max_age_seconds": {
+      "type": "integer",
+      "minimum": 300,
+      "maximum": 1296000,
+      "description": "Auth Token Max Age Seconds",
+      "default": 36000
+    },
+    "authentication_method_name": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "Authentication Method Name"
+    },
+    "authentication_method_type": {
+      "type": "string",
+      "description": "An enumeration.",
+      "title": "Authentication method type",
+      "enum": [
+        "internal",
+        "saml"
+      ]
+    },
+    "auto_join_team_id": {
+      "type": "string",
+      "maxLength": 32,
+      "description": "Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null."
+    },
+    "auto_join_user_group_id": {
+      "type": "string",
+      "maxLength": 36,
+      "description": "Automatically add users to a group, when user signs up using this authentication method"
+    },
+    "linked_domains": {
+      "type": "array",
+      "description": "Linked Domains",
+      "items": {
+        "type": "object",
+        "properties": {
+          "domain_id": {
+            "type": "string",
+            "maxLength": 36,
+            "description": "Domain ID"
+          }
+        },
+        "required": [
+          "domain_id"
+        ]
+      }
+    },
+    "saml_assertion_signed_enabled": {
+      "type": "boolean",
+      "description": "Set to 'true' to enable WantAssertionsSigned"
+    },
+    "saml_authn_requests_signed_enabled": {
+      "type": "boolean",
+      "description": "Set to 'true' to enable AuthnRequestsSigned"
+    },
+    "saml_certificate": {
+      "type": "string",
+      "maxLength": 16384,
+      "description": "Identity provider's certificate"
+    },
+    "saml_digest_algorithm": {
+      "type": "string",
+      "description": "An enumeration.",
+      "title": "Digest algorithm. This is an advanced option that typically does not need to be set.",
+      "default": "sha256",
+      "enum": [
+        "sha1",
+        "sha256",
+        "sha384",
+        "sha512"
+      ]
+    },
+    "saml_entity_id": {
+      "type": "string",
+      "maxLength": 2048,
+      "description": "Saml Entity ID"
+    },
+    "saml_field_mapping": {
+      "type": "object",
+      "description": "SAMLFieldMapping",
+      "properties": {
+        "email": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Field name for user email",
+          "default": "email"
+        },
+        "first_name": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Field name for user's first name",
+          "default": "first_name"
+        },
+        "groups": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.",
+          "default": "groups"
+        },
+        "identity": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.",
+          "default": "email"
+        },
+        "last_name": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Field name for user's lastname",
+          "default": "last_name"
+        },
+        "real_name": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Field name for user's full name. If specified, first_name and last_name mappings are ignored"
+        }
+      }
+    },
+    "saml_idp_login_allowed": {
+      "type": "boolean",
+      "description": "Set to 'true' to enable IdP initiated login",
+      "default": false
+    },
+    "saml_idp_url": {
+      "type": "string",
+      "maxLength": 2048,
+      "description": "Saml Idp Url"
+    },
+    "saml_join_groups": {
+      "type": "boolean",
+      "description": "SAML join groups enabled",
+      "default": false
+    },
+    "saml_requested_authn_context_enabled": {
+      "type": "boolean",
+      "description": "Set to 'false' to disable RequestedAuthnContext"
+    },
+    "saml_signature_algorithm": {
+      "type": "string",
+      "description": "An enumeration.",
+      "title": "SAMLSignatureAlgorithm",
+      "default": "rsa-sha256",
+      "enum": [
+        "rsa-sha1",
+        "dsa-sha1",
+        "rsa-sha256",
+        "rsa-sha384",
+        "rsa-sha512"
+      ]
+    },
+    "saml_variant": {
+      "type": "string",
+      "description": "An enumeration.",
+      "title": "SAMLVariant",
+      "enum": [
+        "adfs"
+      ]
+    },
+    "scim_enabled": {
+      "type": "boolean",
+      "description": "SCIM enabled",
+      "default": false
+    }
+  },
+  "required": [
+    "authentication_method_name",
+    "authentication_method_type"
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BillingGroupCreateRequestBody",
+  "description": "BillingGroupCreateRequestBody",
+  "type": "object",
+  "properties": {
+    "account_id": {
+      "type": "string",
+      "maxLength": 36,
+      "description": "Account ID"
+    },
+    "address_lines": {
+      "type": "array",
+      "maxItems": 3,
+      "description": "Address lines",
+      "items": {
+        "type": "string"
+      }
+    },
+    "billing_address_id": {
+      "type": "string",
+      "maxLength": 36,
+      "description": "Address ID"
+    },
+    "billing_contact_emails": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "List of billing groups contact email addresses",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "description": "User email address"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      }
+    },
+    "billing_currency": {
+      "type": "string",
+      "description": "Billing currency",
+      "enum": [
+        "AUD",
+        "CAD",
+        "CHF",
+        "DKK",
+        "EUR",
+        "GBP",
+        "JPY",
+        "NOK",
+        "NZD",
+        "SEK",
+        "SGD",
+        "USD"
+      ]
+    },
+    "billing_emails": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "List of project billing email addresses",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "description": "User email address"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      }
+    },
+    "billing_extra_text": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Extra text to be included in all project invoices, e.g. purchase order or cost center number"
+    },
+    "billing_group_name": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "Billing group name"
+    },
+    "card_id": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "Credit card ID"
+    },
+    "city": {
+      "type": "string",
+      "maxLength": 50,
+      "description": "Address city"
+    },
+    "company": {
+      "type": "string",
+      "maxLength": 83,
+      "description": "Name of a company"
+    },
+    "copy_from_billing_group": {
+      "type": "string",
+      "minLength": 36,
+      "maxLength": 36,
+      "description": "Billing group ID"
+    },
+    "country_code": {
+      "type": "string",
+      "maxLength": 2,
+      "description": "Two letter country code for billing country"
+    },
+    "shipping_address_id": {
+      "type": "string",
+      "maxLength": 36,
+      "description": "Address ID"
+    },
+    "state": {
+      "type": "string",
+      "maxLength": 30,
+      "description": "Address state or province"
+    },
+    "vat_id": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "EU VAT Identification Number"
+    },
+    "zip_code": {
+      "type": "string",
+      "maxLength": 36,
+      "description": "Address zip code"
+    }
+  },
+  "required": [
+    "billing_group_name"
+  ]
+}

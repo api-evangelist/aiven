@@ -1,0 +1,32 @@
+{
+  "summary": "List all services in a project",
+  "description": "Example request to retrieve all managed services within a project",
+  "request": {
+    "method": "GET",
+    "url": "https://api.aiven.io/v1/project/{project}/service",
+    "headers": {
+      "Authorization": "Bearer {token}"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "services": [
+        {
+          "service_name": "my-kafka-cluster",
+          "service_type": "kafka",
+          "state": "RUNNING",
+          "plan": "business-4",
+          "cloud_name": "aws-us-east-1"
+        },
+        {
+          "service_name": "my-postgres-db",
+          "service_type": "pg",
+          "state": "RUNNING",
+          "plan": "startup-4",
+          "cloud_name": "google-europe-west1"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectCreateRequestBody",
+  "description": "ProjectCreateRequestBody",
+  "type": "object",
+  "properties": {
+    "account_id": {
+      "type": "string",
+      "maxLength": 36,
+      "description": "Account ID"
+    },
+    "add_account_owners_admin_access": {
+      "type": "boolean",
+      "description": "[DEPRECATED] If account_id is set, grant account owner team admin access to the new project. This flag is ignored, and assumed true."
+    },
+    "address_lines": {
+      "type": "array",
+      "maxItems": 3,
+      "description": "[DEPRECATED] Address lines",
+      "items": {
+        "type": "string"
+      }
+    },
+    "base_port": {
+      "type": "integer",
+      "minimum": 10000,
+      "maximum": 29000,
+      "description": "New services in this project will use this value as a base when deriving their service port numbers. This allows new services to allocate predictable and specific service ports. If not provided during project creation a random base port is used.",
+      "title": "Base value that new services in this project will use to derive their port numbers."
+    },
+    "billing_address": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "DEPRECATED: use split address fields like company, address_lines, zip_code, city and state instead"
+    },
+    "billing_currency": {
+      "type": "string",
+      "description": "[DEPRECATED] Billing currency",
+      "enum": [
+        "AUD",
+        "CAD",
+        "CHF",
+        "DKK",
+        "EUR",
+        "GBP",
+        "JPY",
+        "NOK",
+        "NZD",
+        "SEK",
+        "SGD",
+        "USD"
+      ]
+    },
+    "billing_emails": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "[DEPRECATED] Billing emails",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "description": "User email address"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      }
+    },
+    "billing_extra_text": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "[DEPRECATED] Extra text to be included in all project invoices"
+    },
+    "billing_group_id": {
+      "type": "string",
+      "minLength": 36,
+      "maxLength": 36,
+      "description": "Billing group ID"
+    },
+    "card_id": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "[DEPRECATED] Credit card ID"
+    },
+    "city": {
+      "type": "string",
+      "maxLength": 50,
+      "description": "[DEPRECATED] Address city"
+    },
+    "cloud": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Target cloud"
+    },
+    "company": {
+      "type": "string",
+      "maxLength": 83,
+      "description": "[DEPRECATED] Name of company"
+    },
+    "copy_from_project": {
+      "type": "string",
+      "maxLength": 63,
+      "description": "Project name from which to copy settings to the new project"
+    },
+    "copy_tags": {
+      "type": "boolean",
+      "description": "Copy tags from the source project. If request contains additional tags, the tags copied from source are updated with them.",
+      "default": false
+    },
+    "country_code": {
+      "type": "string",
+      "maxLength": 2,
+      "description": "[DEPRECATED] Two letter country code for billing country"
+    },
+    "project": {
+      "type": "string",
+      "maxLength": 63,
+      "description": "Project name"
+    },
+    "state": {
+      "type": "string",
+      "maxLength": 30,
+      "description": "[DEPRECATED] Address state"
+    },
+    "tags": {
+      "type": "object",
+      "description": "Set of resource tags",
+      "properties": {}
+    },
+    "tech_emails": {
+      "type": "array",
+      "maxItems": 10,
+      "description": "List of project tech email addresses",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 254,
+            "description": "User email address"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      }
+    },
+    "use_source_project_billing_group": {
+      "type": "boolean",
+      "description": "If set to true, use the same billing group that is used in source project. If set to false, create a copy of the billing group used in the source project with the same information. If new project is not being copied from existing one this option has no effect",
+      "title": "Use the same billing group that is used in source project.",
+      "default": false
+    },
+    "vat_id": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "[DEPRECATED] EU VAT identification"
+    },
+    "zip_code": {
+      "type": "string",
+      "maxLength": 36,
+      "description": "[DEPRECATED] Address zip code"
+    }
+  },
+  "required": [
+    "project"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "summary": "Create a managed Apache Kafka service",
+  "description": "Example request to provision a managed Apache Kafka cluster on Aiven",
+  "request": {
+    "method": "POST",
+    "url": "https://api.aiven.io/v1/project/{project}/service",
+    "headers": {
+      "Authorization": "Bearer {token}",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "service_name": "my-kafka-cluster",
+      "service_type": "kafka",
+      "cloud_name": "aws-us-east-1",
+      "plan": "business-4",
+      "kafka": {
+        "kafka_version": "3.5"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "service": {
+        "service_name": "my-kafka-cluster",
+        "service_type": "kafka",
+        "state": "REBUILDING",
+        "plan": "business-4",
+        "cloud_name": "aws-us-east-1"
+      }
+    }
+  }
+}

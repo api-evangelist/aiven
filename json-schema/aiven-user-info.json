@@ -1,0 +1,230 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UserInfoResponse",
+  "description": "UserInfoResponse",
+  "type": "object",
+  "properties": {
+    "errors": {
+      "type": "array",
+      "description": "List of errors occurred during request processing",
+      "items": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Printable error message"
+          },
+          "more_info": {
+            "type": "string",
+            "description": "URL to the documentation of the error"
+          },
+          "status": {
+            "type": "integer",
+            "description": "HTTP error status code"
+          }
+        },
+        "required": [
+          "message",
+          "status"
+        ]
+      }
+    },
+    "message": {
+      "type": "string",
+      "description": "Printable result of the request"
+    },
+    "user": {
+      "type": "object",
+      "description": "User information",
+      "properties": {
+        "auth": {
+          "type": "array",
+          "description": "List of user's required authentication methods",
+          "items": {
+            "type": "string"
+          }
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "City"
+        },
+        "country": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Country code ISO 3166-1 alpha-2"
+        },
+        "create_time": {
+          "type": "string",
+          "maxLength": 36,
+          "description": "User registration time"
+        },
+        "department": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Job department"
+        },
+        "features": {
+          "type": "object",
+          "description": "Feature flags",
+          "properties": {}
+        },
+        "invitations": {
+          "type": "array",
+          "description": "List of pending invitations",
+          "items": {
+            "type": "object",
+            "properties": {
+              "invite_code": {
+                "type": "string",
+                "description": "Code for accepting the invitation"
+              },
+              "invite_time": {
+                "type": "string",
+                "maxLength": 36,
+                "description": "Timestamp in ISO 8601 format, always in UTC"
+              },
+              "inviting_user_email": {
+                "type": "string",
+                "maxLength": 254,
+                "description": "User email address"
+              },
+              "project_name": {
+                "type": "string",
+                "maxLength": 63,
+                "description": "Project name"
+              }
+            },
+            "required": [
+              "invite_code",
+              "invite_time",
+              "inviting_user_email",
+              "project_name"
+            ]
+          }
+        },
+        "job_title": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "Job title"
+        },
+        "managed_by_scim": {
+          "type": "boolean",
+          "description": "User management status"
+        },
+        "managing_organization_id": {
+          "type": "string",
+          "maxLength": 36,
+          "description": "Organization ID"
+        },
+        "project_membership": {
+          "type": "object",
+          "description": "Project membership and type of membership",
+          "properties": {
+            "ANY": {
+              "type": "string",
+              "description": "Project member type",
+              "enum": [
+                "admin",
+                "developer",
+                "operator",
+                "organization:app_users:write",
+                "organization:audit_logs:read",
+                "organization:billing:read",
+                "organization:billing:write",
+                "organization:domains:write",
+                "organization:groups:write",
+                "organization:networking:read",
+                "organization:networking:write",
+                "organization:projects:write",
+                "organization:users:write",
+                "project:audit_logs:read",
+                "project:integrations:read",
+                "project:integrations:write",
+                "project:networking:read",
+                "project:networking:write",
+                "project:permissions:read",
+                "project:services:read",
+                "project:services:write",
+                "read_only",
+                "role:organization:admin",
+                "role:project:admin",
+                "role:services:maintenance",
+                "role:services:recover",
+                "service:configuration:write",
+                "service:data:write",
+                "service:logs:read",
+                "service:metrics:read",
+                "service:secrets:read",
+                "service:users:write"
+              ]
+            }
+          }
+        },
+        "project_memberships": {
+          "type": "object",
+          "description": "List of project membership and type of membership",
+          "properties": {
+            "ANY": {
+              "type": "array",
+              "description": "List of project member type",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "projects": {
+          "type": "array",
+          "description": "List of projects the user is a member of",
+          "items": {
+            "type": "string"
+          }
+        },
+        "real_name": {
+          "type": "string",
+          "maxLength": 256,
+          "description": "User real name"
+        },
+        "state": {
+          "type": "string",
+          "description": "User account state"
+        },
+        "tenant": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "Tenant identifier"
+        },
+        "token_validity_begin": {
+          "type": "string",
+          "maxLength": 36,
+          "description": "Earliest valid authentication token timestamp"
+        },
+        "user": {
+          "type": "string",
+          "maxLength": 254,
+          "description": "User email address"
+        },
+        "user_id": {
+          "type": "string",
+          "description": "User ID"
+        }
+      },
+      "required": [
+        "auth",
+        "invitations",
+        "project_membership",
+        "project_memberships",
+        "projects",
+        "real_name",
+        "state",
+        "tenant",
+        "user",
+        "user_id"
+      ]
+    }
+  },
+  "required": [
+    "user"
+  ]
+}
