@@ -1,0 +1,69 @@
+name: Aiven API Rate Limits
+description: >
+  Aiven's REST API (https://api.aiven.io/v1) does not publish explicit numeric rate limits
+  in its public documentation. The platform uses token-based authentication (aivenv1 tokens)
+  and OAuth2 to identify and manage API consumers. Standard HTTP 429 Too Many Requests
+  responses are returned when limits are exceeded. Specific thresholds are not disclosed
+  publicly and may vary by account type, plan tier, and endpoint category. Customers
+  requiring guaranteed higher throughput should contact Aiven support.
+url: https://aiven.io/docs/tools/api
+specificationVersion: "0.1"
+rateLimits:
+  - name: API Request Rate
+    description: >
+      Aiven does not publicly document specific numeric rate limits for its REST API.
+      Requests that exceed platform thresholds receive HTTP 429 Too Many Requests responses.
+      Limits may vary by account tier and endpoint category.
+    type: requests
+    window: undisclosed
+    limit: undisclosed
+    scope: account
+    headers:
+      - name: Retry-After
+        description: Seconds to wait before retrying after a 429 response
+    errorResponse:
+      httpStatus: 429
+      description: Too Many Requests — client has exceeded the rate threshold
+  - name: Authentication Token Validity
+    description: >
+      Personal access tokens (aivenv1 format) are created through the Aiven console at
+      console.aiven.io/profile/auth. Tokens can be scoped and revoked at any time.
+      OAuth2 tokens follow standard expiry and refresh token patterns.
+    type: authentication
+    scope: token
+    details:
+      - Token type: Personal access token (aivenv1 prefix)
+      - OAuth2 authorization code flow supported
+      - Tokens revocable on demand via console
+      - OAuth2 authorization URL: https://console.aiven.io/oauth/authorize
+      - OAuth2 token URL: https://api.aiven.io/v1/oauth2/token
+  - name: Free Tier Service Limits
+    description: >
+      Free tier services have enforced resource limits that act as functional rate limits
+      for data throughput and connections on managed services.
+    type: resource
+    scope: service
+    limits:
+      - service: Apache Kafka (Free)
+        throughput: 250 KiB/s
+        topics: 5 maximum
+        retention: 3 days maximum
+      - service: OpenSearch (Developer)
+        connections: 50 concurrent maximum
+        storage: 30 GB maximum
+      - service: PostgreSQL (Developer)
+        storage: 8 GB maximum
+recommendations:
+  - Implement exponential backoff and retry logic for 429 responses
+  - Use the Aiven CLI (aiven-client) for scripted bulk operations to benefit from built-in retry handling
+  - Contact Aiven support for workloads requiring high API call volumes
+  - Consider using Terraform Provider or Kubernetes Operator for large-scale provisioning to reduce direct API call overhead
+references:
+  - name: Aiven API Documentation
+    url: https://aiven.io/docs/tools/api
+  - name: Aiven API Reference
+    url: https://api.aiven.io/doc/
+  - name: Aiven Authentication Tokens
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - name: Aiven CLI (Python)
+    url: https://github.com/aiven/aiven-client

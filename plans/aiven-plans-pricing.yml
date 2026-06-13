@@ -1,0 +1,137 @@
+name: Aiven Plans and Pricing
+description: >
+  Aiven offers all-inclusive, hourly-billed pricing across Free, Developer, Startup,
+  Business, and Premium service tiers for managed open-source data services including
+  Apache Kafka, PostgreSQL, MySQL, OpenSearch, ClickHouse, and Valkey. Pricing is
+  transparent with no hidden fees for networking, storage, backups, or maintenance.
+  Custom enterprise plans are available starting at $5,000/month. Annual commitment
+  discounts are available for qualifying organizations.
+url: https://aiven.io/pricing
+specificationVersion: "0.1"
+plans:
+  - name: Free
+    description: >
+      Always-on managed services for Apache Kafka, PostgreSQL, MySQL, OpenSearch, and
+      Valkey with no credit card required and no time limit. Runs on the same infrastructure
+      as paid plans. Subject to acceptable use policies.
+    url: https://aiven.io/free-tier
+    price: $0/month
+    billingCycle: hourly
+    features:
+      - Apache Kafka with up to 250 KiB/s throughput
+      - PostgreSQL single node, 1 CPU, 1 GB RAM, 1 GB storage
+      - MySQL single node, 1 CPU, 1 GB RAM, 1 GB storage
+      - OpenSearch single node, 1 CPU, 1 GB RAM, 1 GB storage
+      - Valkey single node
+      - Schema Registry included (Kafka)
+      - No credit card required
+      - No time limit
+    limitations:
+      - No cloud provider choice
+      - No VPC creation
+      - No static IPs
+      - No dynamic disk scaling
+      - Up to 5 Kafka topics
+      - 3-day Kafka retention maximum
+  - name: Developer
+    description: >
+      Entry-level paid tier for development and testing workloads. Starts at $5/month
+      for select services. Includes basic support and 24/7 operations on dedicated
+      VMs with more storage and throughput than the free tier.
+    url: https://aiven.io/developer-tier
+    price: Starting at $5/month
+    billingCycle: hourly
+    features:
+      - Dedicated VMs
+      - 24/7 operations and monitoring
+      - Basic support included
+      - Apache Kafka up to 1 MB/s throughput
+      - Up to 20 Kafka topics
+      - Kafka Connect compatible
+      - OpenSearch single node, 1 CPU, 4 GB RAM, 30 GB storage
+      - PostgreSQL single node, 1 CPU, 1 GB RAM, up to 8 GB disk
+      - Up to 50 concurrent OpenSearch connections
+    limitations:
+      - No cloud provider choice
+      - No VPC creation
+      - No static IPs
+      - No dynamic disk scaling
+      - Single-node (no high availability)
+  - name: Startup
+    description: >
+      Production-ready tier for growing teams requiring reliable managed data services
+      with more resources, high availability options, and cloud provider flexibility.
+    url: https://aiven.io/pricing
+    price: Starting at $200/month
+    billingCycle: hourly
+    features:
+      - Choice of cloud provider and region
+      - 3-node Apache Kafka cluster (2 CPU, 2-4 GB RAM per node, 90 GB storage)
+      - High availability configurations available
+      - Kafka Connect support
+      - VPC peering available
+      - Dynamic disk scaling
+      - Automated backups and point-in-time recovery
+      - 24/7 operations and monitoring
+  - name: Business
+    description: >
+      High-performance tier for business-critical workloads requiring robust HA, larger
+      resource pools, and advanced integrations across data services.
+    url: https://aiven.io/pricing
+    price: Starting at $500/month
+    billingCycle: hourly
+    features:
+      - 3-node Apache Kafka cluster (2-16 CPU, 4-32 GB RAM, 600 GB-18.43 TB storage)
+      - PostgreSQL high availability with 2-node replication
+      - Full Kafka Connect and Schema Registry support
+      - VPC creation and peering
+      - Static IPs
+      - Dynamic disk scaling
+      - Advanced monitoring and integrations
+      - Priority support
+      - Datadog, AWS CloudWatch, and other monitoring integrations
+  - name: Premium
+    description: >
+      Enterprise-grade tier for the largest and most demanding workloads, including
+      multi-node Kafka clusters and maximum storage, throughput, and reliability.
+    url: https://aiven.io/pricing
+    price: Starting at $1,900/month
+    billingCycle: hourly
+    features:
+      - 6-30 node Apache Kafka clusters (4-16 CPU, 8-32 GB RAM per node)
+      - Up to 184.32 TB Kafka storage
+      - PostgreSQL HA with 3-node replication
+      - Full platform access with all integrations
+      - Dedicated infrastructure options
+      - Advanced security and compliance features
+      - Enterprise support
+  - name: Custom
+    description: >
+      Fully customizable enterprise plans for organizations with specialized requirements,
+      including adjusted storage, backup frequency, node count, and CPU/RAM configurations.
+      Available with annual commitment discounts.
+    url: https://aiven.io/contact
+    price: Starting at $5,000/month
+    billingCycle: monthly
+    features:
+      - Custom node counts
+      - Custom CPU/RAM/storage configurations
+      - Custom backup frequency
+      - Dedicated infrastructure
+      - Annual commitment discounts
+      - Dedicated account management
+      - SLA guarantees
+  - name: Free Trial
+    description: >
+      30-day free trial with $300 USD in credits, no credit card required. Includes
+      access to paid tier features with limits on VMs, VPCs, and VPC peering connections.
+    url: https://aiven.io/pricing
+    price: $0 (30-day trial, $300 credits)
+    billingCycle: one-time
+    features:
+      - $300 USD credits
+      - Up to 10 VMs
+      - 1 VPC
+      - 10 VPC peering connections
+      - Full access to paid tier features
+      - No credit card required

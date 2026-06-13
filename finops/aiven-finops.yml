@@ -1,0 +1,127 @@
+name: Aiven FinOps
+description: >
+  Aiven's managed open-source data platform uses hourly, all-inclusive billing across
+  service tiers (Free, Developer, Startup, Business, Premium, Custom). All costs —
+  including compute VMs, networking, storage, backups, maintenance, and monitoring —
+  are bundled into a single transparent hourly rate. Services can be powered off
+  immediately to stop charges, with a minimum one-hour billing unit. Annual commitment
+  discounts are available for qualifying organizations spending $5,000+/month.
+  The 30-day free trial provides $300 in credits with no credit card required.
+specificationVersion: "1.0"
+url: https://aiven.io/pricing
+framework: FinOps Framework
+focusVersion: "1.0"
+costManagement:
+  billingModel: hourly
+  minimumCharge: 1 hour
+  allInclusive: true
+  includedCosts:
+    - Virtual machine compute
+    - Networking and data transfer
+    - Automated backups
+    - Point-in-time recovery
+    - Maintenance and upgrades
+    - 24/7 monitoring and operations
+    - Credit card processing fees
+    - Security (encryption at rest and in transit)
+  excludedCosts:
+    - Custom enterprise plans negotiated separately
+  currency: USD
+  annualDiscounts: true
+  annualMinimumSpend: "$5,000/month"
+costAllocation:
+  granularity: per-service
+  dimensions:
+    - Service type (Kafka, PostgreSQL, OpenSearch, etc.)
+    - Cloud provider (AWS, GCP, Azure, DigitalOcean, etc.)
+    - Region
+    - Plan tier (Free, Developer, Startup, Business, Premium)
+    - Project
+    - Organization
+  tagging:
+    supported: true
+    dimensions:
+      - Project name
+      - Service name
+      - Environment
+  billing:
+    invoiceFrequency: monthly
+    paymentMethods:
+      - Credit card
+      - AWS Marketplace
+      - GCP Marketplace
+optimization:
+  powerOff:
+    description: >
+      Services can be powered off at any time to immediately stop charge accumulation.
+      Minimum billing unit is one hour. Storage charges may continue for powered-off
+      services depending on the configuration.
+    supported: true
+  rightSizing:
+    description: >
+      Aiven provides multiple plan tiers allowing teams to right-size services to
+      their actual workload requirements. Dynamic disk sizing is available on Startup
+      and higher tiers.
+    supported: true
+    tiers:
+      - Free
+      - Developer
+      - Startup
+      - Business
+      - Premium
+      - Custom
+  dynamicDiskScaling:
+    description: Scale disk storage dynamically based on actual usage without service downtime.
+    supported: true
+    availableOn:
+      - Startup
+      - Business
+      - Premium
+      - Custom
+  freeTier:
+    description: >
+      Always-on free tier available for Kafka, PostgreSQL, MySQL, OpenSearch, and Valkey.
+      No credit card or time limit. Ideal for development, experimentation, and small workloads.
+    url: https://aiven.io/free-tier
+  freeTrial:
+    description: 30-day free trial with $300 USD in credits, no credit card required.
+    durationDays: 30
+    creditAmount: "$300 USD"
+    creditCardRequired: false
+    limits:
+      vms: 10
+      vpcs: 1
+      vpcPeeringConnections: 10
+visibility:
+  console: https://console.aiven.io
+  billingDashboard: https://console.aiven.io/billing
+  costExplorer: true
+  realTimeMetrics: true
+  monitoring:
+    - Aiven Console built-in monitoring
+    - Datadog integration
+    - AWS CloudWatch integration
+    - Grafana integration
+    - Prometheus-compatible metrics
+governance:
+  budgetAlerts: true
+  spendingControls:
+    - Project-level cost tracking
+    - Organization-level billing groups
+    - Service power-off to stop charges immediately
+  compliance:
+    - SOC 2 Type II
+    - ISO 27001
+    - GDPR compliant
+    - HIPAA eligible (selected plans)
+resources:
+  - name: Aiven Pricing Page
+    url: https://aiven.io/pricing
+  - name: Aiven Service Pricing Concepts
+    url: https://aiven.io/docs/platform/concepts/service-pricing
+  - name: Aiven Free Tier
+    url: https://aiven.io/free-tier
+  - name: Aiven Cloud Cost Optimization
+    url: https://aiven.io/optimize-your-cloud-costs-with-aiven-data-platform
+  - name: Aiven Console Billing
+    url: https://console.aiven.io/billing

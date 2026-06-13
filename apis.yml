@@ -1,0 +1,86 @@
+aid: aiven
+name: Aiven
+description: >
+  Aiven is a managed open-source data infrastructure platform that enables developers and
+  organizations to provision, operate, and scale open-source data services across all major
+  cloud providers. The platform offers fully managed Apache Kafka, PostgreSQL, OpenSearch,
+  Redis, MySQL, ClickHouse, and other data technologies through a unified REST API and
+  console. Aiven handles infrastructure provisioning, backups, upgrades, monitoring, and
+  security so teams can focus on building applications rather than managing infrastructure.
+  Pricing is all-inclusive and hourly-billed, covering VMs, networking, backups, and
+  maintenance with no hidden fees across Free, Developer, Startup, Business, and Premium tiers.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/aiven/refs/heads/main/apis.yml
+created: "2026-06-13"
+modified: "2026-06-13"
+specificationVersion: "0.19"
+tags:
+  - Managed Data Infrastructure
+  - Apache Kafka
+  - PostgreSQL
+  - OpenSearch
+  - ClickHouse
+  - Redis
+  - MySQL
+  - Open Source
+  - Cloud Database
+  - DBaaS
+  - Data Streaming
+  - Data Platform
+apis:
+  - aid: aiven:aiven-api
+    name: Aiven REST API
+    description: >
+      The Aiven REST API provides programmatic access to the Aiven platform for provisioning
+      and managing open-source data services including Apache Kafka, PostgreSQL, OpenSearch,
+      Redis, MySQL, ClickHouse, and more. The API supports full lifecycle management of
+      services, projects, organizations, billing, VPCs, integrations, and user access controls.
+      Authentication is via personal access tokens or OAuth2 authorization code flow with
+      granular scopes for accounts, billing, projects, and services.
+    humanURL: https://aiven.io/docs/tools/api
+    baseURL: https://api.aiven.io/v1
+    tags:
+      - Data Infrastructure
+      - Managed Services
+      - Apache Kafka
+      - PostgreSQL
+      - OpenSearch
+    properties:
+      - type: Documentation
+        url: https://aiven.io/docs/tools/api
+      - type: OpenAPI
+        url: https://api.aiven.io/doc/
+      - type: Authentication
+        url: https://aiven.io/docs/platform/howto/create_authentication_token
+    contact:
+      - FN: Aiven Support
+        url: https://aiven.io/support
+common:
+  - type: Website
+    url: https://aiven.io
+  - type: Documentation
+    url: https://aiven.io/docs
+  - type: GitHubOrg
+    url: https://github.com/aiven
+  - type: GitHubOrg
+    url: https://github.com/Aiven-Open
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/aiven
+  - type: Blog
+    url: https://aiven.io/blog
+  - type: Pricing
+    url: https://aiven.io/pricing
+  - type: StatusPage
+    url: https://status.aiven.io
+  - type: X
+    url: https://x.com/aiven_io
+  - type: Plans
+    url: plans/aiven-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/aiven-rate-limits.yml
+  - type: FinOps
+    url: finops/aiven-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
