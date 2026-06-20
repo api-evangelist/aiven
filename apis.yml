@@ -10,7 +10,7 @@ description: >
   Pricing is all-inclusive and hourly-billed, covering VMs, networking, backups, and
   maintenance with no hidden fees across Free, Developer, Startup, Business, and Premium tiers.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/aiven/refs/heads/main/apis.yml
 created: "2026-06-13"
 modified: "2026-06-13"
