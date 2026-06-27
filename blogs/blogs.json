@@ -2,12 +2,17 @@
   "repo": "aiven",
   "feeds": [
     {
-      "source": "https://aiven.io/blog",
+      "source": "https://aiven.io/blog/feed.xml",
       "feed_url": "https://aiven.io/blog/feed.xml",
-      "title": "Aiven Blog",
-      "saved": 1
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://www.linkedin.com/company/aiven",
+      "error": "HTTPError"
     }
   ],
-  "fetched": "2026-06-21T17:00:00Z",
+  "fetched": "2026-06-27T12:03:07Z",
   "post_count": 1
 }
