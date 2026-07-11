@@ -1,0 +1,218 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/aiven-aiven-api-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/aiven-aiven-api-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://console.aiven.io/oauth/authorize
+    tokenUrl: https://api.aiven.io/v1/oauth2/token
+  description: OAuth2 security scheme
+scopes:
+- scope: accounts
+  description: Allow enumerating and reading accounts configuration
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: accounts:read
+  description: Allow modifying account configuration
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: accounts:write
+  description: Provides full access to authentication related API
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: all
+  description: Provide full access to the API
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: authentication
+  description: Provides full access to authentication related API
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: authentication:read
+  description: Allow reading authentication related configuration on resources (user profile,
+    accounts)
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: authentication:write
+  description: Allow modifying authentication related configurations on resources (user profile,
+    accounts)
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: billing
+  description: Provide full access to billing APIs
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: billing:read
+  description: Allow reading billing information and configuration
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: billing:write
+  description: Allow writing billing configuration
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: payments
+  description: Provide full access to payment method APIs
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: payments:read
+  description: Allow reading the payment method configurations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: payments:write
+  description: Allows writing payment method configuration
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: privatelink
+  description: Provide full access to private link APIs
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: privatelink:read
+  description: Allow enumerating and reading private link items and configurations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: privatelink:write
+  description: Allow writing (creating, modifying, deleting) private link items
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: projects
+  description: Provide full access to projects APIs
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: projects:read
+  description: Allow enumerating projects and reading their configuration
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: projects:write
+  description: Allow writing (creating, modifying, deleting) projects
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: scim
+  description: Provide full access to SCIM operations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: scim:read
+  description: Allow reading SCIM endpoints
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: scim:write
+  description: Allow writing (modifying) SCIM endpoints
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: services
+  description: Provide full access to services APIs
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: services:read
+  description: Allow enumerating services and reading their configuration
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: services:write
+  description: Allow writing (creating, modifying, deleting) services
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: static_ips
+  description: Provide full access to static IPs APIs
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: static_ips:read
+  description: Allow enumerating and reading static IP items and configurations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: static_ips:write
+  description: Allow writing (creating, modifying, deleting) static IP items
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: tickets
+  description: Provide full access to support ticket APIs
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: tickets:read
+  description: Allow enumerating and reading support tickets
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: tickets:write
+  description: Allow writing (creating, modifying) support tickets
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: user
+  description: Provide full access to user profile APIs
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: user:read
+  description: Allow reading user profile and configuration
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- scope: user:write
+  description: Allow writing (modifying) user profile and configuration
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml

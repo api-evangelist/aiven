@@ -83,6 +83,8 @@ apis:
       - FN: Aiven Support
         url: https://aiven.io/support
 common:
+  - type: OAuthScopes
+    url: scopes/aiven-scopes.yml
   - type: Website
     url: https://aiven.io
   - type: Documentation
