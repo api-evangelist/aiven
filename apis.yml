@@ -83,6 +83,12 @@ apis:
       - FN: Aiven Support
         url: https://aiven.io/support
 common:
+  - type: VulnerabilityDisclosure
+    url: security/aiven-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/aiven-domain-security.yml
+  - type: Authentication
+    url: authentication/aiven-authentication.yml
   - type: OAuthScopes
     url: scopes/aiven-scopes.yml
   - type: Website

@@ -1,0 +1,27 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/aiven-aiven-api-openapi.yml
+summary:
+  types:
+  - http
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: tokenAuth
+  type: http
+  scheme: bearer
+  description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can
+    be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://console.aiven.io/oauth/authorize
+    tokenUrl: https://api.aiven.io/v1/oauth2/token
+    scopes: 34
+  description: OAuth2 security scheme
+  sources:
+  - openapi/aiven-aiven-api-openapi.yml
