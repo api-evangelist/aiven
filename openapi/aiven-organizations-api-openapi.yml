@@ -1,0 +1,2669 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: support@aiven.io
+    name: Aiven support team
+    url: https://aiven.io/support-services
+  title: Aiven API Documentation Account Organizations API
+  version: v1
+  x-logo:
+    altText: Aiven logo
+    backgroundColor: '#fafafa'
+    href: https://api.aiven.io/doc
+    url: https://aiven.io/assets/img/aiven-logo.png
+  description: "# Introduction\n\n[Direct link to openapi.json](https://api.aiven.io/doc/openapi.json) for use with external tools\n\n[Aiven](https://aiven.io) is a modern fully-managed open source data platform for streaming, storing, and analyzing data on any public cloud. On Aiven Platform, you can operate your data infrastructure with a few devops tools: [Aiven Console](https://console.aiven.io/), [Aiven Terraform Provider](https://aiven.io/docs/tools/terraform), [Aiven CLI](https://github.com/aiven/aiven-client), and [Aiven Operator for Kubernetes](https://github.com/aiven/aiven-operator). All of them are built on an open secure powerful REST API for integration with custom tooling.\n\nThe Aiven [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer) API\nprovides programmatic access to Aiven.io services. To call the Aiven API, you can use either CLI tools (for example, `cURL` or [Aiven CLI client](https://aiven.io/docs/tools/cli)) or GUI tools, such as the [Aiven public API Postman collection](https://www.postman.com/aiven-apis).\n\nThis Aiven API documentation will help you operate your Aiven organization, projects, or services programmatically by integrating your applications and processes with Aiven.\n\n# Description\n\nAiven's APIs ([Application Programming Interfaces](https://en.wikipedia.org/wiki/API)) power its platform for data management. Aiven has a number of REST APIs that can help you build strong and robust data infrastructure for your applications.\n\nThe Aiven API is organized around core resources. Each core resource has multiple endpoints, which can be interacted with using different HTTP methods.\n\n## Core resources\n\n### Platform APIs\n\n<dl>\n  <dt>Account</dt>\n  <dd>Operations on the organization level related to accounts, projects, teams, users, invites, billing groups, payment methods, credit cards, authentication methods, and more </dd>\n  <dt>User</dt>\n  <dd>Operations related to users and users' profiles, access, authentication, authorization, user management, and more</dd>\n  <dt>Project</dt>\n  <dd>General operations on projects related to users, VPCs, invitations, alerts, peering connections, and more</dd>\n  <dt>BillingGroup</dt>\n  <dd>Operation on invoices, billing groups' credits and events </dd>\n  <dt>Support ticket</dt>\n  <dd>Operations on support tickets: listing, creating, looping users in</dd>\n</dl>\n\n### Services APIs\n\n<dl>\n  <dt>Service</dt>\n  <dd>All general (non-service-specific) operations on the service level: service creation, termination, configuration, updates, information retrieval, reset, and more</dd>\n  <dt>Service Integrations</dt>\n  <dd>Operations related to integrating services and managing service integrations</dd>\n  <dt>Service: ClickHouse</dt>\n  <dd>ClickHouse-specific operations on queries and databases </dd>\n  <dt>Service: Flink</dt>\n  <dd>Operations on Flink queries, jobs, and applications</dd>\n  <dt>Service: Kafka</dt>\n  <dd>Kafka and Kafka Connect specific operations on connectors, ACL entries, quotas, topics, topic messages, schema registry, and more</dd>\n  <dt>Service: Kafka MirrorMaker</dt>\n  <dd>Operations on replication flows</dd>\n  <dt>Service: MySQL</dt>\n  <dd>Fetching service query statistics</dd>\n  <dt>Service: OpenSearch</dt>\n  <dd>Operations on ACL configuration, security administration and configuration</dd>\n  <dt>Service: PostgreSQL</dt>\n  <dd>Operations on extensions, service query statistics, and connection pools</dd>\n</dl>\n\n# Requests\n\nThere are multiple ways you can interact with the Aiven API over HTTP. You can access it by sending requests from a client (for example, a web browser) to the Aiven's server. In this API reference, you'll find code examples of how to do that using `cURL` and a few different client libraries (programming languages).\n\nTo send an API request, you need to specify the following:\n\n* HTTP method\n* Path\n* Request headers\n\n  Typically, `content-type` needs to be set to `application/json`: `content-type: application/json`. There are a few exceptions though.\n\n* Path, query, or body parameters (either required or optional).\n\n```bash\ncurl --request POST \\\n  --url https://api.aiven.io/v1/project/{project}/vpcs \\\n  --header 'Authorization: aivenv1 REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data\n     '{\n        \"cloud_name\": \"string\",\n        \"network_cidr\": \"string\",\n        \"peering_connections\": [\n          {\n            \"peer_azure_app_id\": \"string\",\n            \"peer_azure_tenant_id\": \"string\",\n            \"peer_cloud_account\": \"string\",\n            \"peer_region\": \"string\",\n            \"peer_resource_group\": \"string\",\n            \"peer_vpc\": \"string\",\n            \"user_peer_network_cidrs\": [\n              \"string\"\n            ]\n          }\n        ]\n      }'\n```\n\n# Responses\n\nUpon receiving and processing a request, the Aiven API returns the response status code, response headers, and a response body in the `JSON` format. Response bodies include different properties, which can be either required or optional, for example, the ``message`` property, which is an optional human-readable information on the result of the action (deleted, created, or updated).\n\n```json\n{\n    \"cloud_name\": \"string\",\n    \"create_time\": \"string\",\n    \"message\": \"string\",\n    \"network_cidr\": \"string\",\n    \"peering_connections\": [\n        { ... }\n    ],\n    \"pending_build_only_peering_connections\": \"string\",\n    \"project_vpc_id\": \"string\",\n    \"state\": \"ACTIVE\",\n    \"update_time\": \"string\"\n}\n```\n\n## Successful responses\n\nA successful API response returns an HTTP result code between 200 and 299.\n\nExample of the ``created`` response\n\n```json\n  {\n      \"service\": {\n          \"service_name\": \"foobar\",\n          ...\n      }\n  }\n```\n\n## Failed responses\n\nA failed API response returns a HTTP code greater or equal to 400. Additionally, the response may return a list of errors in the response body as JSON, for example\n\n```json\n{\n  \"errors\": [\n    {\n      \"error_code\": \"authentication_failed\",\n      \"message\": \"Authentication failed\",\n      \"status\": 403,\n      \"metadata\": {\n        ...\n      }\n    }\n  ],\n  \"message\": \"Authentication failed\"\n}\n```\n\n> For information on errors' properties and error codes, check [Errors](/doc/openapi/openapi-description#errors).\n\n# Get started\n\nCheck out how to start using the Aiven API either in [API quick start](https://aiven.io/docs/tools/api#api-quickstart) or [Your first API call](https://aiven.io/blog/your-first-aiven-api-call).\n\n## Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->\n\n# Errors\n\nWhen working with the Aiven API, you may encounter different error responses when you attempt to perform operations that can fail. For example, trying to enable writes for a database that has been powered off would lead to the following error response:\n\n```json\n{\n  \"errors\": [\n    {\n      \"error_code\": \"not_powered\",\n      \"message\": \"Database not powered on\",\n      \"status\": 409\n    }\n  ],\n  \"message\": \"Database not powered on\"\n}\n```\n\n## Check a response for errors\n\nIf a request fails with a HTTP code greater or equal to 400, it returns a list of errors in the response body as JSON. `errors` objects are embedded in the failed API responses.\n\n```json\n{\n  \"errors\": [\n    {\n      \"error_code\": \"account_not_found\",\n      \"message\": \"Account does not exist\",\n      \"status\": 404\n    }\n  ],\n  \"message\": \"Account does not exist\"\n}\n```\n\n## Errors' properties\n\nIn an API response, one or more errors may be included in the ``errors`` array of objects. Each error object may contain a few properties:\n\n* ``status`` (required) is an HTTP error code, which can be used to programmatically identify the error type.\n\n  * ``200`` <= ``status``< ``300`` means a successful request.\n  * ``300`` <= ``status`` <= ``500`` means a failed request.\n\n  ``errors`` can have the following HTTPS status codes:\n\n  * 200 - OK\n  * 201 - Created\n  * 400 - Bad Request\n  * 401 - Unauthorized\n  * 403 - Forbidden\n  * 404 - Not found\n  * 405 - Method Not Allowed\n  * 409 - Conflict\n  * 500 - Internal Server Error\n\n* ``message`` (required) is human-readable information on the error.\n* ``error_code`` is a machine-readable information on the error (see [Error codes](/doc/openapi/openapi-description#error-codes)).\n\n## Error codes\n\nMachine-readable ``error_code`` fields are progressively added to Aiven endpoints to allow you to identify different failure cases programmatically. Currently, the supported values are the following:\n\n- `account_already_exists`\n- `account_already_has_organization`\n- `account_and_project_do_not_match`\n- `account_and_project_must_belong_same_tenant`\n- `account_cannot_be_own_ancestor`\n- `account_must_have_enabled_authentication_method`\n- `account_not_found`\n- `account_team_not_found`\n- `account_unit_cannot_create_for_personal_tier`\n- `account_unit_cannot_have_billing_group`\n- `account_with_child_accounts_cannot_be_deleted`\n- `account_with_projects_cannot_be_deleted`\n- `action_forbidden_for_application_users`\n- `action_forbidden_for_managed_users`\n- `action_forbidden_for_marketplace_users`\n- `action_forbidden_for_scim_users`\n- `action_forbidden_for_timescale_users`\n- `action_forbidden_missing_governance_usergroup`\n- `action_forbidden_on_application_users`\n- `action_forbidden_on_topic_request`\n- `action_forbidden_on_unmanaged_users`\n- `acu_billing_not_allowed`\n- `address_already_belongs_to_organization`\n- `address_in_use`\n- `address_not_found`\n- `api_client_ip_allowlist_blocks_caller`\n- `approval_forbidden_on_topic_request`\n- `approval_missing_on_request`\n- `auth_token_max_age_too_low`\n- `authentication_method_disable_current_not_allowed`\n- `authentication_method_does_not_allow_auto_join_user_group`\n- `authentication_method_limit_reached`\n- `authentication_method_not_found`\n- `backup_failed`\n- `bad_request`\n- `billing_address_not_found`\n- `billing_customer_id_not_found`\n- `billing_group_not_found`\n- `billing_group_organization_active_trial`\n- `billing_group_owning_account_must_be_organization`\n- `billing_metronome_support_contract_not_found`\n- `ca_version_not_in_sequence`\n- `cannot_delete_active_managed_users`\n- `cannot_delete_users_with_organizations_memberships`\n- `cannot_move_project_not_assigned_to_organization`\n- `cannot_remove_managed_users_from_organization`\n- `cannot_set_groups_managed_by_scim_as_auto_join_group`\n- `client_ip_address_policy_violation`\n- `credit_card_not_found`\n- `credit_memo_not_found`\n- `custom_cloud_environment_cloud_not_supported`\n- `custom_cloud_environment_internal`\n- `custom_cloud_environment_invalid_iam_role_arn`\n- `custom_cloud_environment_missing_configuration`\n- `custom_cloud_environment_not_found`\n- `custom_cloud_environment_region_not_supported`\n- `database_not_found`\n- `decline_forbidden_on_topic_request`\n- `deleting_forbidden_on_governance_request`\n- `deleting_forbidden_on_topic_request`\n- `discount_not_found`\n- `feature_not_enabled`\n- `free_plans_in_high_demand_and_unavailable`\n- `free_tier_restricted`\n- `free_trial_extensions_not_available`\n- `free_trial_max_extended`\n- `free_trial_not_active`\n- `free_trial_not_available`\n- `governance_access_no_permission_on_project`\n- `governance_access_not_found`\n- `governance_configuration_already_exists`\n- `governance_configuration_not_found`\n- `governance_group_not_found`\n- `governance_invalid_service_type`\n- `governance_request_already_in_progress`\n- `governance_request_deleted`\n- `idp_no_domains_linked`\n- `index_close_failed`\n- `index_not_found`\n- `internal_server_error`\n- `invalid_backup_configuration`\n- `invalid_cmk_id`\n- `invalid_currency_code`\n- `invalid_date_format`\n- `invalid_email_format`\n- `invalid_governance_group_provided`\n- `invalid_kafka_topic_request_type`\n- `invalid_os_migration_command`\n- `invalid_owner_user_group`\n- `invalid_private_access_settings`\n- `invalid_scim_user_state_update`\n- `invalid_service_type`\n- `invalid_vcs_type`\n- `invitation_expired`\n- `invitation_not_found`\n- `invoice_lines_not_supported`\n- `invoice_not_found`\n- `ip_address_not_present`\n- `ip_address_not_valid`\n- `kafka_acl_not_supported`\n- `kafka_console_governance_enabled`\n- `kafka_governance_not_available`\n- `kafka_governance_not_enabled`\n- `kafka_governance_policy_incomplete`\n- `kafka_partition_reassignment_in_progress`\n- `kafka_policy_violation`\n- `kafka_service_unavailable`\n- `kafka_terraform_governance_enabled`\n- `kafka_topic_already_exists`\n- `kafka_topic_invalid_config`\n- `kafka_topic_not_found`\n- `kafka_topic_not_synchronized`\n- `kafka_topic_queued_for_deletion`\n- `kafka_topic_reserved`\n- `marketplace_aws_customer_or_product_details_not_found`\n- `marketplace_subscription_already_linked_to_organization`\n- `marketplace_subscription_link_expired`\n- `marketplace_subscription_no_access`\n- `metadata_validation_failed`\n- `mfa_required_by_organization`\n- `mp_account_with_active_subscription_deleted`\n- `mp_account_with_commitment_deleted`\n- `mp_account_with_support_contract_deleted`\n- `mp_subscription_not_found`\n- `nested_account_cannot_have_authentication_method`\n- `nested_account_cannot_have_user_groups`\n- `new_subnet_id_required`\n- `no_failed_os_migration`\n- `node_prune_version_not_updated`\n- `not_powered`\n- `opensearch_delete_system_index`\n- `opensearch_internal_server_error`\n- `opensearch_service_unavailable`\n- `opensearch_too_many_requests`\n- `optimization_failed`\n- `optimization_not_found`\n- `organization_aiven_enterprise_contract_denied`\n- `organization_aiven_enterprise_contract_feature_denied`\n- `organization_aiven_enterprise_denied`\n- `organization_aiven_enterprise_organization_required`\n- `organization_cannot_exist_without_root_account`\n- `organization_domain_already_linked`\n- `organization_domain_not_found`\n- `organization_domain_not_root`\n- `organization_domain_verification_failed`\n- `organization_has_active_addresses`\n- `organization_has_active_payment_methods`\n- `organization_kafka_topics_invalid_filters`\n- `organization_mismatch`\n- `organization_must_have_one_super_admin`\n- `organization_not_found`\n- `organization_pending_support_contract_already_exists`\n- `organization_support_contract_tier_not_supported`\n- `organization_tier_downgrade_not_allowed`\n- `organization_user_not_found`\n- `orphaned_project_not_allowed`\n- `parent_account_cannot_be_own_ancestor`\n- `parent_account_not_found`\n- `parent_account_tenant_invalid`\n- `parent_account_too_deep`\n- `payment_method_not_found`\n- `permission_denied`\n- `pg_editor_readonly_violation`\n- `pg_pool_already_exists`\n- `pg_pool_invalid_database`\n- `pg_pool_invalid_name`\n- `pg_pool_not_found`\n- `pg_pool_not_supported`\n- `pg_pool_pinned_pools_not_enabled`\n- `pg_pool_requires_pinned_pools`\n- `pg_pool_too_big`\n- `pg_pool_too_many`\n- `pg_publication_not_found`\n- `pg_replication_slot_not_found`\n- `pg_scram_not_allowed`\n- `project_account_not_active`\n- `project_already_exists`\n- `project_belongs_to_account_billing_group_must_use_api`\n- `project_does_not_exist`\n- `project_has_no_such_user`\n- `project_limitation_not_found`\n- `project_move_invalid`\n- `project_move_organizations_internal_config_not_match`\n- `project_not_found`\n- `project_without_billing_group_must_be_assigned_from_account`\n- `query_validation_failed`\n- `replication_already_exists`\n- `replication_config_invalid`\n- `replication_not_found`\n- `replication_service_not_found`\n- `repository_not_found`\n- `request_already_exists`\n- `request_forbidden`\n- `request_not_found`\n- `request_operation_already_exists`\n- `request_operation_not_found`\n- `resource_managed_by_governance`\n- `resource_managed_by_scim`\n- `resource_not_managed_by_scim`\n- `retired_api_endpoint`\n- `root_account_required`\n- `same_organization_required`\n- `schema_insights_failed`\n- `service_acl_not_found`\n- `service_acl_too_many`\n- `service_does_not_exist`\n- `service_governance_not_enabled`\n- `service_integration_endpoint_not_found`\n- `service_integration_not_found`\n- `service_integration_project_mismatch_source_destination`\n- `service_is_upgrade_pipeline_source`\n- `service_logs_backend_timeout`\n- `service_logs_backend_unavailable`\n- `service_maintenance_required`\n- `service_not_found`\n- `service_type_not_allowed`\n- `service_type_version_pin_locked`\n- `shipping_address_not_found`\n- `signup_welcome_invalid_key`\n- `snapshot_creation_failed`\n- `snapshot_deletion_failed`\n- `snapshot_not_found`\n- `snapshot_restoration_failed`\n- `stripe_customer_owning_account_must_be_organization`\n- `support_contract_and_account_must_be_in_same_organization`\n- `support_contract_earliest_cancellation_date_later_than_end_date`\n- `support_contract_must_have_billing_group`\n- `support_contract_null_tier`\n- `team_limit_exceeded`\n- `team_names_must_be_unique`\n- `tenant_mismatch`\n- `topic_not_found`\n- `unable_to_parse_query`\n- `unit_cannot_be_moved_out_of_organization`\n- `unknown_user_sso_login_attempt`\n- `unsupported_resource_type`\n- `upgrade_pipeline_no_nodes`\n- `upgrade_pipeline_no_validation`\n- `upgrade_pipeline_not_enabled_for_project`\n- `upgrade_pipeline_service_not_destination`\n- `upgrade_pipeline_service_not_found`\n- `upgrade_step_destination_already_has_source`\n- `upgrade_step_destination_service_not_found`\n- `upgrade_step_exceeds_max_chain_length`\n- `upgrade_step_not_found`\n- `upgrade_step_service_type_mismatch`\n- `upgrade_step_source_service_not_found`\n- `upgrade_step_unsupported_service_type`\n- `upgrade_step_validation_not_possible_due_to_service_state`\n- `upgrade_step_would_create_cycle`\n- `upgrade_validation_already_exists`\n- `user_already_in_organization`\n- `user_already_invited_to_organization`\n- `user_cant_login`\n- `user_config_2fa_otp_verification_failed`\n- `user_deactivated`\n- `user_domain_does_not_belong_to_organization_or_no_linked_auth_method`\n- `user_group_names_must_be_unique`\n- `user_group_not_found`\n- `user_groups_belong_to_different_accounts`\n- `user_groups_must_be_from_same_account`\n- `user_has_no_access_to_billing_info`\n- `user_has_no_access_to_project_with_current_authentication_method`\n- `user_has_to_sign_in_with_non_account_authentication_method`\n- `user_has_too_many_disk_addition_requests`\n- `user_is_internal_user`\n- `user_not_account_owner`\n- `user_not_account_owner_of_billing_group`\n- `user_not_account_owner_of_parent_account`\n- `user_not_admin_of_account_billing_group`\n- `user_not_application_user`\n- `user_not_found`\n- `user_not_managed_by_organization`\n- `user_not_organization_admin`\n- `user_not_signed_in_with_account_authentication_method`\n- `user_oauth_authentication_method_not_allowed`\n- `user_password_authentication_method_not_allowed`\n- `user_password_compromised`\n- `user_password_not_found`\n- `user_personal_token_allowed_authentication_methods_cannot_be_disabled`\n- `user_personal_token_not_allowed`\n- `user_personal_tokens_cannot_be_disabled`\n- `user_role_not_allowed_to_perform_operation`\n- `user_saml_authentication_method_not_allowed`\n- `user_weblink_action_expired`\n- `username_is_invalid`\n- `username_is_reserved`\n- `users_belong_to_different_tenant_from_user_group_account`\n- `vcs_integration_installation_not_found_or_not_accessible`\n- `vcs_integration_not_found`\n- `vpc_id_and_subnet_id_required`\n- `webhook_invalid_event_data`\n- `webhook_unauthorized`\n"
+servers:
+- url: https://api.aiven.io/v1
+tags:
+- name: Organizations
+  x-displayName: Organizations
+paths:
+  /organization/{organization_id}/discovered-organizations:
+    get:
+      summary: List the other organizations that existing managed users are part of
+      tags:
+      - Organizations
+      operationId: DiscoveredOrganizationList
+      x-badges:
+      - name: Experimental
+        position: after
+        color: '#787885'
+      x-experimental: true
+      description: <p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoveredOrganizationListResponse'
+        '404':
+          description: Organization not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - organization_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'organization_not_found: Organization not found.'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - user:read
+  /organization/{organization_id}/config/authentication:
+    get:
+      summary: Retrieve authentication configuration
+      tags:
+      - Organizations
+      operationId: OrganizationAuthenticationConfigGet
+      description: <p>Retrieve current authentication configuration for an organization.</p>
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAuthenticationConfigGetResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - authentication:read
+    patch:
+      summary: Update authentication configuration
+      tags:
+      - Organizations
+      operationId: OrganizationAuthenticationConfigUpdate
+      description: <p>Update current authentication configuration for an organization.</p>
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationAuthenticationConfigUpdateRequestBody'
+            example:
+              mcp_enabled: false
+              oauth_enabled: false
+              password_auth_enabled: false
+              personal_tokens_enabled: false
+              personal_tokens_require_allowed_auth_method: false
+              saml_allow_external: false
+              saml_enabled: false
+              two_factor_required: false
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationAuthenticationConfigUpdateResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - authentication:write
+  /organization/{organization_id}:
+    delete:
+      summary: Delete an organization
+      tags:
+      - Organizations
+      operationId: OrganizationDelete
+      x-badges:
+      - name: Experimental
+        position: after
+        color: '#787885'
+      x-experimental: true
+      description: <p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      - $ref: '#/components/parameters/organizationdelete_recursive'
+      responses:
+        '204':
+          description: Delete an organization
+          content: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - organization_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'organization_not_found: Organization not found.'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+    get:
+      summary: Get information about an organization
+      tags:
+      - Organizations
+      operationId: OrganizationGet
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationGetResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+    patch:
+      summary: Update organization's details
+      tags:
+      - Organizations
+      operationId: OrganizationUpdate
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationUpdateRequestBody'
+            example:
+              name: Aiven Ltd
+              tier: business
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationUpdateResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+  /organization/{organization_id}/governance/access:
+    post:
+      summary: Create organization access
+      tags:
+      - Organizations
+      operationId: OrganizationGovernanceAccessCreate
+      x-badges:
+      - name: Experimental
+        position: after
+        color: '#787885'
+      x-experimental: true
+      description: <p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationGovernanceAccessCreateRequestBody'
+            example:
+              access_data:
+                acls:
+                - host: '*'
+                  operation: Write
+                  permission_type: ALLOW
+                  resource_name: events
+                  resource_type: Topic
+                project_name: project-1
+                service_name: service-1
+                username: api3
+              access_name: My Access
+              access_type: KAFKA
+              owner_user_group_id: ug22ba494e096
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationGovernanceAccessCreateResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - organization_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'organization_not_found: Organization not found.'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - kafka_governance_not_enabled
+                          - kafka_console_governance_enabled
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'kafka_governance_not_enabled: Governance on Kafka is not enabled for organization. kafka_console_governance_enabled: Console Governance is enabled for this kafka service'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+    get:
+      summary: List access for organization
+      tags:
+      - Organizations
+      operationId: OrganizationGovernanceAccessList
+      x-badges:
+      - name: Experimental
+        position: after
+        color: '#787885'
+      x-experimental: true
+      description: <p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      - $ref: '#/components/parameters/organizationgovernanceaccesslist_cursor'
+      - $ref: '#/components/parameters/organizationgovernanceaccesslist_limit'
+      - $ref: '#/components/parameters/organizationgovernanceaccesslist_resource_name'
+      - $ref: '#/components/parameters/organizationgovernanceaccesslist_owner_user_group_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationGovernanceAccessListResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - organization_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'organization_not_found: Organization not found.'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - kafka_governance_not_enabled
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'kafka_governance_not_enabled: Governance on Kafka is not enabled for organization'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /organization/{organization_id}/governance/access/{access_id}/credentials:
+    get:
+      summary: Get organization access credentials
+      tags:
+      - Organizations
+      operationId: OrganizationGovernanceAccessCredentialsGet
+      x-badges:
+      - name: Experimental
+        position: after
+        color: '#787885'
+      x-experimental: true
+      description: <p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      - $ref: '#/components/parameters/access_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationGovernanceAccessCredentialsGetResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - organization_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'organization_not_found: Organization not found.'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - kafka_governance_not_enabled
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'kafka_governance_not_enabled: Governance on Kafka is not enabled for organization'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /organization/{organization_id}/governance/access/{access_id}:
+    delete:
+      summary: Delete organization access
+      tags:
+      - Organizations
+      operationId: OrganizationGovernanceAccessDelete
+      x-badges:
+      - name: Experimental
+        position: after
+        color: '#787885'
+      x-experimental: true
+      description: <p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      - $ref: '#/components/parameters/access_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationGovernanceAccessDeleteResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - organization_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'organization_not_found: Organization not found.'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - kafka_governance_not_enabled
+                          - kafka_console_governance_enabled
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'kafka_governance_not_enabled: Governance on Kafka is not enabled for organization. kafka_console_governance_enabled: Console Governance is enabled for this kafka service'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+    get:
+      summary: Get organization access details
+      tags:
+      - Organizations
+      operationId: OrganizationGovernanceAccessGet
+      x-badges:
+      - name: Experimental
+        position: after
+        color: '#787885'
+      x-experimental: true
+      description: <p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      - $ref: '#/components/parameters/access_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationGovernanceAccessGetResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - organization_not_found
+                          - governance_access_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'organization_not_found: Organization not found.. governance_access_not_found: Governance access not found'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - kafka_governance_not_enabled
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'kafka_governance_not_enabled: Governance on Kafka is not enabled for organization'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /organization/{organization_id}/config/api-client-ip-allowlist:
+    get:
+      summary: Get organization IP range allowlist
+      tags:
+      - Organizations
+      operationId: OrganizationIPAllowListGet
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationIPAllowListGetResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - organization_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'organization_not_found: Organization not found.'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+    put:
+      summary: Set organization IP range allowlist
+      tags:
+      - Organizations
+      operationId: OrganizationIPAllowListSet
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationIPAllowListSetRequestBody'
+            example:
+              api_client_ip_allowlist:
+              - 192.168.0.0/24
+              - 2001:db8::/32
+              api_client_ip_allowlist_enabled: true
+      responses:
+        '204':
+          description: Set organization IP range allowlist
+          content: {}
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - api_client_ip_allowlist_blocks_caller
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'api_client_ip_allowlist_blocks_caller: The IP allowlist provided would lock out the caller of the update.'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - organization_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'organization_not_found: Organization not found.'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+  /organization/{organization_id}/projects:
+    post:
+      summary: Create project under the organization
+      tags:
+      - Organizations
+      operationId: OrganizationProjectsCreate
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationProjectsCreateRequestBody'
+            example:
+              base_port: 10000
+              billing_group_id: 721bf796-1d89-402d-9195-425a23c4efdc
+              parent_id: a3fd7a594e01
+              project_id: project-1
+              tags:
+                ANY: value
+              tech_emails: '[{"email": "jane@aiven.io"}]'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationProjectsCreateResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - project_not_found
+                          - organization_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'project_not_found: Project not found. organization_not_found: Organization not found.'
+        '403':
+          description: Operation not allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - user_not_organization_admin
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'user_not_organization_admin: User is not organization administrator.'
+        '409':
+          description: Request conflict
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - project_already_exists
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'project_already_exists: Project already exists'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - projects:write
+    get:
+      summary: List projects under the organization
+      tags:
+      - Organizations
+      operationId: OrganizationProjectsList
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationProjectsListResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - project_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'project_not_found: Project not found'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - projects:read
+  /organization/{organization_id}/project/{project_id}:
+    delete:
+      summary: Delete project under the organization
+      tags:
+      - Organizations
+      operationId: OrganizationProjectsDelete
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      - $ref: '#/components/parameters/project_id'
+      responses:
+        '204':
+          description: Delete project under the organization
+          content: {}
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - project_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'project_not_found: Project not found'
+        '403':
+          description: Operation not allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - user_not_organization_admin
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'user_not_organization_admin: User is not organization administrator.'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - projects:write
+    get:
+      summary: Retrieve project under the organization
+      tags:
+      - Organizations
+      operationId: OrganizationProjectsGet
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      - $ref: '#/components/parameters/project_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationProjectsGetResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - project_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'project_not_found: Project not found'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - projects:read
+    patch:
+      summary: Update project under the organization
+      tags:
+      - Organizations
+      operationId: OrganizationProjectsUpdate
+      description: <p>Moving a project to a different unit requires organization admin privileges (role:organization:admin). Moving to a different organization requires admin privileges in both organizations, and specifying both the target organization and the target parent unit IDs.</p>
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      - $ref: '#/components/parameters/project_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationProjectsUpdateRequestBody'
+            example:
+              base_port: 10000
+              billing_group_id: 721bf796-1d89-402d-9195-425a23c4efdc
+              organization_id: org1234abcd
+              parent_id: a3fd7a594e01
+              project_name: project-1
+              tags:
+                ANY: value
+              tech_emails: '[{"email": "jane@aiven.io"}]'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationProjectsUpdateResponse'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - project_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'project_not_found: Project not found'
+        '403':
+          description: Operation not allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - user_not_organization_admin
+                          - project_move_organizations_internal_config_not_match
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'user_not_organization_admin: User is not organization administrator.. project_move_organizations_internal_config_not_match: Project internal configuration does not match between organizations'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - projects:write
+  /organization/{organization_id}/invitation/{user_email}:
+    post:
+      summary: Accept a user invitation to the organization
+      tags:
+      - Organizations
+      operationId: OrganizationUserInvitationAccept
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      - $ref: '#/components/parameters/user_email'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationUserInvitationAcceptRequestBody'
+            example:
+              action: accept
+      responses:
+        '204':
+          description: Accept a user invitation to the organization
+          content: {}
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+    delete:
+      summary: Remove an invitation to the organization
+      tags:
+      - Organizations
+      operationId: OrganizationUserInvitationDelete
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      - $ref: '#/components/parameters/user_email'
+      responses:
+        '204':
+          description: Remove an invitation to the organization
+          content: {}
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /organization/{organization_id}/invitation:
+    get:
+      summary: List user invitations to the organization
+      tags:
+      - Organizations
+      operationId: OrganizationUserInvitationsList
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationUserInvitationsListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+    post:
+      summary: Invite a user to the organization
+      tags:
+      - Organizations
+      operationId: OrganizationUserInvite
+      parameters:
+      - $ref: '#/components/parameters/organization_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationUserInviteRequestBody'
+            example:
+              user_email: jane@example.com
+      responses:
+        '204':
+          description: Invite a user to the organization
+          content: {}
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /organizations:
+    post:
+      summary: Create an organization
+      tags:
+      - Organizations
+      operationId: UserOrganizationCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserOrganizationCreateRequestBody'
+            example:
+              organization_name: Aiven Ltd
+              primary_billing_group_id: adcf7194-d877-4505-a47a-91fefd96e3b8
+              tier: business
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOrganizationCreateResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+    get:
+      summary: List organizations the user belongs to
+      tags:
+      - Organizations
+      operationId: UserOrganizationsList
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOrganizationsListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+components:
+  schemas:
+    OrganizationAuthenticationConfigUpdateResponse:
+      type: object
+      description: OrganizationAuthenticationConfigUpdateResponse
+      properties:
+        mcp_enabled:
+          type: boolean
+          description: Users can use MCP clients with services and other resources they have access to in this organization.
+        oauth_enabled:
+          type: boolean
+          description: Organization users are able to use OAuth authentication.
+        password_auth_enabled:
+          type: boolean
+          description: Organization users are able to use password authentication.
+        personal_tokens_enabled:
+          type: boolean
+          description: Organization users can use their personal tokens to access the organization through the Aiven API or other applications.
+        personal_tokens_require_allowed_auth_method:
+          type: boolean
+          description: Organization users are able to use personal tokens that were generated from one of the allowed authentication methods.
+        saml_allow_external:
+          type: boolean
+          description: Organization users are able to use SAML authentication of other organizations.
+        saml_enabled:
+          type: boolean
+          description: Organization users are able to use SAML authentication.
+        two_factor_required:
+          type: boolean
+          description: 2FA is required to access resources in this organization.
+    OrganizationProjectsUpdateResponse:
+      type: object
+      description: OrganizationProjectsUpdateResponse
+      properties:
+        account_id:
+          type: string
+          description: '[DEPRECATED] Account ID to where the project belongs'
+        base_port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+          description: Valid port number (1-65535)
+          title: Base Port
+        billing_group_id:
+          type: string
+          minLength: 1
+          description: Billing group ID
+        end_of_life_extension:
+          type: object
+          description: End of life extension information
+          properties:
+            ANY:
+              type: object
+              description: ServiceEndOfLifeExtension
+              properties:
+                eol_date:
+                  type: string
+                  maxLength: 36
+                  description: Extended EOL date
+                version:
+                  type: string
+                  description: Service version
+              required:
+              - eol_date
+              - version
+        features:
+          type: object
+          description: Feature flags
+          properties:
+            ANY:
+              type: boolean
+              description: Boolean
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization ID
+        parent_id:
+          type: string
+          description: Organization or unit ID to where the project belongs
+        project_id:
+          type: string
+          description: Project ID
+        tags:
+          type: object
+          description: Tags
+          properties:
+            ANY:
+              type: string
+              maxLength: 64
+              description: Tag value
+        tech_emails:
+          type: array
+          description: List of project technical email addresses
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Technical contact email
+            required:
+            - email
+      required:
+      - end_of_life_extension
+      - organization_id
+      - parent_id
+      - project_id
+      - tags
+      - tech_emails
+    OrganizationProjectsListResponse:
+      type: object
+      description: OrganizationProjectsListResponse
+      properties:
+        projects:
+          type: array
+          description: List of projects
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                description: '[DEPRECATED] Account ID to where the project belongs'
+              base_port:
+                type: integer
+                minimum: 1
+                maximum: 65535
+                description: Valid port number (1-65535)
+                title: Base Port
+              billing_group_id:
+                type: string
+                minLength: 1
+                description: Billing group ID
+              end_of_life_extension:
+                type: object
+                description: End of life extension information
+                properties:
+                  ANY:
+                    type: object
+                    description: ServiceEndOfLifeExtension
+                    properties:
+                      eol_date:
+                        type: string
+                        maxLength: 36
+                        description: Extended EOL date
+                      version:
+                        type: string
+                        description: Service version
+                    required:
+                    - eol_date
+                    - version
+              parent_id:
+                type: string
+                description: Organization or unit ID to where the project belongs
+              project_id:
+                type: string
+                description: Project ID
+              tags:
+                type: object
+                description: Tags
+                properties:
+                  ANY:
+                    type: string
+                    maxLength: 64
+                    description: Tag value
+              tech_emails:
+                type: array
+                description: List of project technical email addresses
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      maxLength: 254
+                      description: Technical contact email
+                  required:
+                  - email
+            required:
+            - end_of_life_extension
+            - parent_id
+            - project_id
+            - tags
+            - tech_emails
+        total_project_count:
+          type: integer
+          minimum: 0
+          description: Total number of projects
+      required:
+      - projects
+      - total_project_count
+    OrganizationUserInviteRequestBody:
+      type: object
+      description: OrganizationUserInviteRequestBody
+      properties:
+        user_email:
+          type: string
+          maxLength: 254
+          description: User Email
+      required:
+      - user_email
+    OrganizationUserInvitationAcceptRequestBody:
+      type: object
+      description: OrganizationUserInvitationAcceptRequestBody
+      properties:
+        action:
+          type: string
+          description: Action to be performed on the invitation
+          default: accept
+          enum:
+          - accept
+    OrganizationProjectsCreateRequestBody:
+      type: object
+      description: OrganizationProjectsCreateRequestBody
+      properties:
+        base_port:
+          type: integer
+          minimum: 10000
+          maximum: 30000
+          description: Valid port number (10000-30000)
+          title: Base Port
+        billing_group_id:
+          type: string
+          minLength: 1
+          description: Billing group ID to assign to the project.
+        parent_id:
+          type: string
+          description: Organization or unit ID to where to move the project
+        project_id:
+          type: string
+          description: Project ID
+        tags:
+          type: object
+          description: Tags
+          properties:
+            ANY:
+              type: string
+              maxLength: 64
+              description: Tag value
+        tech_emails:
+          type: array
+          maxItems: 10
+          description: Technical contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Technical contact email
+            required:
+            - email
+      required:
+      - billing_group_id
+      - project_id
+      - tags
+    DiscoveredOrganizationListResponse:
+      type: object
+      description: DiscoveredOrganizationListResponse
+      properties:
+        discovered_organizations:
+          type: array
+          description: Discovered Organizations
+          items:
+            type: object
+            properties:
+              create_time:
+                type: string
+                maxLength: 36
+                description: Time of creating the organization
+              organization_id:
+                type: string
+                maxLength: 36
+                description: Organization's ID
+              organization_name:
+                type: string
+                maxLength: 83
+                description: Organization's name
+              users:
+                type: array
+                description: Users
+                items:
+                  type: object
+                  properties:
+                    create_time:
+                      type: string
+                      maxLength: 36
+                      description: Creation time
+                    is_super_admin:
+                      type: boolean
+                      description: Is Super Admin
+                    real_name:
+                      type: string
+                      maxLength: 256
+                      description: Real Name
+                    user_email:
+                      type: string
+                      maxLength: 254
+                      description: User Email
+                    user_id:
+                      type: string
+                      description: User ID
+                  required:
+                  - create_time
+                  - is_super_admin
+                  - real_name
+                  - user_email
+                  - user_id
+            required:
+            - create_time
+            - organization_id
+            - organization_name
+            - users
+      required:
+      - discovered_organizations
+    OrganizationGetResponse:
+      type: object
+      description: OrganizationGetResponse
+      properties:
+        account_id:
+          type: string
+          maxLength: 36
+          description: Account ID of the organization's root unit
+        create_time:
+          type: string
+          maxLength: 36
+          description: Time of creating the organization
+        default_governance_user_group_id:
+          type: string
+          maxLength: 36
+          description: Default governance user group ID
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization's ID
+        organization_name:
+          type: string
+          maxLength: 83
+          description: Organization's name
+        tier:
+          type: string
+          description: An enumeration.
+          title: Tier of the organization
+          enum:
+          - business
+          - personal
+        update_time:
+          type: string
+          maxLength: 36
+          description: Time of the organization's latest update
+      required:
+      - account_id
+      - create_time
+      - organization_id
+      - organization_name
+      - tier
+      - update_time
+    UserOrganizationCreateRequestBody:
+      type: object
+      description: UserOrganizationCreateRequestBody
+      properties:
+        organization_name:
+          type: string
+          maxLength: 83
+          description: Organization's name
+        primary_billing_group_id:
+          type: string
+          minLength: 36
+          maxLength: 36
+          description: Billing group ID
+        tier:
+          type: string
+          description: An enumeration.
+          title: Tier of the organization
+          enum:
+          - business
+          - personal
+      required:
+      - organization_name
+      - tier
+    OrganizationUpdateRequestBody:
+      type: object
+      description: OrganizationUpdateRequestBody
+      properties:
+        name:
+          type: string
+          maxLength: 83
+          description: New name of the organization
+        tier:
+          type: string
+          description: An enumeration.
+          title: New tier for the organization
+          enum:
+          - business
+          - personal
+    OrganizationGovernanceAccessCreateRequestBody:
+      type: object
+      description: OrganizationGovernanceAccessCreateRequestBody
+      properties:
+        access_data:
+          type: object
+          description: access type specific data
+          properties:
+            acls:
+              type: array
+              description: Acls
+              items:
+                type: object
+                properties:
+                  host:
+                    type: string
+                    maxLength: 256
+                    description: Acl host
+                  operation:
+                    type: string
+                    description: An enumeration.
+                    title: Acl operation
+                    enum:
+                    - Read
+                    - Write
+                  permission_type:
+                    type: string
+                    description: An enumeration.
+                    title: Acl permission type
+                    enum:
+                    - ALLOW
+                  resource_name:
+                    type: string
+                    maxLength: 256
+                    description: Acl resource name
+                  resource_type:
+                    type: string
+                    description: An enumeration.
+                    title: Acl resource type
+                    enum:
+                    - Topic
+                required:
+                - host
+                - operation
+                - permission_type
+                - resource_name
+                - resource_type
+            project_name:
+              type: string
+              description: Project name
+            service_name:
+              type: string
+              description: Service name
+            username:
+              type: string
+              description: The service username assigned to the access
+          required:
+          - acls
+          - project_name
+          - service_name
+          - username
+        access_name:
+          type: string
+          description: Label to describe the access
+        access_type:
+          type: string
+          description: An enumeration.
+          title: Type of access
+          enum:
+          - KAFKA
+        owner_user_group_id:
+          type: string
+          maxLength: 36
+          description: The ID of the group that will own the access
+      required:
+      - access_data
+      - access_name
+      - access_type
+    OrganizationIPAllowListSetRequestBody:
+      type: object
+      description: OrganizationIPAllowListSetRequestBody
+      properties:
+        api_client_ip_allowlist:
+          type: array
+          description: List of allowed IP ranges
+          items:
+            type: string
+        api_client_ip_allowlist_enabled:
+          type: boolean
+          description: If the IP allowlist is being enforced for this organization
+      required:
+      - api_client_ip_allowlist
+      - api_client_ip_allowlist_enabled
+    OrganizationUserInvitationsListResponse:
+      type: object
+      description: OrganizationUserInvitationsListResponse
+      properties:
+        invitations:
+          type: array
+          description: List of user invitations for the organization
+          items:
+            type: object
+            properties:
+              create_time:
+                type: string
+                maxLength: 36
+                description: Time of creating the invitation
+              expiry_time:
+                type: string
+                maxLength: 36
+                description: By when the invitation is valid
+              invited_by:
+                type: string
+                description: Name of the invitation creator
+              user_email:
+                type: string
+                maxLength: 254
+                description: User Email
+            required:
+            - create_time
+            - expiry_time
+            - invited_by
+            - user_email
+      required:
+      - invitations
+    OrganizationAuthenticationConfigGetResponse:
+      type: object
+      description: OrganizationAuthenticationConfigGetResponse
+      properties:
+        mcp_enabled:
+          type: boolean
+          description: Users can use MCP clients with services and other resources they have access to in this organization.
+        oauth_enabled:
+          type: boolean
+          description: Organization users are able to use OAuth authentication.
+        password_auth_enabled:
+          type: boolean
+          description: Organization users are able to use password authentication.
+        personal_tokens_enabled:
+          type: boolean
+          description: Organization users can use their personal tokens to access the organization through the Aiven API or other applications.
+        personal_tokens_require_allowed_auth_method:
+          type: boolean
+          description: Organization users are able to use personal tokens that were generated from one of the allowed authentication methods.
+        saml_allow_external:
+          type: boolean
+          description: Organization users are able to use SAML authentication of other organizations.
+        saml_enabled:
+          type: boolean
+          description: Organization users are able to use SAML authentication.
+        two_factor_required:
+          type: boolean
+          description: 2FA is required to access resources in this organization.
+    UserOrganizationCreateResponse:
+      type: object
+      description: UserOrganizationCreateResponse
+      properties:
+        account_id:
+          type: string
+          maxLength: 36
+          description: Account ID of the organization's root unit
+        create_time:
+          type: string
+          maxLength: 36
+          description: Time of creating the organization
+        default_governance_user_group_id:
+          type: string
+          maxLength: 36
+          description: Default governance user group ID
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization's ID
+        organization_name:
+          type: string
+          maxLength: 83
+          description: Organization's name
+        tier:
+          type: string
+          description: An enumeration.
+          title: Tier of the organization
+          enum:
+          - business
+          - personal
+        update_time:
+          type: string
+          maxLength: 36
+          description: Time of the organization's latest update
+      required:
+      - account_id
+      - create_time
+      - organization_id
+      - organization_name
+      - tier
+      - update_time
+    OrganizationProjectsGetResponse:
+      type: object
+      description: OrganizationProjectsGetResponse
+      properties:
+        account_id:
+          type: string
+          description: '[DEPRECATED] Account ID to where the project belongs'
+        base_port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+          description: Valid port number (1-65535)
+          title: Base Port
+        billing_group_id:
+          type: string
+          minLength: 1
+          description: Billing group ID
+        end_of_life_extension:
+          type: object
+          description: End of life extension information
+          properties:
+            ANY:
+              type: object
+              description: ServiceEndOfLifeExtension
+              properties:
+                eol_date:
+                  type: string
+                  maxLength: 36
+                  description: Extended EOL date
+                version:
+                  type: string
+                  description: Service version
+              required:
+              - eol_date
+              - version
+        features:
+          type: object
+          description: Feature flags
+          properties:
+            ANY:
+              type: boolean
+              description: Boolean
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization ID
+        parent_id:
+          type: string
+          description: Organization or unit ID to where the project belongs
+        project_id:
+          type: string
+          description: Project ID
+        tags:
+          type: object
+          description: Tags
+          properties:
+            ANY:
+              type: string
+              maxLength: 64
+              description: Tag value
+        tech_emails:
+          type: array
+          description: List of project technical email addresses
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Technical contact email
+            required:
+            - email
+      required:
+      - end_of_life_extension
+      - organization_id
+      - parent_id
+      - project_id
+      - tags
+      - tech_emails
+    UserOrganizationsListResponse:
+      type: object
+      description: UserOrganizationsListResponse
+      properties:
+        organizations:
+          type: array
+          description: Organizations
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID of the organization's root unit
+              create_time:
+                type: string
+                maxLength: 36
+                description: Time of creating the organization
+              default_governance_user_group_id:
+                type: string
+                maxLength: 36
+                description: Default governance user group ID
+              organization_id:
+                type: string
+                maxLength: 36
+                description: Organization's ID
+              organization_name:
+                type: string
+                maxLength: 83
+                description: Organization's name
+              tier:
+                type: string
+                description: An enumeration.
+                title: Tier of the organization
+                enum:
+                - business
+                - personal
+              update_time:
+                type: string
+                maxLength: 36
+                description: Time of the organization's latest update
+            required:
+            - account_id
+            - create_time
+            - organization_id
+            - organization_name
+            - tier
+            - update_time
+      required:
+      - organizations
+    OrganizationAuthenticationConfigUpdateRequestBody:
+      type: object
+      description: OrganizationAuthenticationConfigUpdateRequestBody
+      properties:
+        mcp_enabled:
+          type: boolean
+          description: Users can use MCP clients with services and other resources they have access to in this organization.
+        oauth_enabled:
+          type: boolean
+          description: Organization users are able to use OAuth authentication.
+        password_auth_enabled:
+          type: boolean
+          description: Organization users are able to use password authentication.
+        personal_tokens_enabled:
+          type: boolean
+          description: Organization users can use their personal tokens to access the organization through the Aiven API or other applications.
+        personal_tokens_require_allowed_auth_method:
+          type: boolean
+          description: Organization users are able to use personal tokens that were generated from one of the allowed authentication methods.
+        saml_allow_external:
+          type: boolean
+          description: Organization users are able to use SAML authentication of other organizations.
+        saml_enabled:
+          type: boolean
+          description: Organization users are able to use SAML authentication.
+        two_factor_required:
+          type: boolean
+          description: 2FA is required to access resources in this organization.
+    OrganizationProjectsCreateResponse:
+      type: object
+      description: OrganizationProjectsCreateResponse
+      properties:
+        account_id:
+          type: string
+          description: '[DEPRECATED] Account ID to where the project belongs'
+        base_port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+          description: Valid port number (1-65535)
+          title: Base Port
+        billing_group_id:
+          type: string
+          minLength: 1
+          description: Billing group ID
+        end_of_life_extension:
+          type: object
+          description: End of life extension information
+          properties:
+            ANY:
+              type: object
+              description: ServiceEndOfLifeExtension
+              properties:
+                eol_date:
+                  type: string
+                  maxLength: 36
+                  description: Extended EOL date
+                version:
+                  type: string
+                  description: Service version
+              required:
+              - eol_date
+              - version
+        features:
+          type: object
+          description: Feature flags
+          properties:
+            ANY:
+              type: boolean
+              description: Boolean
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization ID
+        parent_id:
+          type: string
+          description: Organization or unit ID to where the project belongs
+        project_id:
+          type: string
+          description: Project ID
+        tags:
+          type: object
+          description: Tags
+          properties:
+            ANY:
+              type: string
+              maxLength: 64
+              description: Tag value
+        tech_emails:
+          type: array
+          description: List of project technical email addresses
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Technical contact email
+            required:
+            - email
+      required:
+      - end_of_life_extension
+      - organization_id
+      - parent_id
+      - project_id
+      - tags
+      - tech_emails
+    OrganizationUpdateResponse:
+      type: object
+      description: OrganizationUpdateResponse
+      properties:
+        account_id:
+          type: string
+          maxLength: 36
+          description: Account ID of the organization's root unit
+        create_time:
+          type: string
+          maxLength: 36
+          description: Time of creating the organization
+        default_governance_user_group_id:
+          type: string
+          maxLength: 36
+          description: Default governance user group ID
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization's ID
+        organization_name:
+          type: string
+          maxLength: 83
+          description: Organization's name
+        tier:
+          type: string
+          description: An enumeration.
+          title: Tier of the organization
+          enum:
+          - business
+          - personal
+        update_time:
+          type: string
+          maxLength: 36
+          description: Time of the organization's latest update
+      required:
+      - account_id
+      - create_time
+      - organization_id
+      - organization_name
+      - tier
+      - update_time
+    OrganizationGovernanceAccessGetResponse:
+      type: object
+      description: OrganizationGovernanceAccessGetResponse
+      properties:
+        access:
+          type: object
+          description: OrganizationGovernanceAccess
+          properties:
+            access_data:
+              type: object
+              description: access type specific data
+              properties:
+                acls:
+                  type: array
+                  description: Acls
+                  items:
+                    type: object
+                    properties:
+                      host:
+                        type: string
+                        maxLength: 256
+                        description: Acl host
+                      id:
+                        type: string
+                        description: Acl ID
+                      operation:
+                        type: string
+                        description: An enumeration.
+                        title: Acl operation
+                        enum:
+                        - Read
+                        - Write
+                      pattern_type:
+                        type: string
+                        description: An enumeration.
+                        title: Acl pattern type
+                        enum:
+                        - LITERAL
+                      permission_type:
+                        type: string
+                        description: An enumeration.
+                        title: Acl permission type
+                        enum:
+                        - ALLOW
+                      principal:
+                        type: string
+                        description: Acl principal
+                      resource_name:
+                        type: string
+                        maxLength: 256
+                        description: Acl resource name
+                      resource_type:
+                        type: string
+                        description: An enumeration.
+                        title: Acl resource type
+                        enum:
+                        - Topic
+                    required:
+                    - host
+                    - id
+                    - operation
+                    - pattern_type
+                    - permission_type
+                    - principal
+                    - resource_name
+                    - resource_type
+                project_name:
+                  type: string
+                  description: Project name
+                service_name:
+                  type: string
+                  description: Service name
+                username:
+                  type: string
+                  description: The service username assigned to the access
+              required:
+              - acls
+              - project_name
+              - service_name
+              - username
+            access_id:
+              type: string
+              description: The ID of the access
+            access_name:
+              type: string
+              description: Label to describe the access
+            access_type:
+              type: string
+              description: An enumeration.
+              title: Type of access
+              enum:
+              - KAFKA
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp of when access was created
+            created_by:
+              type: string
+              description: The user that created the access
+            credentials_consumed:
+              type: boolean
+              description: Wether the credentials have been reviewed
+            credentials_user_id:
+              type: string
+              description: The user that created is assigned to review the credentials
+            owner_user_group_id:
+              type: string
+              maxLength: 36
+              description: The ID of the group that will own the access
+          required:
+          - access_data
+          - access_id
+          - access_name
+          - access_type
+          - create_time
+          - created_by
+          - credentials_consumed
+          - credentials_user_id
+      required:
+      - access
+    OrganizationProjectsUpdateRequestBody:
+      type: object
+      description: OrganizationProjectsUpdateRequestBody
+      properties:
+        base_port:
+          type: integer
+          minimum: 10000
+          maximum: 30000
+          description: Valid port number (10000-30000)
+          title: Base Port
+        billing_group_id:
+          type: string
+          minLength: 1
+          description: Billing group ID to assign to the project. It's required when moving projects between organizations
+        organization_id:
+          type: string
+          description: Organization ID
+        parent_id:
+          type: string
+          description: Organization or unit ID to where to move the project
+        project_name:
+          type: string
+          maxLength: 63
+          description: Project name
+        tags:
+          type: object
+          description: Tags
+          properties:
+            ANY:
+              type: string
+              maxLength: 64
+              description: Tag value
+        tech_emails:
+          type: array
+          maxItems: 10
+          description: Technical contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Technical contact email
+            required:
+            - email
+    OrganizationGovernanceAccessCreateResponse:
+      type: object
+      description: OrganizationGovernanceAccessCreateResponse
+      properties:
+        access:
+          type: object
+          description: OrganizationGovernanceAccess
+          properties:
+            access_data:
+              type: object
+              description: access type specific data
+              properties:
+                acls:
+                  type: array
+                  description: Acls
+                  items:
+                    type: object
+                    properties:
+                      host:
+                        type: string
+                        maxLength: 256
+                        description: Acl host
+                      id:
+                        type: string
+                        description: Acl ID
+                      operation:
+                        type: string
+                        description: An enumeration.
+                        title: Acl operation
+                        enum:
+                        - Read
+                        - Write
+                      pattern_type:
+                        type: string
+                        description: An enumeration.
+                        title: Acl pattern type
+                        enum:
+                        - LITERAL
+                      permission_type:
+                        type: string
+                        description: An enumeration.
+                        title: Acl permission type
+                        enum:
+                        - ALLOW
+                      principal:
+                        type: string
+                        description: Acl principal
+                      resource_name:
+                        type: string
+                        maxLength: 256
+                        description: Acl resource name
+                      resource_type:
+                        type: string
+                        description: An enumeration.
+                        title: Acl resource type
+                        enum:
+                        - Topic
+                    required:
+                    - host
+                    - id
+                    - operation
+                    - pattern_type
+                    - permission_type
+                    - principal
+                    - resource_name
+                    - resource_type
+                project_name:
+                  type: string
+                  description: Project name
+                service_name:
+                  type: string
+                  description: Service name
+                username:
+                  type: string
+                  description: The service username assigned to the access
+              required:
+              - acls
+              - project_name
+              - service_name
+              - username
+            access_id:
+              type: string
+              description: The ID of the access
+            access_name:
+              type: string
+              description: Label to describe the access
+            access_type:
+              type: string
+              description: An enumeration.
+              title: Type of access
+              enum:
+              - KAFKA
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp of when access was created
+            created_by:
+              type: string
+              description: The user that created the access
+            credentials_consumed:
+              type: boolean
+              description: Wether the credentials have been reviewed
+            credentials_user_id:
+              type: string
+              description: The user that created is assigned to review the credentials
+            owner_user_group_id:
+              type: string
+              maxLength: 36
+              description: The ID of the group that will own the access
+          required:
+          - access_data
+          - access_id
+          - access_name
+          - access_type
+          - create_time
+          - created_by
+          - credentials_consumed
+          - credentials_user_id
+      required:
+      - access
+    OrganizationGovernanceAccessCredentialsGetResponse:
+      type: object
+      description: OrganizationGovernanceAccessCredentialsGetResponse
+      properties:
+        credentials:
+          type: object
+          description: KafkaAccessCredentials
+          properties:
+            access_cert:
+              type: string
+              description: service user access cert
+            access_key:
+              type: string
+              description: service user access key
+            password:
+              type: string
+              description: service user password
+          required:
+          - access_cert
+          - access_key
+          - password
+      required:
+      - credentials
+    OrganizationGovernanceAccessListResponse:
+      type: object
+      description: OrganizationGovernanceAccessListResponse
+      properties:
+        access:
+          type: array
+          description: Access
+          items:
+            type: object
+            properties:
+              access_data:
+                type: object
+                description: access type specific data
+                properties:
+                  acls:
+                    type: array
+                    description: Acls
+                    items:
+                      type: object
+                      properties:
+                        host:
+                          type: string
+                          maxLength: 256
+                          description: Acl host
+                        id:
+                          type: string
+                          description: Acl ID
+                        operation:
+                          type: string
+                          description: An enumeration.
+                          title: Acl operation
+                          enum:
+                          - Read
+                          - Write
+                        pattern_type:
+                          type: string
+                          description: An enumeration.
+                          title: Acl pattern type
+                          enum:
+                          - LITERAL
+                        permission_type:
+                          type: string
+                          description: An enumeration.
+                          title: Acl permission type
+                          enum:
+                          - ALLOW
+                        principal:
+                          type: string
+                          description: Acl principal
+                        resource_name:
+                          type: string
+                          maxLength: 256
+                          description: Acl resource name
+                        resource_type:
+                          type: string
+                          description: An enumeration.
+                          title: Acl resource type
+                          enum:
+                          - Topic
+                      required:
+                      - host
+                      - id
+                      - operation
+                      - pattern_type
+                      - permission_type
+                      - principal
+                      - resource_name
+                      - resource_type
+                  project_name:
+                    type: string
+                    description: Project name
+                  service_name:
+                    type: string
+                    description: Service name
+                  username:
+                    type: string
+                    description: The service username assigned to the access
+                required:
+                - acls
+                - project_name
+                - service_name
+                - username
+              access_id:
+                type: string
+                description: The ID of the access
+              access_name:
+                type: string
+                description: Label to describe the access
+              access_type:
+                type: string
+                description: An enumeration.
+                title: Type of access
+                enum:
+                - KAFKA
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp of when access was created
+              created_by:
+                type: string
+                description: The user that created the access
+              credentials_consumed:
+                type: boolean
+                description: Wether the credentials have been reviewed
+              credentials_user_id:
+                type: string
+                description: The user that created is assigned to review the credentials
+              owner_user_group_id:
+                type: string
+                maxLength: 36
+                description: The ID of the group that will own the access
+            required:
+            - access_data
+            - access_id
+            - access_name
+            - access_type
+            - create_time
+            - created_by
+            - credentials_consumed
+            - credentials_user_id
+        first:
+          type: string
+          description: First page
+        last:
+          type: string
+          description: Last page
+        next:
+          type: string
+          description: Next page
+        prev:
+          type: string
+          description: Previous page
+        total_count:
+          type: integer
+          description: Total number of results
+      required:
+      - access
+    OrganizationIPAllowListGetResponse:
+      type: object
+      description: OrganizationIPAllowListGetResponse
+      properties:
+        api_client_ip_allowlist:
+          type: array
+          description: List of allowed IP ranges
+          items:
+            type: string
+        api_client_ip_allowlist_enabled:
+          type: boolean
+          description: If the IP allowlist is being enforced for this organization
+      required:
+      - api_client_ip_allowlist
+      - api_client_ip_allowlist_enabled
+    OrganizationGovernanceAccessDeleteResponse:
+      type: object
+      description: OrganizationGovernanceAccessDeleteResponse
+      properties:
+        access_id:
+          type: string
+          description: The ID of the access
+      required:
+      - access_id
+  parameters:
+    organizationgovernanceaccesslist_limit:
+      in: query
+      name: limit
+      description: Limit results to this number
+      schema:
+        type: integer
+        minimum: 30
+        maximum: 999
+      required: false
+    organizationgovernanceaccesslist_cursor:
+      in: query
+      name: cursor
+      description: Pagination cursor
+      schema:
+        type: string
+      required: false
+    organizationgovernanceaccesslist_owner_user_group_id:
+      in: query
+      name: owner_user_group_id
+      description: Filter by owner user group ID
+      schema:
+        type: string
+        minimum: 1
+        maximum: 36
+      required: false
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
+    organizationdelete_recursive:
+      in: query
+      name: recursive
+      description: Delete all resources in the organization
+      schema:
+        type: boolean
+      required: true
+    user_email:
+      in: path
+      name: user_email
+      description: Email address
+      schema:
+        type: string
+      required: true
+    organizationgovernanceaccesslist_resource_name:
+      in: query
+      name: resource_name
+      description: Filter by resource name
+      schema:
+        type: string
+        minimum: 1
+        maximum: 256
+      required: false
+    access_id:
+      in: path
+      name: access_id
+      description: Access Id
+      schema:
+        type: string
+      required: true
+    project_id:
+      in: path
+      name: project_id
+      description: Project Id
+      schema:
+        type: string
+      required: true
+  securitySchemes:
+    tokenAuth:
+      description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'
+      scheme: bearer
+      type: http
+    oauth2:
+      type: oauth2
+      description: OAuth2 security scheme
+      flows:
+        authorizationCode:
+          authorizationUrl: https://console.aiven.io/oauth/authorize
+          tokenUrl: https://api.aiven.io/v1/oauth2/token
+          scopes:
+            all: Provide full access to the API
+            accounts: Allow enumerating and reading accounts configuration
+            accounts:read: Allow modifying account configuration
+            accounts:write: Provides full access to authentication related API
+            authentication: Provides full access to authentication related API
+            authentication:read: Allow reading authentication related configuration on resources (user profile, accounts)
+            authentication:write: Allow modifying authentication related configurations on resources (user profile, accounts)
+            billing: Provide full access to billing APIs
+            billing:read: Allow reading billing information and configuration
+            billing:write: Allow writing billing configuration
+            payments: Provide full access to payment method APIs
+            payments:read: Allow reading the payment method configurations
+            payments:write: Allows writing payment method configuration
+            privatelink: Provide full access to private link APIs
+            privatelink:read: Allow enumerating and reading private link items and configurations
+            privatelink:write: Allow writing (creating, modifying, deleting) private link items
+            projects: Provide full access to projects APIs
+            projects:read: Allow enumerating projects and reading their configuration
+            projects:write: Allow writing (creating, modifying, deleting) projects
+            scim: Provide full access to SCIM operations
+            scim:read: Allow reading SCIM endpoints
+            scim:write: Allow writing (modifying) SCIM endpoints
+            services: Provide full access to services APIs
+            services:read: Allow enumerating services and reading their configuration
+            services:write: Allow writing (creating, modifying, deleting) services
+            static_ips: Provide full access to static IPs APIs
+            static_ips:read: Allow enumerating and reading static IP items and configurations
+            static_ips:write: Allow writing (creating, modifying, deleting) static IP items
+            tickets: Provide full access to support ticket APIs
+            tickets:read: Allow enumerating and reading support tickets
+            tickets:write: Allow writing (creating, modifying) support tickets
+            user: Provide full access to user profile APIs
+            user:read: Allow reading user profile and configuration
+            user:write: Allow writing (modifying) user profile and configuration
+externalDocs:
+  description: Aiven CLI client
+  url: https://github.com/aiven/aiven-client

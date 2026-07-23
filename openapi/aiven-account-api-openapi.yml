@@ -1,0 +1,4631 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: support@aiven.io
+    name: Aiven support team
+    url: https://aiven.io/support-services
+  title: Aiven API Documentation Account API
+  version: v1
+  x-logo:
+    altText: Aiven logo
+    backgroundColor: '#fafafa'
+    href: https://api.aiven.io/doc
+    url: https://aiven.io/assets/img/aiven-logo.png
+  description: "# Introduction\n\n[Direct link to openapi.json](https://api.aiven.io/doc/openapi.json) for use with external tools\n\n[Aiven](https://aiven.io) is a modern fully-managed open source data platform for streaming, storing, and analyzing data on any public cloud. On Aiven Platform, you can operate your data infrastructure with a few devops tools: [Aiven Console](https://console.aiven.io/), [Aiven Terraform Provider](https://aiven.io/docs/tools/terraform), [Aiven CLI](https://github.com/aiven/aiven-client), and [Aiven Operator for Kubernetes](https://github.com/aiven/aiven-operator). All of them are built on an open secure powerful REST API for integration with custom tooling.\n\nThe Aiven [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer) API\nprovides programmatic access to Aiven.io services. To call the Aiven API, you can use either CLI tools (for example, `cURL` or [Aiven CLI client](https://aiven.io/docs/tools/cli)) or GUI tools, such as the [Aiven public API Postman collection](https://www.postman.com/aiven-apis).\n\nThis Aiven API documentation will help you operate your Aiven organization, projects, or services programmatically by integrating your applications and processes with Aiven.\n\n# Description\n\nAiven's APIs ([Application Programming Interfaces](https://en.wikipedia.org/wiki/API)) power its platform for data management. Aiven has a number of REST APIs that can help you build strong and robust data infrastructure for your applications.\n\nThe Aiven API is organized around core resources. Each core resource has multiple endpoints, which can be interacted with using different HTTP methods.\n\n## Core resources\n\n### Platform APIs\n\n<dl>\n  <dt>Account</dt>\n  <dd>Operations on the organization level related to accounts, projects, teams, users, invites, billing groups, payment methods, credit cards, authentication methods, and more </dd>\n  <dt>User</dt>\n  <dd>Operations related to users and users' profiles, access, authentication, authorization, user management, and more</dd>\n  <dt>Project</dt>\n  <dd>General operations on projects related to users, VPCs, invitations, alerts, peering connections, and more</dd>\n  <dt>BillingGroup</dt>\n  <dd>Operation on invoices, billing groups' credits and events </dd>\n  <dt>Support ticket</dt>\n  <dd>Operations on support tickets: listing, creating, looping users in</dd>\n</dl>\n\n### Services APIs\n\n<dl>\n  <dt>Service</dt>\n  <dd>All general (non-service-specific) operations on the service level: service creation, termination, configuration, updates, information retrieval, reset, and more</dd>\n  <dt>Service Integrations</dt>\n  <dd>Operations related to integrating services and managing service integrations</dd>\n  <dt>Service: ClickHouse</dt>\n  <dd>ClickHouse-specific operations on queries and databases </dd>\n  <dt>Service: Flink</dt>\n  <dd>Operations on Flink queries, jobs, and applications</dd>\n  <dt>Service: Kafka</dt>\n  <dd>Kafka and Kafka Connect specific operations on connectors, ACL entries, quotas, topics, topic messages, schema registry, and more</dd>\n  <dt>Service: Kafka MirrorMaker</dt>\n  <dd>Operations on replication flows</dd>\n  <dt>Service: MySQL</dt>\n  <dd>Fetching service query statistics</dd>\n  <dt>Service: OpenSearch</dt>\n  <dd>Operations on ACL configuration, security administration and configuration</dd>\n  <dt>Service: PostgreSQL</dt>\n  <dd>Operations on extensions, service query statistics, and connection pools</dd>\n</dl>\n\n# Requests\n\nThere are multiple ways you can interact with the Aiven API over HTTP. You can access it by sending requests from a client (for example, a web browser) to the Aiven's server. In this API reference, you'll find code examples of how to do that using `cURL` and a few different client libraries (programming languages).\n\nTo send an API request, you need to specify the following:\n\n* HTTP method\n* Path\n* Request headers\n\n  Typically, `content-type` needs to be set to `application/json`: `content-type: application/json`. There are a few exceptions though.\n\n* Path, query, or body parameters (either required or optional).\n\n```bash\ncurl --request POST \\\n  --url https://api.aiven.io/v1/project/{project}/vpcs \\\n  --header 'Authorization: aivenv1 REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data\n     '{\n        \"cloud_name\": \"string\",\n        \"network_cidr\": \"string\",\n        \"peering_connections\": [\n          {\n            \"peer_azure_app_id\": \"string\",\n            \"peer_azure_tenant_id\": \"string\",\n            \"peer_cloud_account\": \"string\",\n            \"peer_region\": \"string\",\n            \"peer_resource_group\": \"string\",\n            \"peer_vpc\": \"string\",\n            \"user_peer_network_cidrs\": [\n              \"string\"\n            ]\n          }\n        ]\n      }'\n```\n\n# Responses\n\nUpon receiving and processing a request, the Aiven API returns the response status code, response headers, and a response body in the `JSON` format. Response bodies include different properties, which can be either required or optional, for example, the ``message`` property, which is an optional human-readable information on the result of the action (deleted, created, or updated).\n\n```json\n{\n    \"cloud_name\": \"string\",\n    \"create_time\": \"string\",\n    \"message\": \"string\",\n    \"network_cidr\": \"string\",\n    \"peering_connections\": [\n        { ... }\n    ],\n    \"pending_build_only_peering_connections\": \"string\",\n    \"project_vpc_id\": \"string\",\n    \"state\": \"ACTIVE\",\n    \"update_time\": \"string\"\n}\n```\n\n## Successful responses\n\nA successful API response returns an HTTP result code between 200 and 299.\n\nExample of the ``created`` response\n\n```json\n  {\n      \"service\": {\n          \"service_name\": \"foobar\",\n          ...\n      }\n  }\n```\n\n## Failed responses\n\nA failed API response returns a HTTP code greater or equal to 400. Additionally, the response may return a list of errors in the response body as JSON, for example\n\n```json\n{\n  \"errors\": [\n    {\n      \"error_code\": \"authentication_failed\",\n      \"message\": \"Authentication failed\",\n      \"status\": 403,\n      \"metadata\": {\n        ...\n      }\n    }\n  ],\n  \"message\": \"Authentication failed\"\n}\n```\n\n> For information on errors' properties and error codes, check [Errors](/doc/openapi/openapi-description#errors).\n\n# Get started\n\nCheck out how to start using the Aiven API either in [API quick start](https://aiven.io/docs/tools/api#api-quickstart) or [Your first API call](https://aiven.io/blog/your-first-aiven-api-call).\n\n## Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->\n\n# Errors\n\nWhen working with the Aiven API, you may encounter different error responses when you attempt to perform operations that can fail. For example, trying to enable writes for a database that has been powered off would lead to the following error response:\n\n```json\n{\n  \"errors\": [\n    {\n      \"error_code\": \"not_powered\",\n      \"message\": \"Database not powered on\",\n      \"status\": 409\n    }\n  ],\n  \"message\": \"Database not powered on\"\n}\n```\n\n## Check a response for errors\n\nIf a request fails with a HTTP code greater or equal to 400, it returns a list of errors in the response body as JSON. `errors` objects are embedded in the failed API responses.\n\n```json\n{\n  \"errors\": [\n    {\n      \"error_code\": \"account_not_found\",\n      \"message\": \"Account does not exist\",\n      \"status\": 404\n    }\n  ],\n  \"message\": \"Account does not exist\"\n}\n```\n\n## Errors' properties\n\nIn an API response, one or more errors may be included in the ``errors`` array of objects. Each error object may contain a few properties:\n\n* ``status`` (required) is an HTTP error code, which can be used to programmatically identify the error type.\n\n  * ``200`` <= ``status``< ``300`` means a successful request.\n  * ``300`` <= ``status`` <= ``500`` means a failed request.\n\n  ``errors`` can have the following HTTPS status codes:\n\n  * 200 - OK\n  * 201 - Created\n  * 400 - Bad Request\n  * 401 - Unauthorized\n  * 403 - Forbidden\n  * 404 - Not found\n  * 405 - Method Not Allowed\n  * 409 - Conflict\n  * 500 - Internal Server Error\n\n* ``message`` (required) is human-readable information on the error.\n* ``error_code`` is a machine-readable information on the error (see [Error codes](/doc/openapi/openapi-description#error-codes)).\n\n## Error codes\n\nMachine-readable ``error_code`` fields are progressively added to Aiven endpoints to allow you to identify different failure cases programmatically. Currently, the supported values are the following:\n\n- `account_already_exists`\n- `account_already_has_organization`\n- `account_and_project_do_not_match`\n- `account_and_project_must_belong_same_tenant`\n- `account_cannot_be_own_ancestor`\n- `account_must_have_enabled_authentication_method`\n- `account_not_found`\n- `account_team_not_found`\n- `account_unit_cannot_create_for_personal_tier`\n- `account_unit_cannot_have_billing_group`\n- `account_with_child_accounts_cannot_be_deleted`\n- `account_with_projects_cannot_be_deleted`\n- `action_forbidden_for_application_users`\n- `action_forbidden_for_managed_users`\n- `action_forbidden_for_marketplace_users`\n- `action_forbidden_for_scim_users`\n- `action_forbidden_for_timescale_users`\n- `action_forbidden_missing_governance_usergroup`\n- `action_forbidden_on_application_users`\n- `action_forbidden_on_topic_request`\n- `action_forbidden_on_unmanaged_users`\n- `acu_billing_not_allowed`\n- `address_already_belongs_to_organization`\n- `address_in_use`\n- `address_not_found`\n- `api_client_ip_allowlist_blocks_caller`\n- `approval_forbidden_on_topic_request`\n- `approval_missing_on_request`\n- `auth_token_max_age_too_low`\n- `authentication_method_disable_current_not_allowed`\n- `authentication_method_does_not_allow_auto_join_user_group`\n- `authentication_method_limit_reached`\n- `authentication_method_not_found`\n- `backup_failed`\n- `bad_request`\n- `billing_address_not_found`\n- `billing_customer_id_not_found`\n- `billing_group_not_found`\n- `billing_group_organization_active_trial`\n- `billing_group_owning_account_must_be_organization`\n- `billing_metronome_support_contract_not_found`\n- `ca_version_not_in_sequence`\n- `cannot_delete_active_managed_users`\n- `cannot_delete_users_with_organizations_memberships`\n- `cannot_move_project_not_assigned_to_organization`\n- `cannot_remove_managed_users_from_organization`\n- `cannot_set_groups_managed_by_scim_as_auto_join_group`\n- `client_ip_address_policy_violation`\n- `credit_card_not_found`\n- `credit_memo_not_found`\n- `custom_cloud_environment_cloud_not_supported`\n- `custom_cloud_environment_internal`\n- `custom_cloud_environment_invalid_iam_role_arn`\n- `custom_cloud_environment_missing_configuration`\n- `custom_cloud_environment_not_found`\n- `custom_cloud_environment_region_not_supported`\n- `database_not_found`\n- `decline_forbidden_on_topic_request`\n- `deleting_forbidden_on_governance_request`\n- `deleting_forbidden_on_topic_request`\n- `discount_not_found`\n- `feature_not_enabled`\n- `free_plans_in_high_demand_and_unavailable`\n- `free_tier_restricted`\n- `free_trial_extensions_not_available`\n- `free_trial_max_extended`\n- `free_trial_not_active`\n- `free_trial_not_available`\n- `governance_access_no_permission_on_project`\n- `governance_access_not_found`\n- `governance_configuration_already_exists`\n- `governance_configuration_not_found`\n- `governance_group_not_found`\n- `governance_invalid_service_type`\n- `governance_request_already_in_progress`\n- `governance_request_deleted`\n- `idp_no_domains_linked`\n- `index_close_failed`\n- `index_not_found`\n- `internal_server_error`\n- `invalid_backup_configuration`\n- `invalid_cmk_id`\n- `invalid_currency_code`\n- `invalid_date_format`\n- `invalid_email_format`\n- `invalid_governance_group_provided`\n- `invalid_kafka_topic_request_type`\n- `invalid_os_migration_command`\n- `invalid_owner_user_group`\n- `invalid_private_access_settings`\n- `invalid_scim_user_state_update`\n- `invalid_service_type`\n- `invalid_vcs_type`\n- `invitation_expired`\n- `invitation_not_found`\n- `invoice_lines_not_supported`\n- `invoice_not_found`\n- `ip_address_not_present`\n- `ip_address_not_valid`\n- `kafka_acl_not_supported`\n- `kafka_console_governance_enabled`\n- `kafka_governance_not_available`\n- `kafka_governance_not_enabled`\n- `kafka_governance_policy_incomplete`\n- `kafka_partition_reassignment_in_progress`\n- `kafka_policy_violation`\n- `kafka_service_unavailable`\n- `kafka_terraform_governance_enabled`\n- `kafka_topic_already_exists`\n- `kafka_topic_invalid_config`\n- `kafka_topic_not_found`\n- `kafka_topic_not_synchronized`\n- `kafka_topic_queued_for_deletion`\n- `kafka_topic_reserved`\n- `marketplace_aws_customer_or_product_details_not_found`\n- `marketplace_subscription_already_linked_to_organization`\n- `marketplace_subscription_link_expired`\n- `marketplace_subscription_no_access`\n- `metadata_validation_failed`\n- `mfa_required_by_organization`\n- `mp_account_with_active_subscription_deleted`\n- `mp_account_with_commitment_deleted`\n- `mp_account_with_support_contract_deleted`\n- `mp_subscription_not_found`\n- `nested_account_cannot_have_authentication_method`\n- `nested_account_cannot_have_user_groups`\n- `new_subnet_id_required`\n- `no_failed_os_migration`\n- `node_prune_version_not_updated`\n- `not_powered`\n- `opensearch_delete_system_index`\n- `opensearch_internal_server_error`\n- `opensearch_service_unavailable`\n- `opensearch_too_many_requests`\n- `optimization_failed`\n- `optimization_not_found`\n- `organization_aiven_enterprise_contract_denied`\n- `organization_aiven_enterprise_contract_feature_denied`\n- `organization_aiven_enterprise_denied`\n- `organization_aiven_enterprise_organization_required`\n- `organization_cannot_exist_without_root_account`\n- `organization_domain_already_linked`\n- `organization_domain_not_found`\n- `organization_domain_not_root`\n- `organization_domain_verification_failed`\n- `organization_has_active_addresses`\n- `organization_has_active_payment_methods`\n- `organization_kafka_topics_invalid_filters`\n- `organization_mismatch`\n- `organization_must_have_one_super_admin`\n- `organization_not_found`\n- `organization_pending_support_contract_already_exists`\n- `organization_support_contract_tier_not_supported`\n- `organization_tier_downgrade_not_allowed`\n- `organization_user_not_found`\n- `orphaned_project_not_allowed`\n- `parent_account_cannot_be_own_ancestor`\n- `parent_account_not_found`\n- `parent_account_tenant_invalid`\n- `parent_account_too_deep`\n- `payment_method_not_found`\n- `permission_denied`\n- `pg_editor_readonly_violation`\n- `pg_pool_already_exists`\n- `pg_pool_invalid_database`\n- `pg_pool_invalid_name`\n- `pg_pool_not_found`\n- `pg_pool_not_supported`\n- `pg_pool_pinned_pools_not_enabled`\n- `pg_pool_requires_pinned_pools`\n- `pg_pool_too_big`\n- `pg_pool_too_many`\n- `pg_publication_not_found`\n- `pg_replication_slot_not_found`\n- `pg_scram_not_allowed`\n- `project_account_not_active`\n- `project_already_exists`\n- `project_belongs_to_account_billing_group_must_use_api`\n- `project_does_not_exist`\n- `project_has_no_such_user`\n- `project_limitation_not_found`\n- `project_move_invalid`\n- `project_move_organizations_internal_config_not_match`\n- `project_not_found`\n- `project_without_billing_group_must_be_assigned_from_account`\n- `query_validation_failed`\n- `replication_already_exists`\n- `replication_config_invalid`\n- `replication_not_found`\n- `replication_service_not_found`\n- `repository_not_found`\n- `request_already_exists`\n- `request_forbidden`\n- `request_not_found`\n- `request_operation_already_exists`\n- `request_operation_not_found`\n- `resource_managed_by_governance`\n- `resource_managed_by_scim`\n- `resource_not_managed_by_scim`\n- `retired_api_endpoint`\n- `root_account_required`\n- `same_organization_required`\n- `schema_insights_failed`\n- `service_acl_not_found`\n- `service_acl_too_many`\n- `service_does_not_exist`\n- `service_governance_not_enabled`\n- `service_integration_endpoint_not_found`\n- `service_integration_not_found`\n- `service_integration_project_mismatch_source_destination`\n- `service_is_upgrade_pipeline_source`\n- `service_logs_backend_timeout`\n- `service_logs_backend_unavailable`\n- `service_maintenance_required`\n- `service_not_found`\n- `service_type_not_allowed`\n- `service_type_version_pin_locked`\n- `shipping_address_not_found`\n- `signup_welcome_invalid_key`\n- `snapshot_creation_failed`\n- `snapshot_deletion_failed`\n- `snapshot_not_found`\n- `snapshot_restoration_failed`\n- `stripe_customer_owning_account_must_be_organization`\n- `support_contract_and_account_must_be_in_same_organization`\n- `support_contract_earliest_cancellation_date_later_than_end_date`\n- `support_contract_must_have_billing_group`\n- `support_contract_null_tier`\n- `team_limit_exceeded`\n- `team_names_must_be_unique`\n- `tenant_mismatch`\n- `topic_not_found`\n- `unable_to_parse_query`\n- `unit_cannot_be_moved_out_of_organization`\n- `unknown_user_sso_login_attempt`\n- `unsupported_resource_type`\n- `upgrade_pipeline_no_nodes`\n- `upgrade_pipeline_no_validation`\n- `upgrade_pipeline_not_enabled_for_project`\n- `upgrade_pipeline_service_not_destination`\n- `upgrade_pipeline_service_not_found`\n- `upgrade_step_destination_already_has_source`\n- `upgrade_step_destination_service_not_found`\n- `upgrade_step_exceeds_max_chain_length`\n- `upgrade_step_not_found`\n- `upgrade_step_service_type_mismatch`\n- `upgrade_step_source_service_not_found`\n- `upgrade_step_unsupported_service_type`\n- `upgrade_step_validation_not_possible_due_to_service_state`\n- `upgrade_step_would_create_cycle`\n- `upgrade_validation_already_exists`\n- `user_already_in_organization`\n- `user_already_invited_to_organization`\n- `user_cant_login`\n- `user_config_2fa_otp_verification_failed`\n- `user_deactivated`\n- `user_domain_does_not_belong_to_organization_or_no_linked_auth_method`\n- `user_group_names_must_be_unique`\n- `user_group_not_found`\n- `user_groups_belong_to_different_accounts`\n- `user_groups_must_be_from_same_account`\n- `user_has_no_access_to_billing_info`\n- `user_has_no_access_to_project_with_current_authentication_method`\n- `user_has_to_sign_in_with_non_account_authentication_method`\n- `user_has_too_many_disk_addition_requests`\n- `user_is_internal_user`\n- `user_not_account_owner`\n- `user_not_account_owner_of_billing_group`\n- `user_not_account_owner_of_parent_account`\n- `user_not_admin_of_account_billing_group`\n- `user_not_application_user`\n- `user_not_found`\n- `user_not_managed_by_organization`\n- `user_not_organization_admin`\n- `user_not_signed_in_with_account_authentication_method`\n- `user_oauth_authentication_method_not_allowed`\n- `user_password_authentication_method_not_allowed`\n- `user_password_compromised`\n- `user_password_not_found`\n- `user_personal_token_allowed_authentication_methods_cannot_be_disabled`\n- `user_personal_token_not_allowed`\n- `user_personal_tokens_cannot_be_disabled`\n- `user_role_not_allowed_to_perform_operation`\n- `user_saml_authentication_method_not_allowed`\n- `user_weblink_action_expired`\n- `username_is_invalid`\n- `username_is_reserved`\n- `users_belong_to_different_tenant_from_user_group_account`\n- `vcs_integration_installation_not_found_or_not_accessible`\n- `vcs_integration_not_found`\n- `vpc_id_and_subnet_id_required`\n- `webhook_invalid_event_data`\n- `webhook_unauthorized`\n"
+servers:
+- url: https://api.aiven.io/v1
+tags:
+- name: Account
+  x-displayName: Account
+paths:
+  /account/{account_id}/payment_methods:
+    post:
+      summary: Attach payment method for account
+      tags:
+      - Account
+      operationId: AccountAttachPaymentMethod
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountAttachPaymentMethodRequestBody'
+            example:
+              payment_method_id: pm_1Q0PsIJvEtkwdCNYMSaVuRz6
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAttachPaymentMethodResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - payments:write
+    get:
+      summary: List credit cards attached as a payment method to the account
+      tags:
+      - Account
+      operationId: AccountPaymentMethodsList
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountPaymentMethodsListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - payments:read
+  /account/{account_id}/authentication:
+    post:
+      summary: Create a new authentication method
+      tags:
+      - Account
+      operationId: AccountAuthenticationMethodCreate
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountAuthenticationMethodCreateRequestBody'
+            example:
+              auth_token_extend_when_used: true
+              auth_token_max_age_seconds: 42
+              authentication_method_name: Main SAML service
+              authentication_method_type: internal
+              auto_join_team_id: at29872a9e
+              auto_join_user_group_id: ug22ba494e096
+              linked_domains:
+              - domain_id: domain-a9s7d6f98as7d6
+              saml_assertion_signed_enabled: true
+              saml_authn_requests_signed_enabled: true
+              saml_certificate: '-----BEGIN CERTIFICATE...'
+              saml_digest_algorithm: sha256
+              saml_entity_id: https://example.com/saml2/entity
+              saml_field_mapping:
+                email: email
+                first_name: first_name
+                groups: groups
+                identity: email
+                last_name: last_name
+                real_name: full_name
+              saml_idp_login_allowed: true
+              saml_idp_url: https://example.com/saml2/idp
+              saml_join_groups: true
+              saml_requested_authn_context_enabled: true
+              saml_signature_algorithm: rsa-sha256
+              saml_variant: adfs
+              scim_enabled: true
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAuthenticationMethodCreateResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - authentication:write
+    get:
+      summary: List authentication methods
+      tags:
+      - Account
+      operationId: AccountAuthenticationMethodsList
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAuthenticationMethodsListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - authentication:read
+  /account/{account_id}/authentication/{account_authentication_method_id}:
+    delete:
+      summary: Delete authentication method
+      tags:
+      - Account
+      operationId: AccountAuthenticationMethodDelete
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/account_authentication_method_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAuthenticationMethodDeleteResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - authentication:write
+    get:
+      summary: Get details of a single authentication method
+      tags:
+      - Account
+      operationId: AccountAuthenticationMethodGet
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/account_authentication_method_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAuthenticationMethodGetResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - authentication:read
+    put:
+      summary: Update authentication method
+      tags:
+      - Account
+      operationId: AccountAuthenticationMethodUpdate
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/account_authentication_method_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountAuthenticationMethodUpdateRequestBody'
+            example:
+              auth_token_extend_when_used: true
+              auth_token_max_age_seconds: 42
+              authentication_method_enabled: true
+              authentication_method_name: Main SAML service
+              auto_join_team_id: at29872a9e
+              auto_join_user_group_id: ug22ba494e096
+              saml_assertion_signed_enabled: true
+              saml_authn_requests_signed_enabled: true
+              saml_certificate: '-----BEGIN CERTIFICATE...'
+              saml_digest_algorithm: sha256
+              saml_entity_id: https://example.com/saml2/entity
+              saml_field_mapping:
+                email: email
+                first_name: first_name
+                groups: groups
+                identity: email
+                last_name: last_name
+                real_name: full_name
+              saml_idp_login_allowed: true
+              saml_idp_url: https://example.com/saml2/idp
+              saml_join_groups: true
+              saml_requested_authn_context_enabled: true
+              saml_signature_algorithm: rsa-sha256
+              saml_variant: adfs
+              scim_enabled: true
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAuthenticationMethodUpdateResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - authentication:write
+  /account/{account_id}/billing-group:
+    get:
+      summary: List account billing groups
+      tags:
+      - Account
+      operationId: AccountBillingGroupList
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountBillingGroupListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - billing:read
+  /account:
+    post:
+      summary: Create a new account
+      tags:
+      - Account
+      operationId: AccountCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreateRequestBody'
+            example:
+              account_name: Aiven Ltd
+              parent_account_id: a22ba494e096
+              primary_billing_group_id: ffb3f0cd-5532-4eb9-8867-f2cac5823492
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountCreateResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - marketplace_subscription_already_linked_to_organization
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'marketplace_subscription_already_linked_to_organization: Marketplace subscription is already linked to an organization.'
+        '403':
+          description: Operation not allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - account_unit_cannot_create_for_personal_tier
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'account_unit_cannot_create_for_personal_tier: You cannot create organizational units in a Personal organization. Consider upgrading to a Business organization.'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+    get:
+      summary: List accounts you have access to
+      tags:
+      - Account
+      operationId: AccountList
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /account/{account_id}:
+    delete:
+      summary: Delete empty account
+      tags:
+      - Account
+      operationId: AccountDelete
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountDeleteResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+    get:
+      summary: Get account details
+      tags:
+      - Account
+      operationId: AccountGet
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountGetResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+    put:
+      summary: Update existing account
+      tags:
+      - Account
+      operationId: AccountUpdate
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdateRequestBody'
+            example:
+              account_name: Aiven Ltd
+              primary_billing_group_id: ffb3f0cd-5532-4eb9-8867-f2cac5823492
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUpdateResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+  /account/{account_id}/events:
+    get:
+      summary: List account events
+      tags:
+      - Account
+      operationId: AccountEventList
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEventListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /account/{account_id}/parent_account:
+    put:
+      summary: Move an existing organization unit
+      tags:
+      - Account
+      operationId: AccountMove
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountMoveRequestBody'
+            example:
+              parent_account_id: a22ba494e096
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountMoveResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+  /account/{account_id}/payment_method/{card_id}:
+    delete:
+      summary: Delete credit card attached to the account as a payment method
+      tags:
+      - Account
+      operationId: AccountPaymentMethodDelete
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/card_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountPaymentMethodDeleteResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - payments:write
+  /account/{account_id}/projects:
+    get:
+      summary: List projects belonging to account
+      tags:
+      - Account
+      operationId: AccountProjectsList
+      deprecated: true
+      description: '<p>DEPRECATED: Use the organization projects API to list projects within the organization</p>'
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountProjectsListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - projects:read
+  /account/{account_id}/project/{project_name}/teams:
+    get:
+      summary: List account teams associated to a project
+      tags:
+      - Account
+      operationId: AccountProjectsTeamsList
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/project_name'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountProjectsTeamsListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - projects:read
+  /account/{account_id}/teams:
+    post:
+      summary: Create a new team
+      tags:
+      - Account
+      operationId: AccountTeamCreate
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamCreateResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - team_names_must_be_unique
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'team_names_must_be_unique: Team with the same name already exists'
+        '403':
+          description: Operation not allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - feature_not_enabled
+                          - team_limit_exceeded
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'feature_not_enabled: This feature is not enabled in your context, please contact support to enable it. team_limit_exceeded: Maximum number of teams reached, please contact support to increase the limit'
+        '404':
+          description: Account not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    title: Human readable error message
+                  errors:
+                    type: array
+                    title: List of error details. Typically there is only one element
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          title: Human readable error message
+                        error_code:
+                          type: string
+                          enum:
+                          - account_not_found
+                          title: Machine processable error code. Clients must be prepared to handle new codes.
+                          description: 'account_not_found: No such account exists'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+    get:
+      summary: List teams belonging to an account
+      tags:
+      - Account
+      operationId: AccountTeamList
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /account/{account_id}/team/{team_id}:
+    delete:
+      summary: Delete a team
+      tags:
+      - Account
+      operationId: AccountTeamDelete
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamDeleteResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+    get:
+      summary: Get details for a single team
+      tags:
+      - Account
+      operationId: AccountTeamGet
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamGetResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+    put:
+      summary: Update team details
+      tags:
+      - Account
+      operationId: AccountTeamUpdate
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountTeamUpdateRequestBody'
+            example:
+              team_name: Ops team
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamUpdateResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+  /account/{account_id}/team/{team_id}/invites:
+    get:
+      summary: List pending invites
+      tags:
+      - Account
+      operationId: AccountTeamInvitesList
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamInvitesListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /account/{account_id}/team/{team_id}/invites/{user_email}:
+    delete:
+      summary: Cancel pending user invite
+      tags:
+      - Account
+      operationId: AccountTeamMemberCancelInvite
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      - $ref: '#/components/parameters/user_email'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamMemberCancelInviteResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+  /account/{account_id}/invite/{invite_verification_code}:
+    post:
+      summary: Confirm account team invite
+      tags:
+      - Account
+      operationId: AccountTeamMemberVerifyInvite
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/invite_verification_code'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamMemberVerifyInviteResponse'
+  /account/{account_id}/team/{team_id}/member/{user_id}:
+    delete:
+      summary: Remove a member from the team
+      tags:
+      - Account
+      operationId: AccountTeamMembersDelete
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      - $ref: '#/components/parameters/user_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamMembersDeleteResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+  /account/{account_id}/team/{team_id}/members:
+    post:
+      summary: Invite a new member to join the team
+      tags:
+      - Account
+      operationId: AccountTeamMembersInvite
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamMembersInviteResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+    get:
+      summary: List members of a single team
+      tags:
+      - Account
+      operationId: AccountTeamMembersList
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamMembersListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /account/{account_id}/team/{team_id}/project/{project}:
+    post:
+      summary: Associate team to a project
+      tags:
+      - Account
+      operationId: AccountTeamProjectAssociate
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      - $ref: '#/components/parameters/project'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountTeamProjectAssociateRequestBody'
+            example:
+              team_type: operator
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamProjectAssociateResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - projects:read
+    put:
+      summary: Update team-project association
+      tags:
+      - Account
+      operationId: AccountTeamProjectAssociationUpdate
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      - $ref: '#/components/parameters/project'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountTeamProjectAssociationUpdateRequestBody'
+            example:
+              team_type: operator
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamProjectAssociationUpdateResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - projects:read
+    delete:
+      summary: Disassociate team from a project
+      tags:
+      - Account
+      operationId: AccountTeamProjectDisassociate
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      - $ref: '#/components/parameters/project'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamProjectDisassociateResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:write
+        - projects:read
+  /account/{account_id}/team/{team_id}/projects:
+    get:
+      summary: List projects associated to a team
+      tags:
+      - Account
+      operationId: AccountTeamProjectList
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/team_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountTeamProjectListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - projects:read
+  /account/{account_id}/user/{user_id}/projects:
+    get:
+      summary: List projects associated with this account that user has access to
+      tags:
+      - Account
+      operationId: AccountUserProjectsList
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/user_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUserProjectsListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+        - projects:read
+  /account/{account_id}/user/{user_id}/teams:
+    get:
+      summary: List all teams for user
+      tags:
+      - Account
+      operationId: AccountUserTeamsList
+      description: <p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      - $ref: '#/components/parameters/user_id'
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUserTeamsListResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+  /account/{account_id}/users/search:
+    post:
+      summary: List/search users who are members of any team on this account
+      tags:
+      - Account
+      operationId: AccountUsersSearch
+      parameters:
+      - $ref: '#/components/parameters/account_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUsersSearchRequestBody'
+            example:
+              limit: 100
+              order_by:
+              - user_email:desc
+              query: john
+      responses:
+        '200':
+          description: Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountUsersSearchResponse'
+      security:
+      - tokenAuth: []
+        oauth2:
+        - accounts:read
+components:
+  schemas:
+    AccountProjectsListResponse:
+      type: object
+      description: AccountProjectsListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        projects:
+          type: array
+          description: List of projects
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              address_lines:
+                type: array
+                maxItems: 3
+                description: Address lines
+                items:
+                  type: string
+              available_credits:
+                type: string
+                description: 'DEPRECATED: Available credits, in USD. Always 0.00, use billing group credits instead'
+              billing_address:
+                type: string
+                maxLength: 1000
+                description: 'DEPRECATED: use split address fields like company, address_lines, zip_code, city and state instead'
+              billing_currency:
+                type: string
+                description: Billing currency
+                enum:
+                - AUD
+                - CAD
+                - CHF
+                - DKK
+                - EUR
+                - GBP
+                - JPY
+                - NOK
+                - NZD
+                - SEK
+                - SGD
+                - USD
+              billing_emails:
+                type: array
+                maxItems: 10
+                description: List of project billing email addresses
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      maxLength: 254
+                      description: User email address
+                  required:
+                  - email
+              billing_extra_text:
+                type: string
+                maxLength: 1000
+                description: Extra text to be included in all project invoices, e.g. purchase order or cost center number
+              billing_group_id:
+                type: string
+                minLength: 36
+                maxLength: 36
+                description: Billing group ID
+              billing_group_name:
+                type: string
+                maxLength: 128
+                description: Billing group name
+              card_info:
+                type: object
+                description: Credit card assigned to the project
+                properties:
+                  brand:
+                    type: string
+                    description: Brand
+                  card_id:
+                    type: string
+                    maxLength: 64
+                    description: Credit card ID
+                  country:
+                    type: string
+                    maxLength: 128
+                    description: Country
+                  country_code:
+                    type: string
+                    maxLength: 2
+                    description: Two letter ISO country code
+                  exp_month:
+                    type: integer
+                    minimum: 1
+                    maximum: 12
+                    description: Expiration month
+                  exp_year:
+                    type: integer
+                    minimum: 2015
+                    maximum: 2100
+                    description: Expiration year
+                  last4:
+                    type: string
+                    description: Credit card last four digits
+                  name:
+                    type: string
+                    maxLength: 256
+                    description: Name on the credit card
+                  user_email:
+                    type: string
+                    maxLength: 254
+                    description: User email address
+                required:
+                - brand
+                - card_id
+                - country
+                - country_code
+                - exp_month
+                - exp_year
+                - last4
+                - name
+                - user_email
+              city:
+                type: string
+                maxLength: 50
+                description: Address city
+              company:
+                type: string
+                maxLength: 83
+                description: Name of a company
+              country:
+                type: string
+                maxLength: 128
+                description: Billing country
+              country_code:
+                type: string
+                maxLength: 2
+                description: Two letter ISO country code
+              default_cloud:
+                type: string
+                maxLength: 256
+                description: Default cloud to use when launching services
+              end_of_life_extension:
+                type: object
+                description: End of life extension information
+                properties:
+                  elasticsearch:
+                    type: object
+                    description: Service EOL extension
+                    properties:
+                      eol_date:
+                        type: string
+                        description: Extended EOL date
+                      version:
+                        type: string
+                        description: Service version
+                    required:
+                    - eol_date
+                    - version
+              estimated_balance:
+                type: string
+                description: Estimated balance, in USD
+              estimated_balance_local:
+                type: string
+                description: Estimated balance, in billing currency
+              features:
+                type: object
+                description: Feature flags
+                properties: {}
+              organization_id:
+                type: string
+                maxLength: 36
+                description: Organization ID
+              payment_method:
+                type: string
+                description: Payment method
+              project_name:
+                type: string
+                maxLength: 63
+                description: Project name
+              state:
+                type: string
+                maxLength: 30
+                description: Address state or province
+              tags:
+                type: object
+                description: Set of resource tags
+                properties: {}
+              tech_emails:
+                type: array
+                maxItems: 10
+                description: List of project tech email addresses
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      maxLength: 254
+                      description: User email address
+                  required:
+                  - email
+              tenant_id:
+                type: string
+                description: Tenant ID
+              trial_expiration_time:
+                type: string
+                maxLength: 36
+                description: Trial expiration time (ISO 8601)
+              vat_id:
+                type: string
+                maxLength: 64
+                description: EU VAT Identification Number
+              zip_code:
+                type: string
+                maxLength: 36
+                description: Address zip code
+            required:
+            - account_id
+            - billing_address
+            - billing_emails
+            - billing_group_id
+            - billing_group_name
+            - country
+            - country_code
+            - default_cloud
+            - estimated_balance
+            - organization_id
+            - payment_method
+            - project_name
+            - vat_id
+        total_project_count:
+          type: integer
+          description: Total count of projects associated to account.
+      required:
+      - projects
+    AccountAuthenticationMethodDeleteResponse:
+      type: object
+      description: AccountAuthenticationMethodDeleteResponse
+      properties:
+        message:
+          type: string
+          description: Response message field
+      required:
+      - message
+    AccountTeamDeleteResponse:
+      type: object
+      description: AccountTeamDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountUserTeamsListResponse:
+      type: object
+      description: AccountUserTeamsListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        teams:
+          type: array
+          description: List of teams
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+            required:
+            - account_id
+            - account_name
+            - team_id
+            - team_name
+      required:
+      - teams
+    AccountAttachPaymentMethodRequestBody:
+      type: object
+      description: AccountAttachPaymentMethodRequestBody
+      properties:
+        payment_method_id:
+          type: string
+          minLength: 10
+          maxLength: 64
+          description: Unique identifier for a Stripe payment method
+      required:
+      - payment_method_id
+    AccountTeamCreateResponse:
+      type: object
+      description: AccountTeamCreateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        team:
+          type: object
+          description: Account Team details
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            team_name:
+              type: string
+              maxLength: 128
+              description: Team name
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - team_id
+          - team_name
+      required:
+      - team
+    AccountUsersSearchResponse:
+      type: object
+      description: AccountUsersSearchResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        users:
+          type: array
+          description: List of users
+          items:
+            type: object
+            properties:
+              real_name:
+                type: string
+                maxLength: 256
+                description: User real name
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+              user_id:
+                type: string
+                description: User ID
+            required:
+            - real_name
+            - user_email
+            - user_id
+      required:
+      - users
+    AccountMoveRequestBody:
+      type: object
+      description: AccountMoveRequestBody
+      properties:
+        parent_account_id:
+          type: string
+          maxLength: 36
+          description: Account ID
+      required:
+      - parent_account_id
+    AccountTeamUpdateResponse:
+      type: object
+      description: AccountTeamUpdateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        team:
+          type: object
+          description: Account Team details
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            team_name:
+              type: string
+              maxLength: 128
+              description: Team name
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - team_id
+          - team_name
+      required:
+      - team
+    AccountTeamMembersListResponse:
+      type: object
+      description: AccountTeamMembersListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        members:
+          type: array
+          description: List of account team members
+          items:
+            type: object
+            properties:
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              real_name:
+                type: string
+                maxLength: 256
+                description: User real name
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              update_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+              user_id:
+                type: string
+                description: User ID
+            required:
+            - create_time
+            - real_name
+            - team_id
+            - team_name
+            - update_time
+            - user_email
+            - user_id
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - members
+    AccountTeamProjectDisassociateResponse:
+      type: object
+      description: AccountTeamProjectDisassociateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountTeamGetResponse:
+      type: object
+      description: AccountTeamGetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        team:
+          type: object
+          description: Account Team details
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            team_name:
+              type: string
+              maxLength: 128
+              description: Team name
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - team_id
+          - team_name
+      required:
+      - team
+    AccountBillingGroupListResponse:
+      type: object
+      description: AccountBillingGroupListResponse
+      properties:
+        account_billing_groups:
+          type: array
+          description: List of billing groups
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              address_lines:
+                type: array
+                maxItems: 3
+                description: Address lines
+                items:
+                  type: string
+              billing_address:
+                type: string
+                maxLength: 1000
+                description: 'DEPRECATED: use split address fields like company, address_lines, zip_code, city and state instead'
+              billing_address_id:
+                type: string
+                maxLength: 36
+                description: Address ID
+              billing_contact_emails:
+                type: array
+                maxItems: 10
+                description: List of billing groups contact email addresses
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      maxLength: 254
+                      description: User email address
+                  required:
+                  - email
+              billing_currency:
+                type: string
+                description: Billing currency
+                enum:
+                - AUD
+                - CAD
+                - CHF
+                - DKK
+                - EUR
+                - GBP
+                - JPY
+                - NOK
+                - NZD
+                - SEK
+                - SGD
+                - USD
+              billing_emails:
+                type: array
+                maxItems: 10
+                description: List of project billing email addresses
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      maxLength: 254
+                      description: User email address
+                  required:
+                  - email
+              billing_extra_text:
+                type: string
+                maxLength: 1000
+                description: Extra text to be included in all project invoices, e.g. purchase order or cost center number
+              billing_group_id:
+                type: string
+                minLength: 36
+                maxLength: 36
+                description: Billing group ID
+              billing_group_name:
+                type: string
+                maxLength: 128
+                description: Billing group name
+              billing_type:
+                type: string
+                description: Method of charging/invoicing this project
+              card_info:
+                type: object
+                description: Credit card assigned to the project
+                properties:
+                  brand:
+                    type: string
+                    description: Brand
+                  card_id:
+                    type: string
+                    maxLength: 64
+                    description: Credit card ID
+                  country:
+                    type: string
+                    maxLength: 128
+                    description: Country
+                  country_code:
+                    type: string
+                    maxLength: 2
+                    description: Two letter ISO country code
+                  exp_month:
+                    type: integer
+                    minimum: 1
+                    maximum: 12
+                    description: Expiration month
+                  exp_year:
+                    type: integer
+                    minimum: 2015
+                    maximum: 2100
+                    description: Expiration year
+                  last4:
+                    type: string
+                    description: Credit card last four digits
+                  name:
+                    type: string
+                    maxLength: 256
+                    description: Name on the credit card
+                  user_email:
+                    type: string
+                    maxLength: 254
+                    description: User email address
+                required:
+                - brand
+                - card_id
+                - country
+                - country_code
+                - exp_month
+                - exp_year
+                - last4
+                - name
+                - user_email
+              city:
+                type: string
+                maxLength: 50
+                description: Address city
+              company:
+                type: string
+                maxLength: 83
+                description: Name of a company
+              country:
+                type: string
+                maxLength: 128
+                description: Billing country
+              country_code:
+                type: string
+                maxLength: 2
+                description: Two letter ISO country code
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              estimated_balance_local:
+                type: string
+                description: Estimated balance in billing currency, before tax
+              estimated_balance_usd:
+                type: string
+                description: Estimated balance in USD, before tax
+              payment_method:
+                type: string
+                description: Payment method
+                enum:
+                - accrual
+                - card
+                - disabled
+                - email
+                - no_payment_expected
+                - partner
+              shipping_address_id:
+                type: string
+                maxLength: 36
+                description: Address ID
+              state:
+                type: string
+                maxLength: 30
+                description: Address state or province
+              vat_id:
+                type: string
+                maxLength: 64
+                description: EU VAT Identification Number
+              zip_code:
+                type: string
+                maxLength: 36
+                description: Address zip code
+            required:
+            - account_id
+            - account_name
+            - address_lines
+            - billing_address_id
+            - billing_contact_emails
+            - billing_currency
+            - billing_emails
+            - billing_extra_text
+            - billing_group_id
+            - billing_group_name
+            - billing_type
+            - card_info
+            - city
+            - company
+            - country
+            - country_code
+            - create_time
+            - estimated_balance_local
+            - estimated_balance_usd
+            - payment_method
+            - shipping_address_id
+            - state
+            - vat_id
+            - zip_code
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account_billing_groups
+    AccountCreateRequestBody:
+      type: object
+      description: AccountCreateRequestBody
+      properties:
+        account_name:
+          type: string
+          maxLength: 83
+          description: Account name
+        parent_account_id:
+          type: string
+          maxLength: 36
+          description: Account ID
+        primary_billing_group_id:
+          type: string
+          minLength: 36
+          maxLength: 36
+          description: Billing group ID
+      required:
+      - account_name
+    AccountAuthenticationMethodUpdateRequestBody:
+      type: object
+      description: AccountAuthenticationMethodUpdateRequestBody
+      properties:
+        auth_token_extend_when_used:
+          type: boolean
+          description: Extend authentication token validity when used
+        auth_token_max_age_seconds:
+          type: integer
+          minimum: 300
+          maximum: 1296000
+          description: Auth Token Max Age Seconds
+        authentication_method_enabled:
+          type: boolean
+          description: If true, authentication method can be used to access account/projects in account. If false, authentication method can still be used to sign in
+        authentication_method_name:
+          type: string
+          maxLength: 128
+          description: Authentication Method Name
+        auto_join_team_id:
+          type: string
+          maxLength: 32
+          description: Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null.
+        auto_join_user_group_id:
+          type: string
+          maxLength: 36
+          description: Automatically add users to a group, when user signs up using this authentication method
+        saml_assertion_signed_enabled:
+          type: boolean
+          description: Set to 'true' to enable WantAssertionsSigned
+        saml_authn_requests_signed_enabled:
+          type: boolean
+          description: Set to 'true' to enable AuthnRequestsSigned
+        saml_certificate:
+          type: string
+          maxLength: 16384
+          description: Identity provider's certificate
+        saml_digest_algorithm:
+          type: string
+          description: An enumeration.
+          title: Digest algorithm. This is an advanced option that typically does not need to be set.
+          default: sha256
+          enum:
+          - sha1
+          - sha256
+          - sha384
+          - sha512
+        saml_entity_id:
+          type: string
+          maxLength: 2048
+          description: Saml Entity ID
+        saml_field_mapping:
+          type: object
+          description: SAMLFieldMapping
+          properties:
+            email:
+              type: string
+              maxLength: 256
+              description: Field name for user email
+              default: email
+            first_name:
+              type: string
+              maxLength: 256
+              description: Field name for user's first name
+              default: first_name
+            groups:
+              type: string
+              maxLength: 256
+              description: Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.
+              default: groups
+            identity:
+              type: string
+              maxLength: 256
+              description: Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.
+              default: email
+            last_name:
+              type: string
+              maxLength: 256
+              description: Field name for user's lastname
+              default: last_name
+            real_name:
+              type: string
+              maxLength: 256
+              description: Field name for user's full name. If specified, first_name and last_name mappings are ignored
+        saml_idp_login_allowed:
+          type: boolean
+          description: Set to 'true' to enable IdP initiated login
+        saml_idp_url:
+          type: string
+          maxLength: 2048
+          description: Saml Idp Url
+        saml_join_groups:
+          type: boolean
+          description: SAML join groups enabled
+        saml_requested_authn_context_enabled:
+          type: boolean
+          description: Set to 'false' to disable RequestedAuthnContext
+        saml_signature_algorithm:
+          type: string
+          description: An enumeration.
+          title: SAMLSignatureAlgorithm
+          default: rsa-sha256
+          enum:
+          - rsa-sha1
+          - dsa-sha1
+          - rsa-sha256
+          - rsa-sha384
+          - rsa-sha512
+        saml_variant:
+          type: string
+          description: An enumeration.
+          title: SAMLVariant
+          enum:
+          - adfs
+        scim_enabled:
+          type: boolean
+          description: SCIM enabled
+    AccountPaymentMethodsListResponse:
+      type: object
+      description: AccountPaymentMethodsListResponse
+      properties:
+        cards:
+          type: array
+          description: List of account's credit cards
+          items:
+            type: object
+            properties:
+              brand:
+                type: string
+                description: Brand
+              card_id:
+                type: string
+                maxLength: 64
+                description: Credit card ID
+              country:
+                type: string
+                maxLength: 128
+                description: Country
+              country_code:
+                type: string
+                maxLength: 2
+                description: Two letter ISO country code
+              exp_month:
+                type: integer
+                minimum: 1
+                maximum: 12
+                description: Expiration month
+              exp_year:
+                type: integer
+                minimum: 2015
+                maximum: 2100
+                description: Expiration year
+              last4:
+                type: string
+                description: Credit card last four digits
+              name:
+                type: string
+                maxLength: 256
+                description: Name on the credit card
+            required:
+            - brand
+            - card_id
+            - country
+            - country_code
+            - exp_month
+            - exp_year
+            - last4
+            - name
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - cards
+    AccountMoveResponse:
+      type: object
+      description: AccountMoveResponse
+      properties:
+        account:
+          type: object
+          description: Account details
+          properties:
+            access_source:
+              type: string
+              description: Describe the source of the account
+              enum:
+              - descendant_membership
+              - organization_membership
+              - project_membership
+              - team_membership
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            account_name:
+              type: string
+              maxLength: 83
+              description: Account name
+            account_owner_team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            features:
+              type: object
+              description: Feature flags
+              properties: {}
+            is_account_member:
+              type: boolean
+              description: If true, user is part of a team of this or a parent account
+            is_account_owner:
+              type: boolean
+              description: If true, user is part of the owners team for this account
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            parent_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            primary_billing_group_id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: Primary billing group ID - deprecated, always null
+            root_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            tenant_id:
+              type: string
+              maxLength: 64
+              description: Tenant identifier
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - account_id
+          - account_name
+          - account_owner_team_id
+          - create_time
+          - is_account_owner
+          - organization_id
+          - primary_billing_group_id
+          - root_account_id
+          - update_time
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account
+    AccountAuthenticationMethodCreateRequestBody:
+      type: object
+      description: AccountAuthenticationMethodCreateRequestBody
+      properties:
+        auth_token_extend_when_used:
+          type: boolean
+          description: Extend authentication token validity when used
+          default: true
+        auth_token_max_age_seconds:
+          type: integer
+          minimum: 300
+          maximum: 1296000
+          description: Auth Token Max Age Seconds
+          default: 36000
+        authentication_method_name:
+          type: string
+          maxLength: 128
+          description: Authentication Method Name
+        authentication_method_type:
+          type: string
+          description: An enumeration.
+          title: Authentication method type
+          enum:
+          - internal
+          - saml
+        auto_join_team_id:
+          type: string
+          maxLength: 32
+          description: Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null.
+        auto_join_user_group_id:
+          type: string
+          maxLength: 36
+          description: Automatically add users to a group, when user signs up using this authentication method
+        linked_domains:
+          type: array
+          description: Linked Domains
+          items:
+            type: object
+            properties:
+              domain_id:
+                type: string
+                maxLength: 36
+                description: Domain ID
+            required:
+            - domain_id
+        saml_assertion_signed_enabled:
+          type: boolean
+          description: Set to 'true' to enable WantAssertionsSigned
+        saml_authn_requests_signed_enabled:
+          type: boolean
+          description: Set to 'true' to enable AuthnRequestsSigned
+        saml_certificate:
+          type: string
+          maxLength: 16384
+          description: Identity provider's certificate
+        saml_digest_algorithm:
+          type: string
+          description: An enumeration.
+          title: Digest algorithm. This is an advanced option that typically does not need to be set.
+          default: sha256
+          enum:
+          - sha1
+          - sha256
+          - sha384
+          - sha512
+        saml_entity_id:
+          type: string
+          maxLength: 2048
+          description: Saml Entity ID
+        saml_field_mapping:
+          type: object
+          description: SAMLFieldMapping
+          properties:
+            email:
+              type: string
+              maxLength: 256
+              description: Field name for user email
+              default: email
+            first_name:
+              type: string
+              maxLength: 256
+              description: Field name for user's first name
+              default: first_name
+            groups:
+              type: string
+              maxLength: 256
+              description: Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.
+              default: groups
+            identity:
+              type: string
+              maxLength: 256
+              description: Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.
+              default: email
+            last_name:
+              type: string
+              maxLength: 256
+              description: Field name for user's lastname
+              default: last_name
+            real_name:
+              type: string
+              maxLength: 256
+              description: Field name for user's full name. If specified, first_name and last_name mappings are ignored
+        saml_idp_login_allowed:
+          type: boolean
+          description: Set to 'true' to enable IdP initiated login
+          default: false
+        saml_idp_url:
+          type: string
+          maxLength: 2048
+          description: Saml Idp Url
+        saml_join_groups:
+          type: boolean
+          description: SAML join groups enabled
+          default: false
+        saml_requested_authn_context_enabled:
+          type: boolean
+          description: Set to 'false' to disable RequestedAuthnContext
+        saml_signature_algorithm:
+          type: string
+          description: An enumeration.
+          title: SAMLSignatureAlgorithm
+          default: rsa-sha256
+          enum:
+          - rsa-sha1
+          - dsa-sha1
+          - rsa-sha256
+          - rsa-sha384
+          - rsa-sha512
+        saml_variant:
+          type: string
+          description: An enumeration.
+          title: SAMLVariant
+          enum:
+          - adfs
+        scim_enabled:
+          type: boolean
+          description: SCIM enabled
+          default: false
+      required:
+      - authentication_method_name
+      - authentication_method_type
+    AccountUsersSearchRequestBody:
+      type: object
+      description: AccountUsersSearchRequestBody
+      properties:
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 500
+          description: Maximum number of results to return
+          default: 100
+        order_by:
+          type: string
+          description: Sorting criteria; desc is descending order and asc ascending
+          enum:
+          - user_email:asc
+          - user_email:desc
+          - user_id:asc
+          - user_id:desc
+          - real_name:asc
+          - real_name:desc
+        query:
+          type: string
+          maxLength: 128
+          description: Very simple filtering is used; a single word is recommended
+          title: Filter keyword
+    AccountTeamProjectAssociateRequestBody:
+      type: object
+      description: AccountTeamProjectAssociateRequestBody
+      properties:
+        team_type:
+          type: string
+          description: Team type (permission level)
+          enum:
+          - admin
+          - operator
+          - developer
+          - read_only
+          - project:integrations:read
+          - project:integrations:write
+          - project:networking:read
+          - project:networking:write
+          - project:permissions:read
+          - service:configuration:write
+          - service:logs:read
+          - project:services:read
+          - project:services:write
+          - project:audit_logs:read
+          - service:data:write
+          - service:secrets:read
+          - service:users:write
+          - service:metrics:read
+          - role:project:admin
+          - role:services:maintenance
+          - role:services:recover
+          - organization:projects:write
+          - organization:billing:read
+          - organization:billing:write
+          - organization:audit_logs:read
+          - organization:users:write
+          - organization:app_users:write
+          - organization:groups:write
+          - organization:domains:write
+          - organization:networking:read
+          - organization:networking:write
+          - role:organization:admin
+      required:
+      - team_type
+    AccountTeamProjectAssociateResponse:
+      type: object
+      description: AccountTeamProjectAssociateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountUpdateResponse:
+      type: object
+      description: AccountUpdateResponse
+      properties:
+        account:
+          type: object
+          description: Account details
+          properties:
+            access_source:
+              type: string
+              description: Describe the source of the account
+              enum:
+              - descendant_membership
+              - organization_membership
+              - project_membership
+              - team_membership
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            account_name:
+              type: string
+              maxLength: 83
+              description: Account name
+            account_owner_team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            features:
+              type: object
+              description: Feature flags
+              properties: {}
+            is_account_member:
+              type: boolean
+              description: If true, user is part of a team of this or a parent account
+            is_account_owner:
+              type: boolean
+              description: If true, user is part of the owners team for this account
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            parent_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            primary_billing_group_id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: Primary billing group ID - deprecated, always null
+            root_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            tenant_id:
+              type: string
+              maxLength: 64
+              description: Tenant identifier
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - account_id
+          - account_name
+          - account_owner_team_id
+          - create_time
+          - is_account_owner
+          - organization_id
+          - primary_billing_group_id
+          - root_account_id
+          - update_time
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account
+    AccountTeamMembersInviteResponse:
+      type: object
+      description: AccountTeamMembersInviteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountTeamMembersDeleteResponse:
+      type: object
+      description: AccountTeamMembersDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountTeamListResponse:
+      type: object
+      description: AccountTeamListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        teams:
+          type: array
+          description: List of teams
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              update_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+            required:
+            - team_id
+            - team_name
+      required:
+      - teams
+    AccountProjectsTeamsListResponse:
+      type: object
+      description: AccountProjectsTeamsListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        teams:
+          type: array
+          description: List of teams
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              team_type:
+                type: string
+                description: Team type (permission level)
+                enum:
+                - admin
+                - operator
+                - developer
+                - read_only
+                - project:integrations:read
+                - project:integrations:write
+                - project:networking:read
+                - project:networking:write
+                - project:permissions:read
+                - service:configuration:write
+                - service:logs:read
+                - project:services:read
+                - project:services:write
+                - project:audit_logs:read
+                - service:data:write
+                - service:secrets:read
+                - service:users:write
+                - service:metrics:read
+                - role:project:admin
+                - role:services:maintenance
+                - role:services:recover
+                - organization:projects:write
+                - organization:billing:read
+                - organization:billing:write
+                - organization:audit_logs:read
+                - organization:users:write
+                - organization:app_users:write
+                - organization:groups:write
+                - organization:domains:write
+                - organization:networking:read
+                - organization:networking:write
+                - role:organization:admin
+              update_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+            required:
+            - team_id
+            - team_name
+      required:
+      - teams
+    AccountAuthenticationMethodsListResponse:
+      type: object
+      description: AccountAuthenticationMethodsListResponse
+      properties:
+        authentication_methods:
+          type: array
+          description: Authentication Methods
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              auth_token_extend_when_used:
+                type: boolean
+                description: Extend authentication token validity when used
+              auth_token_max_age_seconds:
+                type: integer
+                minimum: 300
+                maximum: 1296000
+                description: Auth Token Max Age Seconds
+              authentication_method_enabled:
+                type: boolean
+                description: If true, authentication method can be used to access account/projects in account. If false, authentication method can still be used to sign in
+              authentication_method_id:
+                type: string
+                description: Authentication Method ID
+              authentication_method_name:
+                type: string
+                maxLength: 128
+                description: Authentication Method Name
+              authentication_method_type:
+                type: string
+                description: An enumeration.
+                title: Authentication method type
+                enum:
+                - internal
+                - saml
+              auto_join_team_id:
+                type: string
+                maxLength: 32
+                description: Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null.
+              auto_join_user_group_id:
+                type: string
+                maxLength: 36
+                description: Automatically add users to a group, when user signs up using this authentication method
+              create_time:
+                type: string
+                maxLength: 36
+                description: Create Time
+              delete_time:
+                type: string
+                maxLength: 36
+                description: Delete Time
+              internal_mcp_enabled:
+                type: boolean
+                description: MCP connections enabled
+              organization_id:
+                type: string
+                maxLength: 36
+                description: Organization ID
+              saml_acs_url:
+                type: string
+                maxLength: 2048
+                description: Saml Acs Url
+              saml_assertion_signed_enabled:
+                type: boolean
+                description: Set to 'true' to enable WantAssertionsSigned
+              saml_authn_requests_signed_enabled:
+                type: boolean
+                description: Set to 'true' to enable AuthnRequestsSigned
+              saml_cert:
+                type: string
+                description: An enumeration.
+                title: SAMLVariant
+                enum:
+                - adfs
+              saml_certificate:
+                type: string
+                maxLength: 16384
+                description: Identity provider's certificate
+              saml_certificate_issuer:
+                type: string
+                description: Saml Certificate Issuer
+              saml_certificate_not_valid_after:
+                type: string
+                maxLength: 36
+                description: Saml Certificate Not Valid After
+              saml_certificate_not_valid_before:
+                type: string
+                maxLength: 36
+                description: Saml Certificate Not Valid Before
+              saml_certificate_subject:
+                type: string
+                description: Saml Certificate Subject
+              saml_digest_algorithm:
+                type: string
+                description: An enumeration.
+                title: Digest algorithm. This is an advanced option that typically does not need to be set.
+                default: sha256
+                enum:
+                - sha1
+                - sha256
+                - sha384
+                - sha512
+              saml_entity_id:
+                type: string
+                maxLength: 2048
+                description: Saml Entity ID
+              saml_field_mapping:
+                type: object
+                description: SAMLFieldMapping
+                properties:
+                  email:
+                    type: string
+                    maxLength: 256
+                    description: Field name for user email
+                    default: email
+                  first_name:
+                    type: string
+                    maxLength: 256
+                    description: Field name for user's first name
+                    default: first_name
+                  groups:
+                    type: string
+                    maxLength: 256
+                    description: Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.
+                    default: groups
+                  identity:
+                    type: string
+                    maxLength: 256
+                    description: Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.
+                    default: email
+                  last_name:
+                    type: string
+                    maxLength: 256
+                    description: Field name for user's lastname
+                    default: last_name
+                  real_name:
+                    type: string
+                    maxLength: 256
+                    description: Field name for user's full name. If specified, first_name and last_name mappings are ignored
+              saml_idp_login_allowed:
+                type: boolean
+                description: Set to 'true' to enable IdP initiated login
+              saml_idp_url:
+                type: string
+                maxLength: 2048
+                description: Saml Idp Url
+              saml_join_groups:
+                type: boolean
+                description: SAML join groups enabled
+              saml_metadata_url:
+                type: string
+                maxLength: 2048
+                description: Saml Metadata Url
+              saml_requested_authn_context_enabled:
+                type: boolean
+                description: Set to 'false' to disable RequestedAuthnContext
+              saml_signature_algorithm:
+                type: string
+                description: An enumeration.
+                title: SAMLSignatureAlgorithm
+                default: rsa-sha256
+                enum:
+                - rsa-sha1
+                - dsa-sha1
+                - rsa-sha256
+                - rsa-sha384
+                - rsa-sha512
+              saml_sp_certificate:
+                type: string
+                maxLength: 16384
+                description: Saml Sp Certificate
+              saml_variant:
+                type: string
+                description: An enumeration.
+                title: SAMLVariant
+                enum:
+                - adfs
+              scim_enabled:
+                type: boolean
+                description: SCIM API enabled
+              scim_url:
+                type: string
+                maxLength: 2048
+                description: Scim Url
+              state:
+                type: string
+                description: An enumeration.
+                title: AuthenticationMethodState
+                enum:
+                - active
+                - deleted
+                - pending_configuration
+              update_time:
+                type: string
+                maxLength: 36
+                description: Update Time
+            required:
+            - account_id
+            - authentication_method_enabled
+            - authentication_method_id
+            - authentication_method_type
+            - auto_join_team_id
+            - auto_join_user_group_id
+            - create_time
+            - delete_time
+            - state
+            - update_time
+      required:
+      - authentication_methods
+    AccountListResponse:
+      type: object
+      description: AccountListResponse
+      properties:
+        accounts:
+          type: array
+          description: List of accounts
+          items:
+            type: object
+            properties:
+              access_source:
+                type: string
+                description: Describe the source of the account
+                enum:
+                - descendant_membership
+                - organization_membership
+                - project_membership
+                - team_membership
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              account_owner_team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              features:
+                type: object
+                description: Feature flags
+                properties: {}
+              is_account_member:
+                type: boolean
+                description: If true, user is part of a team of this or a parent account
+              is_account_owner:
+                type: boolean
+                description: If true, user is part of the owners team for this account
+              organization_id:
+                type: string
+                maxLength: 36
+                description: Organization ID
+              parent_account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              primary_billing_group_id:
+                type: string
+                minLength: 36
+                maxLength: 36
+                description: Primary billing group ID - deprecated, always null
+              root_account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              tenant_id:
+                type: string
+                maxLength: 64
+                description: Tenant identifier
+              update_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+            required:
+            - account_id
+            - account_name
+            - account_owner_team_id
+            - create_time
+            - is_account_owner
+            - organization_id
+            - primary_billing_group_id
+            - root_account_id
+            - update_time
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - accounts
+    AccountTeamMemberCancelInviteResponse:
+      type: object
+      description: AccountTeamMemberCancelInviteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountTeamProjectAssociationUpdateResponse:
+      type: object
+      description: AccountTeamProjectAssociationUpdateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountAttachPaymentMethodResponse:
+      type: object
+      description: AccountAttachPaymentMethodResponse
+      properties:
+        card:
+          type: object
+          description: User credit card information
+          properties:
+            brand:
+              type: string
+              description: Brand
+            card_id:
+              type: string
+              maxLength: 64
+              description: Credit card ID
+            country:
+              type: string
+              maxLength: 128
+              description: Country
+            country_code:
+              type: string
+              maxLength: 2
+              description: Two letter ISO country code
+            exp_month:
+              type: integer
+              minimum: 1
+              maximum: 12
+              description: Expiration month
+            exp_year:
+              type: integer
+              minimum: 2015
+              maximum: 2100
+              description: Expiration year
+            last4:
+              type: string
+              description: Credit card last four digits
+            name:
+              type: string
+              maxLength: 256
+              description: Name on the credit card
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            projects:
+              type: array
+              description: List of projects the card is assigned to
+              items:
+                type: string
+          required:
+          - brand
+          - card_id
+          - country
+          - country_code
+          - exp_month
+          - exp_year
+          - last4
+          - name
+          - projects
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - card
+    AccountAuthenticationMethodCreateResponse:
+      type: object
+      description: AccountAuthenticationMethodCreateResponse
+      properties:
+        authentication_method:
+          type: object
+          description: AuthenticationMethod
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            auth_token_extend_when_used:
+              type: boolean
+              description: Extend authentication token validity when used
+            auth_token_max_age_seconds:
+              type: integer
+              minimum: 300
+              maximum: 1296000
+              description: Auth Token Max Age Seconds
+            authentication_method_enabled:
+              type: boolean
+              description: If true, authentication method can be used to access account/projects in account. If false, authentication method can still be used to sign in
+            authentication_method_id:
+              type: string
+              description: Authentication Method ID
+            authentication_method_name:
+              type: string
+              maxLength: 128
+              description: Authentication Method Name
+            authentication_method_type:
+              type: string
+              description: An enumeration.
+              title: Authentication method type
+              enum:
+              - internal
+              - saml
+            auto_join_team_id:
+              type: string
+              maxLength: 32
+              description: Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null.
+            auto_join_user_group_id:
+              type: string
+              maxLength: 36
+              description: Automatically add users to a group, when user signs up using this authentication method
+            create_time:
+              type: string
+              maxLength: 36
+              description: Create Time
+            delete_time:
+              type: string
+              maxLength: 36
+              description: Delete Time
+            internal_mcp_enabled:
+              type: boolean
+              description: MCP connections enabled
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            saml_acs_url:
+              type: string
+              maxLength: 2048
+              description: Saml Acs Url
+            saml_assertion_signed_enabled:
+              type: boolean
+              description: Set to 'true' to enable WantAssertionsSigned
+            saml_authn_requests_signed_enabled:
+              type: boolean
+              description: Set to 'true' to enable AuthnRequestsSigned
+            saml_cert:
+              type: string
+              description: An enumeration.
+              title: SAMLVariant
+              enum:
+              - adfs
+            saml_certificate:
+              type: string
+              maxLength: 16384
+              description: Identity provider's certificate
+            saml_certificate_issuer:
+              type: string
+              description: Saml Certificate Issuer
+            saml_certificate_not_valid_after:
+              type: string
+              maxLength: 36
+              description: Saml Certificate Not Valid After
+            saml_certificate_not_valid_before:
+              type: string
+              maxLength: 36
+              description: Saml Certificate Not Valid Before
+            saml_certificate_subject:
+              type: string
+              description: Saml Certificate Subject
+            saml_digest_algorithm:
+              type: string
+              description: An enumeration.
+              title: Digest algorithm. This is an advanced option that typically does not need to be set.
+              default: sha256
+              enum:
+              - sha1
+              - sha256
+              - sha384
+              - sha512
+            saml_entity_id:
+              type: string
+              maxLength: 2048
+              description: Saml Entity ID
+            saml_field_mapping:
+              type: object
+              description: SAMLFieldMapping
+              properties:
+                email:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user email
+                  default: email
+                first_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's first name
+                  default: first_name
+                groups:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.
+                  default: groups
+                identity:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.
+                  default: email
+                last_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's lastname
+                  default: last_name
+                real_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's full name. If specified, first_name and last_name mappings are ignored
+            saml_idp_login_allowed:
+              type: boolean
+              description: Set to 'true' to enable IdP initiated login
+            saml_idp_url:
+              type: string
+              maxLength: 2048
+              description: Saml Idp Url
+            saml_join_groups:
+              type: boolean
+              description: SAML join groups enabled
+            saml_metadata_url:
+              type: string
+              maxLength: 2048
+              description: Saml Metadata Url
+            saml_requested_authn_context_enabled:
+              type: boolean
+              description: Set to 'false' to disable RequestedAuthnContext
+            saml_signature_algorithm:
+              type: string
+              description: An enumeration.
+              title: SAMLSignatureAlgorithm
+              default: rsa-sha256
+              enum:
+              - rsa-sha1
+              - dsa-sha1
+              - rsa-sha256
+              - rsa-sha384
+              - rsa-sha512
+            saml_sp_certificate:
+              type: string
+              maxLength: 16384
+              description: Saml Sp Certificate
+            saml_variant:
+              type: string
+              description: An enumeration.
+              title: SAMLVariant
+              enum:
+              - adfs
+            scim_enabled:
+              type: boolean
+              description: SCIM API enabled
+            scim_url:
+              type: string
+              maxLength: 2048
+              description: Scim Url
+            state:
+              type: string
+              description: An enumeration.
+              title: AuthenticationMethodState
+              enum:
+              - active
+              - deleted
+              - pending_configuration
+            update_time:
+              type: string
+              maxLength: 36
+              description: Update Time
+          required:
+          - account_id
+          - authentication_method_enabled
+          - authentication_method_id
+          - authentication_method_type
+          - auto_join_team_id
+          - auto_join_user_group_id
+          - create_time
+          - delete_time
+          - state
+          - update_time
+      required:
+      - authentication_method
+    AccountTeamMemberVerifyInviteResponse:
+      type: object
+      description: AccountTeamMemberVerifyInviteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        invite_details:
+          type: object
+          description: Details of verified invite
+          properties:
+            user_email:
+              type: string
+              maxLength: 254
+              description: User email address
+          required:
+          - user_email
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - invite_details
+    AccountAuthenticationMethodGetResponse:
+      type: object
+      description: AccountAuthenticationMethodGetResponse
+      properties:
+        authentication_method:
+          type: object
+          description: AuthenticationMethod
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            auth_token_extend_when_used:
+              type: boolean
+              description: Extend authentication token validity when used
+            auth_token_max_age_seconds:
+              type: integer
+              minimum: 300
+              maximum: 1296000
+              description: Auth Token Max Age Seconds
+            authentication_method_enabled:
+              type: boolean
+              description: If true, authentication method can be used to access account/projects in account. If false, authentication method can still be used to sign in
+            authentication_method_id:
+              type: string
+              description: Authentication Method ID
+            authentication_method_name:
+              type: string
+              maxLength: 128
+              description: Authentication Method Name
+            authentication_method_type:
+              type: string
+              description: An enumeration.
+              title: Authentication method type
+              enum:
+              - internal
+              - saml
+            auto_join_team_id:
+              type: string
+              maxLength: 32
+              description: Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null.
+            auto_join_user_group_id:
+              type: string
+              maxLength: 36
+              description: Automatically add users to a group, when user signs up using this authentication method
+            create_time:
+              type: string
+              maxLength: 36
+              description: Create Time
+            delete_time:
+              type: string
+              maxLength: 36
+              description: Delete Time
+            internal_mcp_enabled:
+              type: boolean
+              description: MCP connections enabled
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            saml_acs_url:
+              type: string
+              maxLength: 2048
+              description: Saml Acs Url
+            saml_assertion_signed_enabled:
+              type: boolean
+              description: Set to 'true' to enable WantAssertionsSigned
+            saml_authn_requests_signed_enabled:
+              type: boolean
+              description: Set to 'true' to enable AuthnRequestsSigned
+            saml_cert:
+              type: string
+              description: An enumeration.
+              title: SAMLVariant
+              enum:
+              - adfs
+            saml_certificate:
+              type: string
+              maxLength: 16384
+              description: Identity provider's certificate
+            saml_certificate_issuer:
+              type: string
+              description: Saml Certificate Issuer
+            saml_certificate_not_valid_after:
+              type: string
+              maxLength: 36
+              description: Saml Certificate Not Valid After
+            saml_certificate_not_valid_before:
+              type: string
+              maxLength: 36
+              description: Saml Certificate Not Valid Before
+            saml_certificate_subject:
+              type: string
+              description: Saml Certificate Subject
+            saml_digest_algorithm:
+              type: string
+              description: An enumeration.
+              title: Digest algorithm. This is an advanced option that typically does not need to be set.
+              default: sha256
+              enum:
+              - sha1
+              - sha256
+              - sha384
+              - sha512
+            saml_entity_id:
+              type: string
+              maxLength: 2048
+              description: Saml Entity ID
+            saml_field_mapping:
+              type: object
+              description: SAMLFieldMapping
+              properties:
+                email:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user email
+                  default: email
+                first_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's first name
+                  default: first_name
+                groups:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.
+                  default: groups
+                identity:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.
+                  default: email
+                last_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's lastname
+                  default: last_name
+                real_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's full name. If specified, first_name and last_name mappings are ignored
+            saml_idp_login_allowed:
+              type: boolean
+              description: Set to 'true' to enable IdP initiated login
+            saml_idp_url:
+              type: string
+              maxLength: 2048
+              description: Saml Idp Url
+            saml_join_groups:
+              type: boolean
+              description: SAML join groups enabled
+            saml_metadata_url:
+              type: string
+              maxLength: 2048
+              description: Saml Metadata Url
+            saml_requested_authn_context_enabled:
+              type: boolean
+              description: Set to 'false' to disable RequestedAuthnContext
+            saml_signature_algorithm:
+              type: string
+              description: An enumeration.
+              title: SAMLSignatureAlgorithm
+              default: rsa-sha256
+              enum:
+              - rsa-sha1
+              - dsa-sha1
+              - rsa-sha256
+              - rsa-sha384
+              - rsa-sha512
+            saml_sp_certificate:
+              type: string
+              maxLength: 16384
+              description: Saml Sp Certificate
+            saml_variant:
+              type: string
+              description: An enumeration.
+              title: SAMLVariant
+              enum:
+              - adfs
+            scim_enabled:
+              type: boolean
+              description: SCIM API enabled
+            scim_url:
+              type: string
+              maxLength: 2048
+              description: Scim Url
+            state:
+              type: string
+              description: An enumeration.
+              title: AuthenticationMethodState
+              enum:
+              - active
+              - deleted
+              - pending_configuration
+            update_time:
+              type: string
+              maxLength: 36
+              description: Update Time
+          required:
+          - account_id
+          - authentication_method_enabled
+          - authentication_method_id
+          - authentication_method_type
+          - auto_join_team_id
+          - auto_join_user_group_id
+          - create_time
+          - delete_time
+          - state
+          - update_time
+      required:
+      - authentication_method
+    AccountAuthenticationMethodUpdateResponse:
+      type: object
+      description: AccountAuthenticationMethodUpdateResponse
+      properties:
+        authentication_method:
+          type: object
+          description: AuthenticationMethod
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            auth_token_extend_when_used:
+              type: boolean
+              description: Extend authentication token validity when used
+            auth_token_max_age_seconds:
+              type: integer
+              minimum: 300
+              maximum: 1296000
+              description: Auth Token Max Age Seconds
+            authentication_method_enabled:
+              type: boolean
+              description: If true, authentication method can be used to access account/projects in account. If false, authentication method can still be used to sign in
+            authentication_method_id:
+              type: string
+              description: Authentication Method ID
+            authentication_method_name:
+              type: string
+              maxLength: 128
+              description: Authentication Method Name
+            authentication_method_type:
+              type: string
+              description: An enumeration.
+              title: Authentication method type
+              enum:
+              - internal
+              - saml
+            auto_join_team_id:
+              type: string
+              maxLength: 32
+              description: Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null.
+            auto_join_user_group_id:
+              type: string
+              maxLength: 36
+              description: Automatically add users to a group, when user signs up using this authentication method
+            create_time:
+              type: string
+              maxLength: 36
+              description: Create Time
+            delete_time:
+              type: string
+              maxLength: 36
+              description: Delete Time
+            internal_mcp_enabled:
+              type: boolean
+              description: MCP connections enabled
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            saml_acs_url:
+              type: string
+              maxLength: 2048
+              description: Saml Acs Url
+            saml_assertion_signed_enabled:
+              type: boolean
+              description: Set to 'true' to enable WantAssertionsSigned
+            saml_authn_requests_signed_enabled:
+              type: boolean
+              description: Set to 'true' to enable AuthnRequestsSigned
+            saml_cert:
+              type: string
+              description: An enumeration.
+              title: SAMLVariant
+              enum:
+              - adfs
+            saml_certificate:
+              type: string
+              maxLength: 16384
+              description: Identity provider's certificate
+            saml_certificate_issuer:
+              type: string
+              description: Saml Certificate Issuer
+            saml_certificate_not_valid_after:
+              type: string
+              maxLength: 36
+              description: Saml Certificate Not Valid After
+            saml_certificate_not_valid_before:
+              type: string
+              maxLength: 36
+              description: Saml Certificate Not Valid Before
+            saml_certificate_subject:
+              type: string
+              description: Saml Certificate Subject
+            saml_digest_algorithm:
+              type: string
+              description: An enumeration.
+              title: Digest algorithm. This is an advanced option that typically does not need to be set.
+              default: sha256
+              enum:
+              - sha1
+              - sha256
+              - sha384
+              - sha512
+            saml_entity_id:
+              type: string
+              maxLength: 2048
+              description: Saml Entity ID
+            saml_field_mapping:
+              type: object
+              description: SAMLFieldMapping
+              properties:
+                email:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user email
+                  default: email
+                first_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's first name
+                  default: first_name
+                groups:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.
+                  default: groups
+                identity:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.
+                  default: email
+                last_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's lastname
+                  default: last_name
+                real_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's full name. If specified, first_name and last_name mappings are ignored
+            saml_idp_login_allowed:
+              type: boolean
+              description: Set to 'true' to enable IdP initiated login
+            saml_idp_url:
+              type: string
+              maxLength: 2048
+              description: Saml Idp Url
+            saml_join_groups:
+              type: boolean
+              description: SAML join groups enabled
+            saml_metadata_url:
+              type: string
+              maxLength: 2048
+              description: Saml Metadata Url
+            saml_requested_authn_context_enabled:
+              type: boolean
+              description: Set to 'false' to disable RequestedAuthnContext
+            saml_signature_algorithm:
+              type: string
+              description: An enumeration.
+              title: SAMLSignatureAlgorithm
+              default: rsa-sha256
+              enum:
+              - rsa-sha1
+              - dsa-sha1
+              - rsa-sha256
+              - rsa-sha384
+              - rsa-sha512
+            saml_sp_certificate:
+              type: string
+              maxLength: 16384
+              description: Saml Sp Certificate
+            saml_variant:
+              type: string
+              description: An enumeration.
+              title: SAMLVariant
+              enum:
+              - adfs
+            scim_enabled:
+              type: boolean
+              description: SCIM API enabled
+            scim_url:
+              type: string
+              maxLength: 2048
+              description: Scim Url
+            state:
+              type: string
+              description: An enumeration.
+              title: AuthenticationMethodState
+              enum:
+              - active
+              - deleted
+              - pending_configuration
+            update_time:
+              type: string
+              maxLength: 36
+              description: Update Time
+          required:
+          - account_id
+          - authentication_method_enabled
+          - authentication_method_id
+          - authentication_method_type
+          - auto_join_team_id
+          - auto_join_user_group_id
+          - create_time
+          - delete_time
+          - state
+          - update_time
+      required:
+      - authentication_method
+    AccountCreateResponse:
+      type: object
+      description: AccountCreateResponse
+      properties:
+        account:
+          type: object
+          description: Account details
+          properties:
+            access_source:
+              type: string
+              description: Describe the source of the account
+              enum:
+              - descendant_membership
+              - organization_membership
+              - project_membership
+              - team_membership
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            account_name:
+              type: string
+              maxLength: 83
+              description: Account name
+            account_owner_team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            features:
+              type: object
+              description: Feature flags
+              properties: {}
+            is_account_member:
+              type: boolean
+              description: If true, user is part of a team of this or a parent account
+            is_account_owner:
+              type: boolean
+              description: If true, user is part of the owners team for this account
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            parent_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            primary_billing_group_id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: Primary billing group ID - deprecated, always null
+            root_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            tenant_id:
+              type: string
+              maxLength: 64
+              description: Tenant identifier
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - account_id
+          - account_name
+          - account_owner_team_id
+          - create_time
+          - is_account_owner
+          - organization_id
+          - primary_billing_group_id
+          - root_account_id
+          - update_time
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account
+    AccountGetResponse:
+      type: object
+      description: AccountGetResponse
+      properties:
+        account:
+          type: object
+          description: Account details
+          properties:
+            access_source:
+              type: string
+              description: Describe the source of the account
+              enum:
+              - descendant_membership
+              - organization_membership
+              - project_membership
+              - team_membership
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            account_name:
+              type: string
+              maxLength: 83
+              description: Account name
+            account_owner_team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            features:
+              type: object
+              description: Feature flags
+              properties: {}
+            is_account_member:
+              type: boolean
+              description: If true, user is part of a team of this or a parent account
+            is_account_owner:
+              type: boolean
+              description: If true, user is part of the owners team for this account
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            parent_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            primary_billing_group_id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: Primary billing group ID - deprecated, always null
+            root_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            tenant_id:
+              type: string
+              maxLength: 64
+              description: Tenant identifier
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - account_id
+          - account_name
+          - account_owner_team_id
+          - create_time
+          - is_account_owner
+          - organization_id
+          - primary_billing_group_id
+          - root_account_id
+          - update_time
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account
+    AccountTeamInvitesListResponse:
+      type: object
+      description: AccountTeamInvitesListResponse
+      properties:
+        account_invites:
+          type: array
+          description: List of invites
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              invited_by_user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - account_id
+            - account_name
+            - create_time
+            - invited_by_user_email
+            - team_id
+            - team_name
+            - user_email
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account_invites
+    AccountPaymentMethodDeleteResponse:
+      type: object
+      description: AccountPaymentMethodDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountUserProjectsListResponse:
+      type: object
+      description: AccountUserProjectsListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        user_projects:
+          type: array
+          description: List of user's projects
+          items:
+            type: object
+            properties:
+              access_type:
+                type: string
+                description: Access type
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              member_type:
+                type: string
+                description: Project member type
+                enum:
+                - admin
+                - developer
+                - operator
+                - organization:app_users:write
+                - organization:audit_logs:read
+                - organization:billing:read
+                - organization:billing:write
+                - organization:domains:write
+                - organization:groups:write
+                - organization:networking:read
+                - organization:networking:write
+                - organization:projects:write
+                - organization:users:write
+                - project:audit_logs:read
+                - project:integrations:read
+                - project:integrations:write
+                - project:networking:read
+                - project:networking:write
+                - project:permissions:read
+                - project:services:read
+                - project:services:write
+                - read_only
+                - role:organization:admin
+                - role:project:admin
+                - role:services:maintenance
+                - role:services:recover
+                - service:configuration:write
+                - service:data:write
+                - service:logs:read
+                - service:metrics:read
+                - service:secrets:read
+                - service:users:write
+              project_name:
+                type: string
+                maxLength: 63
+                description: Project name
+              real_name:
+                type: string
+                maxLength: 256
+                description: User real name
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - account_id
+            - create_time
+            - member_type
+            - project_name
+            - real_name
+            - team_id
+            - team_name
+            - user_email
+      required:
+      - user_projects
+    AccountTeamProjectListResponse:
+      type: object
+      description: AccountTeamProjectListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        projects:
+          type: array
+          description: List of projects associated to a team
+          items:
+            type: object
+            properties:
+              project_name:
+                type: string
+                maxLength: 63
+                description: Project name
+              team_type:
+                type: string
+                description: Team type (permission level)
+                enum:
+                - admin
+                - operator
+                - developer
+                - read_only
+                - project:integrations:read
+                - project:integrations:write
+                - project:networking:read
+                - project:networking:write
+                - project:permissions:read
+                - service:configuration:write
+                - service:logs:read
+                - project:services:read
+                - project:services:write
+                - project:audit_logs:read
+                - service:data:write
+                - service:secrets:read
+                - service:users:write
+                - service:metrics:read
+                - role:project:admin
+                - role:services:maintenance
+                - role:services:recover
+                - organization:projects:write
+                - organization:billing:read
+                - organization:billing:write
+                - organization:audit_logs:read
+                - organization:users:write
+                - organization:app_users:write
+                - organization:groups:write
+                - organization:domains:write
+                - organization:networking:read
+                - organization:networking:write
+                - role:organization:admin
+            required:
+            - project_name
+            - team_type
+      required:
+      - projects
+    AccountTeamUpdateRequestBody:
+      type: object
+      description: AccountTeamUpdateRequestBody
+      properties:
+        team_name:
+          type: string
+          maxLength: 128
+          description: Team name
+      required:
+      - team_name
+    AccountDeleteResponse:
+      type: object
+      description: AccountDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountTeamProjectAssociationUpdateRequestBody:
+      type: object
+      description: AccountTeamProjectAssociationUpdateRequestBody
+      properties:
+        team_type:
+          type: string
+          description: Team type (permission level)
+          enum:
+          - admin
+          - operator
+          - developer
+          - read_only
+          - project:integrations:read
+          - project:integrations:write
+          - project:networking:read
+          - project:networking:write
+          - project:permissions:read
+          - service:configuration:write
+          - service:logs:read
+          - project:services:read
+          - project:services:write
+          - project:audit_logs:read
+          - service:data:write
+          - service:secrets:read
+          - service:users:write
+          - service:metrics:read
+          - role:project:admin
+          - role:services:maintenance
+          - role:services:recover
+          - organization:projects:write
+          - organization:billing:read
+          - organization:billing:write
+          - organization:audit_logs:read
+          - organization:users:write
+          - organization:app_users:write
+          - organization:groups:write
+          - organization:domains:write
+          - organization:networking:read
+          - organization:networking:write
+          - role:organization:admin
+    AccountUpdateRequestBody:
+      type: object
+      description: AccountUpdateRequestBody
+      properties:
+        account_name:
+          type: string
+          maxLength: 83
+          description: Account name
+        primary_billing_group_id:
+          type: string
+          minLength: 36
+          maxLength: 36
+          description: Billing group ID
+    AccountEventListResponse:
+      type: object
+      description: AccountEventListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        events:
+          type: array
+          description: List of events
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              action_description:
+                type: string
+                description: Event description
+              action_type:
+                type: string
+                description: Event type
+              actor:
+                type: string
+                description: Actor details
+              actor_user_id:
+                type: string
+                description: User ID
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              log_entry_id:
+                type: integer
+                minimum: 0
+                description: Entry ID
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+            required:
+            - account_id
+            - action_description
+            - action_type
+            - actor
+            - actor_user_id
+            - create_time
+            - log_entry_id
+            - team_id
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - events
+  parameters:
+    team_id:
+      in: path
+      name: team_id
+      description: Team ID
+      schema:
+        type: string
+      required: true
+    account_id:
+      in: path
+      name: account_id
+      description: Account ID
+      schema:
+        type: string
+      required: true
+    account_authentication_method_id:
+      in: path
+      name: account_authentication_method_id
+      description: Account authentication method ID
+      schema:
+        type: string
+      required: true
+    user_id:
+      in: path
+      name: user_id
+      description: User ID
+      schema:
+        type: string
+      required: true
+    card_id:
+      in: path
+      name: card_id
+      description: Credit card ID
+      schema:
+        type: string
+      required: true
+    project_name:
+      in: path
+      name: project_name
+      description: Project name
+      schema:
+        type: string
+      required: true
+    invite_verification_code:
+      in: path
+      name: invite_verification_code
+      description: Verification code received via email
+      schema:
+        type: string
+      required: true
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    user_email:
+      in: path
+      name: user_email
+      description: Email address
+      schema:
+        type: string
+      required: true
+  securitySchemes:
+    tokenAuth:
+      description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'
+      scheme: bearer
+      type: http
+    oauth2:
+      type: oauth2
+      description: OAuth2 security scheme
+      flows:
+        authorizationCode:
+          authorizationUrl: https://console.aiven.io/oauth/authorize
+          tokenUrl: https://api.aiven.io/v1/oauth2/token
+          scopes:
+            all: Provide full access to the API
+            accounts: Allow enumerating and reading accounts configuration
+            accounts:read: Allow modifying account configuration
+            accounts:write: Provides full access to authentication related API
+            authentication: Provides full access to authentication related API
+            authentication:read: Allow reading authentication related configuration on resources (user profile, accounts)
+            authentication:write: Allow modifying authentication related configurations on resources (user profile, accounts)
+            billing: Provide full access to billing APIs
+            billing:read: Allow reading billing information and configuration
+            billing:write: Allow writing billing configuration
+            payments: Provide full access to payment method APIs
+            payments:read: Allow reading the payment method configurations
+            payments:write: Allows writing payment method configuration
+            privatelink: Provide full access to private link APIs
+            privatelink:read: Allow enumerating and reading private link items and configurations
+            privatelink:write: Allow writing (creating, modifying, deleting) private link items
+            projects: Provide full access to projects APIs
+            projects:read: Allow enumerating projects and reading their configuration
+            projects:write: Allow writing (creating, modifying, deleting) projects
+            scim: Provide full access to SCIM operations
+            scim:read: Allow reading SCIM endpoints
+            scim:write: Allow writing (modifying) SCIM endpoints
+            services: Provide full access to services APIs
+            services:read: Allow enumerating services and reading their configuration
+            services:write: Allow writing (creating, modifying, deleting) services
+            static_ips: Provide full access to static IPs APIs
+            static_ips:read: Allow enumerating and reading static IP items and configurations
+            static_ips:write: Allow writing (creating, modifying, deleting) static IP items
+            tickets: Provide full access to support ticket APIs
+            tickets:read: Allow enumerating and reading support tickets
+            tickets:write: Allow writing (creating, modifying) support tickets
+            user: Provide full access to user profile APIs
+            user:read: Allow reading user profile and configuration
+            user:write: Allow writing (modifying) user profile and configuration
+externalDocs:
+  description: Aiven CLI client
+  url: https://github.com/aiven/aiven-client
