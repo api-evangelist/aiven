@@ -10,7 +10,20 @@ description: >
   Pricing is all-inclusive and hourly-billed, covering VMs, networking, backups, and
   maintenance with no hidden fees across Free, Developer, Startup, Business, and Premium tiers.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: false
+  label: Freemium (free trial) · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/aiven.png
 url: https://raw.githubusercontent.com/api-evangelist/aiven/refs/heads/main/apis.yml
 created: "2026-06-13"
 modified: "2026-07-12"
@@ -29,59 +42,1301 @@ tags:
   - Data Streaming
   - Data Platform
 apis:
-  - aid: aiven:aiven-api
-    name: Aiven REST API
-    description: >
-      The Aiven REST API provides programmatic access to the Aiven platform for provisioning
-      and managing open-source data services including Apache Kafka, PostgreSQL, OpenSearch,
-      Redis, MySQL, ClickHouse, and more. The API supports full lifecycle management of
-      services, projects, organizations, billing, VPCs, integrations, and user access controls.
-      Authentication is via personal access tokens or OAuth2 authorization code flow with
-      granular scopes for accounts, billing, projects, and services.
-    humanURL: https://aiven.io/docs/tools/api
-    baseURL: https://api.aiven.io/v1
-    tags:
-      - Data Infrastructure
-      - Managed Services
-      - Apache Kafka
-      - PostgreSQL
-      - OpenSearch
-    properties:
-      - type: Documentation
-        url: https://aiven.io/docs/tools/api
-      - type: OpenAPI
-        url: https://api.aiven.io/doc/
-      - type: Authentication
-        url: https://aiven.io/docs/platform/howto/create_authentication_token
-      - type: OpenAPI
-        url: openapi/aiven-aiven-api-openapi.yml
-      - type: JSONSchema
-        url: json-schema/aiven-service-create.json
-      - type: JSONSchema
-        url: json-schema/aiven-service-list.json
-      - type: JSONSchema
-        url: json-schema/aiven-project-create.json
-      - type: JSONSchema
-        url: json-schema/aiven-account-auth.json
-      - type: JSONSchema
-        url: json-schema/aiven-billing-group.json
-      - type: JSONSchema
-        url: json-schema/aiven-organization-create.json
-      - type: JSONSchema
-        url: json-schema/aiven-vpc-create.json
-      - type: JSONSchema
-        url: json-schema/aiven-user-info.json
-      - type: Examples
-        url: examples/aiven-create-project.json
-      - type: Examples
-        url: examples/aiven-create-kafka-service.json
-      - type: Examples
-        url: examples/aiven-create-postgresql-service.json
-      - type: Examples
-        url: examples/aiven-list-services.json
-    contact:
-      - FN: Aiven Support
-        url: https://aiven.io/support
+- aid: aiven:aiven-account-api
+  name: Aiven Account API
+  description: The Account API from Aiven — 23 operation(s) for account.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-account-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-application-users-api
+  name: Aiven Application_Users API
+  description: The Application_Users API from Aiven — 4 operation(s) for application_users.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Application_Users
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-application-users-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-authentication-methods-api
+  name: Aiven Authentication_Methods API
+  description: The Authentication_Methods API from Aiven — 2 operation(s) for authentication_methods.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Authentication_Methods
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-authentication-methods-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-billing-api
+  name: Aiven Billing API
+  description: The Billing API from Aiven — 4 operation(s) for billing.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Billing
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-billing-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-billinggroup-api
+  name: Aiven BillingGroup API
+  description: The BillingGroup API from Aiven — 12 operation(s) for billinggroup.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - BillingGroup
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-billinggroup-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-cloud-platforms-api
+  name: Aiven Cloud_platforms API
+  description: The Cloud_platforms API from Aiven — 4 operation(s) for cloud_platforms.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Cloud_platforms
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-cloud-platforms-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-custom-cloud-api
+  name: Aiven Custom_Cloud API
+  description: The Custom_Cloud API from Aiven — 4 operation(s) for custom_cloud.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Custom_Cloud
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-custom-cloud-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-domains-api
+  name: Aiven Domains API
+  description: The Domains API from Aiven — 3 operation(s) for domains.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-domains-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-groups-api
+  name: Aiven Groups API
+  description: The Groups API from Aiven — 3 operation(s) for groups.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-groups-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-organization-vpc-api
+  name: Aiven Organization_Vpc API
+  description: The Organization_Vpc API from Aiven — 9 operation(s) for organization_vpc.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Organization_Vpc
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-organization-vpc-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-organizationbillinggroup-api
+  name: Aiven OrganizationBillingGroup API
+  description: >-
+    The OrganizationBillingGroup API from Aiven — 10 operation(s) for organizationbillinggroup.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - OrganizationBillingGroup
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-organizationbillinggroup-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-organizationemissions-api
+  name: Aiven OrganizationEmissions API
+  description: The OrganizationEmissions API from Aiven — 1 operation(s) for organizationemissions.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - OrganizationEmissions
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-organizationemissions-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-organizationpaymentmethod-api
+  name: Aiven OrganizationPaymentMethod API
+  description: >-
+    The OrganizationPaymentMethod API from Aiven — 7 operation(s) for organizationpaymentmethod.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - OrganizationPaymentMethod
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-organizationpaymentmethod-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-organizations-api
+  name: Aiven Organizations API
+  description: The Organizations API from Aiven — 12 operation(s) for organizations.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-payment-api
+  name: Aiven Payment API
+  description: The Payment API from Aiven — 2 operation(s) for payment.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Payment
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-payment-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-permissions-api
+  name: Aiven Permissions API
+  description: The Permissions API from Aiven — 1 operation(s) for permissions.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Permissions
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-permissions-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-project-api
+  name: Aiven Project API
+  description: The Project API from Aiven — 27 operation(s) for project.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Project
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-project-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-project-billing-api
+  name: Aiven Project_Billing API
+  description: The Project_Billing API from Aiven — 3 operation(s) for project_billing.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Project_Billing
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-project-billing-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-project-key-management-api
+  name: Aiven Project_Key_Management API
+  description: The Project_Key_Management API from Aiven — 1 operation(s) for project_key_management.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Project_Key_Management
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-project-key-management-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-secrets-api
+  name: Aiven Secrets API
+  description: The Secrets API from Aiven — 5 operation(s) for secrets.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Secrets
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-secrets-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-service-api
+  name: Aiven Service API
+  description: The Service API from Aiven — 34 operation(s) for service.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Service
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-service-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-service-clickhouse-api
+  name: Aiven Service:_ClickHouse API
+  description: The Service:_ClickHouse API from Aiven — 8 operation(s) for service:_clickhouse.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Service:_ClickHouse
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-service-clickhouse-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-service-flink-api
+  name: Aiven Service:_Flink API
+  description: The Service:_Flink API from Aiven — 20 operation(s) for service:_flink.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Service:_Flink
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-service-flink-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-service-integrations-api
+  name: Aiven Service_Integrations API
+  description: The Service_Integrations API from Aiven — 7 operation(s) for service_integrations.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Service_Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-service-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-service-kafka-api
+  name: Aiven Service:_Kafka API
+  description: The Service:_Kafka API from Aiven — 34 operation(s) for service:_kafka.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Service:_Kafka
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-service-kafka-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-service-kafka-mirrormaker-api
+  name: Aiven Service:_Kafka_MirrorMaker API
+  description: >-
+    The Service:_Kafka_MirrorMaker API from Aiven — 2 operation(s) for service:_kafka_mirrormaker.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Service:_Kafka_MirrorMaker
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-service-kafka-mirrormaker-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-service-mysql-api
+  name: Aiven Service:_MySQL API
+  description: The Service:_MySQL API from Aiven — 5 operation(s) for service:_mysql.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Service:_MySQL
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-service-mysql-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-service-opensearch-api
+  name: Aiven Service:_OpenSearch API
+  description: The Service:_OpenSearch API from Aiven — 19 operation(s) for service:_opensearch.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Service:_OpenSearch
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-service-opensearch-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-service-postgresql-api
+  name: Aiven Service:_PostgreSQL API
+  description: The Service:_PostgreSQL API from Aiven — 9 operation(s) for service:_postgresql.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Service:_PostgreSQL
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-service-postgresql-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-service-thanos-api
+  name: Aiven Service:_Thanos API
+  description: The Service:_Thanos API from Aiven — 1 operation(s) for service:_thanos.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Service:_Thanos
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-service-thanos-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-staticip-api
+  name: Aiven StaticIP API
+  description: The StaticIP API from Aiven — 4 operation(s) for staticip.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - StaticIP
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-staticip-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-ticket-deprecated-api
+  name: Aiven Ticket_[deprecated] API
+  description: The Ticket_[deprecated] API from Aiven — 3 operation(s) for ticket_[deprecated].
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Ticket_[deprecated]
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-ticket-deprecated-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-upgrade-pipeline-api
+  name: Aiven Upgrade_pipeline API
+  description: The Upgrade_pipeline API from Aiven — 3 operation(s) for upgrade_pipeline.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Upgrade_pipeline
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-upgrade-pipeline-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
+- aid: aiven:aiven-users-api
+  name: Aiven Users API
+  description: The Users API from Aiven — 31 operation(s) for users.
+  humanURL: https://aiven.io/docs/tools/api
+  baseURL: https://api.aiven.io/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/aiven-users-api-openapi.yml
+  - type: Documentation
+    url: https://aiven.io/docs/tools/api
+  - type: Authentication
+    url: https://aiven.io/docs/platform/howto/create_authentication_token
+  - type: JSONSchema
+    url: json-schema/aiven-service-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-service-list.json
+  - type: JSONSchema
+    url: json-schema/aiven-project-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-account-auth.json
+  - type: JSONSchema
+    url: json-schema/aiven-billing-group.json
+  - type: JSONSchema
+    url: json-schema/aiven-organization-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-vpc-create.json
+  - type: JSONSchema
+    url: json-schema/aiven-user-info.json
+  - type: Examples
+    url: examples/aiven-create-project.json
+  - type: Examples
+    url: examples/aiven-create-kafka-service.json
+  - type: Examples
+    url: examples/aiven-create-postgresql-service.json
+  - type: Examples
+    url: examples/aiven-list-services.json
 common:
   - type: AgenticAccess
     url: agentic-access/aiven-agentic-access.yml
