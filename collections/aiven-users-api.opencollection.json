@@ -1,0 +1,788 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Users API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all valid access tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/access_token",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all valid access tokens"
+        },
+        {
+          "info": {
+            "name": "Create new access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/access_token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create new access token"
+        },
+        {
+          "info": {
+            "name": "Update an existing access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/access_token/:token_prefix",
+            "params": [
+              {
+                "name": "token_prefix",
+                "value": "",
+                "type": "path",
+                "description": "Access token prefix"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update an existing access token"
+        },
+        {
+          "info": {
+            "name": "Revoke an access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/access_token/:token_prefix",
+            "params": [
+              {
+                "name": "token_prefix",
+                "value": "",
+                "type": "path",
+                "description": "Access token prefix"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Revoke an access token"
+        },
+        {
+          "info": {
+            "name": "Check password strength for an existing user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/me/password_strength",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check password strength for an existing user"
+        },
+        {
+          "info": {
+            "name": "Check password strength for a new user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/user/password_strength",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Check password strength for a new user"
+        },
+        {
+          "info": {
+            "name": "List user groups of the organization's member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/user/:member_user_id/user-groups",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "member_user_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the organization's user"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List user groups of the organization's member"
+        },
+        {
+          "info": {
+            "name": "List resources permissions of the organization's member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/user/:member_user_id/permissions",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "member_user_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the organization's user"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns a comprehensive list of resources within an organization, including units, projects, and the organization itself, along with the specific permissions assigned to the user for each resource.</p>"
+        },
+        {
+          "info": {
+            "name": "List authentication methods for a user in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/user/:member_user_id/authentication_methods",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "member_user_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the organization's user"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List authentication methods for a user in the organization"
+        },
+        {
+          "info": {
+            "name": "Get details on a user of the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/user/:member_user_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "member_user_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the organization's user"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get details on a user of the organization"
+        },
+        {
+          "info": {
+            "name": "Update details on a user of the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/user/:member_user_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "member_user_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the organization's user"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update details on a user of the organization"
+        },
+        {
+          "info": {
+            "name": "Remove a user from the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/user/:member_user_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "member_user_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the organization's user"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove a user from the organization"
+        },
+        {
+          "info": {
+            "name": "List users of the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/user",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "include_application_users",
+                "value": "",
+                "type": "query",
+                "description": "Include application users in the response. Defaults to true."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List users of the organization"
+        },
+        {
+          "info": {
+            "name": "Reset the password of a managed user in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/user/:member_user_id/reset_password",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "member_user_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the organization's user"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reset the password of a managed user in the organization"
+        },
+        {
+          "info": {
+            "name": "Revoke the token of a managed user in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/user/:member_user_id/access-token/:token_prefix",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "member_user_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the organization's user"
+              },
+              {
+                "name": "token_prefix",
+                "value": "",
+                "type": "path",
+                "description": "Access token prefix"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Revoke the token of a managed user in the organization"
+        },
+        {
+          "info": {
+            "name": "List tokens from an organization's member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/user/:member_user_id/access-tokens",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "member_user_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the organization's user"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns tokens generated using general authentication methods or authentication methods linked to the organization.</p>"
+        },
+        {
+          "info": {
+            "name": "Configure two-factor authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/me/2fa",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Configure two-factor authentication"
+        },
+        {
+          "info": {
+            "name": "Complete one-time password configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/me/2fa/otp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Complete one-time password configuration"
+        },
+        {
+          "info": {
+            "name": "Delete user account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/user/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete user account"
+        },
+        {
+          "info": {
+            "name": "Accept all invites for a single account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/me/account/invites/accept",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Use the organization invitations API instead.</p>"
+        },
+        {
+          "info": {
+            "name": "List pending account invites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/me/account/invites",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Use the organization invitations API instead.</p>"
+        },
+        {
+          "info": {
+            "name": "Reject invite to a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/me/account/invites/reject",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Reject invite to a team"
+        },
+        {
+          "info": {
+            "name": "Authenticate user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/userauth",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p>Authenticate user and return token for following authorizations</p>"
+        },
+        {
+          "info": {
+            "name": "Get available login options",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/userauth/login_options",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p>Get available user login options</p>"
+        },
+        {
+          "info": {
+            "name": "Delete linked authentication method, and revoke all associated access tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/me/authentication_methods/:user_authentication_method_id",
+            "params": [
+              {
+                "name": "user_authentication_method_id",
+                "value": "",
+                "type": "path",
+                "description": "User authentication method ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete linked authentication method, and revoke all associated access tokens"
+        },
+        {
+          "info": {
+            "name": "List linked authentication methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/me/authentication_methods",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List linked authentication methods"
+        },
+        {
+          "info": {
+            "name": "Expire all authorization tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/me/expire_tokens",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Expire all authorization tokens"
+        },
+        {
+          "info": {
+            "name": "Get information for the current session's user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/me",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get information for the current session's user"
+        },
+        {
+          "info": {
+            "name": "Edit profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.aiven.io/v1/me",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Updates details for the user. Returns user's updated information upon success.</p>"
+        },
+        {
+          "info": {
+            "name": "Logout user, removing current authentication token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/me/logout",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Logout user, removing current authentication token"
+        },
+        {
+          "info": {
+            "name": "Change user password",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/me/password",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Sets a new password for the user. Immediately expires all existing authentication tokens.</p>"
+        },
+        {
+          "info": {
+            "name": "Confirm user password reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/user/password_reset/:verification_code",
+            "params": [
+              {
+                "name": "verification_code",
+                "value": "",
+                "type": "path",
+                "description": "Verification code received via email"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Confirm user password reset"
+        },
+        {
+          "info": {
+            "name": "Request user password reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/user/password_reset_request",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<p>Request a password reset code to be sent to the user's email address.</p>"
+        },
+        {
+          "info": {
+            "name": "Confirm user email address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/user/verify_email/:verification_code",
+            "params": [
+              {
+                "name": "verification_code",
+                "value": "",
+                "type": "path",
+                "description": "Verification code received via email"
+              }
+            ]
+          },
+          "docs": "<p>Confirm user email address after user has received the confirm code via email.</p>"
+        },
+        {
+          "info": {
+            "name": "Validate campaign credit code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/user/credit_code/:credit_code",
+            "params": [
+              {
+                "name": "credit_code",
+                "value": "",
+                "type": "path",
+                "description": "Credit Code"
+              }
+            ]
+          },
+          "docs": "Validate campaign credit code"
+        },
+        {
+          "info": {
+            "name": "Validate referral_code code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/me/referral/validation/:referral_code",
+            "params": [
+              {
+                "name": "referral_code",
+                "value": "",
+                "type": "path",
+                "description": "Referral Code"
+              }
+            ]
+          },
+          "docs": "Validate referral_code code"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

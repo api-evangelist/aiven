@@ -1,0 +1,1016 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List credit cards attached as a payment method to the account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/payment_methods",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List credit cards attached as a payment method to the account"
+        },
+        {
+          "info": {
+            "name": "Attach payment method for account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/account/:account_id/payment_methods",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Attach payment method for account"
+        },
+        {
+          "info": {
+            "name": "List authentication methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/authentication",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List authentication methods"
+        },
+        {
+          "info": {
+            "name": "Create a new authentication method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/account/:account_id/authentication",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new authentication method"
+        },
+        {
+          "info": {
+            "name": "Get details of a single authentication method",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/authentication/:account_authentication_method_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "account_authentication_method_id",
+                "value": "",
+                "type": "path",
+                "description": "Account authentication method ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get details of a single authentication method"
+        },
+        {
+          "info": {
+            "name": "Update authentication method",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/account/:account_id/authentication/:account_authentication_method_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "account_authentication_method_id",
+                "value": "",
+                "type": "path",
+                "description": "Account authentication method ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update authentication method"
+        },
+        {
+          "info": {
+            "name": "Delete authentication method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/account/:account_id/authentication/:account_authentication_method_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "account_authentication_method_id",
+                "value": "",
+                "type": "path",
+                "description": "Account authentication method ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete authentication method"
+        },
+        {
+          "info": {
+            "name": "List account billing groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/billing-group",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List account billing groups"
+        },
+        {
+          "info": {
+            "name": "List accounts you have access to",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List accounts you have access to"
+        },
+        {
+          "info": {
+            "name": "Create a new account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new account"
+        },
+        {
+          "info": {
+            "name": "Get account details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get account details"
+        },
+        {
+          "info": {
+            "name": "Update existing account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/account/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update existing account"
+        },
+        {
+          "info": {
+            "name": "Delete empty account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/account/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete empty account"
+        },
+        {
+          "info": {
+            "name": "List account events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/events",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List account events"
+        },
+        {
+          "info": {
+            "name": "Move an existing organization unit",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/account/:account_id/parent_account",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Move an existing organization unit"
+        },
+        {
+          "info": {
+            "name": "Delete credit card attached to the account as a payment method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/account/:account_id/payment_method/:card_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "card_id",
+                "value": "",
+                "type": "path",
+                "description": "Credit card ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete credit card attached to the account as a payment method"
+        },
+        {
+          "info": {
+            "name": "List projects belonging to account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/projects",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use the organization projects API to list projects within the organization</p>"
+        },
+        {
+          "info": {
+            "name": "List account teams associated to a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/project/:project_name/teams",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "project_name",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "List teams belonging to an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/teams",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "Create a new team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/account/:account_id/teams",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "Get details for a single team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "Update team details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "Delete a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "List pending invites",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id/invites",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "Cancel pending user invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id/invites/:user_email",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              },
+              {
+                "name": "user_email",
+                "value": "",
+                "type": "path",
+                "description": "Email address"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "Confirm account team invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/account/:account_id/invite/:invite_verification_code",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "invite_verification_code",
+                "value": "",
+                "type": "path",
+                "description": "Verification code received via email"
+              }
+            ]
+          },
+          "docs": "Confirm account team invite"
+        },
+        {
+          "info": {
+            "name": "Remove a member from the team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id/member/:user_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "List members of a single team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id/members",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "Invite a new member to join the team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id/members",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "Associate team to a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id/project/:project",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "Update team-project association",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id/project/:project",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "Disassociate team from a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id/project/:project",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "List projects associated to a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/team/:team_id/projects",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "team_id",
+                "value": "",
+                "type": "path",
+                "description": "Team ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "List projects associated with this account that user has access to",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/user/:user_id/projects",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List projects associated with this account that user has access to"
+        },
+        {
+          "info": {
+            "name": "List all teams for user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/account/:account_id/user/:user_id/teams",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              },
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Teams have been replaced by groups. To make the transition to groups smoother, migrate your teams to groups. Members of the Account Owners team are automatically made super admin. You can change their access level by revoking super admin privileges, or by granting other roles and permissions.</p>"
+        },
+        {
+          "info": {
+            "name": "List/search users who are members of any team on this account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/account/:account_id/users/search",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "Account ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List/search users who are members of any team on this account"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

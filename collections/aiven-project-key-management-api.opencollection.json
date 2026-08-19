@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Project_Key_Management API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Project_Key_Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve project CA certificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/kms/ca",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve project CA certificate"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

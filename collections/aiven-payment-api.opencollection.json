@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Payment API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List user's credit cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/card",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List user's credit cards"
+        },
+        {
+          "info": {
+            "name": "Add credit card for user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/card",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Add credit card for user"
+        },
+        {
+          "info": {
+            "name": "Update user's credit card",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/card/:card_id",
+            "params": [
+              {
+                "name": "card_id",
+                "value": "",
+                "type": "path",
+                "description": "Credit card ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update user's credit card"
+        },
+        {
+          "info": {
+            "name": "Delete user's credit card",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/card/:card_id",
+            "params": [
+              {
+                "name": "card_id",
+                "value": "",
+                "type": "path",
+                "description": "Credit card ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete user's credit card"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

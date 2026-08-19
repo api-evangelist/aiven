@@ -1,0 +1,389 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Service:_ClickHouse API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service:_ClickHouse",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List active queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/query",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns a list of active queries on a cluster.</p>"
+        },
+        {
+          "info": {
+            "name": "Execute an SQL query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/query",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Executes an SQL query.</p>"
+        },
+        {
+          "info": {
+            "name": "List all databases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/db",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all databases"
+        },
+        {
+          "info": {
+            "name": "Create a database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/db",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a database"
+        },
+        {
+          "info": {
+            "name": "Delete a database",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/db/:database",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "database",
+                "value": "",
+                "type": "path",
+                "description": "Database name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a database"
+        },
+        {
+          "info": {
+            "name": "Reset a user's password",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/user/:user_uuid/password",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "user_uuid",
+                "value": "",
+                "type": "path",
+                "description": "User identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Resets the password for a ClickHouse user.</p>"
+        },
+        {
+          "info": {
+            "name": "Return statistics on recent queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/query/stats",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit for number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for retrieved results based on sort order"
+              },
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Order in which to sort retrieved results"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Return statistics on recent queries"
+        },
+        {
+          "info": {
+            "name": "Get the ClickHouse tiered storage summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/tiered-storage/summary",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the ClickHouse tiered storage summary"
+        },
+        {
+          "info": {
+            "name": "List all users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/user",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Lists all users in ClickHouse.</p>"
+        },
+        {
+          "info": {
+            "name": "Create a ClickHouse user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/user",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Creates a new user in ClickHouse.</p>"
+        },
+        {
+          "info": {
+            "name": "Delete a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/clickhouse/user/:user_uuid",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "user_uuid",
+                "value": "",
+                "type": "path",
+                "description": "User identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Deletes a user from ClickHouse.</p>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,215 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account StaticIP API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "StaticIP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Associate a static IP address with a service",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/static-ips/:static_ip_address_id/association",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "static_ip_address_id",
+                "value": "",
+                "type": "path",
+                "description": "Static IP address identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Associate a static IP address with a service"
+        },
+        {
+          "info": {
+            "name": "Dissociate a static IP address from a service",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/static-ips/:static_ip_address_id/association",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "static_ip_address_id",
+                "value": "",
+                "type": "path",
+                "description": "Static IP address identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Dissociate a static IP address from a service"
+        },
+        {
+          "info": {
+            "name": "List static IP address cloud availability and prices for a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/static-ip-availability",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List static IP address cloud availability and prices for a project"
+        },
+        {
+          "info": {
+            "name": "Update a static IP address configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.aiven.io/v1/project/:project/static-ips/:static_ip_address_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "static_ip_address_id",
+                "value": "",
+                "type": "path",
+                "description": "Static IP address identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a static IP address configuration"
+        },
+        {
+          "info": {
+            "name": "Delete a static IP address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/static-ips/:static_ip_address_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "static_ip_address_id",
+                "value": "",
+                "type": "path",
+                "description": "Static IP address identifier"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a static IP address"
+        },
+        {
+          "info": {
+            "name": "List static IP addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/static-ips",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List static IP addresses"
+        },
+        {
+          "info": {
+            "name": "Create static IP address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/static-ips",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create static IP address"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

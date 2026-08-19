@@ -1,0 +1,1206 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Service:_Flink API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service:_Flink",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Cancel an ApplicationDeployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id/deployment/:deployment_id/cancel",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel an ApplicationDeployment"
+        },
+        {
+          "info": {
+            "name": "Cancel a JarApplicationDeployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id/deployment/:deployment_id/cancel",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Get all Flink Applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get all Flink Applications"
+        },
+        {
+          "info": {
+            "name": "Create a Flink Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a Flink Application"
+        },
+        {
+          "info": {
+            "name": "Get all ApplicationDeployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id/deployment",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get all ApplicationDeployments"
+        },
+        {
+          "info": {
+            "name": "Create an ApplicationDeployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id/deployment",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an ApplicationDeployment"
+        },
+        {
+          "info": {
+            "name": "Create a Flink ApplicationVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id/version",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a Flink ApplicationVersion"
+        },
+        {
+          "info": {
+            "name": "Get all Flink JarApplications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Create a Flink JarApplication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Get all JarApplicationDeployments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id/deployment",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Create an JarApplicationDeployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id/deployment",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Create a Flink JarApplicationVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id/version",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Get a Flink Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a Flink Application"
+        },
+        {
+          "info": {
+            "name": "Update a Flink Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a Flink Application"
+        },
+        {
+          "info": {
+            "name": "Delete a Flink Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a Flink Application"
+        },
+        {
+          "info": {
+            "name": "Get an ApplicationDeployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id/deployment/:deployment_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get an ApplicationDeployment"
+        },
+        {
+          "info": {
+            "name": "Delete an ApplicationDeployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id/deployment/:deployment_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete an ApplicationDeployment"
+        },
+        {
+          "info": {
+            "name": "Get a Flink ApplicationVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id/version/:application_version_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "application_version_id",
+                "value": "",
+                "type": "path",
+                "description": "ApplicationVersion Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a Flink ApplicationVersion"
+        },
+        {
+          "info": {
+            "name": "Delete a Flink ApplicationVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id/version/:application_version_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "application_version_id",
+                "value": "",
+                "type": "path",
+                "description": "ApplicationVersion Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a Flink ApplicationVersion"
+        },
+        {
+          "info": {
+            "name": "Get a Flink JarApplication",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Update a Flink JarApplication",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Delete a Flink JarApplication",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Get a JarApplicationDeployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id/deployment/:deployment_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Delete a JarApplicationDeployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id/deployment/:deployment_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Get a Flink JarApplicationVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id/version/:application_version_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "application_version_id",
+                "value": "",
+                "type": "path",
+                "description": "ApplicationVersion Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Delete a Flink JarApplicationVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id/version/:application_version_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "application_version_id",
+                "value": "",
+                "type": "path",
+                "description": "ApplicationVersion Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Get a Flink job info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/job/:job_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "job_id",
+                "value": "",
+                "type": "path",
+                "description": "Job Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a Flink job info"
+        },
+        {
+          "info": {
+            "name": "Get all Flink jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/job",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get all Flink jobs"
+        },
+        {
+          "info": {
+            "name": "Get a cluster overview",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/overview",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a cluster overview"
+        },
+        {
+          "info": {
+            "name": "Stop an ApplicationDeployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id/deployment/:deployment_id/stop",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Stop an ApplicationDeployment"
+        },
+        {
+          "info": {
+            "name": "Stop an JarApplicationDeployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/jar_application/:application_id/deployment/:deployment_id/stop",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              },
+              {
+                "name": "deployment_id",
+                "value": "",
+                "type": "path",
+                "description": "Deployment Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Validate a Flink ApplicationVersion",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/flink/application/:application_id/version/validate",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "application_id",
+                "value": "",
+                "type": "path",
+                "description": "Application Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Validate a Flink ApplicationVersion"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

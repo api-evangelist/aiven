@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Service:_Thanos API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service:_Thanos",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Thanos object storage summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/thanos/storage/summary",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Thanos object storage summary"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

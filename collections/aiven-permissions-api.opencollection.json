@@ -1,0 +1,131 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Permissions API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Permissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List of permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/permissions/:resource_type/:resource_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "resource_type",
+                "value": "",
+                "type": "path",
+                "description": "Resource type"
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "Resource Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns a list of permissions for a resource.</p>"
+        },
+        {
+          "info": {
+            "name": "Set permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/permissions/:resource_type/:resource_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "resource_type",
+                "value": "",
+                "type": "path",
+                "description": "Resource type"
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "Resource Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Replaces permissions for a resource. The entries entry provided in the request body are applied, replacing all the previously defined permissions defined on the specified resource. Updates are not atomic (changes are computed and each are individually applied); if an error occurs, permissions may have been partially updated. They are however idempotent, so in case of transient errors it is possible to simply retry the request.</p>"
+        },
+        {
+          "info": {
+            "name": "Update permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/permissions/:resource_type/:resource_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "resource_type",
+                "value": "",
+                "type": "path",
+                "description": "Resource type"
+              },
+              {
+                "name": "resource_id",
+                "value": "",
+                "type": "path",
+                "description": "Resource Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Updates permissions for a resource. Each entry provided in the request body is applied, replacing the previous assignment for the target principal. To remove permission assignments an entry with an empty set of permissions must be provided. Updates are not atomic (each entry is individually applied); if an error occurs, permissions may have been partially updated. They are however idempotent, so in case of transient errors it is possible to simply retry the request.</p>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

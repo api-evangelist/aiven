@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Authentication_Methods API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication_Methods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List domains linked to an organization's identity provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/authentication-methods/:authentication_method_id/domains",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "authentication_method_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization authentication method ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List domains linked to an organization's identity provider"
+        },
+        {
+          "info": {
+            "name": "Link a domain to an organization's identity provider",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/authentication-methods/:authentication_method_id/domains",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "authentication_method_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization authentication method ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Link a domain to an organization's identity provider"
+        },
+        {
+          "info": {
+            "name": "Unlink domain from authentication method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/authentication-methods/:authentication_method_id/domains/:domain_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "authentication_method_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization authentication method ID"
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a domain"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Unlink domain from authentication method"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

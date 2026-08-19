@@ -1,0 +1,1717 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Service:_Kafka API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service:_Kafka",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Aiven ACL entries for Kafka service",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/acl",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Aiven ACL entries for Kafka service"
+        },
+        {
+          "info": {
+            "name": "Add Aiven Kafka ACL entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/acl",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Add Aiven Kafka ACL entry"
+        },
+        {
+          "info": {
+            "name": "Delete a Kafka ACL entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/acl/:kafka_acl_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "kafka_acl_id",
+                "value": "",
+                "type": "path",
+                "description": "Kafka ACL ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a Kafka ACL entry"
+        },
+        {
+          "info": {
+            "name": "Lists Kafka connectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connectors",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns successfully resolved connectors in 'connectors' array. If any connectors fail plugin resolution, they are returned in 'failed_connectors' array with an 'error' field explaining the issue.</p>"
+        },
+        {
+          "info": {
+            "name": "Create a Kafka Connect connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connectors",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a Kafka Connect connector"
+        },
+        {
+          "info": {
+            "name": "Edit Kafka Connect connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connectors/:connector_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "connector_name",
+                "value": "",
+                "type": "path",
+                "description": "Connector name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Edit Kafka Connect connector"
+        },
+        {
+          "info": {
+            "name": "Delete Kafka Connect connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connectors/:connector_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "connector_name",
+                "value": "",
+                "type": "path",
+                "description": "Connector name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete Kafka Connect connector"
+        },
+        {
+          "info": {
+            "name": "Get available Kafka Connect connectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/available-connectors",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get available Kafka Connect connectors"
+        },
+        {
+          "info": {
+            "name": "Get Kafka Connect connector configuration schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connector-plugins/:connector_name/configuration",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "connector_name",
+                "value": "",
+                "type": "path",
+                "description": "Connector name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Kafka Connect connector configuration schema"
+        },
+        {
+          "info": {
+            "name": "Get a Kafka Connect Connector status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connectors/:connector_name/status",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "connector_name",
+                "value": "",
+                "type": "path",
+                "description": "Connector name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a Kafka Connect Connector status"
+        },
+        {
+          "info": {
+            "name": "Pause a Kafka Connect Connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connectors/:connector_name/pause",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "connector_name",
+                "value": "",
+                "type": "path",
+                "description": "Connector name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Pause a Kafka Connect Connector"
+        },
+        {
+          "info": {
+            "name": "Restart a Kafka Connect Connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connectors/:connector_name/restart",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "connector_name",
+                "value": "",
+                "type": "path",
+                "description": "Connector name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Restart a Kafka Connect Connector"
+        },
+        {
+          "info": {
+            "name": "Restart a Kafka Connect Connector task",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connectors/:connector_name/tasks/:task_id/restart",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "connector_name",
+                "value": "",
+                "type": "path",
+                "description": "Connector name"
+              },
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path",
+                "description": "Service task"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Restart a Kafka Connect Connector task"
+        },
+        {
+          "info": {
+            "name": "Resume a Kafka Connect Connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connectors/:connector_name/resume",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "connector_name",
+                "value": "",
+                "type": "path",
+                "description": "Connector name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Resume a Kafka Connect Connector"
+        },
+        {
+          "info": {
+            "name": "Stop a Kafka Connect Connector",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/connectors/:connector_name/stop",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "connector_name",
+                "value": "",
+                "type": "path",
+                "description": "Connector name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Stop a Kafka Connect Connector"
+        },
+        {
+          "info": {
+            "name": "List Kafka-native ACL entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/acl",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Kafka-native ACL entries"
+        },
+        {
+          "info": {
+            "name": "Add a Kafka-native ACL entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/acl",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Add a Kafka-native ACL entry"
+        },
+        {
+          "info": {
+            "name": "Get single Kafka-native ACL entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/acl/:kafka_acl_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "kafka_acl_id",
+                "value": "",
+                "type": "path",
+                "description": "Kafka ACL ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get single Kafka-native ACL entry"
+        },
+        {
+          "info": {
+            "name": "Delete a Kafka-native ACL entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/acl/:kafka_acl_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "kafka_acl_id",
+                "value": "",
+                "type": "path",
+                "description": "Kafka ACL ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a Kafka-native ACL entry"
+        },
+        {
+          "info": {
+            "name": "List Kafka quotas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/quota",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Kafka quotas"
+        },
+        {
+          "info": {
+            "name": "Create Kafka quota",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/quota",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create Kafka quota"
+        },
+        {
+          "info": {
+            "name": "Delete Kafka quota",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/quota",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "client-id",
+                "value": "",
+                "type": "query",
+                "description": "Client ID."
+              },
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Username."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete Kafka quota"
+        },
+        {
+          "info": {
+            "name": "Describe Specific Kafka quotas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/quota/describe",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "client-id",
+                "value": "",
+                "type": "query",
+                "description": "Client ID."
+              },
+              {
+                "name": "user",
+                "value": "",
+                "type": "query",
+                "description": "Username."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Describe Specific Kafka quotas"
+        },
+        {
+          "info": {
+            "name": "Get the Kafka tiered storage object storage usage by topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/tiered-storage/storage-usage/by-topic",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Return &quot;400 Bad Request&quot; if tiered storage feature is not enabled for this service. Rarely, the data may be not available. In this case, &quot;503 Service Unavailable&quot; is returned and the client should try later.</p>"
+        },
+        {
+          "info": {
+            "name": "Get the Kafka tiered storage total object storage usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/tiered-storage/storage-usage/total",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Return &quot;400 Bad Request&quot; if tiered storage feature is not enabled for this service. Rarely, the data may be not available. In this case, &quot;503 Service Unavailable&quot; is returned and the client should try later.</p>"
+        },
+        {
+          "info": {
+            "name": "Get the Kafka tiered storage summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/tiered-storage/summary",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the Kafka tiered storage summary"
+        },
+        {
+          "info": {
+            "name": "Get Kafka topic list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/topic",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Kafka topic list"
+        },
+        {
+          "info": {
+            "name": "Create a Kafka topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/topic",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a Kafka topic"
+        },
+        {
+          "info": {
+            "name": "Get Kafka topic info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/topic/:topic_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "topic_name",
+                "value": "",
+                "type": "path",
+                "description": "Kafka topic name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Kafka topic info"
+        },
+        {
+          "info": {
+            "name": "Update a Kafka topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/topic/:topic_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "topic_name",
+                "value": "",
+                "type": "path",
+                "description": "Kafka topic name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a Kafka topic"
+        },
+        {
+          "info": {
+            "name": "Delete a Kafka topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/topic/:topic_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "topic_name",
+                "value": "",
+                "type": "path",
+                "description": "Kafka topic name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a Kafka topic"
+        },
+        {
+          "info": {
+            "name": "List kafka topic messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/rest/topics/:topic_name/messages",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "topic_name",
+                "value": "",
+                "type": "path",
+                "description": "Kafka topic name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List kafka topic messages"
+        },
+        {
+          "info": {
+            "name": "Produce message into a kafka topic",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/rest/topics/:topic_name/produce",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "topic_name",
+                "value": "",
+                "type": "path",
+                "description": "Kafka topic name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Produce message into a kafka topic"
+        },
+        {
+          "info": {
+            "name": "List Schema Registry ACL entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema-registry/acl",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Schema Registry ACL entries"
+        },
+        {
+          "info": {
+            "name": "Add a Schema Registry ACL entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema-registry/acl",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Add a Schema Registry ACL entry"
+        },
+        {
+          "info": {
+            "name": "Delete a Schema Registry ACL entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema-registry/acl/:schema_registry_acl_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "schema_registry_acl_id",
+                "value": "",
+                "type": "path",
+                "description": "Kafka Schema Registry ACL ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a Schema Registry ACL entry"
+        },
+        {
+          "info": {
+            "name": "Check compatibility of schema in Schema Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/compatibility/subjects/:subject_name/versions/:version_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "subject_name",
+                "value": "",
+                "type": "path",
+                "description": "Subject name"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Version Id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check compatibility of schema in Schema Registry"
+        },
+        {
+          "info": {
+            "name": "Get global configuration for Schema Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/config",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get global configuration for Schema Registry"
+        },
+        {
+          "info": {
+            "name": "Edit global configuration for Schema Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/config",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Edit global configuration for Schema Registry"
+        },
+        {
+          "info": {
+            "name": "Get schema in Schema Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/schemas/ids/:schema_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "schema_id",
+                "value": "",
+                "type": "path",
+                "description": "Schema Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get schema in Schema Registry"
+        },
+        {
+          "info": {
+            "name": "Get configuration for Schema Registry subject",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/config/:subject_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "subject_name",
+                "value": "",
+                "type": "path",
+                "description": "Subject name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get configuration for Schema Registry subject"
+        },
+        {
+          "info": {
+            "name": "Edit configuration for Schema Registry subject",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/config/:subject_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "subject_name",
+                "value": "",
+                "type": "path",
+                "description": "Subject name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Edit configuration for Schema Registry subject"
+        },
+        {
+          "info": {
+            "name": "Delete Schema Registry subject",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/subjects/:subject_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "subject_name",
+                "value": "",
+                "type": "path",
+                "description": "Subject name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete Schema Registry subject"
+        },
+        {
+          "info": {
+            "name": "Get Schema Registry Subject version",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/subjects/:subject_name/versions/:version_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "subject_name",
+                "value": "",
+                "type": "path",
+                "description": "Subject name"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Version Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Schema Registry Subject version"
+        },
+        {
+          "info": {
+            "name": "Delete Schema Registry subject version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/subjects/:subject_name/versions/:version_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "subject_name",
+                "value": "",
+                "type": "path",
+                "description": "Subject name"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Version Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete Schema Registry subject version"
+        },
+        {
+          "info": {
+            "name": "Get Schema Registry subject versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/subjects/:subject_name/versions",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "subject_name",
+                "value": "",
+                "type": "path",
+                "description": "Subject name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get Schema Registry subject versions"
+        },
+        {
+          "info": {
+            "name": "Register a new Schema in Schema Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/subjects/:subject_name/versions",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "subject_name",
+                "value": "",
+                "type": "path",
+                "description": "Subject name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Register a new Schema in Schema Registry"
+        },
+        {
+          "info": {
+            "name": "DEPRECATED: Get raw schema of a specific version in Schema Registry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/subjects/:subject_name/versions/:version_id/schema",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "subject_name",
+                "value": "",
+                "type": "path",
+                "description": "Subject name"
+              },
+              {
+                "name": "version_id",
+                "value": "",
+                "type": "path",
+                "description": "Version Id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "DEPRECATED: Get raw schema of a specific version in Schema Registry"
+        },
+        {
+          "info": {
+            "name": "Lists Schema Registry subjects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/kafka/schema/subjects",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Lists Schema Registry subjects"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

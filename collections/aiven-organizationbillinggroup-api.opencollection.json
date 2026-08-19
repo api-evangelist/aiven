@@ -1,0 +1,403 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account OrganizationBillingGroup API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OrganizationBillingGroup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a specific credit memo by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/credit-memos/:credit_memo_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "credit_memo_id",
+                "value": "",
+                "type": "path",
+                "description": "Credit Memo ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Get a PDF Credit Memo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/credit-memos/:credit_memo_id/pdf",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "credit_memo_id",
+                "value": "",
+                "type": "path",
+                "description": "Credit Memo ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "Get credit memos for an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/credit-memos",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>"
+        },
+        {
+          "info": {
+            "name": "List billing groups in an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/billing-groups",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List billing groups in an organization"
+        },
+        {
+          "info": {
+            "name": "Create an organization billing group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/billing-groups",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an organization billing group"
+        },
+        {
+          "info": {
+            "name": "Get organization billing group details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/billing-group/:billing_group_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get organization billing group details"
+        },
+        {
+          "info": {
+            "name": "Update organization billing group details",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/billing-group/:billing_group_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update organization billing group details"
+        },
+        {
+          "info": {
+            "name": "Delete an organization billing group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/billing-group/:billing_group_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete an organization billing group"
+        },
+        {
+          "info": {
+            "name": "Get a single invoice as a CSV of invoice lines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/invoice/:invoice_number/csv",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "invoice_number",
+                "value": "",
+                "type": "path",
+                "description": "Invoice number"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single invoice as a CSV of invoice lines"
+        },
+        {
+          "info": {
+            "name": "Get a single invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/invoice/:invoice_number",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "invoice_number",
+                "value": "",
+                "type": "path",
+                "description": "Invoice number"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a single invoice"
+        },
+        {
+          "info": {
+            "name": "Get invoice lines for a single invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/invoice/:invoice_number/lines",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "invoice_number",
+                "value": "",
+                "type": "path",
+                "description": "Invoice number"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get invoice lines for a single invoice"
+        },
+        {
+          "info": {
+            "name": "Get a list of invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/invoices",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "billing_group_ids",
+                "value": "",
+                "type": "query",
+                "description": "IDs of the billing_groups"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "refers to state of the invoice"
+              },
+              {
+                "name": "starting_date",
+                "value": "",
+                "type": "query",
+                "description": "starting date in the invoice time period"
+              },
+              {
+                "name": "ending_date",
+                "value": "",
+                "type": "query",
+                "description": "ending date in the invoice time period"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a list of invoices"
+        },
+        {
+          "info": {
+            "name": "Get a PDF invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/invoice/:invoice_number/pdf",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "invoice_number",
+                "value": "",
+                "type": "path",
+                "description": "Invoice number"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a PDF invoice"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,118 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Project_Billing API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Project_Billing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List credits available to the project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/credits",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>List all credits available to the project. Credits are assigned at the billing group.</p><p>DEPRECATED: Use /billing-group/&lt;billing_group_id&gt;/credits instead.</p>"
+        },
+        {
+          "info": {
+            "name": "Claim a credit code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/credits",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use /billing-group/&lt;billing_group_id&gt;/credits</p>"
+        },
+        {
+          "info": {
+            "name": "Download PDF invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/invoice/:invoice_number/:download_cookie",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "invoice_number",
+                "value": "",
+                "type": "path",
+                "description": "Invoice number"
+              },
+              {
+                "name": "download_cookie",
+                "value": "",
+                "type": "path",
+                "description": "Authentication cookie for file download"
+              }
+            ]
+          },
+          "docs": "Download PDF invoice"
+        },
+        {
+          "info": {
+            "name": "List project invoices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/invoice",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List project invoices"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

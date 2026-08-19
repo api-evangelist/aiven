@@ -1,0 +1,228 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Upgrade_pipeline API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Upgrade_pipeline",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List upgrade steps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/upgrade-pipeline/steps",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to this number"
+              },
+              {
+                "name": "source_project_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by source project name"
+              },
+              {
+                "name": "source_service_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by source service name"
+              },
+              {
+                "name": "destination_project_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by destination project name"
+              },
+              {
+                "name": "destination_service_name",
+                "value": "",
+                "type": "query",
+                "description": "Filter results by destination service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>List upgrade steps in the organization.</p>"
+        },
+        {
+          "info": {
+            "name": "Create an upgrade step",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/upgrade-pipeline/steps",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Customer must have write access to both source and destination projects (read-only is not enough). Both services must belong to the organization in the URL (and thus the same organization). Initial validation is seeded based on the destination service type pinned release.</p>"
+        },
+        {
+          "info": {
+            "name": "Get details of a specific upgrade step",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/upgrade-pipeline/steps/:step_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "step_id",
+                "value": "",
+                "type": "path",
+                "description": "Upgrade step ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Customer must have access to both source and destination projects.</p>"
+        },
+        {
+          "info": {
+            "name": "Update an upgrade step",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/upgrade-pipeline/steps/:step_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "step_id",
+                "value": "",
+                "type": "path",
+                "description": "Upgrade step ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Customer must have write access to both source and destination projects (read-only is not enough). Both services must belong to the organization in the URL (and thus the same organization). The new auto validation delay in days must be greater than zero.</p>"
+        },
+        {
+          "info": {
+            "name": "Delete an upgrade step",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/upgrade-pipeline/steps/:step_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "step_id",
+                "value": "",
+                "type": "path",
+                "description": "Upgrade step ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Customer must have write access to both source and destination projects (read-only is not enough). Both services must belong to the organization in the URL (and thus the same organization).</p>"
+        },
+        {
+          "info": {
+            "name": "Validate upgrade step",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/upgrade-validation",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Validate maintenance level currently running on the given service, unblocking it for any service(s) that are targets of a upgrade pipeline step with this service as the source service. This allows the destination services of the pipeline steps to have all maintenances applied to the source service automatically applied to them.</p>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

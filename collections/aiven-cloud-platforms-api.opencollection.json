@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Cloud_platforms API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cloud_platforms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List cloud platforms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/clouds"
+          },
+          "docs": "<p>Returns a list of available cloud platforms.</p>"
+        },
+        {
+          "info": {
+            "name": "List cloud platforms for a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/clouds",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "sort_by_proximity",
+                "value": "",
+                "type": "query",
+                "description": "When true, order clouds by proximity to the caller's IP (closest first)."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns a list of cloud platforms available for a project.</p>"
+        },
+        {
+          "info": {
+            "name": "List privatelink clouds and prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/tenants/:tenant/privatelink-availability",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path",
+                "description": "Aiven tenant ID"
+              }
+            ]
+          },
+          "docs": "<p>Returns a list of cloud platforms supporting privatelink along with privatelink costs for specific cloud platforms.</p>"
+        },
+        {
+          "info": {
+            "name": "List static IP clouds and prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/tenants/:tenant/static-ip-availability",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path",
+                "description": "Aiven tenant ID"
+              }
+            ]
+          },
+          "docs": "<p>Returns a list of cloud platforms supporting static IP addresses along with static IP addresses costs for specific cloud platforms.</p>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

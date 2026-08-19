@@ -1,0 +1,374 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Organization_Vpc API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organization_Vpc",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List organization VPC clouds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpc-clouds",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>List clouds available for creating organization VPCs in this organization.</p>"
+        },
+        {
+          "info": {
+            "name": "List organization VPCs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpcs",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Lists organization VPCs in an organization.</p>"
+        },
+        {
+          "info": {
+            "name": "Create organization VPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpcs",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Creates an organization VPC. This requires the manage-organization-networking permissions and can be also achieved using the Aiven Console, the Aiven CLI, or the Aiven Terraform Provider.</p>"
+        },
+        {
+          "info": {
+            "name": "Get organization VPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpc/:organization_vpc_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "organization_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization VPC ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Retrieves information about an organization VPC. This requires an organization ID and an organization VPC ID, which you can find in the Aiven Console or using the Aiven API or CLI to list your organizations or VPCs.</p>"
+        },
+        {
+          "info": {
+            "name": "Update organization VPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpc/:organization_vpc_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "organization_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization VPC ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Updates organization VPC properties that can be changed after creation.</p>"
+        },
+        {
+          "info": {
+            "name": "Delete organization VPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpc/:organization_vpc_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "organization_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization VPC ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Deletes an organization VPC. This requires removing all services from the VCP before deleting it. To remove the services from the VCP, either migrate them out of the VCP or delete them. Deleting the organization VPC terminates its peering connections, if any.</p>"
+        },
+        {
+          "info": {
+            "name": "Create organization VPC peering",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpc/:organization_vpc_id/peering-connections",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "organization_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization VPC ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Creates a peering connection for an organization VPC. This requires the manage-organization-networking permissions and two VPCs to peer: one in Aiven and one in your cloud account (Azure, AWS, Google Cloud, or UpCloud).</p>"
+        },
+        {
+          "info": {
+            "name": "Delete organization VPC peering",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpc/:organization_vpc_id/peering-connection/:peering_connection_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "organization_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization VPC ID"
+              },
+              {
+                "name": "peering_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization peering connection ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Deletes a peering connection between an Aiven organization VPC and a VPC in your cloud account (Azure, AWS, Google Cloud, or UpCloud). This results in terminating all the traffic between the VPCs.</p>"
+        },
+        {
+          "info": {
+            "name": "Update peering connection user peer network CIDRs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpc/:organization_vpc_id/peering-connection/:peering_connection_id/user-peer-network-cidrs",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "organization_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization VPC ID"
+              },
+              {
+                "name": "peering_connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization peering connection ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Updates user peer network CIDRS of an organization VPC peering connection.</p><p>DEPRECATED: Use <code>PUT /organization/&lt;organization_id&gt;/vpc/&lt;organization_vpc_id&gt;/user-peer-network-cidrs</code></p>"
+        },
+        {
+          "info": {
+            "name": "Update organization VPC user peer network CIDRs",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpc/:organization_vpc_id/user-peer-network-cidrs",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "organization_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization VPC ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Updates organization VPC user peer network CIDRs.</p>"
+        },
+        {
+          "info": {
+            "name": "List organization VPC peering connection types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpc-peering-connection-types",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Lists peering connection types available for VPCs in the organization.</p>"
+        },
+        {
+          "info": {
+            "name": "Check if the state of peering connections in the cloud has changed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/vpc/:organization_vpc_id/peering-connections/refresh",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "organization_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Organization VPC ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Triggers an asynchronous refresh of the peering connection states for an organization VPC. Checks the state of the peering connections in the cloud provider and updates them in Aiven. To confirm the refresh has completed, retrieve the organization VPC using <code>GET /organization/{organization_id}/vpc/{organization_vpc_id}</code> and check that the <code>pending_build_only_peering_connections</code> field has returned to <code>null</code>.</p>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

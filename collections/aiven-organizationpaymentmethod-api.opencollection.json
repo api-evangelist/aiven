@@ -1,0 +1,253 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account OrganizationPaymentMethod API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OrganizationPaymentMethod",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get bank transfer payment method in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/payment-method/bank-transfer/:payment_method_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "payment_method_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payment method"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get bank transfer payment method in the organization"
+        },
+        {
+          "info": {
+            "name": "List bank transfers payment methods in an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/payment-method/bank-transfers",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List bank transfers payment methods in an organization"
+        },
+        {
+          "info": {
+            "name": "List credit cards payment methods in an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/payment-method/credit-cards",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List credit cards payment methods in an organization"
+        },
+        {
+          "info": {
+            "name": "Create credit card payment method in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/payment-method/credit-cards",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create credit card payment method in the organization"
+        },
+        {
+          "info": {
+            "name": "Get credit card payment method in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/payment-method/credit-card/:payment_method_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "payment_method_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payment method"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get credit card payment method in the organization"
+        },
+        {
+          "info": {
+            "name": "Delete credit card payment method in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/payment-method/credit-card/:payment_method_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "payment_method_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payment method"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete credit card payment method in the organization"
+        },
+        {
+          "info": {
+            "name": "Get custom payment method in the organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/payment-method/custom/:payment_method_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "payment_method_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the payment method"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get custom payment method in the organization"
+        },
+        {
+          "info": {
+            "name": "List custom payment methods in an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/payment-method/custom",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List custom payment methods in an organization"
+        },
+        {
+          "info": {
+            "name": "List payment methods for an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/payment-methods",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns a lightweight list of payment method identifiers and their types for the given organization. This endpoint does <strong>not</strong> return full payment method metadata; it is intended for selection/association workflows where only <code>(payment_method_id, payment_method_type)</code> are needed.</p>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

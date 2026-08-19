@@ -1,0 +1,1015 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Project API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Project",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List VPC peering connection types for a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/vpc-peering-connection-types",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List VPC peering connection types for a project"
+        },
+        {
+          "info": {
+            "name": "List active alerts for a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/alerts",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List active alerts for a project"
+        },
+        {
+          "info": {
+            "name": "List projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use the organization projects API to list projects within each organization</p>"
+        },
+        {
+          "info": {
+            "name": "Create a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a project"
+        },
+        {
+          "info": {
+            "name": "Get project details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use the organization project API to retrieve project details</p>"
+        },
+        {
+          "info": {
+            "name": "Update project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use the organization project PATCH API for partial updates</p>"
+        },
+        {
+          "info": {
+            "name": "Delete project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use the per-organization project DELETE API</p>"
+        },
+        {
+          "info": {
+            "name": "Download SBOM report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/download-sbom/:file_format/:download_cookie",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "file_format",
+                "value": "",
+                "type": "path",
+                "description": "of the SBOM report"
+              },
+              {
+                "name": "download_cookie",
+                "value": "",
+                "type": "path",
+                "description": "Authentication cookie for file download"
+              }
+            ]
+          },
+          "docs": "Download SBOM report"
+        },
+        {
+          "info": {
+            "name": "Generate SBOM for project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/generate-sbom-download-url/:file_format",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "file_format",
+                "value": "",
+                "type": "path",
+                "description": "of the SBOM report"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate SBOM for project"
+        },
+        {
+          "info": {
+            "name": "Get project event log entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/events",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get project event log entries"
+        },
+        {
+          "info": {
+            "name": "Send project membership invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/invite",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use the Organizations APIs to invite users and the Permissions API to manage access</p>"
+        },
+        {
+          "info": {
+            "name": "Confirm project invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/invite/:invite_verification_code",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "invite_verification_code",
+                "value": "",
+                "type": "path",
+                "description": "Verification code received via email"
+              }
+            ]
+          },
+          "docs": "<p>DEPRECATED: Use the Organizations APIs to invite users and the Permissions API to manage access</p>"
+        },
+        {
+          "info": {
+            "name": "Delete an invitation to a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/invite/:invited_email",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "invited_email",
+                "value": "",
+                "type": "path",
+                "description": "Email address of user to be invited"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use the Organizations APIs to invite users and the Permissions API to manage access</p>"
+        },
+        {
+          "info": {
+            "name": "List Privatelink cloud availability and prices for a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/privatelink-availability",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List Privatelink cloud availability and prices for a project"
+        },
+        {
+          "info": {
+            "name": "List service plans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service-types/:service_type/plans",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_type",
+                "value": "",
+                "type": "path",
+                "description": "Service type"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns a list of the plans available for a service type.</p>"
+        },
+        {
+          "info": {
+            "name": "Get plan pricing",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/pricing/service-types/:service_type/plans/:service_plan/clouds/:cloud",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_type",
+                "value": "",
+                "type": "path",
+                "description": "Service type"
+              },
+              {
+                "name": "service_plan",
+                "value": "",
+                "type": "path",
+                "description": "Service plan"
+              },
+              {
+                "name": "cloud",
+                "value": "",
+                "type": "path",
+                "description": "Cloud"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns pricing information for a service plan.</p>"
+        },
+        {
+          "info": {
+            "name": "Get service plan details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service-types/:service_type/plans/:service_plan",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_type",
+                "value": "",
+                "type": "path",
+                "description": "Service type"
+              },
+              {
+                "name": "service_plan",
+                "value": "",
+                "type": "path",
+                "description": "Service plan"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns information about a plan for a service type such as the disk storage and backup configuration.</p>"
+        },
+        {
+          "info": {
+            "name": "Get service type details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service-types/:service_type",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_type",
+                "value": "",
+                "type": "path",
+                "description": "Service type"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns the configuration options for a service type.</p>"
+        },
+        {
+          "info": {
+            "name": "List service types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service-types",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Returns a list of all available service types and their configuration options.</p>"
+        },
+        {
+          "info": {
+            "name": "List all tags attached to this project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/tags",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all tags attached to this project"
+        },
+        {
+          "info": {
+            "name": "Replace all project tags with a new set of tags, deleting old ones",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/tags",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace all project tags with a new set of tags, deleting old ones"
+        },
+        {
+          "info": {
+            "name": "Update one or more tags, creating ones that don't exist, and deleting ones given NULL value",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.aiven.io/v1/project/:project/tags",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update one or more tags, creating ones that don't exist, and deleting ones given NULL value"
+        },
+        {
+          "info": {
+            "name": "List users with access to the project. May contain same user multiple times if they belong to multiple teams associated to the project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/users",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use the Organizations APIs to manage users and the Permissions API to manage access</p>"
+        },
+        {
+          "info": {
+            "name": "Update a project user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/user/:user_email",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "user_email",
+                "value": "",
+                "type": "path",
+                "description": "Email address"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use the Organizations APIs to update users and the Permissions API to manage access</p>"
+        },
+        {
+          "info": {
+            "name": "Remove user from the project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/user/:user_email",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "user_email",
+                "value": "",
+                "type": "path",
+                "description": "Email address"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>DEPRECATED: Use the Organizations APIs to update users and the Permissions API to manage access</p>"
+        },
+        {
+          "info": {
+            "name": "List VPCs for a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/vpcs",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List VPCs for a project"
+        },
+        {
+          "info": {
+            "name": "Create a VPC in a cloud for the project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/vpcs",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a VPC in a cloud for the project"
+        },
+        {
+          "info": {
+            "name": "Get VPC information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/vpcs/:project_vpc_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "project_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Project VPC ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get VPC information"
+        },
+        {
+          "info": {
+            "name": "Delete a project VPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/vpcs/:project_vpc_id",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "project_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Project VPC ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a project VPC"
+        },
+        {
+          "info": {
+            "name": "Create a peering connection for a project VPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/vpcs/:project_vpc_id/peering-connections",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "project_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Project VPC ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a peering connection for a project VPC"
+        },
+        {
+          "info": {
+            "name": "Delete a peering connection for a project VPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/vpcs/:project_vpc_id/peering-connections/peer-accounts/:peer_cloud_account/peer-vpcs/:peer_vpc",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "project_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Project VPC ID"
+              },
+              {
+                "name": "peer_cloud_account",
+                "value": "",
+                "type": "path",
+                "description": "AWS account ID, Google project name, Azure subscription ID, or string &quot;upcloud&quot; for UpCloud peering connections"
+              },
+              {
+                "name": "peer_vpc",
+                "value": "",
+                "type": "path",
+                "description": "AWS VPC-ID, Google network name, Azure VNet name, or UpCloud VPC ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a peering connection for a project VPC"
+        },
+        {
+          "info": {
+            "name": "Update user-defined peer network CIDRs for a project VPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/vpcs/:project_vpc_id/user-peer-network-cidrs",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "project_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Project VPC ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update user-defined peer network CIDRs for a project VPC"
+        },
+        {
+          "info": {
+            "name": "Delete a peering connection for a project VPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/vpcs/:project_vpc_id/peering-connections/peer-accounts/:peer_cloud_account/peer-vpcs/:peer_vpc/peer-regions/:peer_region",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "project_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Project VPC ID"
+              },
+              {
+                "name": "peer_cloud_account",
+                "value": "",
+                "type": "path",
+                "description": "AWS account ID, Google project name, Azure subscription ID, or string &quot;upcloud&quot; for UpCloud peering connections"
+              },
+              {
+                "name": "peer_vpc",
+                "value": "",
+                "type": "path",
+                "description": "AWS VPC-ID, Google network name, Azure VNet name, or UpCloud VPC ID"
+              },
+              {
+                "name": "peer_region",
+                "value": "",
+                "type": "path",
+                "description": "AWS region"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a peering connection for a project VPC"
+        },
+        {
+          "info": {
+            "name": "Delete a peering connection for a project VPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/vpcs/:project_vpc_id/peering-connections/peer-accounts/:peer_cloud_account/peer-resource-groups/:peer_resource_group/peer-vpcs/:peer_vpc",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "project_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Project VPC ID"
+              },
+              {
+                "name": "peer_cloud_account",
+                "value": "",
+                "type": "path",
+                "description": "AWS account ID, Google project name, Azure subscription ID, or string &quot;upcloud&quot; for UpCloud peering connections"
+              },
+              {
+                "name": "peer_resource_group",
+                "value": "",
+                "type": "path",
+                "description": "Azure resource group"
+              },
+              {
+                "name": "peer_vpc",
+                "value": "",
+                "type": "path",
+                "description": "AWS VPC-ID, Google network name, Azure VNet name, or UpCloud VPC ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a peering connection for a project VPC"
+        },
+        {
+          "info": {
+            "name": "Check if the state of peering connections in the cloud has changed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/vpcs/:project_vpc_id/peering-connections/refresh",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "project_vpc_id",
+                "value": "",
+                "type": "path",
+                "description": "Project VPC ID"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Triggers an asynchronous refresh of the peering connection states for a project VPC. Checks the state of the peering connections in the cloud provider and updates them in Aiven. To confirm the refresh has completed, retrieve the project VPC using <code>GET /project/{project}/vpcs/{project_vpc_id}</code> and check that the <code>pending_build_only_peering_connect"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

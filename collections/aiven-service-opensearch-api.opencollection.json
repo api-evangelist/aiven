@@ -1,0 +1,858 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Service:_OpenSearch API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service:_OpenSearch",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Show OpenSearch ACL configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/acl",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Show OpenSearch ACL configuration"
+        },
+        {
+          "info": {
+            "name": "Set OpenSearch ACL configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/acl",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Set OpenSearch ACL configuration"
+        },
+        {
+          "info": {
+            "name": "Update OpenSearch ACL configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/acl",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update OpenSearch ACL configuration"
+        },
+        {
+          "info": {
+            "name": "Open OpenSearch indices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/:index_pattern/_close",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "index_pattern",
+                "value": "",
+                "type": "path",
+                "description": "OpenSearch index name, comma-separated list or pattern"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Open OpenSearch indices"
+        },
+        {
+          "info": {
+            "name": "Close multiple OpenSearch indexes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/index/close_multiple",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Close multiple OpenSearch indexes"
+        },
+        {
+          "info": {
+            "name": "Delete an OpenSearch index",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/index/:index_pattern",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "index_pattern",
+                "value": "",
+                "type": "path",
+                "description": "OpenSearch index name, comma-separated list or pattern"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete an OpenSearch index"
+        },
+        {
+          "info": {
+            "name": "List OpenSearch indexes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/index",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List OpenSearch indexes"
+        },
+        {
+          "info": {
+            "name": "Open OpenSearch indices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/:index_pattern/_open",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "index_pattern",
+                "value": "",
+                "type": "path",
+                "description": "OpenSearch index name, comma-separated list or pattern"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Open OpenSearch indices"
+        },
+        {
+          "info": {
+            "name": "Open multiple OpenSearch indexes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/index/open_multiple",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Open multiple OpenSearch indexes"
+        },
+        {
+          "info": {
+            "name": "Show OpenSearch security configuration status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/security",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Show OpenSearch security configuration status"
+        },
+        {
+          "info": {
+            "name": "Enable Opensearch Security Admin by setting the password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/security/admin",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Enable Opensearch Security Admin by setting the password"
+        },
+        {
+          "info": {
+            "name": "Change Opensearch Security Admin password",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/security/admin",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Change Opensearch Security Admin password"
+        },
+        {
+          "info": {
+            "name": "Show snapshot details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot/:repository_name/:snapshot_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "repository_name",
+                "value": "",
+                "type": "path",
+                "description": "Repository name"
+              },
+              {
+                "name": "snapshot_name",
+                "value": "",
+                "type": "path",
+                "description": "Snapshot name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Show snapshot details"
+        },
+        {
+          "info": {
+            "name": "Create a snapshot to custom repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot/:repository_name/:snapshot_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "repository_name",
+                "value": "",
+                "type": "path",
+                "description": "Repository name"
+              },
+              {
+                "name": "snapshot_name",
+                "value": "",
+                "type": "path",
+                "description": "Snapshot name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a snapshot to custom repository"
+        },
+        {
+          "info": {
+            "name": "Delete a snapshot from custom repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot/:repository_name/:snapshot_name",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "repository_name",
+                "value": "",
+                "type": "path",
+                "description": "Repository name"
+              },
+              {
+                "name": "snapshot_name",
+                "value": "",
+                "type": "path",
+                "description": "Snapshot name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a snapshot from custom repository"
+        },
+        {
+          "info": {
+            "name": "List all snapshots in custom repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot/:repository_name/_all",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "repository_name",
+                "value": "",
+                "type": "path",
+                "description": "Repository name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List all snapshots in custom repository"
+        },
+        {
+          "info": {
+            "name": "Verify custom repo name is allowed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot/:repository_name/_verify",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "repository_name",
+                "value": "",
+                "type": "path",
+                "description": "Repository name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Verify custom repo name is allowed"
+        },
+        {
+          "info": {
+            "name": "Restore a snapshot from custom repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot/:repository_name/:snapshot_name/_restore",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "repository_name",
+                "value": "",
+                "type": "path",
+                "description": "Repository name"
+              },
+              {
+                "name": "snapshot_name",
+                "value": "",
+                "type": "path",
+                "description": "Snapshot name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Restore a snapshot from custom repository"
+        },
+        {
+          "info": {
+            "name": "Dry run endpoint to check for conflicted indices before restoring a snapshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot/:repository_name/:snapshot_name/_restore_check",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "repository_name",
+                "value": "",
+                "type": "path",
+                "description": "Repository name"
+              },
+              {
+                "name": "snapshot_name",
+                "value": "",
+                "type": "path",
+                "description": "Snapshot name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Dry run endpoint to check for conflicted indices before restoring a snapshot"
+        },
+        {
+          "info": {
+            "name": "Show full status of a snapshot in custom repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot/:repository_name/:snapshot_name/_status",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "repository_name",
+                "value": "",
+                "type": "path",
+                "description": "Repository name"
+              },
+              {
+                "name": "snapshot_name",
+                "value": "",
+                "type": "path",
+                "description": "Snapshot name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Show full status of a snapshot in custom repository"
+        },
+        {
+          "info": {
+            "name": "List currently running snapshots for a custom repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot/:repository_name/_status",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "repository_name",
+                "value": "",
+                "type": "path",
+                "description": "Repository name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List currently running snapshots for a custom repository"
+        },
+        {
+          "info": {
+            "name": "List custom repositories defined for OpenSearch service",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List custom repositories defined for OpenSearch service"
+        },
+        {
+          "info": {
+            "name": "List restorations in progress for this service",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/_snapshot/restoration_in_progress",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List restorations in progress for this service"
+        },
+        {
+          "info": {
+            "name": "Get OpenSearch tiered storage summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/opensearch/tiered-storage/summary",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get OpenSearch tiered storage summary"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,207 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Service:_Kafka_MirrorMaker API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Service:_Kafka_MirrorMaker",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get replication flows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/mirrormaker/replication-flows",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get replication flows"
+        },
+        {
+          "info": {
+            "name": "Create a replication flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/mirrormaker/replication-flows",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a replication flow"
+        },
+        {
+          "info": {
+            "name": "Get a replication flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/mirrormaker/replication-flows/:source_cluster/:target_cluster",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "source_cluster",
+                "value": "",
+                "type": "path",
+                "description": "Source cluster alias"
+              },
+              {
+                "name": "target_cluster",
+                "value": "",
+                "type": "path",
+                "description": "Target cluster alias"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a replication flow"
+        },
+        {
+          "info": {
+            "name": "Update a replication flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/mirrormaker/replication-flows/:source_cluster/:target_cluster",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "source_cluster",
+                "value": "",
+                "type": "path",
+                "description": "Source cluster alias"
+              },
+              {
+                "name": "target_cluster",
+                "value": "",
+                "type": "path",
+                "description": "Target cluster alias"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update a replication flow"
+        },
+        {
+          "info": {
+            "name": "Delete a replication flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/project/:project/service/:service_name/mirrormaker/replication-flows/:source_cluster/:target_cluster",
+            "params": [
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              },
+              {
+                "name": "service_name",
+                "value": "",
+                "type": "path",
+                "description": "Service name"
+              },
+              {
+                "name": "source_cluster",
+                "value": "",
+                "type": "path",
+                "description": "Source cluster alias"
+              },
+              {
+                "name": "target_cluster",
+                "value": "",
+                "type": "path",
+                "description": "Target cluster alias"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete a replication flow"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

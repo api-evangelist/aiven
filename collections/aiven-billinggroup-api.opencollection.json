@@ -1,0 +1,426 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account BillingGroup API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "BillingGroup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List billing groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/billing-group",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List billing groups"
+        },
+        {
+          "info": {
+            "name": "Create a billing group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/billing-group",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a billing group"
+        },
+        {
+          "info": {
+            "name": "List billing group credits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/credits",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List billing group credits"
+        },
+        {
+          "info": {
+            "name": "Claim a credit code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/credits",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Claim a credit code"
+        },
+        {
+          "info": {
+            "name": "Get billing group details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get billing group details"
+        },
+        {
+          "info": {
+            "name": "Update billing group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update billing group"
+        },
+        {
+          "info": {
+            "name": "Delete billing group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete billing group"
+        },
+        {
+          "info": {
+            "name": "List billing group events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/events",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "List billing group events"
+        },
+        {
+          "info": {
+            "name": "Get a single invoice as a CSV of invoice lines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/invoice/:invoice_number/csv",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              },
+              {
+                "name": "invoice_number",
+                "value": "",
+                "type": "path",
+                "description": "Invoice number"
+              },
+              {
+                "name": "cookie",
+                "value": "",
+                "type": "query",
+                "description": "Download cookie signature."
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "query",
+                "description": "Project name. Only required if the provided cookie comes from the Project Billing API."
+              }
+            ]
+          },
+          "docs": "Get a single invoice as a CSV of invoice lines"
+        },
+        {
+          "info": {
+            "name": "Download PDF invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/invoice/:invoice_number/:download_cookie",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              },
+              {
+                "name": "invoice_number",
+                "value": "",
+                "type": "path",
+                "description": "Invoice number"
+              },
+              {
+                "name": "download_cookie",
+                "value": "",
+                "type": "path",
+                "description": "Authentication cookie for file download"
+              }
+            ]
+          },
+          "docs": "Download PDF invoice"
+        },
+        {
+          "info": {
+            "name": "Get a single invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/invoice/:invoice_number",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              },
+              {
+                "name": "invoice_number",
+                "value": "",
+                "type": "path",
+                "description": "Invoice number"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p>Use GET /v1/organization/{organization_id}/invoice/{invoice_number}</p>"
+        },
+        {
+          "info": {
+            "name": "Get invoice lines for a single invoice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/invoice/:invoice_number/lines",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              },
+              {
+                "name": "invoice_number",
+                "value": "",
+                "type": "path",
+                "description": "Invoice number"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get invoice lines for a single invoice"
+        },
+        {
+          "info": {
+            "name": "Get invoices generated for billing group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/invoice",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get invoices generated for billing group"
+        },
+        {
+          "info": {
+            "name": "Assign project to billing group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/project-assign/:project",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project name"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Assign project to billing group"
+        },
+        {
+          "info": {
+            "name": "Get projects assigned to billing group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/projects",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get projects assigned to billing group"
+        },
+        {
+          "info": {
+            "name": "Assign projects to billing group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/billing-group/:billing_group_id/projects-assign",
+            "params": [
+              {
+                "name": "billing_group_id",
+                "value": "",
+                "type": "path",
+                "description": "Billing group id"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Assign projects to billing group"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

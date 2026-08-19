@@ -1,0 +1,4326 @@
+{
+  "item": [
+    {
+      "id": "4c0abe60-17a5-4c5f-8b38-0b9abd8b209d",
+      "name": "Organizations",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "78a5a8d0-7a21-4565-83aa-5f201820d0d2",
+          "name": "List the other organizations that existing managed users are part of",
+          "request": {
+            "name": "List the other organizations that existing managed users are part of",
+            "description": {
+              "content": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "discovered-organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3bed0946-632b-4123-a391-542a1f27c53c",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "discovered-organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"discovered_organizations\": [\n    {\n      \"create_time\": \"string\",\n      \"organization_id\": \"string\",\n      \"organization_name\": \"string\",\n      \"users\": [\n        {\n          \"create_time\": \"string\",\n          \"is_super_admin\": true,\n          \"real_name\": \"string\",\n          \"user_email\": \"string\",\n          \"user_id\": \"string\"\n        },\n        {\n          \"create_time\": \"string\",\n          \"is_super_admin\": true,\n          \"real_name\": \"string\",\n          \"user_email\": \"string\",\n          \"user_id\": \"string\"\n        }\n      ]\n    },\n    {\n      \"create_time\": \"string\",\n      \"organization_id\": \"string\",\n      \"organization_name\": \"string\",\n      \"users\": [\n        {\n          \"create_time\": \"string\",\n          \"is_super_admin\": true,\n          \"real_name\": \"string\",\n          \"user_email\": \"string\",\n          \"user_id\": \"string\"\n        },\n        {\n          \"create_time\": \"string\",\n          \"is_super_admin\": true,\n          \"real_name\": \"string\",\n          \"user_email\": \"string\",\n          \"user_id\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "78f2d342-1a3e-4436-892c-f7e23b9b6f95",
+              "name": "Organization not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "discovered-organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cddfa10a-31eb-441c-92e1-7e1d7b218d72",
+          "name": "Retrieve authentication configuration",
+          "request": {
+            "name": "Retrieve authentication configuration",
+            "description": {
+              "content": "<p>Retrieve current authentication configuration for an organization.</p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "config",
+                "authentication"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c8de3b9b-fc2a-4bc0-b48f-4964a70ec68c",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "config",
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mcp_enabled\": true,\n  \"oauth_enabled\": false,\n  \"password_auth_enabled\": false,\n  \"personal_tokens_enabled\": false,\n  \"personal_tokens_require_allowed_auth_method\": false,\n  \"saml_allow_external\": false,\n  \"saml_enabled\": true,\n  \"two_factor_required\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6223664-1140-4fcf-aca1-c63c3fc3e317",
+          "name": "Update authentication configuration",
+          "request": {
+            "name": "Update authentication configuration",
+            "description": {
+              "content": "<p>Update current authentication configuration for an organization.</p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "config",
+                "authentication"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mcp_enabled\": \"<boolean>\",\n  \"oauth_enabled\": \"<boolean>\",\n  \"password_auth_enabled\": \"<boolean>\",\n  \"personal_tokens_enabled\": \"<boolean>\",\n  \"personal_tokens_require_allowed_auth_method\": \"<boolean>\",\n  \"saml_allow_external\": \"<boolean>\",\n  \"saml_enabled\": \"<boolean>\",\n  \"two_factor_required\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1a9e7cc2-fb70-49a1-961e-79d139d53fa0",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "config",
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mcp_enabled\": false,\n  \"oauth_enabled\": false,\n  \"password_auth_enabled\": false,\n  \"personal_tokens_enabled\": false,\n  \"personal_tokens_require_allowed_auth_method\": false,\n  \"saml_allow_external\": false,\n  \"saml_enabled\": false,\n  \"two_factor_required\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mcp_enabled\": false,\n  \"oauth_enabled\": true,\n  \"password_auth_enabled\": true,\n  \"personal_tokens_enabled\": false,\n  \"personal_tokens_require_allowed_auth_method\": false,\n  \"saml_allow_external\": false,\n  \"saml_enabled\": false,\n  \"two_factor_required\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fdf3083b-8de3-4b49-a14d-16a29c0ee4bb",
+          "name": "Delete an organization",
+          "request": {
+            "name": "Delete an organization",
+            "description": {
+              "content": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "recursive",
+                  "value": "<boolean>",
+                  "description": "(Required) Delete all resources in the organization"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8cbf8b8f-92fb-44a6-8561-749727a720d5",
+              "name": "Delete an organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "recursive",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "49b67785-bbd7-4799-a78d-5c80e8cb2aae",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "recursive",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76031adc-ca9c-437e-a267-b164c121252e",
+          "name": "Get information about an organization",
+          "request": {
+            "name": "Get information about an organization",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9b24d46b-71d5-4538-b3c0-807cd7c1b65d",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_id\": \"string\",\n  \"create_time\": \"string\",\n  \"organization_id\": \"string\",\n  \"organization_name\": \"string\",\n  \"tier\": \"personal\",\n  \"update_time\": \"string\",\n  \"default_governance_user_group_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f97761e7-cb98-484f-9d2a-d4ea01099dc9",
+          "name": "Update organization's details",
+          "request": {
+            "name": "Update organization's details",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"tier\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4bac6016-d751-4f04-b168-f9bc62039407",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Aiven Ltd\",\n  \"tier\": \"business\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_id\": \"string\",\n  \"create_time\": \"string\",\n  \"organization_id\": \"string\",\n  \"organization_name\": \"string\",\n  \"tier\": \"personal\",\n  \"update_time\": \"string\",\n  \"default_governance_user_group_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57369696-4df1-4cf8-99aa-bcaea57e608d",
+          "name": "Create organization access",
+          "request": {
+            "name": "Create organization access",
+            "description": {
+              "content": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "governance",
+                "access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_data\": {\n    \"acls\": [\n      {\n        \"host\": \"<string>\",\n        \"operation\": \"<string>\",\n        \"permission_type\": \"<string>\",\n        \"resource_name\": \"<string>\",\n        \"resource_type\": \"<string>\"\n      },\n      {\n        \"host\": \"<string>\",\n        \"operation\": \"<string>\",\n        \"permission_type\": \"<string>\",\n        \"resource_name\": \"<string>\",\n        \"resource_type\": \"<string>\"\n      }\n    ],\n    \"project_name\": \"<string>\",\n    \"service_name\": \"<string>\",\n    \"username\": \"<string>\"\n  },\n  \"access_name\": \"<string>\",\n  \"access_type\": \"<string>\",\n  \"owner_user_group_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "041ebb87-0e10-440e-a6f4-03996371ada4",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"access_data\": {\n    \"acls\": [\n      {\n        \"host\": \"*\",\n        \"operation\": \"Write\",\n        \"permission_type\": \"ALLOW\",\n        \"resource_name\": \"events\",\n        \"resource_type\": \"Topic\"\n      }\n    ],\n    \"project_name\": \"project-1\",\n    \"service_name\": \"service-1\",\n    \"username\": \"api3\"\n  },\n  \"access_name\": \"My Access\",\n  \"access_type\": \"KAFKA\",\n  \"owner_user_group_id\": \"ug22ba494e096\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access\": {\n    \"access_data\": {\n      \"acls\": [\n        {\n          \"host\": \"string\",\n          \"id\": \"string\",\n          \"operation\": \"Read\",\n          \"pattern_type\": \"LITERAL\",\n          \"permission_type\": \"ALLOW\",\n          \"principal\": \"string\",\n          \"resource_name\": \"string\",\n          \"resource_type\": \"Topic\"\n        },\n        {\n          \"host\": \"string\",\n          \"id\": \"string\",\n          \"operation\": \"Read\",\n          \"pattern_type\": \"LITERAL\",\n          \"permission_type\": \"ALLOW\",\n          \"principal\": \"string\",\n          \"resource_name\": \"string\",\n          \"resource_type\": \"Topic\"\n        }\n      ],\n      \"project_name\": \"string\",\n      \"service_name\": \"string\",\n      \"username\": \"string\"\n    },\n    \"access_id\": \"string\",\n    \"access_name\": \"string\",\n    \"access_type\": \"KAFKA\",\n    \"create_time\": \"string\",\n    \"created_by\": \"string\",\n    \"credentials_consumed\": true,\n    \"credentials_user_id\": \"string\",\n    \"owner_user_group_id\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e78450a-b75a-46ed-8cd5-683f21876977",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"access_data\": {\n    \"acls\": [\n      {\n        \"host\": \"*\",\n        \"operation\": \"Write\",\n        \"permission_type\": \"ALLOW\",\n        \"resource_name\": \"events\",\n        \"resource_type\": \"Topic\"\n      }\n    ],\n    \"project_name\": \"project-1\",\n    \"service_name\": \"service-1\",\n    \"username\": \"api3\"\n  },\n  \"access_name\": \"My Access\",\n  \"access_type\": \"KAFKA\",\n  \"owner_user_group_id\": \"ug22ba494e096\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"kafka_console_governance_enabled\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"kafka_governance_not_enabled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2d7e7ba-2c75-4c45-bb30-98e8a8e3d629",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"access_data\": {\n    \"acls\": [\n      {\n        \"host\": \"*\",\n        \"operation\": \"Write\",\n        \"permission_type\": \"ALLOW\",\n        \"resource_name\": \"events\",\n        \"resource_type\": \"Topic\"\n      }\n    ],\n    \"project_name\": \"project-1\",\n    \"service_name\": \"service-1\",\n    \"username\": \"api3\"\n  },\n  \"access_name\": \"My Access\",\n  \"access_type\": \"KAFKA\",\n  \"owner_user_group_id\": \"ug22ba494e096\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e47be2ce-7718-44db-a4ab-8818c8d36821",
+          "name": "List access for organization",
+          "request": {
+            "name": "List access for organization",
+            "description": {
+              "content": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "governance",
+                "access"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Limit results to this number"
+                },
+                {
+                  "disabled": false,
+                  "key": "resource_name",
+                  "value": "<string>",
+                  "description": "Filter by resource name"
+                },
+                {
+                  "disabled": false,
+                  "key": "owner_user_group_id",
+                  "value": "<string>",
+                  "description": "Filter by owner user group ID"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f6fe808e-3c39-4d50-8568-d58bfcac7d7f",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "resource_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_user_group_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access\": [\n    {\n      \"access_data\": {\n        \"acls\": [\n          {\n            \"host\": \"string\",\n            \"id\": \"string\",\n            \"operation\": \"Read\",\n            \"pattern_type\": \"LITERAL\",\n            \"permission_type\": \"ALLOW\",\n            \"principal\": \"string\",\n            \"resource_name\": \"string\",\n            \"resource_type\": \"Topic\"\n          },\n          {\n            \"host\": \"string\",\n            \"id\": \"string\",\n            \"operation\": \"Read\",\n            \"pattern_type\": \"LITERAL\",\n            \"permission_type\": \"ALLOW\",\n            \"principal\": \"string\",\n            \"resource_name\": \"string\",\n            \"resource_type\": \"Topic\"\n          }\n        ],\n        \"project_name\": \"string\",\n        \"service_name\": \"string\",\n        \"username\": \"string\"\n      },\n      \"access_id\": \"string\",\n      \"access_name\": \"string\",\n      \"access_type\": \"KAFKA\",\n      \"create_time\": \"string\",\n      \"created_by\": \"string\",\n      \"credentials_consumed\": false,\n      \"credentials_user_id\": \"string\",\n      \"owner_user_group_id\": \"string\"\n    },\n    {\n      \"access_data\": {\n        \"acls\": [\n          {\n            \"host\": \"string\",\n            \"id\": \"string\",\n            \"operation\": \"Read\",\n            \"pattern_type\": \"LITERAL\",\n            \"permission_type\": \"ALLOW\",\n            \"principal\": \"string\",\n            \"resource_name\": \"string\",\n            \"resource_type\": \"Topic\"\n          },\n          {\n            \"host\": \"string\",\n            \"id\": \"string\",\n            \"operation\": \"Read\",\n            \"pattern_type\": \"LITERAL\",\n            \"permission_type\": \"ALLOW\",\n            \"principal\": \"string\",\n            \"resource_name\": \"string\",\n            \"resource_type\": \"Topic\"\n          }\n        ],\n        \"project_name\": \"string\",\n        \"service_name\": \"string\",\n        \"username\": \"string\"\n      },\n      \"access_id\": \"string\",\n      \"access_name\": \"string\",\n      \"access_type\": \"KAFKA\",\n      \"create_time\": \"string\",\n      \"created_by\": \"string\",\n      \"credentials_consumed\": true,\n      \"credentials_user_id\": \"string\",\n      \"owner_user_group_id\": \"string\"\n    }\n  ],\n  \"first\": \"string\",\n  \"last\": \"string\",\n  \"next\": \"string\",\n  \"prev\": \"string\",\n  \"total_count\": 5788\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d48c10a-64d6-402f-91bc-fa06002d8989",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "resource_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_user_group_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"kafka_governance_not_enabled\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"kafka_governance_not_enabled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "101af5eb-8e87-4758-b3b1-cc2047f38e2a",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "resource_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "owner_user_group_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1e2ac76-429a-442b-8de9-3e52f3f2355c",
+          "name": "Get organization access credentials",
+          "request": {
+            "name": "Get organization access credentials",
+            "description": {
+              "content": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "governance",
+                "access",
+                ":access_id",
+                "credentials"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "access_id",
+                  "description": "(Required) Access Id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "aad7302a-f686-4c3f-b547-f343d5a8b850",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access",
+                    ":access_id",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "access_id",
+                      "description": "(Required) Access Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"credentials\": {\n    \"access_cert\": \"string\",\n    \"access_key\": \"string\",\n    \"password\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f3fa8cf-7e92-4767-b7d5-dfe0b7076c89",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access",
+                    ":access_id",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "access_id",
+                      "description": "(Required) Access Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"kafka_governance_not_enabled\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"kafka_governance_not_enabled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c379b617-814e-4ca8-8840-68a7b2c50d6a",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access",
+                    ":access_id",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "access_id",
+                      "description": "(Required) Access Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3de80fc9-5892-4941-aa8e-b8db2f0af304",
+          "name": "Delete organization access",
+          "request": {
+            "name": "Delete organization access",
+            "description": {
+              "content": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "governance",
+                "access",
+                ":access_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "access_id",
+                  "description": "(Required) Access Id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "73601b67-9770-429f-bf16-ebc34b109a0e",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access",
+                    ":access_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "access_id",
+                      "description": "(Required) Access Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e225eba-6b5e-4d3f-9b38-08caaa7b4686",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access",
+                    ":access_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "access_id",
+                      "description": "(Required) Access Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"kafka_console_governance_enabled\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"kafka_governance_not_enabled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa208813-9171-4447-95ad-39178b6f7672",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access",
+                    ":access_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "access_id",
+                      "description": "(Required) Access Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85adc957-55eb-464b-aeb0-5cab21c04f21",
+          "name": "Get organization access details",
+          "request": {
+            "name": "Get organization access details",
+            "description": {
+              "content": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "governance",
+                "access",
+                ":access_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "access_id",
+                  "description": "(Required) Access Id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "078597db-1dec-49ce-8331-806f496efef6",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access",
+                    ":access_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "access_id",
+                      "description": "(Required) Access Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access\": {\n    \"access_data\": {\n      \"acls\": [\n        {\n          \"host\": \"string\",\n          \"id\": \"string\",\n          \"operation\": \"Write\",\n          \"pattern_type\": \"LITERAL\",\n          \"permission_type\": \"ALLOW\",\n          \"principal\": \"string\",\n          \"resource_name\": \"string\",\n          \"resource_type\": \"Topic\"\n        },\n        {\n          \"host\": \"string\",\n          \"id\": \"string\",\n          \"operation\": \"Write\",\n          \"pattern_type\": \"LITERAL\",\n          \"permission_type\": \"ALLOW\",\n          \"principal\": \"string\",\n          \"resource_name\": \"string\",\n          \"resource_type\": \"Topic\"\n        }\n      ],\n      \"project_name\": \"string\",\n      \"service_name\": \"string\",\n      \"username\": \"string\"\n    },\n    \"access_id\": \"string\",\n    \"access_name\": \"string\",\n    \"access_type\": \"KAFKA\",\n    \"create_time\": \"string\",\n    \"created_by\": \"string\",\n    \"credentials_consumed\": true,\n    \"credentials_user_id\": \"string\",\n    \"owner_user_group_id\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ed71b487-fad3-41ab-aa1a-4049fe7d872f",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access",
+                    ":access_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "access_id",
+                      "description": "(Required) Access Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"kafka_governance_not_enabled\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"kafka_governance_not_enabled\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "deca8607-775c-492b-9267-b42ba990b3a3",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "governance",
+                    "access",
+                    ":access_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "access_id",
+                      "description": "(Required) Access Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"governance_access_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e191d706-9193-40b4-b058-32190f580933",
+          "name": "Get organization IP range allowlist",
+          "request": {
+            "name": "Get organization IP range allowlist",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "config",
+                "api-client-ip-allowlist"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5438d172-68d8-4179-94d5-e8a862fcc302",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "config",
+                    "api-client-ip-allowlist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api_client_ip_allowlist\": [\n    \"string\",\n    \"string\"\n  ],\n  \"api_client_ip_allowlist_enabled\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75c45492-fd70-4335-ad18-c5aa2a5877ee",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "config",
+                    "api-client-ip-allowlist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c03f11a-5966-4c49-8359-6cc3522876ec",
+          "name": "Set organization IP range allowlist",
+          "request": {
+            "name": "Set organization IP range allowlist",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "config",
+                "api-client-ip-allowlist"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"api_client_ip_allowlist\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"api_client_ip_allowlist_enabled\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ed060efd-92bc-4862-ba39-185896d9629e",
+              "name": "Set organization IP range allowlist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "config",
+                    "api-client-ip-allowlist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_client_ip_allowlist\": [\n    \"192.168.0.0/24\",\n    \"2001:db8::/32\"\n  ],\n  \"api_client_ip_allowlist_enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d0b6eaec-72e6-4eee-a3c7-3a3b7bf040e7",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "config",
+                    "api-client-ip-allowlist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_client_ip_allowlist\": [\n    \"192.168.0.0/24\",\n    \"2001:db8::/32\"\n  ],\n  \"api_client_ip_allowlist_enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"api_client_ip_allowlist_blocks_caller\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"api_client_ip_allowlist_blocks_caller\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "382e73d4-757d-4c08-87b2-872896626c9f",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "config",
+                    "api-client-ip-allowlist"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"api_client_ip_allowlist\": [\n    \"192.168.0.0/24\",\n    \"2001:db8::/32\"\n  ],\n  \"api_client_ip_allowlist_enabled\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a69c41a0-2bd1-44bf-a0a0-72b398b0b28b",
+          "name": "Create project under the organization",
+          "request": {
+            "name": "Create project under the organization",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"billing_group_id\": \"<string>\",\n  \"project_id\": \"<string>\",\n  \"tags\": {\n    \"ANY\": \"<string>\"\n  },\n  \"base_port\": \"<integer>\",\n  \"parent_id\": \"<string>\",\n  \"tech_emails\": [\n    {\n      \"email\": \"<string>\"\n    },\n    {\n      \"email\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b4ee69ec-c9a9-448a-bb2c-c2fb792fb3b5",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base_port\": 10000,\n  \"billing_group_id\": \"721bf796-1d89-402d-9195-425a23c4efdc\",\n  \"parent_id\": \"a3fd7a594e01\",\n  \"project_id\": \"project-1\",\n  \"tags\": {\n    \"ANY\": \"value\"\n  },\n  \"tech_emails\": \"[{\\\"email\\\": \\\"jane@aiven.io\\\"}]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"end_of_life_extension\": {\n    \"ANY\": {\n      \"eol_date\": \"string\",\n      \"version\": \"string\"\n    }\n  },\n  \"organization_id\": \"string\",\n  \"parent_id\": \"string\",\n  \"project_id\": \"string\",\n  \"tags\": {\n    \"ANY\": \"string\"\n  },\n  \"tech_emails\": [\n    {\n      \"email\": \"string\"\n    },\n    {\n      \"email\": \"string\"\n    }\n  ],\n  \"account_id\": \"string\",\n  \"base_port\": 9478,\n  \"billing_group_id\": \"string\",\n  \"features\": {\n    \"ANY\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e1e0629-2e34-48a7-8048-7303d5965ff6",
+              "name": "Operation not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base_port\": 10000,\n  \"billing_group_id\": \"721bf796-1d89-402d-9195-425a23c4efdc\",\n  \"parent_id\": \"a3fd7a594e01\",\n  \"project_id\": \"project-1\",\n  \"tags\": {\n    \"ANY\": \"value\"\n  },\n  \"tech_emails\": \"[{\\\"email\\\": \\\"jane@aiven.io\\\"}]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"user_not_organization_admin\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"user_not_organization_admin\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a82e051-6f77-4729-9b47-4548bde5525c",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base_port\": 10000,\n  \"billing_group_id\": \"721bf796-1d89-402d-9195-425a23c4efdc\",\n  \"parent_id\": \"a3fd7a594e01\",\n  \"project_id\": \"project-1\",\n  \"tags\": {\n    \"ANY\": \"value\"\n  },\n  \"tech_emails\": \"[{\\\"email\\\": \\\"jane@aiven.io\\\"}]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"organization_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b65a2e4-bce2-44b8-8b9f-177ed70b6930",
+              "name": "Request conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base_port\": 10000,\n  \"billing_group_id\": \"721bf796-1d89-402d-9195-425a23c4efdc\",\n  \"parent_id\": \"a3fd7a594e01\",\n  \"project_id\": \"project-1\",\n  \"tags\": {\n    \"ANY\": \"value\"\n  },\n  \"tech_emails\": \"[{\\\"email\\\": \\\"jane@aiven.io\\\"}]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_already_exists\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_already_exists\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e5bd0075-897c-4273-b286-478c3e25e9e7",
+          "name": "List projects under the organization",
+          "request": {
+            "name": "List projects under the organization",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2238411f-33eb-44da-a8e7-8695b52e1e12",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"projects\": [\n    {\n      \"end_of_life_extension\": {\n        \"ANY\": {\n          \"eol_date\": \"string\",\n          \"version\": \"string\"\n        }\n      },\n      \"parent_id\": \"string\",\n      \"project_id\": \"string\",\n      \"tags\": {\n        \"ANY\": \"string\"\n      },\n      \"tech_emails\": [\n        {\n          \"email\": \"string\"\n        },\n        {\n          \"email\": \"string\"\n        }\n      ],\n      \"account_id\": \"string\",\n      \"base_port\": 32255,\n      \"billing_group_id\": \"string\"\n    },\n    {\n      \"end_of_life_extension\": {\n        \"ANY\": {\n          \"eol_date\": \"string\",\n          \"version\": \"string\"\n        }\n      },\n      \"parent_id\": \"string\",\n      \"project_id\": \"string\",\n      \"tags\": {\n        \"ANY\": \"string\"\n      },\n      \"tech_emails\": [\n        {\n          \"email\": \"string\"\n        },\n        {\n          \"email\": \"string\"\n        }\n      ],\n      \"account_id\": \"string\",\n      \"base_port\": 42827,\n      \"billing_group_id\": \"string\"\n    }\n  ],\n  \"total_project_count\": 8740\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "017c8e83-8294-436f-a65e-0a4d661c8173",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "45d0ba28-eb68-43df-914d-23144d5f62ce",
+          "name": "Delete project under the organization",
+          "request": {
+            "name": "Delete project under the organization",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "project",
+                ":project_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_id",
+                  "description": "(Required) Project Id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5b5d340c-f5db-46ed-af89-be88f12f64b0",
+              "name": "Delete project under the organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "project",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) Project Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0d826850-c54d-4c5e-824b-3043c8edf634",
+              "name": "Operation not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "project",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) Project Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"user_not_organization_admin\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"user_not_organization_admin\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5dcd9a63-3c7a-4bef-b310-e8cd4d08d305",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "project",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) Project Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7b6e9cb-cf8c-49e2-b4ef-9c72aa5dec1f",
+          "name": "Retrieve project under the organization",
+          "request": {
+            "name": "Retrieve project under the organization",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "project",
+                ":project_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_id",
+                  "description": "(Required) Project Id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0ccbb166-a3ad-4159-8469-90e48280aa83",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "project",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) Project Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"end_of_life_extension\": {\n    \"ANY\": {\n      \"eol_date\": \"string\",\n      \"version\": \"string\"\n    }\n  },\n  \"organization_id\": \"string\",\n  \"parent_id\": \"string\",\n  \"project_id\": \"string\",\n  \"tags\": {\n    \"ANY\": \"string\"\n  },\n  \"tech_emails\": [\n    {\n      \"email\": \"string\"\n    },\n    {\n      \"email\": \"string\"\n    }\n  ],\n  \"account_id\": \"string\",\n  \"base_port\": 18546,\n  \"billing_group_id\": \"string\",\n  \"features\": {\n    \"ANY\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "696c6877-7035-4387-ae88-64fb10b12573",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "project",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) Project Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9a56ed53-cb2c-4a14-bc0e-651fe19b6b1c",
+          "name": "Update project under the organization",
+          "request": {
+            "name": "Update project under the organization",
+            "description": {
+              "content": "<p>Moving a project to a different unit requires organization admin privileges (role:organization:admin). Moving to a different organization requires admin privileges in both organizations, and specifying both the target organization and the target parent unit IDs.</p>",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "project",
+                ":project_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_id",
+                  "description": "(Required) Project Id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"base_port\": \"<integer>\",\n  \"billing_group_id\": \"<string>\",\n  \"organization_id\": \"<string>\",\n  \"parent_id\": \"<string>\",\n  \"project_name\": \"<string>\",\n  \"tags\": {\n    \"ANY\": \"<string>\"\n  },\n  \"tech_emails\": [\n    {\n      \"email\": \"<string>\"\n    },\n    {\n      \"email\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "523bb684-3490-4525-92b9-9487a6796796",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "project",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) Project Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base_port\": 10000,\n  \"billing_group_id\": \"721bf796-1d89-402d-9195-425a23c4efdc\",\n  \"organization_id\": \"org1234abcd\",\n  \"parent_id\": \"a3fd7a594e01\",\n  \"project_name\": \"project-1\",\n  \"tags\": {\n    \"ANY\": \"value\"\n  },\n  \"tech_emails\": \"[{\\\"email\\\": \\\"jane@aiven.io\\\"}]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"end_of_life_extension\": {\n    \"ANY\": {\n      \"eol_date\": \"string\",\n      \"version\": \"string\"\n    }\n  },\n  \"organization_id\": \"string\",\n  \"parent_id\": \"string\",\n  \"project_id\": \"string\",\n  \"tags\": {\n    \"ANY\": \"string\"\n  },\n  \"tech_emails\": [\n    {\n      \"email\": \"string\"\n    },\n    {\n      \"email\": \"string\"\n    }\n  ],\n  \"account_id\": \"string\",\n  \"base_port\": 51714,\n  \"billing_group_id\": \"string\",\n  \"features\": {\n    \"ANY\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "455f05c1-8240-41c9-951f-a1c0161ed883",
+              "name": "Operation not allowed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "project",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) Project Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base_port\": 10000,\n  \"billing_group_id\": \"721bf796-1d89-402d-9195-425a23c4efdc\",\n  \"organization_id\": \"org1234abcd\",\n  \"parent_id\": \"a3fd7a594e01\",\n  \"project_name\": \"project-1\",\n  \"tags\": {\n    \"ANY\": \"value\"\n  },\n  \"tech_emails\": \"[{\\\"email\\\": \\\"jane@aiven.io\\\"}]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_move_organizations_internal_config_not_match\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_move_organizations_internal_config_not_match\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03dd69b9-1d31-4c86-adc7-12c5454d2b55",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "project",
+                    ":project_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_id",
+                      "description": "(Required) Project Id"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"base_port\": 10000,\n  \"billing_group_id\": \"721bf796-1d89-402d-9195-425a23c4efdc\",\n  \"organization_id\": \"org1234abcd\",\n  \"parent_id\": \"a3fd7a594e01\",\n  \"project_name\": \"project-1\",\n  \"tags\": {\n    \"ANY\": \"value\"\n  },\n  \"tech_emails\": \"[{\\\"email\\\": \\\"jane@aiven.io\\\"}]\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_not_found\"\n    },\n    {\n      \"message\": \"string\",\n      \"error_code\": \"project_not_found\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "09314c86-c408-433f-b92b-76fdde0b8772",
+          "name": "Accept a user invitation to the organization",
+          "request": {
+            "name": "Accept a user invitation to the organization",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "invitation",
+                ":user_email"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_email",
+                  "description": "(Required) Email address"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"accept\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4ffe98f9-a5ac-4307-91f8-bdf751dac9f8",
+              "name": "Accept a user invitation to the organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "invitation",
+                    ":user_email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_email",
+                      "description": "(Required) Email address"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"accept\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1bce680-5155-415d-a69f-22dc63e9c0be",
+          "name": "Remove an invitation to the organization",
+          "request": {
+            "name": "Remove an invitation to the organization",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "invitation",
+                ":user_email"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_email",
+                  "description": "(Required) Email address"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "99b30e13-ce4d-47b4-b98e-16f8a9091c83",
+              "name": "Remove an invitation to the organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "invitation",
+                    ":user_email"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_email",
+                      "description": "(Required) Email address"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a85d987-afb7-4fa5-ba84-06b89a0c8f97",
+          "name": "List user invitations to the organization",
+          "request": {
+            "name": "List user invitations to the organization",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "invitation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b32c4610-5dbb-4fe6-a189-55b481203de9",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "invitation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"invitations\": [\n    {\n      \"create_time\": \"string\",\n      \"expiry_time\": \"string\",\n      \"invited_by\": \"string\",\n      \"user_email\": \"string\"\n    },\n    {\n      \"create_time\": \"string\",\n      \"expiry_time\": \"string\",\n      \"invited_by\": \"string\",\n      \"user_email\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8bf0890a-8de1-406c-8460-9e9de3a5fab6",
+          "name": "Invite a user to the organization",
+          "request": {
+            "name": "Invite a user to the organization",
+            "description": {},
+            "url": {
+              "path": [
+                "organization",
+                ":organization_id",
+                "invitation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) ID of an organization"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a2a6e4a0-d7d3-4afb-8ca8-a2f7fa9f9fd6",
+              "name": "Invite a user to the organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organization",
+                    ":organization_id",
+                    "invitation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) ID of an organization"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_email\": \"jane@example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed150442-4e46-4b54-b435-5e69d39dc957",
+          "name": "Create an organization",
+          "request": {
+            "name": "Create an organization",
+            "description": {},
+            "url": {
+              "path": [
+                "organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization_name\": \"<string>\",\n  \"tier\": \"<string>\",\n  \"primary_billing_group_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3b601a0b-fee3-4f57-9347-bf01213cf4b6",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"Aiven Ltd\",\n  \"primary_billing_group_id\": \"adcf7194-d877-4505-a47a-91fefd96e3b8\",\n  \"tier\": \"business\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"account_id\": \"string\",\n  \"create_time\": \"string\",\n  \"organization_id\": \"string\",\n  \"organization_name\": \"string\",\n  \"tier\": \"business\",\n  \"update_time\": \"string\",\n  \"default_governance_user_group_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "659300cc-2d25-47a5-884f-3eb9d94eb64f",
+          "name": "List organizations the user belongs to",
+          "request": {
+            "name": "List organizations the user belongs to",
+            "description": {},
+            "url": {
+              "path": [
+                "organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "93de35da-b9d0-443b-97c6-b95bd3b22446",
+              "name": "Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"organizations\": [\n    {\n      \"account_id\": \"string\",\n      \"create_time\": \"string\",\n      \"organization_id\": \"string\",\n      \"organization_name\": \"string\",\n      \"tier\": \"business\",\n      \"update_time\": \"string\",\n      \"default_governance_user_group_id\": \"string\"\n    },\n    {\n      \"account_id\": \"string\",\n      \"create_time\": \"string\",\n      \"organization_id\": \"string\",\n      \"organization_name\": \"string\",\n      \"tier\": \"business\",\n      \"update_time\": \"string\",\n      \"default_governance_user_group_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.aiven.io/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c0abd166-a378-4726-a1f6-80ca31efb099",
+    "name": "Aiven API Documentation Account Organizations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Introduction\n\n[Direct link to openapi.json](https://api.aiven.io/doc/openapi.json) for use with external tools\n\n[Aiven](https://aiven.io) is a modern fully-managed open source data platform for streaming, storing, and analyzing data on any public cloud. On Aiven Platform, you can operate your data infrastructure with a few devops tools: [Aiven Console](https://console.aiven.io/), [Aiven Terraform Provider](https://aiven.io/docs/tools/terraform), [Aiven CLI](https://github.com/aiven/aiven-client), and [Aiven Operator for Kubernetes](https://github.com/aiven/aiven-operator). All of them are built on an open secure powerful REST API for integration with custom tooling.\n\nThe Aiven [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer) API\nprovides programmatic access to Aiven.io services. To call the Aiven API, you can use either CLI tools (for example, `cURL` or [Aiven CLI client](https://aiven.io/docs/tools/cli)) or GUI tools, such as the [Aiven public API Postman collection](https://www.postman.com/aiven-apis).\n\nThis Aiven API documentation will help you operate your Aiven organization, projects, or services programmatically by integrating your applications and processes with Aiven.\n\n# Description\n\nAiven's APIs ([Application Programming Interfaces](https://en.wikipedia.org/wiki/API)) power its platform for data management. Aiven has a number of REST APIs that can help you build strong and robust data infrastructure for your applications.\n\nThe Aiven API is organized around core resources. Each core resource has multiple endpoints, which can be interacted with using different HTTP methods.\n\n## Core resources\n\n### Platform APIs\n\n<dl>\n  <dt>Account</dt>\n  <dd>Operations on the organization level related to accounts, projects, teams, users, invites, billing groups, payment methods, credit cards, authentication methods, and more </dd>\n  <dt>User</dt>\n  <dd>Operations related to users and users' profiles, access, authentication, authorization, user management, and more</dd>\n  <dt>Project</dt>\n  <dd>General operations on projects related to users, VPCs, invitations, alerts, peering connections, and more</dd>\n  <dt>BillingGroup</dt>\n  <dd>Operation on invoices, billing groups' credits and events </dd>\n  <dt>Support ticket</dt>\n  <dd>Operations on support tickets: listing, creating, looping users in</dd>\n</dl>\n\n### Services APIs\n\n<dl>\n  <dt>Service</dt>\n  <dd>All general (non-service-specific) operations on the service level: service creation, termination, configuration, updates, information retrieval, reset, and more</dd>\n  <dt>Service Integrations</dt>\n  <dd>Operations related to integrating services and managing service integrations</dd>\n  <dt>Service: ClickHouse</dt>\n  <dd>ClickHouse-specific operations on queries and databases </dd>\n  <dt>Service: Flink</dt>\n  <dd>Operations on Flink queries, jobs, and applications</dd>\n  <dt>Service: Kafka</dt>\n  <dd>Kafka and Kafka Connect specific operations on connectors, ACL entries, quotas, topics, topic messages, schema registry, and more</dd>\n  <dt>Service: Kafka MirrorMaker</dt>\n  <dd>Operations on replication flows</dd>\n  <dt>Service: MySQL</dt>\n  <dd>Fetching service query statistics</dd>\n  <dt>Service: OpenSearch</dt>\n  <dd>Operations on ACL configuration, security administration and configuration</dd>\n  <dt>Service: PostgreSQL</dt>\n  <dd>Operations on extensions, service query statistics, and connection pools</dd>\n</dl>\n\n# Requests\n\nThere are multiple ways you can interact with the Aiven API over HTTP. You can access it by sending requests from a client (for example, a web browser) to the Aiven's server. In this API reference, you'll find code examples of how to do that using `cURL` and a few different client libraries (programming languages).\n\nTo send an API request, you need to specify the following:\n\n* HTTP method\n* Path\n* Request headers\n\n  Typically, `content-type` needs to be set to `application/json`: `content-type: application/json`. There are a few exceptions though.\n\n* Path, query, or body parameters (either required or optional).\n\n```bash\ncurl --request POST \\\n  --url https://api.aiven.io/v1/project/{project}/vpcs \\\n  --header 'Authorization: aivenv1 REPLACE_BEARER_TOKEN' \\\n  --header 'content-type: application/json' \\\n  --data\n     '{\n        \"cloud_name\": \"string\",\n        \"network_cidr\": \"string\",\n        \"peering_connections\": [\n          {\n            \"peer_azure_app_id\": \"string\",\n            \"peer_azure_tenant_id\": \"string\",\n            \"peer_cloud_account\": \"string\",\n            \"peer_region\": \"string\",\n            \"peer_resource_group\": \"string\",\n            \"peer_vpc\": \"string\",\n            \"user_peer_network_cidrs\": [\n              \"string\"\n            ]\n          }\n        ]\n      }'\n```\n\n# Responses\n\nUpon receiving and processing a request, the Aiven API returns the response status code, response headers, and a response body in the `JSON` format. Response bodies include different properties, which can be either required or optional, for example, the ``message`` property, which is an optional human-readable information on the result of the action (deleted, created, or updated).\n\n```json\n{\n    \"cloud_name\": \"string\",\n    \"create_time\": \"string\",\n    \"message\": \"string\",\n    \"network_cidr\": \"string\",\n    \"peering_connections\": [\n        { ... }\n    ],\n    \"pending_build_only_peering_connections\": \"string\",\n    \"project_vpc_id\": \"string\",\n    \"state\": \"ACTIVE\",\n    \"update_time\": \"string\"\n}\n```\n\n## Successful responses\n\nA successful API response returns an HTTP result code between 200 and 299.\n\nExample of the ``created`` response\n\n```json\n  {\n      \"service\": {\n          \"service_name\": \"foobar\",\n          ...\n      }\n  }\n```\n\n## Failed responses\n\nA failed API response returns a HTTP code greater or equal to 400. Additionally, the response may return a list of errors in the response body as JSON, for example\n\n```json\n{\n  \"errors\": [\n    {\n      \"error_code\": \"authentication_failed\",\n      \"message\": \"Authentication failed\",\n      \"status\": 403,\n      \"metadata\": {\n        ...\n      }\n    }\n  ],\n  \"message\": \"Authentication failed\"\n}\n```\n\n> For information on errors' properties and error codes, check [Errors](/doc/openapi/openapi-description#errors).\n\n# Get started\n\nCheck out how to start using the Aiven API either in [API quick start](https://aiven.io/docs/tools/api#api-quickstart) or [Your first API call](https://aiven.io/blog/your-first-aiven-api-call).\n\n## Authentication\n\n<!-- ReDoc-Inject: <security-definitions> -->\n\n# Errors\n\nWhen working with the Aiven API, you may encounter different error responses when you attempt to perform operations that can fail. For example, trying to enable writes for a database that has been powered off would lead to the following error response:\n\n```json\n{\n  \"errors\": [\n    {\n      \"error_code\": \"not_powered\",\n      \"message\": \"Database not powered on\",\n      \"status\": 409\n    }\n  ],\n  \"message\": \"Database not powered on\"\n}\n```\n\n## Check a response for errors\n\nIf a request fails with a HTTP code greater or equal to 400, it returns a list of errors in the response body as JSON. `errors` objects are embedded in the failed API responses.\n\n```json\n{\n  \"errors\": [\n    {\n      \"error_code\": \"account_not_found\",\n      \"message\": \"Account does not exist\",\n      \"status\": 404\n    }\n  ],\n  \"message\": \"Account does not exist\"\n}\n```\n\n## Errors' properties\n\nIn an API response, one or more errors may be included in the ``errors`` array of objects. Each error object may contain a few properties:\n\n* ``status`` (required) is an HTTP error code, which can be used to programmatically identify the error type.\n\n  * ``200`` <= ``status``< ``300`` means a successful request.\n  * ``300`` <= ``status`` <= ``500`` means a failed request.\n\n  ``errors`` can have the following HTTPS status codes:\n\n  * 200 - OK\n  * 201 - Created\n  * 400 - Bad Request\n  * 401 - Unauthorized\n  * 403 - Forbidden\n  * 404 - Not found\n  * 405 - Method Not Allowed\n  * 409 - Conflict\n  * 500 - Internal Server Error\n\n* ``message`` (required) is human-readable information on the error.\n* ``error_code`` is a machine-readable information on the error (see [Error codes](/doc/openapi/openapi-description#error-codes)).\n\n## Error codes\n\nMachine-readable ``error_code`` fields are progressively added to Aiven endpoints to allow you to identify different failure cases programmatically. Currently, the supported values are the following:\n\n- `account_already_exists`\n- `account_already_has_organization`\n- `account_and_project_do_not_match`\n- `account_and_project_must_belong_same_tenant`\n- `account_cannot_be_own_ancestor`\n- `account_must_have_enabled_authentication_method`\n- `account_not_found`\n- `account_team_not_found`\n- `account_unit_cannot_create_for_personal_tier`\n- `account_unit_cannot_have_billing_group`\n- `account_with_child_accounts_cannot_be_deleted`\n- `account_with_projects_cannot_be_deleted`\n- `action_forbidden_for_application_users`\n- `action_forbidden_for_managed_users`\n- `action_forbidden_for_marketplace_users`\n- `action_forbidden_for_scim_users`\n- `action_forbidden_for_timescale_users`\n- `action_forbidden_missing_governance_usergroup`\n- `action_forbidden_on_application_users`\n- `action_forbidden_on_topic_request`\n- `action_forbidden_on_unmanaged_users`\n- `acu_billing_not_allowed`\n- `address_already_belongs_to_organization`\n- `address_in_use`\n- `address_not_found`\n- `api_client_ip_allowlist_blocks_caller`\n- `approval_forbidden_on_topic_request`\n- `approval_missing_on_request`\n- `auth_token_max_age_too_low`\n- `authentication_method_disable_current_not_allowed`\n- `authentication_method_does_not_allow_auto_join_user_group`\n- `authentication_method_limit_reached`\n- `authentication_method_not_found`\n- `backup_failed`\n- `bad_request`\n- `billing_address_not_found`\n- `billing_customer_id_not_found`\n- `billing_group_not_found`\n- `billing_group_organization_active_trial`\n- `billing_group_owning_account_must_be_organization`\n- `billing_metronome_support_contract_not_found`\n- `ca_version_not_in_sequence`\n- `cannot_delete_active_managed_users`\n- `cannot_delete_users_with_organizations_memberships`\n- `cannot_move_project_not_assigned_to_organization`\n- `cannot_remove_managed_users_from_organization`\n- `cannot_set_groups_managed_by_scim_as_auto_join_group`\n- `client_ip_address_policy_violation`\n- `credit_card_not_found`\n- `credit_memo_not_found`\n- `custom_cloud_environment_cloud_not_supported`\n- `custom_cloud_environment_internal`\n- `custom_cloud_environment_invalid_iam_role_arn`\n- `custom_cloud_environment_missing_configuration`\n- `custom_cloud_environment_not_found`\n- `custom_cloud_environment_region_not_supported`\n- `database_not_found`\n- `decline_forbidden_on_topic_request`\n- `deleting_forbidden_on_governance_request`\n- `deleting_forbidden_on_topic_request`\n- `discount_not_found`\n- `feature_not_enabled`\n- `free_plans_in_high_demand_and_unavailable`\n- `free_tier_restricted`\n- `free_trial_extensions_not_available`\n- `free_trial_max_extended`\n- `free_trial_not_active`\n- `free_trial_not_available`\n- `governance_access_no_permission_on_project`\n- `governance_access_not_found`\n- `governance_configuration_already_exists`\n- `governance_configuration_not_found`\n- `governance_group_not_found`\n- `governance_invalid_service_type`\n- `governance_request_already_in_progress`\n- `governance_request_deleted`\n- `idp_no_domains_linked`\n- `index_close_failed`\n- `index_not_found`\n- `internal_server_error`\n- `invalid_backup_configuration`\n- `invalid_cmk_id`\n- `invalid_currency_code`\n- `invalid_date_format`\n- `invalid_email_format`\n- `invalid_governance_group_provided`\n- `invalid_kafka_topic_request_type`\n- `invalid_os_migration_command`\n- `invalid_owner_user_group`\n- `invalid_private_access_settings`\n- `invalid_scim_user_state_update`\n- `invalid_service_type`\n- `invalid_vcs_type`\n- `invitation_expired`\n- `invitation_not_found`\n- `invoice_lines_not_supported`\n- `invoice_not_found`\n- `ip_address_not_present`\n- `ip_address_not_valid`\n- `kafka_acl_not_supported`\n- `kafka_console_governance_enabled`\n- `kafka_governance_not_available`\n- `kafka_governance_not_enabled`\n- `kafka_governance_policy_incomplete`\n- `kafka_partition_reassignment_in_progress`\n- `kafka_policy_violation`\n- `kafka_service_unavailable`\n- `kafka_terraform_governance_enabled`\n- `kafka_topic_already_exists`\n- `kafka_topic_invalid_config`\n- `kafka_topic_not_found`\n- `kafka_topic_not_synchronized`\n- `kafka_topic_queued_for_deletion`\n- `kafka_topic_reserved`\n- `marketplace_aws_customer_or_product_details_not_found`\n- `marketplace_subscription_already_linked_to_organization`\n- `marketplace_subscription_link_expired`\n- `marketplace_subscription_no_access`\n- `metadata_validation_failed`\n- `mfa_required_by_organization`\n- `mp_account_with_active_subscription_deleted`\n- `mp_account_with_commitment_deleted`\n- `mp_account_with_support_contract_deleted`\n- `mp_subscription_not_found`\n- `nested_account_cannot_have_authentication_method`\n- `nested_account_cannot_have_user_groups`\n- `new_subnet_id_required`\n- `no_failed_os_migration`\n- `node_prune_version_not_updated`\n- `not_powered`\n- `opensearch_delete_system_index`\n- `opensearch_internal_server_error`\n- `opensearch_service_unavailable`\n- `opensearch_too_many_requests`\n- `optimization_failed`\n- `optimization_not_found`\n- `organization_aiven_enterprise_contract_denied`\n- `organization_aiven_enterprise_contract_feature_denied`\n- `organization_aiven_enterprise_denied`\n- `organization_aiven_enterprise_organization_required`\n- `organization_cannot_exist_without_root_account`\n- `organization_domain_already_linked`\n- `organization_domain_not_found`\n- `organization_domain_not_root`\n- `organization_domain_verification_failed`\n- `organization_has_active_addresses`\n- `organization_has_active_payment_methods`\n- `organization_kafka_topics_invalid_filters`\n- `organization_mismatch`\n- `organization_must_have_one_super_admin`\n- `organization_not_found`\n- `organization_pending_support_contract_already_exists`\n- `organization_support_contract_tier_not_supported`\n- `organization_tier_downgrade_not_allowed`\n- `organization_user_not_found`\n- `orphaned_project_not_allowed`\n- `parent_account_cannot_be_own_ancestor`\n- `parent_account_not_found`\n- `parent_account_tenant_invalid`\n- `parent_account_too_deep`\n- `payment_method_not_found`\n- `permission_denied`\n- `pg_editor_readonly_violation`\n- `pg_pool_already_exists`\n- `pg_pool_invalid_database`\n- `pg_pool_invalid_name`\n- `pg_pool_not_found`\n- `pg_pool_not_supported`\n- `pg_pool_pinned_pools_not_enabled`\n- `pg_pool_requires_pinned_pools`\n- `pg_pool_too_big`\n- `pg_pool_too_many`\n- `pg_publication_not_found`\n- `pg_replication_slot_not_found`\n- `pg_scram_not_allowed`\n- `project_account_not_active`\n- `project_already_exists`\n- `project_belongs_to_account_billing_group_must_use_api`\n- `project_does_not_exist`\n- `project_has_no_such_user`\n- `project_limitation_not_found`\n- `project_move_invalid`\n- `project_move_organizations_internal_config_not_match`\n- `project_not_found`\n- `project_without_billing_group_must_be_assigned_from_account`\n- `query_validation_failed`\n- `replication_already_exists`\n- `replication_config_invalid`\n- `replication_not_found`\n- `replication_service_not_found`\n- `repository_not_found`\n- `request_already_exists`\n- `request_forbidden`\n- `request_not_found`\n- `request_operation_already_exists`\n- `request_operation_not_found`\n- `resource_managed_by_governance`\n- `resource_managed_by_scim`\n- `resource_not_managed_by_scim`\n- `retired_api_endpoint`\n- `root_account_required`\n- `same_organization_required`\n- `schema_insights_failed`\n- `service_acl_not_found`\n- `service_acl_too_many`\n- `service_does_not_exist`\n- `service_governance_not_enabled`\n- `service_integration_endpoint_not_found`\n- `service_integration_not_found`\n- `service_integration_project_mismatch_source_destination`\n- `service_is_upgrade_pipeline_source`\n- `service_logs_backend_timeout`\n- `service_logs_backend_unavailable`\n- `service_maintenance_required`\n- `service_not_found`\n- `service_type_not_allowed`\n- `service_type_version_pin_locked`\n- `shipping_address_not_found`\n- `signup_welcome_invalid_key`\n- `snapshot_creation_failed`\n- `snapshot_deletion_failed`\n- `snapshot_not_found`\n- `snapshot_restoration_failed`\n- `stripe_customer_owning_account_must_be_organization`\n- `support_contract_and_account_must_be_in_same_organization`\n- `support_contract_earliest_cancellation_date_later_than_end_date`\n- `support_contract_must_have_billing_group`\n- `support_contract_null_tier`\n- `team_limit_exceeded`\n- `team_names_must_be_unique`\n- `tenant_mismatch`\n- `topic_not_found`\n- `unable_to_parse_query`\n- `unit_cannot_be_moved_out_of_organization`\n- `unknown_user_sso_login_attempt`\n- `unsupported_resource_type`\n- `upgrade_pipeline_no_nodes`\n- `upgrade_pipeline_no_validation`\n- `upgrade_pipeline_not_enabled_for_project`\n- `upgrade_pipeline_service_not_destination`\n- `upgrade_pipeline_service_not_found`\n- `upgrade_step_destination_already_has_source`\n- `upgrade_step_destination_service_not_found`\n- `upgrade_step_exceeds_max_chain_length`\n- `upgrade_step_not_found`\n- `upgrade_step_service_type_mismatch`\n- `upgrade_step_source_service_not_found`\n- `upgrade_step_unsupported_service_type`\n- `upgrade_step_validation_not_possible_due_to_service_state`\n- `upgrade_step_would_create_cycle`\n- `upgrade_validation_already_exists`\n- `user_already_in_organization`\n- `user_already_invited_to_organization`\n- `user_cant_login`\n- `user_config_2fa_otp_verification_failed`\n- `user_deactivated`\n- `user_domain_does_not_belong_to_organization_or_no_linked_auth_method`\n- `user_group_names_must_be_unique`\n- `user_group_not_found`\n- `user_groups_belong_to_different_accounts`\n- `user_groups_must_be_from_same_account`\n- `user_has_no_access_to_billing_info`\n- `user_has_no_access_to_project_with_current_authentication_method`\n- `user_has_to_sign_in_with_non_account_authentication_method`\n- `user_has_too_many_disk_addition_requests`\n- `user_is_internal_user`\n- `user_not_account_owner`\n- `user_not_account_owner_of_billing_group`\n- `user_not_account_owner_of_parent_account`\n- `user_not_admin_of_account_billing_group`\n- `user_not_application_user`\n- `user_not_found`\n- `user_not_managed_by_organization`\n- `user_not_organization_admin`\n- `user_not_signed_in_with_account_authentication_method`\n- `user_oauth_authentication_method_not_allowed`\n- `user_password_authentication_method_not_allowed`\n- `user_password_compromised`\n- `user_password_not_found`\n- `user_personal_token_allowed_authentication_methods_cannot_be_disabled`\n- `user_personal_token_not_allowed`\n- `user_personal_tokens_cannot_be_disabled`\n- `user_role_not_allowed_to_perform_operation`\n- `user_saml_authentication_method_not_allowed`\n- `user_weblink_action_expired`\n- `username_is_invalid`\n- `username_is_reserved`\n- `users_belong_to_different_tenant_from_user_group_account`\n- `vcs_integration_installation_not_found_or_not_accessible`\n- `vcs_integration_not_found`\n- `vpc_id_and_subnet_id_required`\n- `webhook_invalid_event_data`\n- `webhook_unauthorized`\n\n\nContact Support:\n Name: Aiven support team\n Email: support@aiven.io",
+      "type": "text/plain"
+    }
+  }
+}

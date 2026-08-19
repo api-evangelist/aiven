@@ -1,0 +1,231 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Aiven API Documentation Account Custom_Cloud API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Custom_Cloud",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a custom cloud",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/custom-cloud-environments",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Creates a custom cloud environment in an organization.</p>"
+        },
+        {
+          "info": {
+            "name": "Retrieve a custom cloud",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/custom-cloud-environments/:custom_cloud_environment_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "custom_cloud_environment_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a custom cloud environment"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Retrieves the details of a custom cloud environment.</p>"
+        },
+        {
+          "info": {
+            "name": "Update a custom cloud",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/custom-cloud-environments/:custom_cloud_environment_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "custom_cloud_environment_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a custom cloud environment"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Updates a custom cloud environment.</p>"
+        },
+        {
+          "info": {
+            "name": "Delete a custom cloud",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/custom-cloud-environments/:custom_cloud_environment_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "custom_cloud_environment_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a custom cloud environment"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Deletes a custom cloud environment from an organization.</p>"
+        },
+        {
+          "info": {
+            "name": "Retrieve custom cloud permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/custom-cloud-environments/:custom_cloud_environment_id/permissions",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "custom_cloud_environment_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a custom cloud environment"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Retrieves details of the permissions for using a custom cloud environment.</p>"
+        },
+        {
+          "info": {
+            "name": "Update custom cloud permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/custom-cloud-environments/:custom_cloud_environment_id/permissions",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "custom_cloud_environment_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a custom cloud environment"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Updates the permissions to use a custom cloud environment.</p>"
+        },
+        {
+          "info": {
+            "name": "Provision custom cloud resources in Aiven",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aiven.io/v1/organization/:organization_id/custom-cloud-environments/:custom_cloud_environment_id/provision",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of an organization"
+              },
+              {
+                "name": "custom_cloud_environment_id",
+                "value": "",
+                "type": "path",
+                "description": "ID of a custom cloud environment"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "<p><blockquote>This endpoint <b>may be changed or removed at any time</b>. Don't use it in production environments.</blockquote><p>\n\n<p>Call this endpoint after running the Terraform infrastructure template in your cloud provider account. This validates the creation of the custom cloud environment and provisions the resources required for building the environment.</p>"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
