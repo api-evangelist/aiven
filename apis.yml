@@ -36,6 +36,19 @@ tags:
   - ClickHouse
   - Redis
   - MySQL
+  - Open-Source
+  - Cloud Database
+  - Database-as-a-Service
+  - Data Streaming
+  - Data Platform
+tags_raw:
+  - Managed Data Infrastructure
+  - Apache Kafka
+  - PostgreSQL
+  - OpenSearch
+  - ClickHouse
+  - Redis
+  - MySQL
   - Open Source
   - Cloud Database
   - DBaaS
@@ -86,6 +99,8 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
+  - Application Users
+  tags_raw:
   - Application_Users
   properties:
   - type: OpenAPI
@@ -124,6 +139,8 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
+  - Authentication Methods
+  tags_raw:
   - Authentication_Methods
   properties:
   - type: OpenAPI
@@ -352,6 +369,8 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -544,6 +563,8 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -696,6 +717,8 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
+  - Project Billing
+  tags_raw:
   - Project_Billing
   properties:
   - type: OpenAPI
@@ -924,6 +947,8 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
+  - Service Integrations
+  tags_raw:
   - Service_Integrations
   properties:
   - type: OpenAPI
@@ -1305,6 +1330,8 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
