@@ -1377,6 +1377,9 @@ apis:
   - type: Examples
     url: examples/aiven-list-services.json
 common:
+  - type: CapabilityMap
+    url: capabilities/aiven-capability-edges.yml
+    name: Aiven Business Capability Map
   - type: AgenticAccess
     url: agentic-access/aiven-agentic-access.yml
   - type: VulnerabilityDisclosure

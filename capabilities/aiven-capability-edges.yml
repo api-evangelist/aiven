@@ -1,0 +1,140 @@
+slug: aiven
+provider: Aiven
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 12
+edges:
+- tag: Organization_Vpc
+  spec_file: aiven-organization-vpc-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /organization/{organization_id}/vpcs  OrganizationVpcCreate  Create organization VPC
+    ... OrganizationVpcPeeringConnectionCreate  Create organization VPC peering
+  reason: Creating, updating and peering virtual private clouds with peer network CIDRs is cloud network
+    infrastructure provisioning — squarely IT Infrastructure Management.
+- tag: Users
+  spec_file: aiven-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: AccessTokenCreate  Create new access token; OrganizationMemberPermissionsList  List resources
+    permissions of the organization's member; OrganizationUserAuthenticationMethodsList  List authentication
+    methods for a user in the organization
+  reason: Operations manage user accounts, organisation membership, permissions, authentication methods,
+    2FA and access tokens — identity and access management, not HR employee records.
+- tag: Permissions
+  spec_file: aiven-permissions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.82
+  evidence: PUT /organization/{organization_id}/permissions/{resource_type}/{resource_id}  PermissionsSet  Set
+    permissions
+  reason: Reading and setting permissions on organization resources is access control administration,
+    i.e. Identity & Access Management.
+- tag: OrganizationPaymentMethod
+  spec_file: aiven-organizationpaymentmethod-api-openapi.yml
+  capability_id: BC-4250.40
+  capability_id_l1: BC-4250
+  capability_name: Payment Collection & Dunning
+  confidence: 0.8
+  evidence: POST /organization/{organization_id}/payment-method/credit-cards  CreditCardCreate  Create
+    credit card payment method in the organization
+  reason: Operations register, list and delete credit-card and bank-transfer payment methods on the billing
+    account for a subscription cloud service — payment-method management under subscription payment collection.
+    Not a general payments/treasury capability.
+- tag: Payment
+  spec_file: aiven-payment-api-openapi.yml
+  capability_id: BC-4250.40
+  capability_id_l1: BC-4250
+  capability_name: Payment Collection & Dunning
+  confidence: 0.78
+  evidence: POST /card  UserCreditCardAdd  Add credit card for user
+  reason: 'Add, list, update and delete the user''s credit cards — payment-method management for the recurring
+    cloud subscription. Homograph check: ''Payment'' here is card-on-file administration, not payment
+    execution or treasury.'
+- tag: Project_Billing
+  spec_file: aiven-project-billing-api-openapi.yml
+  capability_id: BC-4250.30
+  capability_id_l1: BC-4250
+  capability_name: Invoicing & Statement Management
+  confidence: 0.78
+  evidence: GET /project/{project}/invoice  ProjectInvoiceList  List project invoices; POST /project/{project}/credits  ProjectCreditsClaim  Claim
+    a credit code
+  reason: Listing and downloading invoices and claiming service credits for a cloud project is invoicing/statement
+    handling within the subscription billing model.
+- tag: StaticIP
+  spec_file: aiven-staticip-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.78
+  evidence: ProjectStaticIPAssociate  Associate a static IP address with a service; StaticIPCreate  Create
+    static IP address
+  reason: Provisioning and association of static IP addresses to cloud services is network infrastructure
+    management, squarely IT Infrastructure Management.
+- tag: BillingGroup
+  spec_file: aiven-billinggroup-api-openapi.yml
+  capability_id: BC-4250.30
+  capability_id_l1: BC-4250
+  capability_name: Invoicing & Statement Management
+  confidence: 0.75
+  evidence: GET /billing-group/{billing_group_id}/invoice/{invoice_number}/lines  BillingGroupInvoiceLinesList  Get
+    invoice lines for a single invoice; POST /billing-group/{billing_group_id}/credits  BillingGroupCreditsClaim  Claim
+    a credit code
+  reason: Billing groups aggregate projects for invoicing; operations cover invoices, invoice lines, CSV/PDF
+    statements and credit claims. This is invoicing and statement management for the subscription service.
+- tag: OrganizationBillingGroup
+  spec_file: aiven-organizationbillinggroup-api-openapi.yml
+  capability_id: BC-4250.30
+  capability_id_l1: BC-4250
+  capability_name: Invoicing & Statement Management
+  confidence: 0.75
+  evidence: GET /organization/{organization_id}/invoices  OrganizationBillingInvoiceList  Get a list of
+    invoices; GET /organization/{organization_id}/credit-memos  OrganizationBillingCreditMemosList
+  reason: Organisation-scoped billing groups, invoices, invoice lines and credit memos — issuance, retrieval
+    and adjustment of customer invoices for the subscription service.
+- tag: Authentication_Methods
+  spec_file: aiven-authentication-methods-api-openapi.yml
+  capability_id: BC-4230.50
+  capability_id_l1: BC-4230
+  capability_name: Tenant Identity Federation
+  confidence: 0.72
+  evidence: PUT /organization/{organization_id}/authentication-methods/{authentication_method_id}/domains  OrganizationAuthDomainLink  Link
+    a domain to an organization's identity provider
+  reason: Operations link and unlink verified domains to a customer organisation's identity provider —
+    federation of a tenant's IdP into the SaaS platform, matching tenant identity federation.
+- tag: Billing
+  spec_file: aiven-billing-api-openapi.yml
+  capability_id: BC-4250.30
+  capability_id_l1: BC-4250
+  capability_name: Invoicing & Statement Management
+  confidence: 0.72
+  evidence: GET /invoices/{invoice_number}  InvoiceGet  Get a single invoice; GET /credit-memos/{credit_memo_id}/{download_cookie}  BillingCreditMemoDownload  Download
+    PDF Credit Memo
+  reason: Retrieval and PDF delivery of invoices and credit memos, plus billing addresses for the organisation
+    — invoice generation, delivery and adjustment for the SaaS commercial model.
+- tag: Service
+  spec_file: aiven-service-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: GET /project/{project}/service/{service_name}/backups  ServiceBackupsGet  Get service backup
+    information; POST /project/{project}/service/{service_name}/logs  ProjectGetServiceLogs  Get service
+    log entries
+  reason: Operations provision and operate managed data-service instances (service types/versions, logs,
+    backups, alerts, maintenance, privatelink), i.e. running cloud data infrastructure. IT Infrastructure
+    Management is the honest cross-industry fit for this devtool surface.
