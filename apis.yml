@@ -50,7 +50,7 @@ tags:
   - MySQL
   - Open-Source
   - Cloud Database
-  - Database-as-a-Service
+  - DBaaS
   - Data Streaming
   - Data Platform
 tags_raw:
@@ -111,7 +111,7 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
-  - Application Users
+  - Application_Users
   tags_raw:
   - Application_Users
   properties:
@@ -151,7 +151,7 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
-  - Authentication Methods
+  - Authentication_Methods
   tags_raw:
   - Authentication_Methods
   properties:
@@ -729,7 +729,7 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
-  - Project Billing
+  - Project_Billing
   tags_raw:
   - Project_Billing
   properties:
@@ -959,7 +959,7 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
-  - Service Integrations
+  - Service_Integrations
   tags_raw:
   - Service_Integrations
   properties:
