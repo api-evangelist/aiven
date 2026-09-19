@@ -615,6 +615,8 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
+  - Payments
+  tags_raw:
   - Payment
   properties:
   - type: OpenAPI
@@ -845,6 +847,8 @@ apis:
   humanURL: https://aiven.io/docs/tools/api
   baseURL: https://api.aiven.io/v1
   tags:
+  - Services
+  tags_raw:
   - Service
   properties:
   - type: OpenAPI
