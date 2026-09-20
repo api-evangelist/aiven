@@ -11,6 +11,12 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: business-product
 pricing_basis: tiered-subscription
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-09-20'
+  evidence: Bring Your Own Cloud (BYOC) available for larger setups
+  managed_tier: Developer
 published: true
 note: Managed PostgreSQL plan pricing page; plans billed hourly and invoiced monthly. Annual commitments,
   prepaid discounts, BYOC and upgraded support tiers priced only via contact sales.
