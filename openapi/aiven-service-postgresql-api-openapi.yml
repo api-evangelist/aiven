@@ -388,23 +388,129 @@ paths:
         oauth2:
         - services:write
 components:
+  parameters:
+    account_id:
+      in: path
+      name: account_id
+      description: Account ID
+      schema:
+        type: string
+      required: true
+    pool_name:
+      in: path
+      name: pool_name
+      description: PgBouncer connection pool name
+      schema:
+        type: string
+      required: true
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    service_name:
+      in: path
+      name: service_name
+      description: Service name
+      schema:
+        type: string
+      required: true
   schemas:
-    PGServiceQueryValidateRequestBody:
+    PGAccountQueryOptimizeResponse:
       type: object
-      description: PGServiceQueryValidateRequestBody
+      description: PGAccountQueryOptimizeResponse
       properties:
-        do_not_store:
-          type: boolean
-          description: Do not store details
-          default: false
-        query:
-          type: string
-          description: Query
+        optimize:
+          type: object
+          description: Optimize
+          properties:
+            existing_recommended_indexes:
+              type: array
+              description: Existing Recommended Indexes
+              items:
+                type: object
+                properties:
+                  index_definition:
+                    type: string
+                    description: Index definition
+                required:
+                - index_definition
+            index_recommendations:
+              type: array
+              description: Index Recommendations
+              items:
+                type: object
+                properties:
+                  creation_cmd:
+                    type: string
+                    description: Creation command
+                  table_name:
+                    type: string
+                    description: Table name
+                required:
+                - creation_cmd
+                - table_name
+            optimization_id:
+              type: string
+              description: Optimization ID
+            optimized_query:
+              type: string
+              description: Optimized query in base64 format
+            original_query:
+              type: string
+              description: Original query in base64 format
+            recommendations:
+              type: array
+              description: Recommendations
+              items:
+                type: object
+                properties:
+                  bad_practice_sample:
+                    type: string
+                    description: Bad practice sample
+                  best_practice_sample:
+                    type: string
+                    description: Best practice sample
+                  description:
+                    type: string
+                    description: Description
+                  fixable:
+                    type: boolean
+                    description: Fixable
+                  line_number:
+                    type: integer
+                    description: Line number
+                  priority:
+                    type: integer
+                    description: Priority
+                  title:
+                    type: string
+                    description: Title
+                  type:
+                    type: integer
+                    description: Type
+                required:
+                - bad_practice_sample
+                - best_practice_sample
+                - description
+                - fixable
+                - line_number
+                - priority
+                - title
+                - type
+          required:
+          - existing_recommended_indexes
+          - index_recommendations
+          - optimized_query
+          - original_query
+          - recommendations
       required:
-      - query
-    ServicePGBouncerCreateRequestBody:
+      - optimize
+    ServicePGBouncerUpdateRequestBody:
       type: object
-      description: ServicePGBouncerCreateRequestBody
+      description: ServicePGBouncerUpdateRequestBody
       properties:
         database:
           type: string
@@ -413,31 +519,22 @@ components:
         pool_mode:
           type: string
           description: PGBouncer pool mode
-          default: transaction
           enum:
           - session
           - transaction
           - statement
-        pool_name:
-          type: string
-          maxLength: 63
-          description: Connection pool name
         pool_size:
           type: integer
           minimum: 1
           maximum: 10000
           description: Size of PGBouncer's PostgreSQL side connection pool
-          default: 10
         username:
           type: string
           maxLength: 64
           description: Service username
-      required:
-      - database
-      - pool_name
-    ServicePGBouncerUpdateResponse:
+    ServicePGBouncerDeleteResponse:
       type: object
-      description: ServicePGBouncerUpdateResponse
+      description: ServicePGBouncerDeleteResponse
       properties:
         errors:
           type: array
@@ -460,6 +557,52 @@ components:
         message:
           type: string
           description: Printable result of the request
+    PGServiceAvailableExtensionsResponse:
+      type: object
+      description: PGServiceAvailableExtensionsResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        extensions:
+          type: array
+          description: Extensions available for loading with CREATE EXTENSION in this service
+          items:
+            type: object
+            properties:
+              default_version:
+                type: string
+                description: Default version
+              name:
+                type: string
+                description: Extension name
+              versions:
+                type: array
+                description: Extension versions available
+                items:
+                  type: string
+            required:
+            - name
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - extensions
     PGServiceQueryStatisticsResponse:
       type: object
       description: PGServiceQueryStatisticsResponse
@@ -586,6 +729,88 @@ components:
                 description: Query statistic
       required:
       - queries
+    ServicePGBouncerCreateRequestBody:
+      type: object
+      description: ServicePGBouncerCreateRequestBody
+      properties:
+        database:
+          type: string
+          maxLength: 63
+          description: Service database name
+        pool_mode:
+          type: string
+          description: PGBouncer pool mode
+          default: transaction
+          enum:
+          - session
+          - transaction
+          - statement
+        pool_name:
+          type: string
+          maxLength: 63
+          description: Connection pool name
+        pool_size:
+          type: integer
+          minimum: 1
+          maximum: 10000
+          description: Size of PGBouncer's PostgreSQL side connection pool
+          default: 10
+        username:
+          type: string
+          maxLength: 64
+          description: Service username
+      required:
+      - database
+      - pool_name
+    PGAccountQueryOptimizeRequestBody:
+      type: object
+      description: PGAccountQueryOptimizeRequestBody
+      properties:
+        do_not_store:
+          type: boolean
+          description: Do not store details
+          default: false
+        flags:
+          type: array
+          description: Optimization flags
+          items:
+            type: string
+        pg_version:
+          type: string
+          description: An enumeration.
+          title: PostgreSQL version
+          enum:
+          - '18'
+          - '17'
+          - '16'
+          - '15'
+          - '14'
+          - '13'
+          - '12'
+          - '11'
+          - '10'
+          - '9'
+          - '8'
+          - '7'
+        query:
+          type: string
+          description: Query
+        schema_metadata:
+          type: string
+          description: Schema metadata
+      required:
+      - flags
+      - pg_version
+      - query
+    PGServiceQueryValidateResponse:
+      type: object
+      description: PGServiceQueryValidateResponse
+      properties:
+        status:
+          type: string
+          description: Status
+      required:
+      - status
     PGServiceQueryStatisticsDeprecatedResponse:
       type: object
       description: PGServiceQueryStatisticsDeprecatedResponse
@@ -712,214 +937,6 @@ components:
                 description: Query statistic
       required:
       - queries
-    ServicePGBouncerUpdateRequestBody:
-      type: object
-      description: ServicePGBouncerUpdateRequestBody
-      properties:
-        database:
-          type: string
-          maxLength: 63
-          description: Service database name
-        pool_mode:
-          type: string
-          description: PGBouncer pool mode
-          enum:
-          - session
-          - transaction
-          - statement
-        pool_size:
-          type: integer
-          minimum: 1
-          maximum: 10000
-          description: Size of PGBouncer's PostgreSQL side connection pool
-        username:
-          type: string
-          maxLength: 64
-          description: Service username
-    PGServiceAvailableExtensionsResponse:
-      type: object
-      description: PGServiceAvailableExtensionsResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        extensions:
-          type: array
-          description: Extensions available for loading with CREATE EXTENSION in this service
-          items:
-            type: object
-            properties:
-              default_version:
-                type: string
-                description: Default version
-              name:
-                type: string
-                description: Extension name
-              versions:
-                type: array
-                description: Extension versions available
-                items:
-                  type: string
-            required:
-            - name
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - extensions
-    PGAccountQueryOptimizeResponse:
-      type: object
-      description: PGAccountQueryOptimizeResponse
-      properties:
-        optimize:
-          type: object
-          description: Optimize
-          properties:
-            existing_recommended_indexes:
-              type: array
-              description: Existing Recommended Indexes
-              items:
-                type: object
-                properties:
-                  index_definition:
-                    type: string
-                    description: Index definition
-                required:
-                - index_definition
-            index_recommendations:
-              type: array
-              description: Index Recommendations
-              items:
-                type: object
-                properties:
-                  creation_cmd:
-                    type: string
-                    description: Creation command
-                  table_name:
-                    type: string
-                    description: Table name
-                required:
-                - creation_cmd
-                - table_name
-            optimization_id:
-              type: string
-              description: Optimization ID
-            optimized_query:
-              type: string
-              description: Optimized query in base64 format
-            original_query:
-              type: string
-              description: Original query in base64 format
-            recommendations:
-              type: array
-              description: Recommendations
-              items:
-                type: object
-                properties:
-                  bad_practice_sample:
-                    type: string
-                    description: Bad practice sample
-                  best_practice_sample:
-                    type: string
-                    description: Best practice sample
-                  description:
-                    type: string
-                    description: Description
-                  fixable:
-                    type: boolean
-                    description: Fixable
-                  line_number:
-                    type: integer
-                    description: Line number
-                  priority:
-                    type: integer
-                    description: Priority
-                  title:
-                    type: string
-                    description: Title
-                  type:
-                    type: integer
-                    description: Type
-                required:
-                - bad_practice_sample
-                - best_practice_sample
-                - description
-                - fixable
-                - line_number
-                - priority
-                - title
-                - type
-          required:
-          - existing_recommended_indexes
-          - index_recommendations
-          - optimized_query
-          - original_query
-          - recommendations
-      required:
-      - optimize
-    PGServiceMetadataValidateResponse:
-      type: object
-      description: PGServiceMetadataValidateResponse
-      properties:
-        status:
-          type: string
-          description: Status
-      required:
-      - status
-    PGServiceDatabaseMetadataQueryResponse:
-      type: object
-      description: PGServiceDatabaseMetadataQueryResponse
-      properties:
-        metadata_query:
-          type: string
-          description: Database metadata retrieval query
-      required:
-      - metadata_query
-    PGServiceQueryValidateResponse:
-      type: object
-      description: PGServiceQueryValidateResponse
-      properties:
-        status:
-          type: string
-          description: Status
-      required:
-      - status
-    PGServiceQueryStatisticsRequestBody:
-      type: object
-      description: PGServiceQueryStatisticsRequestBody
-      properties:
-        limit:
-          type: integer
-          minimum: 1
-          maximum: 5000
-          description: Limit for number of results
-          default: 100
-        offset:
-          type: integer
-          minimum: 0
-          description: Offset for retrieved results based on sort order
-          default: 0
-        order_by:
-          type: string
-          maxLength: 256
-          description: 'Sort order can be either asc or desc and multiple comma separated columns with their own order can be specified: :asc,:desc. Accepted sort columns are: blk_read_time, blk_write_time, calls, database_name, local_blks_dirtied, local_blks_hit, local_blks_read, local_blks_written, max_plan_time, max_time, mean_plan_time, mean_time, min_plan_time, min_time, query, queryid, rows, shared_blks_dirtied, shared_blks_hit, shared_blks_read, shared_blks_written, stddev_plan_time, stddev_time, temp_blks_read, temp_blks_written, total_plan_time, total_time, user_name, wal_bytes, wal_fpi, wal_records'
-          title: Order in which to sort retrieved results
-          default: calls:desc
     ServicePGBouncerCreateResponse:
       type: object
       description: ServicePGBouncerCreateResponse
@@ -945,49 +962,74 @@ components:
         message:
           type: string
           description: Printable result of the request
-    PGAccountQueryOptimizeRequestBody:
+    PGServiceMetadataValidateResponse:
       type: object
-      description: PGAccountQueryOptimizeRequestBody
+      description: PGServiceMetadataValidateResponse
+      properties:
+        status:
+          type: string
+          description: Status
+      required:
+      - status
+    PGServiceMetadataValidateRequestBody:
+      type: object
+      description: PGServiceMetadataValidateRequestBody
+      properties:
+        db_version:
+          type: string
+          description: Database version
+        metadata:
+          type: string
+          description: Metadata to validate
+      required:
+      - db_version
+      - metadata
+    PGServiceDatabaseMetadataQueryResponse:
+      type: object
+      description: PGServiceDatabaseMetadataQueryResponse
+      properties:
+        metadata_query:
+          type: string
+          description: Database metadata retrieval query
+      required:
+      - metadata_query
+    PGServiceQueryStatisticsRequestBody:
+      type: object
+      description: PGServiceQueryStatisticsRequestBody
+      properties:
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 5000
+          description: Limit for number of results
+          default: 100
+        offset:
+          type: integer
+          minimum: 0
+          description: Offset for retrieved results based on sort order
+          default: 0
+        order_by:
+          type: string
+          maxLength: 256
+          description: 'Sort order can be either asc or desc and multiple comma separated columns with their own order can be specified: :asc,:desc. Accepted sort columns are: blk_read_time, blk_write_time, calls, database_name, local_blks_dirtied, local_blks_hit, local_blks_read, local_blks_written, max_plan_time, max_time, mean_plan_time, mean_time, min_plan_time, min_time, query, queryid, rows, shared_blks_dirtied, shared_blks_hit, shared_blks_read, shared_blks_written, stddev_plan_time, stddev_time, temp_blks_read, temp_blks_written, total_plan_time, total_time, user_name, wal_bytes, wal_fpi, wal_records'
+          title: Order in which to sort retrieved results
+          default: calls:desc
+    PGServiceQueryValidateRequestBody:
+      type: object
+      description: PGServiceQueryValidateRequestBody
       properties:
         do_not_store:
           type: boolean
           description: Do not store details
           default: false
-        flags:
-          type: array
-          description: Optimization flags
-          items:
-            type: string
-        pg_version:
-          type: string
-          description: An enumeration.
-          title: PostgreSQL version
-          enum:
-          - '18'
-          - '17'
-          - '16'
-          - '15'
-          - '14'
-          - '13'
-          - '12'
-          - '11'
-          - '10'
-          - '9'
-          - '8'
-          - '7'
         query:
           type: string
           description: Query
-        schema_metadata:
-          type: string
-          description: Schema metadata
       required:
-      - flags
-      - pg_version
       - query
-    ServicePGBouncerDeleteResponse:
+    ServicePGBouncerUpdateResponse:
       type: object
-      description: ServicePGBouncerDeleteResponse
+      description: ServicePGBouncerUpdateResponse
       properties:
         errors:
           type: array
@@ -1010,48 +1052,6 @@ components:
         message:
           type: string
           description: Printable result of the request
-    PGServiceMetadataValidateRequestBody:
-      type: object
-      description: PGServiceMetadataValidateRequestBody
-      properties:
-        db_version:
-          type: string
-          description: Database version
-        metadata:
-          type: string
-          description: Metadata to validate
-      required:
-      - db_version
-      - metadata
-  parameters:
-    account_id:
-      in: path
-      name: account_id
-      description: Account ID
-      schema:
-        type: string
-      required: true
-    service_name:
-      in: path
-      name: service_name
-      description: Service name
-      schema:
-        type: string
-      required: true
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
-    pool_name:
-      in: path
-      name: pool_name
-      description: PgBouncer connection pool name
-      schema:
-        type: string
-      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

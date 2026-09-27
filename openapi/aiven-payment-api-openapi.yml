@@ -100,6 +100,88 @@ paths:
         - payments:read
 components:
   schemas:
+    UserCreditCardUpdateResponse:
+      type: object
+      description: UserCreditCardUpdateResponse
+      properties:
+        card:
+          type: object
+          description: User credit card information
+          properties:
+            brand:
+              type: string
+              description: Brand
+            card_id:
+              type: string
+              maxLength: 64
+              description: Credit card ID
+            country:
+              type: string
+              maxLength: 128
+              description: Country
+            country_code:
+              type: string
+              maxLength: 2
+              description: Two letter ISO country code
+            exp_month:
+              type: integer
+              minimum: 1
+              maximum: 12
+              description: Expiration month
+            exp_year:
+              type: integer
+              minimum: 2015
+              maximum: 2100
+              description: Expiration year
+            last4:
+              type: string
+              description: Credit card last four digits
+            name:
+              type: string
+              maxLength: 256
+              description: Name on the credit card
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            projects:
+              type: array
+              description: List of projects the card is assigned to
+              items:
+                type: string
+          required:
+          - brand
+          - card_id
+          - country
+          - country_code
+          - exp_month
+          - exp_year
+          - last4
+          - name
+          - projects
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - card
     UserCreditCardAddResponse:
       type: object
       description: UserCreditCardAddResponse
@@ -182,31 +264,6 @@ components:
           description: Printable result of the request
       required:
       - card
-    UserCreditCardDeleteResponse:
-      type: object
-      description: UserCreditCardDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
     UserCreditCardsListResponse:
       type: object
       description: UserCreditCardsListResponse
@@ -291,65 +348,10 @@ components:
           description: Printable result of the request
       required:
       - cards
-    UserCreditCardUpdateResponse:
+    UserCreditCardDeleteResponse:
       type: object
-      description: UserCreditCardUpdateResponse
+      description: UserCreditCardDeleteResponse
       properties:
-        card:
-          type: object
-          description: User credit card information
-          properties:
-            brand:
-              type: string
-              description: Brand
-            card_id:
-              type: string
-              maxLength: 64
-              description: Credit card ID
-            country:
-              type: string
-              maxLength: 128
-              description: Country
-            country_code:
-              type: string
-              maxLength: 2
-              description: Two letter ISO country code
-            exp_month:
-              type: integer
-              minimum: 1
-              maximum: 12
-              description: Expiration month
-            exp_year:
-              type: integer
-              minimum: 2015
-              maximum: 2100
-              description: Expiration year
-            last4:
-              type: string
-              description: Credit card last four digits
-            name:
-              type: string
-              maxLength: 256
-              description: Name on the credit card
-            organization_id:
-              type: string
-              maxLength: 36
-              description: Organization ID
-            projects:
-              type: array
-              description: List of projects the card is assigned to
-              items:
-                type: string
-          required:
-          - brand
-          - card_id
-          - country
-          - country_code
-          - exp_month
-          - exp_year
-          - last4
-          - name
-          - projects
         errors:
           type: array
           description: List of errors occurred during request processing
@@ -371,8 +373,6 @@ components:
         message:
           type: string
           description: Printable result of the request
-      required:
-      - card
   parameters:
     card_id:
       in: path

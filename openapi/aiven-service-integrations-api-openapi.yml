@@ -294,6 +294,825 @@ paths:
         - services:read
 components:
   schemas:
+    ServiceIntegrationEndpointListResponse:
+      type: object
+      description: ServiceIntegrationEndpointListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        service_integration_endpoints:
+          type: array
+          description: List of service integrations
+          items:
+            type: object
+            properties:
+              endpoint_config:
+                type: object
+                description: Service integration endpoint backend settings
+                properties: {}
+              endpoint_id:
+                type: string
+                description: Integration endpoint ID
+              endpoint_name:
+                type: string
+                minLength: 1
+                maxLength: 40
+                description: Integration endpoint name
+              endpoint_type:
+                type: string
+                description: Integration endpoint type
+                enum:
+                - autoscaler
+                - autoscaler_service
+                - datadog
+                - external_aws_cloudwatch_logs
+                - external_aws_cloudwatch_metrics
+                - external_aws_s3
+                - external_azure_blob_storage
+                - external_clickhouse
+                - external_elasticsearch_logs
+                - external_google_cloud_bigquery
+                - external_google_cloud_logging
+                - external_kafka
+                - external_mysql
+                - external_object_storage_config
+                - external_opensearch_logs
+                - external_postgresql
+                - external_prometheus
+                - external_redis
+                - external_schema_registry
+                - external_sumologic_logs
+                - jolokia
+                - prometheus
+                - rsyslog
+              user_config:
+                type: object
+                description: Service integration endpoint settings
+                properties: {}
+            required:
+            - endpoint_config
+            - endpoint_id
+            - endpoint_name
+            - endpoint_type
+            - user_config
+      required:
+      - service_integration_endpoints
+    ServiceIntegrationEndpointTypesResponse:
+      type: object
+      description: ServiceIntegrationEndpointTypesResponse
+      properties:
+        endpoint_types:
+          type: array
+          description: List of service integration endpoint types
+          items:
+            type: object
+            properties:
+              endpoint_type:
+                type: string
+                description: Endpoint type name
+              service_types:
+                type: array
+                description: Supported service types
+                items:
+                  type: string
+              title:
+                type: string
+                description: Endpoint type description
+              user_config_schema:
+                type: object
+                description: JSON-Schema for the 'user_config' properties
+                properties: {}
+            required:
+            - endpoint_type
+            - service_types
+            - title
+            - user_config_schema
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - endpoint_types
+    ServiceIntegrationEndpointUpdateRequestBody:
+      type: object
+      description: ServiceIntegrationEndpointUpdateRequestBody
+      properties:
+        user_config:
+          type: object
+          description: Service integration endpoint settings
+          properties: {}
+      required:
+      - user_config
+    ServiceIntegrationUpdateResponse:
+      type: object
+      description: ServiceIntegrationUpdateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        service_integration:
+          type: object
+          description: Service integration
+          properties:
+            active:
+              type: boolean
+              description: True when integration is active
+            description:
+              type: string
+              description: Description of the integration
+            dest_endpoint:
+              type: string
+              description: Destination endpoint name
+            dest_endpoint_id:
+              type: string
+              description: Destination endpoint id
+            dest_project:
+              type: string
+              maxLength: 63
+              description: Project name
+            dest_service:
+              type: string
+              description: Destination service name
+            dest_service_type:
+              type: string
+              maxLength: 64
+              description: Service type code
+            enabled:
+              type: boolean
+              description: True when integration is enabled
+            integration_status:
+              type: object
+              description: Integration status
+              properties:
+                state:
+                  type: object
+                  description: Service integration state
+                  properties:
+                    errors:
+                      type: array
+                      description: Errors
+                      items:
+                        type: string
+                    likely_error_cause:
+                      type: string
+                      description: Most likely cause of the errors
+                      enum:
+                      - 'null'
+                      - destination
+                      - integration
+                      - source
+                      - unknown
+                    nodes:
+                      type: object
+                      description: Nodes
+                      properties: {}
+                    status:
+                      type: string
+                      description: Service integration status
+                      enum:
+                      - failed
+                      - inactive
+                      - running
+                      - starting
+                      - unknown
+                  required:
+                  - errors
+                  - nodes
+                  - status
+                status_user_desc:
+                  type: string
+                  description: Integration status description
+              required:
+              - state
+              - status_user_desc
+            integration_type:
+              type: string
+              description: Type of the integration
+            service_integration_id:
+              type: string
+              description: Integration ID
+            source_endpoint:
+              type: string
+              description: Source endpoint name
+            source_endpoint_id:
+              type: string
+              description: Source endpoint ID
+            source_project:
+              type: string
+              maxLength: 63
+              description: Project name
+            source_service:
+              type: string
+              description: Source service name
+            source_service_type:
+              type: string
+              maxLength: 64
+              description: Service type code
+            user_config:
+              type: object
+              description: Service integration settings
+              properties: {}
+          required:
+          - active
+          - description
+          - dest_project
+          - dest_service_type
+          - enabled
+          - integration_type
+          - service_integration_id
+          - source_project
+          - source_service
+          - source_service_type
+      required:
+      - service_integration
+    ServiceIntegrationDeleteResponse:
+      type: object
+      description: ServiceIntegrationDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceIntegrationCreateRequestBody:
+      type: object
+      description: ServiceIntegrationCreateRequestBody
+      properties:
+        dest_endpoint_id:
+          type: string
+          maxLength: 36
+          description: Integration destination endpoint ID
+        dest_project:
+          type: string
+          maxLength: 63
+          description: Defaults to project in the request path
+          title: Destination project name
+        dest_service:
+          type: string
+          maxLength: 64
+          description: Destination service name
+        integration_type:
+          type: string
+          description: Service integration type
+          enum:
+          - alertmanager
+          - application_service_credential
+          - autoscaler
+          - autoscaler_service
+          - caching
+          - clickhouse_credentials
+          - clickhouse_kafka
+          - clickhouse_postgresql
+          - dashboard
+          - datadog
+          - datahub_metadata_ingestion
+          - datasource
+          - disaster_recovery
+          - external_aws_cloudwatch_logs
+          - external_aws_cloudwatch_metrics
+          - external_elasticsearch_logs
+          - external_google_cloud_logging
+          - external_opensearch_logs
+          - flink
+          - flink_external_bigquery
+          - flink_external_kafka
+          - flink_external_postgresql
+          - internal_connectivity
+          - jolokia
+          - kafka_connect
+          - kafka_connect_postgresql
+          - kafka_inkless_postgresql
+          - kafka_logs
+          - kafka_mirrormaker
+          - logs
+          - metrics
+          - opensearch_cross_cluster_replication
+          - opensearch_cross_cluster_search
+          - prometheus
+          - read_replica
+          - rsyslog
+          - schema_registry_proxy
+          - service_composition
+          - stresstester
+          - thanos_distributed_query
+          - thanos_migrate
+          - thanos_object_storage
+          - thanoscompactor
+          - thanosquery
+          - thanosruler
+          - thanosstore
+          - vector
+          - vmalert
+        source_endpoint_id:
+          type: string
+          maxLength: 36
+          description: Integration source endpoint ID
+        source_project:
+          type: string
+          maxLength: 63
+          description: Defaults to project in the request path
+          title: Source project name
+        source_service:
+          type: string
+          maxLength: 64
+          description: Source service name
+        user_config:
+          type: object
+          description: Service type-specific settings
+          properties: {}
+      required:
+      - integration_type
+    ServiceIntegrationEndpointCreateResponse:
+      type: object
+      description: ServiceIntegrationEndpointCreateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        service_integration_endpoint:
+          type: object
+          description: Service integration endpoint
+          properties:
+            endpoint_config:
+              type: object
+              description: Service integration endpoint backend settings
+              properties: {}
+            endpoint_id:
+              type: string
+              description: Integration endpoint ID
+            endpoint_name:
+              type: string
+              minLength: 1
+              maxLength: 40
+              description: Integration endpoint name
+            endpoint_type:
+              type: string
+              description: Integration endpoint type
+              enum:
+              - autoscaler
+              - autoscaler_service
+              - datadog
+              - external_aws_cloudwatch_logs
+              - external_aws_cloudwatch_metrics
+              - external_aws_s3
+              - external_azure_blob_storage
+              - external_clickhouse
+              - external_elasticsearch_logs
+              - external_google_cloud_bigquery
+              - external_google_cloud_logging
+              - external_kafka
+              - external_mysql
+              - external_object_storage_config
+              - external_opensearch_logs
+              - external_postgresql
+              - external_prometheus
+              - external_redis
+              - external_schema_registry
+              - external_sumologic_logs
+              - jolokia
+              - prometheus
+              - rsyslog
+            user_config:
+              type: object
+              description: Service integration endpoint settings
+              properties: {}
+          required:
+          - endpoint_config
+          - endpoint_id
+          - endpoint_name
+          - endpoint_type
+          - user_config
+      required:
+      - service_integration_endpoint
+    ServiceIntegrationEndpointCreateRequestBody:
+      type: object
+      description: ServiceIntegrationEndpointCreateRequestBody
+      properties:
+        endpoint_name:
+          type: string
+          minLength: 1
+          maxLength: 40
+          description: Integration endpoint name
+        endpoint_type:
+          type: string
+          description: Service integration endpoint type
+          enum:
+          - autoscaler
+          - autoscaler_service
+          - datadog
+          - external_aws_cloudwatch_logs
+          - external_aws_cloudwatch_metrics
+          - external_aws_s3
+          - external_azure_blob_storage
+          - external_clickhouse
+          - external_elasticsearch_logs
+          - external_google_cloud_bigquery
+          - external_google_cloud_logging
+          - external_kafka
+          - external_mysql
+          - external_object_storage_config
+          - external_opensearch_logs
+          - external_postgresql
+          - external_prometheus
+          - external_redis
+          - external_schema_registry
+          - external_sumologic_logs
+          - jolokia
+          - prometheus
+          - rsyslog
+        user_config:
+          type: object
+          description: Service integration endpoint settings
+          properties: {}
+      required:
+      - endpoint_name
+      - endpoint_type
+      - user_config
+    ServiceIntegrationGetResponse:
+      type: object
+      description: ServiceIntegrationGetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        service_integration:
+          type: object
+          description: Service integration
+          properties:
+            active:
+              type: boolean
+              description: True when integration is active
+            description:
+              type: string
+              description: Description of the integration
+            dest_endpoint:
+              type: string
+              description: Destination endpoint name
+            dest_endpoint_id:
+              type: string
+              description: Destination endpoint id
+            dest_project:
+              type: string
+              maxLength: 63
+              description: Project name
+            dest_service:
+              type: string
+              description: Destination service name
+            dest_service_type:
+              type: string
+              maxLength: 64
+              description: Service type code
+            enabled:
+              type: boolean
+              description: True when integration is enabled
+            integration_status:
+              type: object
+              description: Integration status
+              properties:
+                state:
+                  type: object
+                  description: Service integration state
+                  properties:
+                    errors:
+                      type: array
+                      description: Errors
+                      items:
+                        type: string
+                    likely_error_cause:
+                      type: string
+                      description: Most likely cause of the errors
+                      enum:
+                      - 'null'
+                      - destination
+                      - integration
+                      - source
+                      - unknown
+                    nodes:
+                      type: object
+                      description: Nodes
+                      properties: {}
+                    status:
+                      type: string
+                      description: Service integration status
+                      enum:
+                      - failed
+                      - inactive
+                      - running
+                      - starting
+                      - unknown
+                  required:
+                  - errors
+                  - nodes
+                  - status
+                status_user_desc:
+                  type: string
+                  description: Integration status description
+              required:
+              - state
+              - status_user_desc
+            integration_type:
+              type: string
+              description: Type of the integration
+            service_integration_id:
+              type: string
+              description: Integration ID
+            source_endpoint:
+              type: string
+              description: Source endpoint name
+            source_endpoint_id:
+              type: string
+              description: Source endpoint ID
+            source_project:
+              type: string
+              maxLength: 63
+              description: Project name
+            source_service:
+              type: string
+              description: Source service name
+            source_service_type:
+              type: string
+              maxLength: 64
+              description: Service type code
+            user_config:
+              type: object
+              description: Service integration settings
+              properties: {}
+          required:
+          - active
+          - description
+          - dest_project
+          - dest_service_type
+          - enabled
+          - integration_type
+          - service_integration_id
+          - source_project
+          - source_service
+          - source_service_type
+      required:
+      - service_integration
+    ServiceIntegrationEndpointGetResponse:
+      type: object
+      description: ServiceIntegrationEndpointGetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        service_integration_endpoint:
+          type: object
+          description: Service integration endpoint
+          properties:
+            endpoint_config:
+              type: object
+              description: Service integration endpoint backend settings
+              properties: {}
+            endpoint_id:
+              type: string
+              description: Integration endpoint ID
+            endpoint_name:
+              type: string
+              minLength: 1
+              maxLength: 40
+              description: Integration endpoint name
+            endpoint_type:
+              type: string
+              description: Integration endpoint type
+              enum:
+              - autoscaler
+              - autoscaler_service
+              - datadog
+              - external_aws_cloudwatch_logs
+              - external_aws_cloudwatch_metrics
+              - external_aws_s3
+              - external_azure_blob_storage
+              - external_clickhouse
+              - external_elasticsearch_logs
+              - external_google_cloud_bigquery
+              - external_google_cloud_logging
+              - external_kafka
+              - external_mysql
+              - external_object_storage_config
+              - external_opensearch_logs
+              - external_postgresql
+              - external_prometheus
+              - external_redis
+              - external_schema_registry
+              - external_sumologic_logs
+              - jolokia
+              - prometheus
+              - rsyslog
+            user_config:
+              type: object
+              description: Service integration endpoint settings
+              properties: {}
+          required:
+          - endpoint_config
+          - endpoint_id
+          - endpoint_name
+          - endpoint_type
+          - user_config
+      required:
+      - service_integration_endpoint
+    ServiceIntegrationUpdateRequestBody:
+      type: object
+      description: ServiceIntegrationUpdateRequestBody
+      properties:
+        user_config:
+          type: object
+          description: Service integration settings
+          properties: {}
+      required:
+      - user_config
+    ServiceIntegrationTypesResponse:
+      type: object
+      description: ServiceIntegrationTypesResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        integration_types:
+          type: array
+          description: List of service integration types
+          items:
+            type: object
+            properties:
+              dest_description:
+                type: string
+                description: Description of the destination service
+              dest_service_type:
+                type: string
+                description: 'Service type. DEPRECATED: Use dest_service_types instead'
+              dest_service_types:
+                type: array
+                description: Supported destination service types
+                items:
+                  type: string
+              integration_type:
+                type: string
+                description: Integration type name
+              source_description:
+                type: string
+                description: Description of the source service
+              source_service_types:
+                type: array
+                description: Supported source service types
+                items:
+                  type: string
+              user_config_schema:
+                type: object
+                description: JSON-Schema for the 'user_config' properties
+                properties: {}
+            required:
+            - dest_description
+            - dest_service_type
+            - dest_service_types
+            - integration_type
+            - source_description
+            - source_service_types
+            - user_config_schema
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - integration_types
     ServiceIntegrationCreateResponse:
       type: object
       description: ServiceIntegrationCreateResponse
@@ -576,850 +1395,6 @@ components:
             - source_service_type
       required:
       - service_integrations
-    ServiceIntegrationEndpointDeleteResponse:
-      type: object
-      description: ServiceIntegrationEndpointDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceIntegrationEndpointCreateRequestBody:
-      type: object
-      description: ServiceIntegrationEndpointCreateRequestBody
-      properties:
-        endpoint_name:
-          type: string
-          minLength: 1
-          maxLength: 40
-          description: Integration endpoint name
-        endpoint_type:
-          type: string
-          description: Service integration endpoint type
-          enum:
-          - autoscaler
-          - autoscaler_service
-          - datadog
-          - external_aws_cloudwatch_logs
-          - external_aws_cloudwatch_metrics
-          - external_aws_s3
-          - external_azure_blob_storage
-          - external_clickhouse
-          - external_elasticsearch_logs
-          - external_google_cloud_bigquery
-          - external_google_cloud_logging
-          - external_kafka
-          - external_mysql
-          - external_object_storage_config
-          - external_opensearch_logs
-          - external_postgresql
-          - external_prometheus
-          - external_redis
-          - external_schema_registry
-          - external_sumologic_logs
-          - jolokia
-          - prometheus
-          - rsyslog
-        user_config:
-          type: object
-          description: Service integration endpoint settings
-          properties: {}
-      required:
-      - endpoint_name
-      - endpoint_type
-      - user_config
-    ServiceIntegrationUpdateResponse:
-      type: object
-      description: ServiceIntegrationUpdateResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        service_integration:
-          type: object
-          description: Service integration
-          properties:
-            active:
-              type: boolean
-              description: True when integration is active
-            description:
-              type: string
-              description: Description of the integration
-            dest_endpoint:
-              type: string
-              description: Destination endpoint name
-            dest_endpoint_id:
-              type: string
-              description: Destination endpoint id
-            dest_project:
-              type: string
-              maxLength: 63
-              description: Project name
-            dest_service:
-              type: string
-              description: Destination service name
-            dest_service_type:
-              type: string
-              maxLength: 64
-              description: Service type code
-            enabled:
-              type: boolean
-              description: True when integration is enabled
-            integration_status:
-              type: object
-              description: Integration status
-              properties:
-                state:
-                  type: object
-                  description: Service integration state
-                  properties:
-                    errors:
-                      type: array
-                      description: Errors
-                      items:
-                        type: string
-                    likely_error_cause:
-                      type: string
-                      description: Most likely cause of the errors
-                      enum:
-                      - 'null'
-                      - destination
-                      - integration
-                      - source
-                      - unknown
-                    nodes:
-                      type: object
-                      description: Nodes
-                      properties: {}
-                    status:
-                      type: string
-                      description: Service integration status
-                      enum:
-                      - failed
-                      - inactive
-                      - running
-                      - starting
-                      - unknown
-                  required:
-                  - errors
-                  - nodes
-                  - status
-                status_user_desc:
-                  type: string
-                  description: Integration status description
-              required:
-              - state
-              - status_user_desc
-            integration_type:
-              type: string
-              description: Type of the integration
-            service_integration_id:
-              type: string
-              description: Integration ID
-            source_endpoint:
-              type: string
-              description: Source endpoint name
-            source_endpoint_id:
-              type: string
-              description: Source endpoint ID
-            source_project:
-              type: string
-              maxLength: 63
-              description: Project name
-            source_service:
-              type: string
-              description: Source service name
-            source_service_type:
-              type: string
-              maxLength: 64
-              description: Service type code
-            user_config:
-              type: object
-              description: Service integration settings
-              properties: {}
-          required:
-          - active
-          - description
-          - dest_project
-          - dest_service_type
-          - enabled
-          - integration_type
-          - service_integration_id
-          - source_project
-          - source_service
-          - source_service_type
-      required:
-      - service_integration
-    ServiceIntegrationTypesResponse:
-      type: object
-      description: ServiceIntegrationTypesResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        integration_types:
-          type: array
-          description: List of service integration types
-          items:
-            type: object
-            properties:
-              dest_description:
-                type: string
-                description: Description of the destination service
-              dest_service_type:
-                type: string
-                description: 'Service type. DEPRECATED: Use dest_service_types instead'
-              dest_service_types:
-                type: array
-                description: Supported destination service types
-                items:
-                  type: string
-              integration_type:
-                type: string
-                description: Integration type name
-              source_description:
-                type: string
-                description: Description of the source service
-              source_service_types:
-                type: array
-                description: Supported source service types
-                items:
-                  type: string
-              user_config_schema:
-                type: object
-                description: JSON-Schema for the 'user_config' properties
-                properties: {}
-            required:
-            - dest_description
-            - dest_service_type
-            - dest_service_types
-            - integration_type
-            - source_description
-            - source_service_types
-            - user_config_schema
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - integration_types
-    ServiceIntegrationUpdateRequestBody:
-      type: object
-      description: ServiceIntegrationUpdateRequestBody
-      properties:
-        user_config:
-          type: object
-          description: Service integration settings
-          properties: {}
-      required:
-      - user_config
-    ServiceIntegrationEndpointCreateResponse:
-      type: object
-      description: ServiceIntegrationEndpointCreateResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        service_integration_endpoint:
-          type: object
-          description: Service integration endpoint
-          properties:
-            endpoint_config:
-              type: object
-              description: Service integration endpoint backend settings
-              properties: {}
-            endpoint_id:
-              type: string
-              description: Integration endpoint ID
-            endpoint_name:
-              type: string
-              minLength: 1
-              maxLength: 40
-              description: Integration endpoint name
-            endpoint_type:
-              type: string
-              description: Integration endpoint type
-              enum:
-              - autoscaler
-              - autoscaler_service
-              - datadog
-              - external_aws_cloudwatch_logs
-              - external_aws_cloudwatch_metrics
-              - external_aws_s3
-              - external_azure_blob_storage
-              - external_clickhouse
-              - external_elasticsearch_logs
-              - external_google_cloud_bigquery
-              - external_google_cloud_logging
-              - external_kafka
-              - external_mysql
-              - external_object_storage_config
-              - external_opensearch_logs
-              - external_postgresql
-              - external_prometheus
-              - external_redis
-              - external_schema_registry
-              - external_sumologic_logs
-              - jolokia
-              - prometheus
-              - rsyslog
-            user_config:
-              type: object
-              description: Service integration endpoint settings
-              properties: {}
-          required:
-          - endpoint_config
-          - endpoint_id
-          - endpoint_name
-          - endpoint_type
-          - user_config
-      required:
-      - service_integration_endpoint
-    ServiceIntegrationDeleteResponse:
-      type: object
-      description: ServiceIntegrationDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceIntegrationCreateRequestBody:
-      type: object
-      description: ServiceIntegrationCreateRequestBody
-      properties:
-        dest_endpoint_id:
-          type: string
-          maxLength: 36
-          description: Integration destination endpoint ID
-        dest_project:
-          type: string
-          maxLength: 63
-          description: Defaults to project in the request path
-          title: Destination project name
-        dest_service:
-          type: string
-          maxLength: 64
-          description: Destination service name
-        integration_type:
-          type: string
-          description: Service integration type
-          enum:
-          - alertmanager
-          - application_service_credential
-          - autoscaler
-          - autoscaler_service
-          - caching
-          - clickhouse_credentials
-          - clickhouse_kafka
-          - clickhouse_postgresql
-          - dashboard
-          - datadog
-          - datahub_metadata_ingestion
-          - datasource
-          - disaster_recovery
-          - external_aws_cloudwatch_logs
-          - external_aws_cloudwatch_metrics
-          - external_elasticsearch_logs
-          - external_google_cloud_logging
-          - external_opensearch_logs
-          - flink
-          - flink_external_bigquery
-          - flink_external_kafka
-          - flink_external_postgresql
-          - internal_connectivity
-          - jolokia
-          - kafka_connect
-          - kafka_connect_postgresql
-          - kafka_inkless_postgresql
-          - kafka_logs
-          - kafka_mirrormaker
-          - logs
-          - metrics
-          - opensearch_cross_cluster_replication
-          - opensearch_cross_cluster_search
-          - prometheus
-          - read_replica
-          - rsyslog
-          - schema_registry_proxy
-          - service_composition
-          - stresstester
-          - thanos_distributed_query
-          - thanos_migrate
-          - thanos_object_storage
-          - thanoscompactor
-          - thanosquery
-          - thanosruler
-          - thanosstore
-          - vector
-          - vmalert
-        source_endpoint_id:
-          type: string
-          maxLength: 36
-          description: Integration source endpoint ID
-        source_project:
-          type: string
-          maxLength: 63
-          description: Defaults to project in the request path
-          title: Source project name
-        source_service:
-          type: string
-          maxLength: 64
-          description: Source service name
-        user_config:
-          type: object
-          description: Service type-specific settings
-          properties: {}
-      required:
-      - integration_type
-    ServiceIntegrationEndpointGetResponse:
-      type: object
-      description: ServiceIntegrationEndpointGetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        service_integration_endpoint:
-          type: object
-          description: Service integration endpoint
-          properties:
-            endpoint_config:
-              type: object
-              description: Service integration endpoint backend settings
-              properties: {}
-            endpoint_id:
-              type: string
-              description: Integration endpoint ID
-            endpoint_name:
-              type: string
-              minLength: 1
-              maxLength: 40
-              description: Integration endpoint name
-            endpoint_type:
-              type: string
-              description: Integration endpoint type
-              enum:
-              - autoscaler
-              - autoscaler_service
-              - datadog
-              - external_aws_cloudwatch_logs
-              - external_aws_cloudwatch_metrics
-              - external_aws_s3
-              - external_azure_blob_storage
-              - external_clickhouse
-              - external_elasticsearch_logs
-              - external_google_cloud_bigquery
-              - external_google_cloud_logging
-              - external_kafka
-              - external_mysql
-              - external_object_storage_config
-              - external_opensearch_logs
-              - external_postgresql
-              - external_prometheus
-              - external_redis
-              - external_schema_registry
-              - external_sumologic_logs
-              - jolokia
-              - prometheus
-              - rsyslog
-            user_config:
-              type: object
-              description: Service integration endpoint settings
-              properties: {}
-          required:
-          - endpoint_config
-          - endpoint_id
-          - endpoint_name
-          - endpoint_type
-          - user_config
-      required:
-      - service_integration_endpoint
-    ServiceIntegrationEndpointUpdateRequestBody:
-      type: object
-      description: ServiceIntegrationEndpointUpdateRequestBody
-      properties:
-        user_config:
-          type: object
-          description: Service integration endpoint settings
-          properties: {}
-      required:
-      - user_config
-    ServiceIntegrationEndpointListResponse:
-      type: object
-      description: ServiceIntegrationEndpointListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        service_integration_endpoints:
-          type: array
-          description: List of service integrations
-          items:
-            type: object
-            properties:
-              endpoint_config:
-                type: object
-                description: Service integration endpoint backend settings
-                properties: {}
-              endpoint_id:
-                type: string
-                description: Integration endpoint ID
-              endpoint_name:
-                type: string
-                minLength: 1
-                maxLength: 40
-                description: Integration endpoint name
-              endpoint_type:
-                type: string
-                description: Integration endpoint type
-                enum:
-                - autoscaler
-                - autoscaler_service
-                - datadog
-                - external_aws_cloudwatch_logs
-                - external_aws_cloudwatch_metrics
-                - external_aws_s3
-                - external_azure_blob_storage
-                - external_clickhouse
-                - external_elasticsearch_logs
-                - external_google_cloud_bigquery
-                - external_google_cloud_logging
-                - external_kafka
-                - external_mysql
-                - external_object_storage_config
-                - external_opensearch_logs
-                - external_postgresql
-                - external_prometheus
-                - external_redis
-                - external_schema_registry
-                - external_sumologic_logs
-                - jolokia
-                - prometheus
-                - rsyslog
-              user_config:
-                type: object
-                description: Service integration endpoint settings
-                properties: {}
-            required:
-            - endpoint_config
-            - endpoint_id
-            - endpoint_name
-            - endpoint_type
-            - user_config
-      required:
-      - service_integration_endpoints
-    ServiceIntegrationEndpointTypesResponse:
-      type: object
-      description: ServiceIntegrationEndpointTypesResponse
-      properties:
-        endpoint_types:
-          type: array
-          description: List of service integration endpoint types
-          items:
-            type: object
-            properties:
-              endpoint_type:
-                type: string
-                description: Endpoint type name
-              service_types:
-                type: array
-                description: Supported service types
-                items:
-                  type: string
-              title:
-                type: string
-                description: Endpoint type description
-              user_config_schema:
-                type: object
-                description: JSON-Schema for the 'user_config' properties
-                properties: {}
-            required:
-            - endpoint_type
-            - service_types
-            - title
-            - user_config_schema
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - endpoint_types
-    ServiceIntegrationGetResponse:
-      type: object
-      description: ServiceIntegrationGetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        service_integration:
-          type: object
-          description: Service integration
-          properties:
-            active:
-              type: boolean
-              description: True when integration is active
-            description:
-              type: string
-              description: Description of the integration
-            dest_endpoint:
-              type: string
-              description: Destination endpoint name
-            dest_endpoint_id:
-              type: string
-              description: Destination endpoint id
-            dest_project:
-              type: string
-              maxLength: 63
-              description: Project name
-            dest_service:
-              type: string
-              description: Destination service name
-            dest_service_type:
-              type: string
-              maxLength: 64
-              description: Service type code
-            enabled:
-              type: boolean
-              description: True when integration is enabled
-            integration_status:
-              type: object
-              description: Integration status
-              properties:
-                state:
-                  type: object
-                  description: Service integration state
-                  properties:
-                    errors:
-                      type: array
-                      description: Errors
-                      items:
-                        type: string
-                    likely_error_cause:
-                      type: string
-                      description: Most likely cause of the errors
-                      enum:
-                      - 'null'
-                      - destination
-                      - integration
-                      - source
-                      - unknown
-                    nodes:
-                      type: object
-                      description: Nodes
-                      properties: {}
-                    status:
-                      type: string
-                      description: Service integration status
-                      enum:
-                      - failed
-                      - inactive
-                      - running
-                      - starting
-                      - unknown
-                  required:
-                  - errors
-                  - nodes
-                  - status
-                status_user_desc:
-                  type: string
-                  description: Integration status description
-              required:
-              - state
-              - status_user_desc
-            integration_type:
-              type: string
-              description: Type of the integration
-            service_integration_id:
-              type: string
-              description: Integration ID
-            source_endpoint:
-              type: string
-              description: Source endpoint name
-            source_endpoint_id:
-              type: string
-              description: Source endpoint ID
-            source_project:
-              type: string
-              maxLength: 63
-              description: Project name
-            source_service:
-              type: string
-              description: Source service name
-            source_service_type:
-              type: string
-              maxLength: 64
-              description: Service type code
-            user_config:
-              type: object
-              description: Service integration settings
-              properties: {}
-          required:
-          - active
-          - description
-          - dest_project
-          - dest_service_type
-          - enabled
-          - integration_type
-          - service_integration_id
-          - source_project
-          - source_service
-          - source_service_type
-      required:
-      - service_integration
     ServiceIntegrationEndpointUpdateResponse:
       type: object
       description: ServiceIntegrationEndpointUpdateResponse
@@ -1500,11 +1475,36 @@ components:
           - user_config
       required:
       - service_integration_endpoint
+    ServiceIntegrationEndpointDeleteResponse:
+      type: object
+      description: ServiceIntegrationEndpointDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
   parameters:
-    service_name:
+    integration_endpoint_id:
       in: path
-      name: service_name
-      description: Service name
+      name: integration_endpoint_id
+      description: Endpoint ID
       schema:
         type: string
       required: true
@@ -1515,10 +1515,10 @@ components:
       schema:
         type: boolean
       required: false
-    integration_endpoint_id:
+    project:
       in: path
-      name: integration_endpoint_id
-      description: Endpoint ID
+      name: project
+      description: Project name
       schema:
         type: string
       required: true
@@ -1529,10 +1529,10 @@ components:
       schema:
         type: string
       required: true
-    project:
+    service_name:
       in: path
-      name: project
-      description: Project name
+      name: service_name
+      description: Service name
       schema:
         type: string
       required: true

@@ -450,58 +450,13 @@ paths:
         - services:write
 components:
   schemas:
-    UpgradePipelineStepCreateResponse:
+    UpgradePipelineStepValidateRequestBody:
       type: object
-      description: UpgradePipelineStepCreateResponse
+      description: UpgradePipelineStepValidateRequestBody
       properties:
-        auto_validation_delay_days:
-          type: integer
-          minimum: 1
-          description: Days before automatic validation
-        destination_project_name:
+        comment:
           type: string
-          description: Destination project name
-        destination_service_name:
-          type: string
-          description: Destination service name
-        last_validation:
-          type: object
-          description: Last validation information for an upgrade step.
-          title: Most recent validation (null if no validations exist)
-          properties:
-            comment:
-              type: string
-              description: Validation comment
-            validated_at:
-              type: string
-              maxLength: 36
-              description: When the validation was created
-            validated_by_user:
-              type: string
-              description: User who created the validation (null for auto-validation)
-          required:
-          - comment
-          - validated_at
-          - validated_by_user
-        source_project_name:
-          type: string
-          description: Source project name
-        source_service_name:
-          type: string
-          description: Source service name
-        step_id:
-          type: string
-          minLength: 36
-          maxLength: 36
-          description: Step ID
-      required:
-      - auto_validation_delay_days
-      - destination_project_name
-      - destination_service_name
-      - last_validation
-      - source_project_name
-      - source_service_name
-      - step_id
+          description: Validation comment
     UpgradePipelineStepUpdateResponse:
       type: object
       description: UpgradePipelineStepUpdateResponse
@@ -554,13 +509,66 @@ components:
       - source_project_name
       - source_service_name
       - step_id
-    UpgradePipelineStepValidateRequestBody:
+    UpgradePipelineStepUpdateRequestBody:
       type: object
-      description: UpgradePipelineStepValidateRequestBody
+      description: UpgradePipelineStepUpdateRequestBody
       properties:
-        comment:
+        auto_validation_delay_days:
+          type: integer
+          minimum: 1
+          description: Days before automatic validation
+    UpgradePipelineStepCreateResponse:
+      type: object
+      description: UpgradePipelineStepCreateResponse
+      properties:
+        auto_validation_delay_days:
+          type: integer
+          minimum: 1
+          description: Days before automatic validation
+        destination_project_name:
           type: string
-          description: Validation comment
+          description: Destination project name
+        destination_service_name:
+          type: string
+          description: Destination service name
+        last_validation:
+          type: object
+          description: Last validation information for an upgrade step.
+          title: Most recent validation (null if no validations exist)
+          properties:
+            comment:
+              type: string
+              description: Validation comment
+            validated_at:
+              type: string
+              maxLength: 36
+              description: When the validation was created
+            validated_by_user:
+              type: string
+              description: User who created the validation (null for auto-validation)
+          required:
+          - comment
+          - validated_at
+          - validated_by_user
+        source_project_name:
+          type: string
+          description: Source project name
+        source_service_name:
+          type: string
+          description: Source service name
+        step_id:
+          type: string
+          minLength: 36
+          maxLength: 36
+          description: Step ID
+      required:
+      - auto_validation_delay_days
+      - destination_project_name
+      - destination_service_name
+      - last_validation
+      - source_project_name
+      - source_service_name
+      - step_id
     UpgradePipelineStepCreateRequestBody:
       type: object
       description: UpgradePipelineStepCreateRequestBody
@@ -586,14 +594,6 @@ components:
       - destination_service_name
       - source_project_name
       - source_service_name
-    UpgradePipelineStepUpdateRequestBody:
-      type: object
-      description: UpgradePipelineStepUpdateRequestBody
-      properties:
-        auto_validation_delay_days:
-          type: integer
-          minimum: 1
-          description: Days before automatic validation
     UpgradePipelineStepListResponse:
       type: object
       description: UpgradePipelineStepListResponse
@@ -722,14 +722,6 @@ components:
       - source_service_name
       - step_id
   parameters:
-    upgradepipelinesteplist_destination_service_name:
-      in: query
-      name: destination_service_name
-      description: Filter results by destination service name
-      schema:
-        type: string
-        maxLength: 36
-      required: false
     upgradepipelinesteplist_limit:
       in: query
       name: limit
@@ -739,36 +731,6 @@ components:
         minimum: 30
         maximum: 999
       required: false
-    upgradepipelinesteplist_source_service_name:
-      in: query
-      name: source_service_name
-      description: Filter results by source service name
-      schema:
-        type: string
-        maxLength: 36
-      required: false
-    upgradepipelinesteplist_source_project_name:
-      in: query
-      name: source_project_name
-      description: Filter results by source project name
-      schema:
-        type: string
-        maxLength: 63
-      required: false
-    service_name:
-      in: path
-      name: service_name
-      description: Service name
-      schema:
-        type: string
-      required: true
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
     step_id:
       in: path
       name: step_id
@@ -778,13 +740,35 @@ components:
         enum:
         - 550e8400-e29b-41d4-a716-446655440000
       required: true
-    upgradepipelinesteplist_destination_project_name:
+    upgradepipelinesteplist_cursor:
       in: query
-      name: destination_project_name
-      description: Filter results by destination project name
+      name: cursor
+      description: Pagination cursor
       schema:
         type: string
-        maxLength: 63
+      required: false
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    upgradepipelinesteplist_destination_service_name:
+      in: query
+      name: destination_service_name
+      description: Filter results by destination service name
+      schema:
+        type: string
+        maxLength: 36
+      required: false
+    upgradepipelinesteplist_source_service_name:
+      in: query
+      name: source_service_name
+      description: Filter results by source service name
+      schema:
+        type: string
+        maxLength: 36
       required: false
     organization_id:
       in: path
@@ -793,12 +777,28 @@ components:
       schema:
         type: string
       required: true
-    upgradepipelinesteplist_cursor:
-      in: query
-      name: cursor
-      description: Pagination cursor
+    service_name:
+      in: path
+      name: service_name
+      description: Service name
       schema:
         type: string
+      required: true
+    upgradepipelinesteplist_destination_project_name:
+      in: query
+      name: destination_project_name
+      description: Filter results by destination project name
+      schema:
+        type: string
+        maxLength: 63
+      required: false
+    upgradepipelinesteplist_source_project_name:
+      in: query
+      name: source_project_name
+      description: Filter results by source project name
+      schema:
+        type: string
+        maxLength: 63
       required: false
   securitySchemes:
     tokenAuth:

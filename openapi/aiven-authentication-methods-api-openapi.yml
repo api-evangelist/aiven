@@ -236,28 +236,6 @@ paths:
         oauth2:
         - accounts:write
 components:
-  parameters:
-    authentication_method_id:
-      in: path
-      name: authentication_method_id
-      description: Organization authentication method ID
-      schema:
-        type: string
-      required: true
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
-    domain_id:
-      in: path
-      name: domain_id
-      description: ID of a domain
-      schema:
-        type: string
-      required: true
   schemas:
     OrganizationAuthDomainLinkRequestBody:
       type: object
@@ -325,6 +303,28 @@ components:
             - verification_type
       required:
       - domains
+  parameters:
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
+    authentication_method_id:
+      in: path
+      name: authentication_method_id
+      description: Organization authentication method ID
+      schema:
+        type: string
+      required: true
+    domain_id:
+      in: path
+      name: domain_id
+      description: ID of a domain
+      schema:
+        type: string
+      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

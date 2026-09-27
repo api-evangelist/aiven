@@ -48,11 +48,12 @@ tags:
   - ClickHouse
   - Redis
   - MySQL
-  - Open-Source
+  - Open Source
   - Cloud Database
   - Database-as-a-Service
   - Data Streaming
   - Data Platform
+  - Database
 tags_raw:
   - Managed Data Infrastructure
   - Apache Kafka
@@ -66,6 +67,8 @@ tags_raw:
   - DBaaS
   - Data Streaming
   - Data Platform
+  - Open-Source
+  - Database
 apis:
 - aid: aiven:aiven-account-api
   name: Aiven Account API

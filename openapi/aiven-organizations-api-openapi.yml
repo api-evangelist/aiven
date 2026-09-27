@@ -1219,518 +1219,77 @@ paths:
         oauth2:
         - accounts:read
 components:
+  parameters:
+    project_id:
+      in: path
+      name: project_id
+      description: Project Id
+      schema:
+        type: string
+      required: true
+    organizationgovernanceaccesslist_cursor:
+      in: query
+      name: cursor
+      description: Pagination cursor
+      schema:
+        type: string
+      required: false
+    user_email:
+      in: path
+      name: user_email
+      description: Email address
+      schema:
+        type: string
+      required: true
+    organizationgovernanceaccesslist_owner_user_group_id:
+      in: query
+      name: owner_user_group_id
+      description: Filter by owner user group ID
+      schema:
+        type: string
+        minimum: 1
+        maximum: 36
+      required: false
+    organizationgovernanceaccesslist_limit:
+      in: query
+      name: limit
+      description: Limit results to this number
+      schema:
+        type: integer
+        minimum: 30
+        maximum: 999
+      required: false
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
+    organizationgovernanceaccesslist_resource_name:
+      in: query
+      name: resource_name
+      description: Filter by resource name
+      schema:
+        type: string
+        minimum: 1
+        maximum: 256
+      required: false
+    organizationdelete_recursive:
+      in: query
+      name: recursive
+      description: Delete all resources in the organization
+      schema:
+        type: boolean
+      required: true
+    access_id:
+      in: path
+      name: access_id
+      description: Access Id
+      schema:
+        type: string
+      required: true
   schemas:
-    OrganizationUserInvitationAcceptRequestBody:
-      type: object
-      description: OrganizationUserInvitationAcceptRequestBody
-      properties:
-        action:
-          type: string
-          description: Action to be performed on the invitation
-          default: accept
-          enum:
-          - accept
-    OrganizationGovernanceAccessCreateRequestBody:
-      type: object
-      description: OrganizationGovernanceAccessCreateRequestBody
-      properties:
-        access_data:
-          type: object
-          description: access type specific data
-          properties:
-            acls:
-              type: array
-              description: Acls
-              items:
-                type: object
-                properties:
-                  host:
-                    type: string
-                    maxLength: 256
-                    description: Acl host
-                  operation:
-                    type: string
-                    description: An enumeration.
-                    title: Acl operation
-                    enum:
-                    - Read
-                    - Write
-                  permission_type:
-                    type: string
-                    description: An enumeration.
-                    title: Acl permission type
-                    enum:
-                    - ALLOW
-                  resource_name:
-                    type: string
-                    maxLength: 256
-                    description: Acl resource name
-                  resource_type:
-                    type: string
-                    description: An enumeration.
-                    title: Acl resource type
-                    enum:
-                    - Topic
-                required:
-                - host
-                - operation
-                - permission_type
-                - resource_name
-                - resource_type
-            project_name:
-              type: string
-              description: Project name
-            service_name:
-              type: string
-              description: Service name
-            username:
-              type: string
-              description: The service username assigned to the access
-          required:
-          - acls
-          - project_name
-          - service_name
-          - username
-        access_name:
-          type: string
-          description: Label to describe the access
-        access_type:
-          type: string
-          description: An enumeration.
-          title: Type of access
-          enum:
-          - KAFKA
-        owner_user_group_id:
-          type: string
-          maxLength: 36
-          description: The ID of the group that will own the access
-      required:
-      - access_data
-      - access_name
-      - access_type
-    OrganizationGovernanceAccessDeleteResponse:
-      type: object
-      description: OrganizationGovernanceAccessDeleteResponse
-      properties:
-        access_id:
-          type: string
-          description: The ID of the access
-      required:
-      - access_id
-    OrganizationUpdateRequestBody:
-      type: object
-      description: OrganizationUpdateRequestBody
-      properties:
-        name:
-          type: string
-          maxLength: 83
-          description: New name of the organization
-        tier:
-          type: string
-          description: An enumeration.
-          title: New tier for the organization
-          enum:
-          - business
-          - personal
-    OrganizationGovernanceAccessGetResponse:
-      type: object
-      description: OrganizationGovernanceAccessGetResponse
-      properties:
-        access:
-          type: object
-          description: OrganizationGovernanceAccess
-          properties:
-            access_data:
-              type: object
-              description: access type specific data
-              properties:
-                acls:
-                  type: array
-                  description: Acls
-                  items:
-                    type: object
-                    properties:
-                      host:
-                        type: string
-                        maxLength: 256
-                        description: Acl host
-                      id:
-                        type: string
-                        description: Acl ID
-                      operation:
-                        type: string
-                        description: An enumeration.
-                        title: Acl operation
-                        enum:
-                        - Read
-                        - Write
-                      pattern_type:
-                        type: string
-                        description: An enumeration.
-                        title: Acl pattern type
-                        enum:
-                        - LITERAL
-                      permission_type:
-                        type: string
-                        description: An enumeration.
-                        title: Acl permission type
-                        enum:
-                        - ALLOW
-                      principal:
-                        type: string
-                        description: Acl principal
-                      resource_name:
-                        type: string
-                        maxLength: 256
-                        description: Acl resource name
-                      resource_type:
-                        type: string
-                        description: An enumeration.
-                        title: Acl resource type
-                        enum:
-                        - Topic
-                    required:
-                    - host
-                    - id
-                    - operation
-                    - pattern_type
-                    - permission_type
-                    - principal
-                    - resource_name
-                    - resource_type
-                project_name:
-                  type: string
-                  description: Project name
-                service_name:
-                  type: string
-                  description: Service name
-                username:
-                  type: string
-                  description: The service username assigned to the access
-              required:
-              - acls
-              - project_name
-              - service_name
-              - username
-            access_id:
-              type: string
-              description: The ID of the access
-            access_name:
-              type: string
-              description: Label to describe the access
-            access_type:
-              type: string
-              description: An enumeration.
-              title: Type of access
-              enum:
-              - KAFKA
-            create_time:
-              type: string
-              maxLength: 36
-              description: Timestamp of when access was created
-            created_by:
-              type: string
-              description: The user that created the access
-            credentials_consumed:
-              type: boolean
-              description: Wether the credentials have been reviewed
-            credentials_user_id:
-              type: string
-              description: The user that created is assigned to review the credentials
-            owner_user_group_id:
-              type: string
-              maxLength: 36
-              description: The ID of the group that will own the access
-          required:
-          - access_data
-          - access_id
-          - access_name
-          - access_type
-          - create_time
-          - created_by
-          - credentials_consumed
-          - credentials_user_id
-      required:
-      - access
-    UserOrganizationCreateRequestBody:
-      type: object
-      description: UserOrganizationCreateRequestBody
-      properties:
-        organization_name:
-          type: string
-          maxLength: 83
-          description: Organization's name
-        primary_billing_group_id:
-          type: string
-          minLength: 36
-          maxLength: 36
-          description: Billing group ID
-        tier:
-          type: string
-          description: An enumeration.
-          title: Tier of the organization
-          enum:
-          - business
-          - personal
-      required:
-      - organization_name
-      - tier
-    DiscoveredOrganizationListResponse:
-      type: object
-      description: DiscoveredOrganizationListResponse
-      properties:
-        discovered_organizations:
-          type: array
-          description: Discovered Organizations
-          items:
-            type: object
-            properties:
-              create_time:
-                type: string
-                maxLength: 36
-                description: Time of creating the organization
-              organization_id:
-                type: string
-                maxLength: 36
-                description: Organization's ID
-              organization_name:
-                type: string
-                maxLength: 83
-                description: Organization's name
-              users:
-                type: array
-                description: Users
-                items:
-                  type: object
-                  properties:
-                    create_time:
-                      type: string
-                      maxLength: 36
-                      description: Creation time
-                    is_super_admin:
-                      type: boolean
-                      description: Is Super Admin
-                    real_name:
-                      type: string
-                      maxLength: 256
-                      description: Real Name
-                    user_email:
-                      type: string
-                      maxLength: 254
-                      description: User Email
-                    user_id:
-                      type: string
-                      description: User ID
-                  required:
-                  - create_time
-                  - is_super_admin
-                  - real_name
-                  - user_email
-                  - user_id
-            required:
-            - create_time
-            - organization_id
-            - organization_name
-            - users
-      required:
-      - discovered_organizations
-    OrganizationProjectsGetResponse:
-      type: object
-      description: OrganizationProjectsGetResponse
-      properties:
-        account_id:
-          type: string
-          description: '[DEPRECATED] Account ID to where the project belongs'
-        base_port:
-          type: integer
-          minimum: 1
-          maximum: 65535
-          description: Valid port number (1-65535)
-          title: Base Port
-        billing_group_id:
-          type: string
-          minLength: 1
-          description: Billing group ID
-        end_of_life_extension:
-          type: object
-          description: End of life extension information
-          properties:
-            ANY:
-              type: object
-              description: ServiceEndOfLifeExtension
-              properties:
-                eol_date:
-                  type: string
-                  maxLength: 36
-                  description: Extended EOL date
-                version:
-                  type: string
-                  description: Service version
-              required:
-              - eol_date
-              - version
-        features:
-          type: object
-          description: Feature flags
-          properties:
-            ANY:
-              type: boolean
-              description: Boolean
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization ID
-        parent_id:
-          type: string
-          description: Organization or unit ID to where the project belongs
-        project_id:
-          type: string
-          description: Project ID
-        tags:
-          type: object
-          description: Tags
-          properties:
-            ANY:
-              type: string
-              maxLength: 64
-              description: Tag value
-        tech_emails:
-          type: array
-          description: List of project technical email addresses
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Technical contact email
-            required:
-            - email
-      required:
-      - end_of_life_extension
-      - organization_id
-      - parent_id
-      - project_id
-      - tags
-      - tech_emails
-    OrganizationAuthenticationConfigUpdateRequestBody:
-      type: object
-      description: OrganizationAuthenticationConfigUpdateRequestBody
-      properties:
-        mcp_enabled:
-          type: boolean
-          description: Users can use MCP clients with services and other resources they have access to in this organization.
-        oauth_enabled:
-          type: boolean
-          description: Organization users are able to use OAuth authentication.
-        password_auth_enabled:
-          type: boolean
-          description: Organization users are able to use password authentication.
-        personal_tokens_enabled:
-          type: boolean
-          description: Organization users can use their personal tokens to access the organization through the Aiven API or other applications.
-        personal_tokens_require_allowed_auth_method:
-          type: boolean
-          description: Organization users are able to use personal tokens that were generated from one of the allowed authentication methods.
-        saml_allow_external:
-          type: boolean
-          description: Organization users are able to use SAML authentication of other organizations.
-        saml_enabled:
-          type: boolean
-          description: Organization users are able to use SAML authentication.
-        two_factor_required:
-          type: boolean
-          description: 2FA is required to access resources in this organization.
-    OrganizationProjectsUpdateRequestBody:
-      type: object
-      description: OrganizationProjectsUpdateRequestBody
-      properties:
-        base_port:
-          type: integer
-          minimum: 10000
-          maximum: 30000
-          description: Valid port number (10000-30000)
-          title: Base Port
-        billing_group_id:
-          type: string
-          minLength: 1
-          description: Billing group ID to assign to the project. It's required when moving projects between organizations
-        organization_id:
-          type: string
-          description: Organization ID
-        parent_id:
-          type: string
-          description: Organization or unit ID to where to move the project
-        project_name:
-          type: string
-          maxLength: 63
-          description: Project name
-        tags:
-          type: object
-          description: Tags
-          properties:
-            ANY:
-              type: string
-              maxLength: 64
-              description: Tag value
-        tech_emails:
-          type: array
-          maxItems: 10
-          description: Technical contact emails
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Technical contact email
-            required:
-            - email
-    OrganizationProjectsCreateRequestBody:
-      type: object
-      description: OrganizationProjectsCreateRequestBody
-      properties:
-        base_port:
-          type: integer
-          minimum: 10000
-          maximum: 30000
-          description: Valid port number (10000-30000)
-          title: Base Port
-        billing_group_id:
-          type: string
-          minLength: 1
-          description: Billing group ID to assign to the project.
-        parent_id:
-          type: string
-          description: Organization or unit ID to where to move the project
-        project_id:
-          type: string
-          description: Project ID
-        tags:
-          type: object
-          description: Tags
-          properties:
-            ANY:
-              type: string
-              maxLength: 64
-              description: Tag value
-        tech_emails:
-          type: array
-          maxItems: 10
-          description: Technical contact emails
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Technical contact email
-            required:
-            - email
-      required:
-      - billing_group_id
-      - project_id
-      - tags
     UserOrganizationsListResponse:
       type: object
       description: UserOrganizationsListResponse
@@ -1781,174 +1340,9 @@ components:
             - update_time
       required:
       - organizations
-    OrganizationAuthenticationConfigGetResponse:
+    OrganizationProjectsCreateResponse:
       type: object
-      description: OrganizationAuthenticationConfigGetResponse
-      properties:
-        mcp_enabled:
-          type: boolean
-          description: Users can use MCP clients with services and other resources they have access to in this organization.
-        oauth_enabled:
-          type: boolean
-          description: Organization users are able to use OAuth authentication.
-        password_auth_enabled:
-          type: boolean
-          description: Organization users are able to use password authentication.
-        personal_tokens_enabled:
-          type: boolean
-          description: Organization users can use their personal tokens to access the organization through the Aiven API or other applications.
-        personal_tokens_require_allowed_auth_method:
-          type: boolean
-          description: Organization users are able to use personal tokens that were generated from one of the allowed authentication methods.
-        saml_allow_external:
-          type: boolean
-          description: Organization users are able to use SAML authentication of other organizations.
-        saml_enabled:
-          type: boolean
-          description: Organization users are able to use SAML authentication.
-        two_factor_required:
-          type: boolean
-          description: 2FA is required to access resources in this organization.
-    OrganizationIPAllowListSetRequestBody:
-      type: object
-      description: OrganizationIPAllowListSetRequestBody
-      properties:
-        api_client_ip_allowlist:
-          type: array
-          description: List of allowed IP ranges
-          items:
-            type: string
-        api_client_ip_allowlist_enabled:
-          type: boolean
-          description: If the IP allowlist is being enforced for this organization
-      required:
-      - api_client_ip_allowlist
-      - api_client_ip_allowlist_enabled
-    OrganizationUpdateResponse:
-      type: object
-      description: OrganizationUpdateResponse
-      properties:
-        account_id:
-          type: string
-          maxLength: 36
-          description: Account ID of the organization's root unit
-        create_time:
-          type: string
-          maxLength: 36
-          description: Time of creating the organization
-        default_governance_user_group_id:
-          type: string
-          maxLength: 36
-          description: Default governance user group ID
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization's ID
-        organization_name:
-          type: string
-          maxLength: 83
-          description: Organization's name
-        tier:
-          type: string
-          description: An enumeration.
-          title: Tier of the organization
-          enum:
-          - business
-          - personal
-        update_time:
-          type: string
-          maxLength: 36
-          description: Time of the organization's latest update
-      required:
-      - account_id
-      - create_time
-      - organization_id
-      - organization_name
-      - tier
-      - update_time
-    OrganizationProjectsListResponse:
-      type: object
-      description: OrganizationProjectsListResponse
-      properties:
-        projects:
-          type: array
-          description: List of projects
-          items:
-            type: object
-            properties:
-              account_id:
-                type: string
-                description: '[DEPRECATED] Account ID to where the project belongs'
-              base_port:
-                type: integer
-                minimum: 1
-                maximum: 65535
-                description: Valid port number (1-65535)
-                title: Base Port
-              billing_group_id:
-                type: string
-                minLength: 1
-                description: Billing group ID
-              end_of_life_extension:
-                type: object
-                description: End of life extension information
-                properties:
-                  ANY:
-                    type: object
-                    description: ServiceEndOfLifeExtension
-                    properties:
-                      eol_date:
-                        type: string
-                        maxLength: 36
-                        description: Extended EOL date
-                      version:
-                        type: string
-                        description: Service version
-                    required:
-                    - eol_date
-                    - version
-              parent_id:
-                type: string
-                description: Organization or unit ID to where the project belongs
-              project_id:
-                type: string
-                description: Project ID
-              tags:
-                type: object
-                description: Tags
-                properties:
-                  ANY:
-                    type: string
-                    maxLength: 64
-                    description: Tag value
-              tech_emails:
-                type: array
-                description: List of project technical email addresses
-                items:
-                  type: object
-                  properties:
-                    email:
-                      type: string
-                      maxLength: 254
-                      description: Technical contact email
-                  required:
-                  - email
-            required:
-            - end_of_life_extension
-            - parent_id
-            - project_id
-            - tags
-            - tech_emails
-        total_project_count:
-          type: integer
-          minimum: 0
-          description: Total number of projects
-      required:
-      - projects
-      - total_project_count
-    OrganizationProjectsUpdateResponse:
-      type: object
-      description: OrganizationProjectsUpdateResponse
+      description: OrganizationProjectsCreateResponse
       properties:
         account_id:
           type: string
@@ -2053,6 +1447,197 @@ components:
         two_factor_required:
           type: boolean
           description: 2FA is required to access resources in this organization.
+    OrganizationUserInviteRequestBody:
+      type: object
+      description: OrganizationUserInviteRequestBody
+      properties:
+        user_email:
+          type: string
+          maxLength: 254
+          description: User Email
+      required:
+      - user_email
+    OrganizationGetResponse:
+      type: object
+      description: OrganizationGetResponse
+      properties:
+        account_id:
+          type: string
+          maxLength: 36
+          description: Account ID of the organization's root unit
+        create_time:
+          type: string
+          maxLength: 36
+          description: Time of creating the organization
+        default_governance_user_group_id:
+          type: string
+          maxLength: 36
+          description: Default governance user group ID
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization's ID
+        organization_name:
+          type: string
+          maxLength: 83
+          description: Organization's name
+        tier:
+          type: string
+          description: An enumeration.
+          title: Tier of the organization
+          enum:
+          - business
+          - personal
+        update_time:
+          type: string
+          maxLength: 36
+          description: Time of the organization's latest update
+      required:
+      - account_id
+      - create_time
+      - organization_id
+      - organization_name
+      - tier
+      - update_time
+    DiscoveredOrganizationListResponse:
+      type: object
+      description: DiscoveredOrganizationListResponse
+      properties:
+        discovered_organizations:
+          type: array
+          description: Discovered Organizations
+          items:
+            type: object
+            properties:
+              create_time:
+                type: string
+                maxLength: 36
+                description: Time of creating the organization
+              organization_id:
+                type: string
+                maxLength: 36
+                description: Organization's ID
+              organization_name:
+                type: string
+                maxLength: 83
+                description: Organization's name
+              users:
+                type: array
+                description: Users
+                items:
+                  type: object
+                  properties:
+                    create_time:
+                      type: string
+                      maxLength: 36
+                      description: Creation time
+                    is_super_admin:
+                      type: boolean
+                      description: Is Super Admin
+                    real_name:
+                      type: string
+                      maxLength: 256
+                      description: Real Name
+                    user_email:
+                      type: string
+                      maxLength: 254
+                      description: User Email
+                    user_id:
+                      type: string
+                      description: User ID
+                  required:
+                  - create_time
+                  - is_super_admin
+                  - real_name
+                  - user_email
+                  - user_id
+            required:
+            - create_time
+            - organization_id
+            - organization_name
+            - users
+      required:
+      - discovered_organizations
+    OrganizationGovernanceAccessCredentialsGetResponse:
+      type: object
+      description: OrganizationGovernanceAccessCredentialsGetResponse
+      properties:
+        credentials:
+          type: object
+          description: KafkaAccessCredentials
+          properties:
+            access_cert:
+              type: string
+              description: service user access cert
+            access_key:
+              type: string
+              description: service user access key
+            password:
+              type: string
+              description: service user password
+          required:
+          - access_cert
+          - access_key
+          - password
+      required:
+      - credentials
+    OrganizationUpdateResponse:
+      type: object
+      description: OrganizationUpdateResponse
+      properties:
+        account_id:
+          type: string
+          maxLength: 36
+          description: Account ID of the organization's root unit
+        create_time:
+          type: string
+          maxLength: 36
+          description: Time of creating the organization
+        default_governance_user_group_id:
+          type: string
+          maxLength: 36
+          description: Default governance user group ID
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization's ID
+        organization_name:
+          type: string
+          maxLength: 83
+          description: Organization's name
+        tier:
+          type: string
+          description: An enumeration.
+          title: Tier of the organization
+          enum:
+          - business
+          - personal
+        update_time:
+          type: string
+          maxLength: 36
+          description: Time of the organization's latest update
+      required:
+      - account_id
+      - create_time
+      - organization_id
+      - organization_name
+      - tier
+      - update_time
+    OrganizationIPAllowListSetRequestBody:
+      type: object
+      description: OrganizationIPAllowListSetRequestBody
+      properties:
+        api_client_ip_allowlist:
+          type: array
+          description: List of allowed IP ranges
+          items:
+            type: string
+        api_client_ip_allowlist_enabled:
+          type: boolean
+          description: If the IP allowlist is being enforced for this organization
+      required:
+      - api_client_ip_allowlist
+      - api_client_ip_allowlist_enabled
     OrganizationUserInvitationsListResponse:
       type: object
       description: OrganizationUserInvitationsListResponse
@@ -2100,30 +1685,72 @@ components:
       required:
       - api_client_ip_allowlist
       - api_client_ip_allowlist_enabled
-    OrganizationGetResponse:
+    OrganizationUpdateRequestBody:
       type: object
-      description: OrganizationGetResponse
+      description: OrganizationUpdateRequestBody
       properties:
-        account_id:
+        name:
           type: string
-          maxLength: 36
-          description: Account ID of the organization's root unit
-        create_time:
+          maxLength: 83
+          description: New name of the organization
+        tier:
           type: string
-          maxLength: 36
-          description: Time of creating the organization
-        default_governance_user_group_id:
+          description: An enumeration.
+          title: New tier for the organization
+          enum:
+          - business
+          - personal
+    OrganizationAuthenticationConfigGetResponse:
+      type: object
+      description: OrganizationAuthenticationConfigGetResponse
+      properties:
+        mcp_enabled:
+          type: boolean
+          description: Users can use MCP clients with services and other resources they have access to in this organization.
+        oauth_enabled:
+          type: boolean
+          description: Organization users are able to use OAuth authentication.
+        password_auth_enabled:
+          type: boolean
+          description: Organization users are able to use password authentication.
+        personal_tokens_enabled:
+          type: boolean
+          description: Organization users can use their personal tokens to access the organization through the Aiven API or other applications.
+        personal_tokens_require_allowed_auth_method:
+          type: boolean
+          description: Organization users are able to use personal tokens that were generated from one of the allowed authentication methods.
+        saml_allow_external:
+          type: boolean
+          description: Organization users are able to use SAML authentication of other organizations.
+        saml_enabled:
+          type: boolean
+          description: Organization users are able to use SAML authentication.
+        two_factor_required:
+          type: boolean
+          description: 2FA is required to access resources in this organization.
+    OrganizationUserInvitationAcceptRequestBody:
+      type: object
+      description: OrganizationUserInvitationAcceptRequestBody
+      properties:
+        action:
           type: string
-          maxLength: 36
-          description: Default governance user group ID
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization's ID
+          description: Action to be performed on the invitation
+          default: accept
+          enum:
+          - accept
+    UserOrganizationCreateRequestBody:
+      type: object
+      description: UserOrganizationCreateRequestBody
+      properties:
         organization_name:
           type: string
           maxLength: 83
           description: Organization's name
+        primary_billing_group_id:
+          type: string
+          minLength: 36
+          maxLength: 36
+          description: Billing group ID
         tier:
           type: string
           description: An enumeration.
@@ -2131,106 +1758,9 @@ components:
           enum:
           - business
           - personal
-        update_time:
-          type: string
-          maxLength: 36
-          description: Time of the organization's latest update
       required:
-      - account_id
-      - create_time
-      - organization_id
       - organization_name
       - tier
-      - update_time
-    OrganizationProjectsCreateResponse:
-      type: object
-      description: OrganizationProjectsCreateResponse
-      properties:
-        account_id:
-          type: string
-          description: '[DEPRECATED] Account ID to where the project belongs'
-        base_port:
-          type: integer
-          minimum: 1
-          maximum: 65535
-          description: Valid port number (1-65535)
-          title: Base Port
-        billing_group_id:
-          type: string
-          minLength: 1
-          description: Billing group ID
-        end_of_life_extension:
-          type: object
-          description: End of life extension information
-          properties:
-            ANY:
-              type: object
-              description: ServiceEndOfLifeExtension
-              properties:
-                eol_date:
-                  type: string
-                  maxLength: 36
-                  description: Extended EOL date
-                version:
-                  type: string
-                  description: Service version
-              required:
-              - eol_date
-              - version
-        features:
-          type: object
-          description: Feature flags
-          properties:
-            ANY:
-              type: boolean
-              description: Boolean
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization ID
-        parent_id:
-          type: string
-          description: Organization or unit ID to where the project belongs
-        project_id:
-          type: string
-          description: Project ID
-        tags:
-          type: object
-          description: Tags
-          properties:
-            ANY:
-              type: string
-              maxLength: 64
-              description: Tag value
-        tech_emails:
-          type: array
-          description: List of project technical email addresses
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Technical contact email
-            required:
-            - email
-      required:
-      - end_of_life_extension
-      - organization_id
-      - parent_id
-      - project_id
-      - tags
-      - tech_emails
-    OrganizationUserInviteRequestBody:
-      type: object
-      description: OrganizationUserInviteRequestBody
-      properties:
-        user_email:
-          type: string
-          maxLength: 254
-          description: User Email
-      required:
-      - user_email
     OrganizationGovernanceAccessListResponse:
       type: object
       description: OrganizationGovernanceAccessListResponse
@@ -2368,6 +1898,238 @@ components:
           description: Total number of results
       required:
       - access
+    OrganizationProjectsGetResponse:
+      type: object
+      description: OrganizationProjectsGetResponse
+      properties:
+        account_id:
+          type: string
+          description: '[DEPRECATED] Account ID to where the project belongs'
+        base_port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+          description: Valid port number (1-65535)
+          title: Base Port
+        billing_group_id:
+          type: string
+          minLength: 1
+          description: Billing group ID
+        end_of_life_extension:
+          type: object
+          description: End of life extension information
+          properties:
+            ANY:
+              type: object
+              description: ServiceEndOfLifeExtension
+              properties:
+                eol_date:
+                  type: string
+                  maxLength: 36
+                  description: Extended EOL date
+                version:
+                  type: string
+                  description: Service version
+              required:
+              - eol_date
+              - version
+        features:
+          type: object
+          description: Feature flags
+          properties:
+            ANY:
+              type: boolean
+              description: Boolean
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization ID
+        parent_id:
+          type: string
+          description: Organization or unit ID to where the project belongs
+        project_id:
+          type: string
+          description: Project ID
+        tags:
+          type: object
+          description: Tags
+          properties:
+            ANY:
+              type: string
+              maxLength: 64
+              description: Tag value
+        tech_emails:
+          type: array
+          description: List of project technical email addresses
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Technical contact email
+            required:
+            - email
+      required:
+      - end_of_life_extension
+      - organization_id
+      - parent_id
+      - project_id
+      - tags
+      - tech_emails
+    OrganizationProjectsUpdateRequestBody:
+      type: object
+      description: OrganizationProjectsUpdateRequestBody
+      properties:
+        base_port:
+          type: integer
+          minimum: 10000
+          maximum: 30000
+          description: Valid port number (10000-30000)
+          title: Base Port
+        billing_group_id:
+          type: string
+          minLength: 1
+          description: Billing group ID to assign to the project. It's required when moving projects between organizations
+        organization_id:
+          type: string
+          description: Organization ID
+        parent_id:
+          type: string
+          description: Organization or unit ID to where to move the project
+        project_name:
+          type: string
+          maxLength: 63
+          description: Project name
+        tags:
+          type: object
+          description: Tags
+          properties:
+            ANY:
+              type: string
+              maxLength: 64
+              description: Tag value
+        tech_emails:
+          type: array
+          maxItems: 10
+          description: Technical contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Technical contact email
+            required:
+            - email
+    OrganizationProjectsListResponse:
+      type: object
+      description: OrganizationProjectsListResponse
+      properties:
+        projects:
+          type: array
+          description: List of projects
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                description: '[DEPRECATED] Account ID to where the project belongs'
+              base_port:
+                type: integer
+                minimum: 1
+                maximum: 65535
+                description: Valid port number (1-65535)
+                title: Base Port
+              billing_group_id:
+                type: string
+                minLength: 1
+                description: Billing group ID
+              end_of_life_extension:
+                type: object
+                description: End of life extension information
+                properties:
+                  ANY:
+                    type: object
+                    description: ServiceEndOfLifeExtension
+                    properties:
+                      eol_date:
+                        type: string
+                        maxLength: 36
+                        description: Extended EOL date
+                      version:
+                        type: string
+                        description: Service version
+                    required:
+                    - eol_date
+                    - version
+              parent_id:
+                type: string
+                description: Organization or unit ID to where the project belongs
+              project_id:
+                type: string
+                description: Project ID
+              tags:
+                type: object
+                description: Tags
+                properties:
+                  ANY:
+                    type: string
+                    maxLength: 64
+                    description: Tag value
+              tech_emails:
+                type: array
+                description: List of project technical email addresses
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      maxLength: 254
+                      description: Technical contact email
+                  required:
+                  - email
+            required:
+            - end_of_life_extension
+            - parent_id
+            - project_id
+            - tags
+            - tech_emails
+        total_project_count:
+          type: integer
+          minimum: 0
+          description: Total number of projects
+      required:
+      - projects
+      - total_project_count
+    OrganizationAuthenticationConfigUpdateRequestBody:
+      type: object
+      description: OrganizationAuthenticationConfigUpdateRequestBody
+      properties:
+        mcp_enabled:
+          type: boolean
+          description: Users can use MCP clients with services and other resources they have access to in this organization.
+        oauth_enabled:
+          type: boolean
+          description: Organization users are able to use OAuth authentication.
+        password_auth_enabled:
+          type: boolean
+          description: Organization users are able to use password authentication.
+        personal_tokens_enabled:
+          type: boolean
+          description: Organization users can use their personal tokens to access the organization through the Aiven API or other applications.
+        personal_tokens_require_allowed_auth_method:
+          type: boolean
+          description: Organization users are able to use personal tokens that were generated from one of the allowed authentication methods.
+        saml_allow_external:
+          type: boolean
+          description: Organization users are able to use SAML authentication of other organizations.
+        saml_enabled:
+          type: boolean
+          description: Organization users are able to use SAML authentication.
+        two_factor_required:
+          type: boolean
+          description: 2FA is required to access resources in this organization.
     UserOrganizationCreateResponse:
       type: object
       description: UserOrganizationCreateResponse
@@ -2530,99 +2292,337 @@ components:
           - credentials_user_id
       required:
       - access
-    OrganizationGovernanceAccessCredentialsGetResponse:
+    OrganizationProjectsCreateRequestBody:
       type: object
-      description: OrganizationGovernanceAccessCredentialsGetResponse
+      description: OrganizationProjectsCreateRequestBody
       properties:
-        credentials:
+        base_port:
+          type: integer
+          minimum: 10000
+          maximum: 30000
+          description: Valid port number (10000-30000)
+          title: Base Port
+        billing_group_id:
+          type: string
+          minLength: 1
+          description: Billing group ID to assign to the project.
+        parent_id:
+          type: string
+          description: Organization or unit ID to where to move the project
+        project_id:
+          type: string
+          description: Project ID
+        tags:
           type: object
-          description: KafkaAccessCredentials
+          description: Tags
           properties:
-            access_cert:
+            ANY:
               type: string
-              description: service user access cert
-            access_key:
-              type: string
-              description: service user access key
-            password:
-              type: string
-              description: service user password
-          required:
-          - access_cert
-          - access_key
-          - password
+              maxLength: 64
+              description: Tag value
+        tech_emails:
+          type: array
+          maxItems: 10
+          description: Technical contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Technical contact email
+            required:
+            - email
       required:
-      - credentials
-  parameters:
-    organizationdelete_recursive:
-      in: query
-      name: recursive
-      description: Delete all resources in the organization
-      schema:
-        type: boolean
-      required: true
-    organizationgovernanceaccesslist_cursor:
-      in: query
-      name: cursor
-      description: Pagination cursor
-      schema:
-        type: string
-      required: false
-    project_id:
-      in: path
-      name: project_id
-      description: Project Id
-      schema:
-        type: string
-      required: true
-    organizationgovernanceaccesslist_resource_name:
-      in: query
-      name: resource_name
-      description: Filter by resource name
-      schema:
-        type: string
-        minimum: 1
-        maximum: 256
-      required: false
-    organizationgovernanceaccesslist_limit:
-      in: query
-      name: limit
-      description: Limit results to this number
-      schema:
-        type: integer
-        minimum: 30
-        maximum: 999
-      required: false
-    user_email:
-      in: path
-      name: user_email
-      description: Email address
-      schema:
-        type: string
-      required: true
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
-    organizationgovernanceaccesslist_owner_user_group_id:
-      in: query
-      name: owner_user_group_id
-      description: Filter by owner user group ID
-      schema:
-        type: string
-        minimum: 1
-        maximum: 36
-      required: false
-    access_id:
-      in: path
-      name: access_id
-      description: Access Id
-      schema:
-        type: string
-      required: true
+      - billing_group_id
+      - project_id
+      - tags
+    OrganizationGovernanceAccessGetResponse:
+      type: object
+      description: OrganizationGovernanceAccessGetResponse
+      properties:
+        access:
+          type: object
+          description: OrganizationGovernanceAccess
+          properties:
+            access_data:
+              type: object
+              description: access type specific data
+              properties:
+                acls:
+                  type: array
+                  description: Acls
+                  items:
+                    type: object
+                    properties:
+                      host:
+                        type: string
+                        maxLength: 256
+                        description: Acl host
+                      id:
+                        type: string
+                        description: Acl ID
+                      operation:
+                        type: string
+                        description: An enumeration.
+                        title: Acl operation
+                        enum:
+                        - Read
+                        - Write
+                      pattern_type:
+                        type: string
+                        description: An enumeration.
+                        title: Acl pattern type
+                        enum:
+                        - LITERAL
+                      permission_type:
+                        type: string
+                        description: An enumeration.
+                        title: Acl permission type
+                        enum:
+                        - ALLOW
+                      principal:
+                        type: string
+                        description: Acl principal
+                      resource_name:
+                        type: string
+                        maxLength: 256
+                        description: Acl resource name
+                      resource_type:
+                        type: string
+                        description: An enumeration.
+                        title: Acl resource type
+                        enum:
+                        - Topic
+                    required:
+                    - host
+                    - id
+                    - operation
+                    - pattern_type
+                    - permission_type
+                    - principal
+                    - resource_name
+                    - resource_type
+                project_name:
+                  type: string
+                  description: Project name
+                service_name:
+                  type: string
+                  description: Service name
+                username:
+                  type: string
+                  description: The service username assigned to the access
+              required:
+              - acls
+              - project_name
+              - service_name
+              - username
+            access_id:
+              type: string
+              description: The ID of the access
+            access_name:
+              type: string
+              description: Label to describe the access
+            access_type:
+              type: string
+              description: An enumeration.
+              title: Type of access
+              enum:
+              - KAFKA
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp of when access was created
+            created_by:
+              type: string
+              description: The user that created the access
+            credentials_consumed:
+              type: boolean
+              description: Wether the credentials have been reviewed
+            credentials_user_id:
+              type: string
+              description: The user that created is assigned to review the credentials
+            owner_user_group_id:
+              type: string
+              maxLength: 36
+              description: The ID of the group that will own the access
+          required:
+          - access_data
+          - access_id
+          - access_name
+          - access_type
+          - create_time
+          - created_by
+          - credentials_consumed
+          - credentials_user_id
+      required:
+      - access
+    OrganizationProjectsUpdateResponse:
+      type: object
+      description: OrganizationProjectsUpdateResponse
+      properties:
+        account_id:
+          type: string
+          description: '[DEPRECATED] Account ID to where the project belongs'
+        base_port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+          description: Valid port number (1-65535)
+          title: Base Port
+        billing_group_id:
+          type: string
+          minLength: 1
+          description: Billing group ID
+        end_of_life_extension:
+          type: object
+          description: End of life extension information
+          properties:
+            ANY:
+              type: object
+              description: ServiceEndOfLifeExtension
+              properties:
+                eol_date:
+                  type: string
+                  maxLength: 36
+                  description: Extended EOL date
+                version:
+                  type: string
+                  description: Service version
+              required:
+              - eol_date
+              - version
+        features:
+          type: object
+          description: Feature flags
+          properties:
+            ANY:
+              type: boolean
+              description: Boolean
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization ID
+        parent_id:
+          type: string
+          description: Organization or unit ID to where the project belongs
+        project_id:
+          type: string
+          description: Project ID
+        tags:
+          type: object
+          description: Tags
+          properties:
+            ANY:
+              type: string
+              maxLength: 64
+              description: Tag value
+        tech_emails:
+          type: array
+          description: List of project technical email addresses
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Technical contact email
+            required:
+            - email
+      required:
+      - end_of_life_extension
+      - organization_id
+      - parent_id
+      - project_id
+      - tags
+      - tech_emails
+    OrganizationGovernanceAccessDeleteResponse:
+      type: object
+      description: OrganizationGovernanceAccessDeleteResponse
+      properties:
+        access_id:
+          type: string
+          description: The ID of the access
+      required:
+      - access_id
+    OrganizationGovernanceAccessCreateRequestBody:
+      type: object
+      description: OrganizationGovernanceAccessCreateRequestBody
+      properties:
+        access_data:
+          type: object
+          description: access type specific data
+          properties:
+            acls:
+              type: array
+              description: Acls
+              items:
+                type: object
+                properties:
+                  host:
+                    type: string
+                    maxLength: 256
+                    description: Acl host
+                  operation:
+                    type: string
+                    description: An enumeration.
+                    title: Acl operation
+                    enum:
+                    - Read
+                    - Write
+                  permission_type:
+                    type: string
+                    description: An enumeration.
+                    title: Acl permission type
+                    enum:
+                    - ALLOW
+                  resource_name:
+                    type: string
+                    maxLength: 256
+                    description: Acl resource name
+                  resource_type:
+                    type: string
+                    description: An enumeration.
+                    title: Acl resource type
+                    enum:
+                    - Topic
+                required:
+                - host
+                - operation
+                - permission_type
+                - resource_name
+                - resource_type
+            project_name:
+              type: string
+              description: Project name
+            service_name:
+              type: string
+              description: Service name
+            username:
+              type: string
+              description: The service username assigned to the access
+          required:
+          - acls
+          - project_name
+          - service_name
+          - username
+        access_name:
+          type: string
+          description: Label to describe the access
+        access_type:
+          type: string
+          description: An enumeration.
+          title: Type of access
+          enum:
+          - KAFKA
+        owner_user_group_id:
+          type: string
+          maxLength: 36
+          description: The ID of the group that will own the access
+      required:
+      - access_data
+      - access_name
+      - access_type
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

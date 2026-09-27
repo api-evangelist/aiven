@@ -82,6 +82,27 @@ paths:
         - accounts:read
 components:
   parameters:
+    organizationemissionsget_project_id:
+      in: query
+      name: project_id
+      description: Filter by project name (repeatable)
+      schema:
+        type: array
+      required: false
+    organizationemissionsget_ending_time:
+      in: query
+      name: ending_time
+      description: 'End of time range (ISO 8601, default: start of current month)'
+      schema:
+        type: string
+      required: false
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
     organizationemissionsget_group_by:
       in: query
       name: group_by
@@ -103,40 +124,19 @@ components:
         - day
         - month
       required: false
-    organizationemissionsget_starting_time:
-      in: query
-      name: starting_time
-      description: 'Start of time range (ISO 8601, default: start of last month)'
-      schema:
-        type: string
-      required: false
-    organizationemissionsget_ending_time:
-      in: query
-      name: ending_time
-      description: 'End of time range (ISO 8601, default: start of current month)'
-      schema:
-        type: string
-      required: false
-    organizationemissionsget_project_id:
-      in: query
-      name: project_id
-      description: Filter by project name (repeatable)
-      schema:
-        type: array
-      required: false
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
     organizationemissionsget_billing_group_id:
       in: query
       name: billing_group_id
       description: Filter to specific billing groups (repeatable)
       schema:
         type: array
+      required: false
+    organizationemissionsget_starting_time:
+      in: query
+      name: starting_time
+      description: 'Start of time range (ISO 8601, default: start of last month)'
+      schema:
+        type: string
       required: false
   schemas:
     OrganizationEmissionsGetResponse:

@@ -71,21 +71,6 @@ paths:
         oauth2:
         - services:read
 components:
-  parameters:
-    service_name:
-      in: path
-      name: service_name
-      description: Service name
-      schema:
-        type: string
-      required: true
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
   schemas:
     ServiceThanosStorageSummaryResponse:
       type: object
@@ -156,6 +141,21 @@ components:
       - forecasted_cost
       - storage_usage_history
       - total_storage_usage
+  parameters:
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    service_name:
+      in: path
+      name: service_name
+      description: Service name
+      schema:
+        type: string
+      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

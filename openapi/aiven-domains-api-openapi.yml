@@ -139,55 +139,6 @@ paths:
         - accounts:write
 components:
   schemas:
-    OrganizationDomainUpdateResponse:
-      type: object
-      description: OrganizationDomainUpdateResponse
-      properties:
-        challenge_token:
-          type: string
-          description: Random string to be used for validation
-        create_time:
-          type: string
-          maxLength: 36
-          description: Time of creating the domain
-        domain_id:
-          type: string
-          description: ID of the domain
-        domain_name:
-          type: string
-          description: Name of the domain
-        linked_authentication_method_ids:
-          type: array
-          description: Linked Authentication Method Ids
-          items:
-            type: string
-        organization_id:
-          type: string
-          description: ID of the organization owning this domain
-        state:
-          type: string
-          description: An enumeration.
-          title: State of the verification process
-          enum:
-          - deleted
-          - unverified
-          - verified
-        verification_type:
-          type: string
-          description: An enumeration.
-          title: Type of verification to be made
-          enum:
-          - dns
-          - http
-      required:
-      - challenge_token
-      - create_time
-      - domain_id
-      - domain_name
-      - linked_authentication_method_ids
-      - organization_id
-      - state
-      - verification_type
     OrganizationDomainAddResponse:
       type: object
       description: OrganizationDomainAddResponse
@@ -237,13 +188,39 @@ components:
       - organization_id
       - state
       - verification_type
-    OrganizationDomainAddRequestBody:
+    OrganizationDomainVerifyResponse:
       type: object
-      description: OrganizationDomainAddRequestBody
+      description: OrganizationDomainVerifyResponse
       properties:
+        challenge_token:
+          type: string
+          description: Random string to be used for validation
+        create_time:
+          type: string
+          maxLength: 36
+          description: Time of creating the domain
+        domain_id:
+          type: string
+          description: ID of the domain
         domain_name:
           type: string
-          description: Name of the domain to be added
+          description: Name of the domain
+        linked_authentication_method_ids:
+          type: array
+          description: Linked Authentication Method Ids
+          items:
+            type: string
+        organization_id:
+          type: string
+          description: ID of the organization owning this domain
+        state:
+          type: string
+          description: An enumeration.
+          title: State of the verification process
+          enum:
+          - deleted
+          - unverified
+          - verified
         verification_type:
           type: string
           description: An enumeration.
@@ -252,10 +229,17 @@ components:
           - dns
           - http
       required:
+      - challenge_token
+      - create_time
+      - domain_id
       - domain_name
-    OrganizationDomainVerifyResponse:
+      - linked_authentication_method_ids
+      - organization_id
+      - state
+      - verification_type
+    OrganizationDomainUpdateResponse:
       type: object
-      description: OrganizationDomainVerifyResponse
+      description: OrganizationDomainUpdateResponse
       properties:
         challenge_token:
           type: string
@@ -359,6 +343,22 @@ components:
             - verification_type
       required:
       - domains
+    OrganizationDomainAddRequestBody:
+      type: object
+      description: OrganizationDomainAddRequestBody
+      properties:
+        domain_name:
+          type: string
+          description: Name of the domain to be added
+        verification_type:
+          type: string
+          description: An enumeration.
+          title: Type of verification to be made
+          enum:
+          - dns
+          - http
+      required:
+      - domain_name
     OrganizationDomainUpdateRequestBody:
       type: object
       description: OrganizationDomainUpdateRequestBody

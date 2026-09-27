@@ -287,9 +287,62 @@ paths:
         - services:write
 components:
   schemas:
-    ServiceClickHouseUserDeleteResponse:
+    ServiceClickHouseDatabaseListResponse:
       type: object
-      description: ServiceClickHouseUserDeleteResponse
+      description: ServiceClickHouseDatabaseListResponse
+      properties:
+        databases:
+          type: array
+          description: List of databases
+          items:
+            type: object
+            properties:
+              engine:
+                type: string
+                description: Database engine
+              name:
+                type: string
+                description: Database name
+              required:
+                type: boolean
+                description: Required database
+              state:
+                type: string
+                description: Database state
+                enum:
+                - ok
+                - pending_creation
+                - pending_removal
+            required:
+            - engine
+            - name
+            - required
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - databases
+    ServiceClickHouseQueryStatsResponse:
+      type: object
+      description: ServiceClickHouseQueryStatsResponse
       properties:
         errors:
           type: array
@@ -312,31 +365,44 @@ components:
         message:
           type: string
           description: Printable result of the request
-    ServiceClickHouseDatabaseDeleteResponse:
-      type: object
-      description: ServiceClickHouseDatabaseDeleteResponse
-      properties:
-        errors:
+        queries:
           type: array
-          description: List of errors occurred during request processing
+          description: List of query statistics
           items:
             type: object
             properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
+              calls:
                 type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
+                description: Number of calls
+              database:
+                type: string
+                description: Database
+              max_time:
+                type: integer
+                description: Maximum query duration in milliseconds
+              mean_time:
+                type: integer
+                description: Average query duration in milliseconds
+              min_time:
+                type: integer
+                description: Minimum query duration in milliseconds
+              p95_time:
+                type: integer
+                description: Query duration 95th percentile in milliseconds
+              query:
+                type: string
+                description: Normalized query
+              rows:
+                type: number
+                description: Average number of rows per call
+              stddev_time:
+                type: integer
+                description: Query duration standard deviation in milliseconds
+              total_time:
+                type: integer
+                description: Total duration of all calls in milliseconds
+      required:
+      - queries
     ServiceClickHouseTieredStorageSummaryResponse:
       type: object
       description: ServiceClickHouseTieredStorageSummaryResponse
@@ -406,33 +472,94 @@ components:
       - forecasted_cost
       - storage_usage_history
       - total_storage_usage
-    ServiceClickHouseUserCreateRequestBody:
+    ServiceClickHouseCurrentQueriesResponse:
       type: object
-      description: ServiceClickHouseUserCreateRequestBody
+      description: ServiceClickHouseCurrentQueriesResponse
       properties:
-        name:
-          type: string
-          maxLength: 64
-          description: User name
-        password:
-          type: string
-          maxLength: 256
-          description: User password
-        roles:
+        errors:
           type: array
-          maxItems: 50
-          description: User roles
+          description: List of errors occurred during request processing
           items:
             type: object
             properties:
-              uuid:
+              message:
                 type: string
-                maxLength: 36
-                description: Role uuid
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
             required:
-            - uuid
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        queries:
+          type: array
+          description: List of currently running queries
+          items:
+            type: object
+            properties:
+              client_name:
+                type: string
+                description: Client name, if set
+              database:
+                type: string
+                description: Database
+              elapsed:
+                type: number
+                description: The time in seconds since request execution started
+              query:
+                type: string
+                description: The query text
+              user:
+                type: string
+                description: The user who made the query
       required:
-      - name
+      - queries
+    ServiceClickHouseUserDeleteResponse:
+      type: object
+      description: ServiceClickHouseUserDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceClickHouseQueryRequestBody:
+      type: object
+      description: ServiceClickHouseQueryRequestBody
+      properties:
+        database:
+          type: string
+          maxLength: 250
+          description: Service database name
+        query:
+          type: string
+          maxLength: 20000
+          description: Query
+      required:
+      - database
+      - query
     ServiceClickHouseDatabaseCreateRequestBody:
       type: object
       description: ServiceClickHouseDatabaseCreateRequestBody
@@ -443,137 +570,9 @@ components:
           description: Service database name
       required:
       - database
-    ServiceClickHouseDatabaseListResponse:
+    ServiceClickHouseDatabaseDeleteResponse:
       type: object
-      description: ServiceClickHouseDatabaseListResponse
-      properties:
-        databases:
-          type: array
-          description: List of databases
-          items:
-            type: object
-            properties:
-              engine:
-                type: string
-                description: Database engine
-              name:
-                type: string
-                description: Database name
-              required:
-                type: boolean
-                description: Required database
-              state:
-                type: string
-                description: Database state
-                enum:
-                - ok
-                - pending_creation
-                - pending_removal
-            required:
-            - engine
-            - name
-            - required
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - databases
-    ServiceClickHouseQueryResponse:
-      type: object
-      description: ServiceClickHouseQueryResponse
-      properties:
-        data:
-          type: array
-          description: Data
-          items:
-            type: array
-            properties: {}
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        meta:
-          type: array
-          description: Meta
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: Column name
-              type:
-                type: string
-                description: Column type
-            required:
-            - name
-            - type
-        summary:
-          type: object
-          description: Summary
-          properties:
-            elapsed_ns:
-              type: integer
-              description: Elapsed time in nanoseconds
-            read_bytes:
-              type: integer
-              description: Number of bytes read
-            read_rows:
-              type: integer
-              description: Number of rows read
-            result_bytes:
-              type: integer
-              description: Number of bytes in the result
-            result_rows:
-              type: integer
-              description: Number of rows in the result
-            written_bytes:
-              type: integer
-              description: Number of bytes written
-            written_rows:
-              type: integer
-              description: Number of rows written
-      required:
-      - data
-      - meta
-      - summary
-    ServiceClickHouseDatabaseCreateResponse:
-      type: object
-      description: ServiceClickHouseDatabaseCreateResponse
+      description: ServiceClickHouseDatabaseDeleteResponse
       properties:
         errors:
           type: array
@@ -699,9 +698,9 @@ components:
           - uuid
       required:
       - user
-    ServiceClickHouseCurrentQueriesResponse:
+    ServiceClickHousePasswordResetResponse:
       type: object
-      description: ServiceClickHouseCurrentQueriesResponse
+      description: ServiceClickHousePasswordResetResponse
       properties:
         errors:
           type: array
@@ -724,44 +723,36 @@ components:
         message:
           type: string
           description: Printable result of the request
-        queries:
+        password:
+          type: string
+          description: User password
+      required:
+      - password
+    ServiceClickHouseDatabaseCreateResponse:
+      type: object
+      description: ServiceClickHouseDatabaseCreateResponse
+      properties:
+        errors:
           type: array
-          description: List of currently running queries
+          description: List of errors occurred during request processing
           items:
             type: object
             properties:
-              client_name:
+              message:
                 type: string
-                description: Client name, if set
-              database:
+                description: Printable error message
+              more_info:
                 type: string
-                description: Database
-              elapsed:
-                type: number
-                description: The time in seconds since request execution started
-              query:
-                type: string
-                description: The query text
-              user:
-                type: string
-                description: The user who made the query
-      required:
-      - queries
-    ServiceClickHouseQueryRequestBody:
-      type: object
-      description: ServiceClickHouseQueryRequestBody
-      properties:
-        database:
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
           type: string
-          maxLength: 250
-          description: Service database name
-        query:
-          type: string
-          maxLength: 20000
-          description: Query
-      required:
-      - database
-      - query
+          description: Printable result of the request
     ServiceClickHouseUserListResponse:
       type: object
       description: ServiceClickHouseUserListResponse
@@ -867,99 +858,6 @@ components:
             - uuid
       required:
       - users
-    ServiceClickHouseQueryStatsResponse:
-      type: object
-      description: ServiceClickHouseQueryStatsResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        queries:
-          type: array
-          description: List of query statistics
-          items:
-            type: object
-            properties:
-              calls:
-                type: integer
-                description: Number of calls
-              database:
-                type: string
-                description: Database
-              max_time:
-                type: integer
-                description: Maximum query duration in milliseconds
-              mean_time:
-                type: integer
-                description: Average query duration in milliseconds
-              min_time:
-                type: integer
-                description: Minimum query duration in milliseconds
-              p95_time:
-                type: integer
-                description: Query duration 95th percentile in milliseconds
-              query:
-                type: string
-                description: Normalized query
-              rows:
-                type: number
-                description: Average number of rows per call
-              stddev_time:
-                type: integer
-                description: Query duration standard deviation in milliseconds
-              total_time:
-                type: integer
-                description: Total duration of all calls in milliseconds
-      required:
-      - queries
-    ServiceClickHousePasswordResetResponse:
-      type: object
-      description: ServiceClickHousePasswordResetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        password:
-          type: string
-          description: User password
-      required:
-      - password
     ServiceClickHousePasswordResetRequestBody:
       type: object
       description: ServiceClickHousePasswordResetRequestBody
@@ -970,11 +868,113 @@ components:
           description: User password
       required:
       - password
+    ServiceClickHouseUserCreateRequestBody:
+      type: object
+      description: ServiceClickHouseUserCreateRequestBody
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          description: User name
+        password:
+          type: string
+          maxLength: 256
+          description: User password
+        roles:
+          type: array
+          maxItems: 50
+          description: User roles
+          items:
+            type: object
+            properties:
+              uuid:
+                type: string
+                maxLength: 36
+                description: Role uuid
+            required:
+            - uuid
+      required:
+      - name
+    ServiceClickHouseQueryResponse:
+      type: object
+      description: ServiceClickHouseQueryResponse
+      properties:
+        data:
+          type: array
+          description: Data
+          items:
+            type: array
+            properties: {}
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        meta:
+          type: array
+          description: Meta
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Column name
+              type:
+                type: string
+                description: Column type
+            required:
+            - name
+            - type
+        summary:
+          type: object
+          description: Summary
+          properties:
+            elapsed_ns:
+              type: integer
+              description: Elapsed time in nanoseconds
+            read_bytes:
+              type: integer
+              description: Number of bytes read
+            read_rows:
+              type: integer
+              description: Number of rows read
+            result_bytes:
+              type: integer
+              description: Number of bytes in the result
+            result_rows:
+              type: integer
+              description: Number of rows in the result
+            written_bytes:
+              type: integer
+              description: Number of bytes written
+            written_rows:
+              type: integer
+              description: Number of rows written
+      required:
+      - data
+      - meta
+      - summary
   parameters:
-    service_name:
+    user_uuid:
       in: path
-      name: service_name
-      description: Service name
+      name: user_uuid
+      description: User identifier
       schema:
         type: string
       required: true
@@ -987,30 +987,6 @@ components:
         minimum: 0
         default: 0
       required: false
-    serviceclickhousequerystats_limit:
-      in: query
-      name: limit
-      description: Limit for number of results
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-        default: 100
-      required: false
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
-    user_uuid:
-      in: path
-      name: user_uuid
-      description: User identifier
-      schema:
-        type: string
-      required: true
     database:
       in: path
       name: database
@@ -1041,6 +1017,30 @@ components:
         - total_time:asc
         - total_time:desc
       required: false
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    serviceclickhousequerystats_limit:
+      in: query
+      name: limit
+      description: Limit for number of results
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+        default: 100
+      required: false
+    service_name:
+      in: path
+      name: service_name
+      description: Service name
+      schema:
+        type: string
+      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

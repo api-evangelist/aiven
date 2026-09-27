@@ -261,6 +261,98 @@ paths:
         - accounts:write
 components:
   schemas:
+    UserGroupUpdateResponse:
+      type: object
+      description: UserGroupUpdateResponse
+      properties:
+        create_time:
+          type: string
+          maxLength: 36
+          description: User group creation time
+        description:
+          type: string
+          maxLength: 4096
+          description: Description
+        managed_by_scim:
+          type: boolean
+          description: Managed By Scim
+        update_time:
+          type: string
+          maxLength: 36
+          description: User group last update time
+        user_group_id:
+          type: string
+          maxLength: 36
+          description: User Group ID
+        user_group_name:
+          type: string
+          maxLength: 128
+          description: User Group Name
+      required:
+      - create_time
+      - description
+      - managed_by_scim
+      - update_time
+      - user_group_id
+      - user_group_name
+    UserGroupUpdateRequestBody:
+      type: object
+      description: UserGroupUpdateRequestBody
+      properties:
+        description:
+          type: string
+          maxLength: 4096
+          description: Description
+        user_group_name:
+          type: string
+          maxLength: 128
+          description: User Group Name
+    UserGroupsListResponse:
+      type: object
+      description: UserGroupsListResponse
+      properties:
+        user_groups:
+          type: array
+          description: User Groups
+          items:
+            type: object
+            properties:
+              create_time:
+                type: string
+                maxLength: 36
+                description: User group creation time
+              description:
+                type: string
+                maxLength: 4096
+                description: Description
+              managed_by_scim:
+                type: boolean
+                description: Managed By Scim
+              member_count:
+                type: integer
+                description: Member Count
+              update_time:
+                type: string
+                maxLength: 36
+                description: User group last update time
+              user_group_id:
+                type: string
+                maxLength: 36
+                description: User Group ID
+              user_group_name:
+                type: string
+                maxLength: 128
+                description: User Group Name
+            required:
+            - create_time
+            - description
+            - managed_by_scim
+            - member_count
+            - update_time
+            - user_group_id
+            - user_group_name
+      required:
+      - user_groups
     UserGroupMemberListResponse:
       type: object
       description: UserGroupMemberListResponse
@@ -332,86 +424,6 @@ components:
             - user_info
       required:
       - members
-    UserGroupGetResponse:
-      type: object
-      description: UserGroupGetResponse
-      properties:
-        create_time:
-          type: string
-          maxLength: 36
-          description: User group creation time
-        description:
-          type: string
-          maxLength: 4096
-          description: Description
-        managed_by_scim:
-          type: boolean
-          description: Managed By Scim
-        update_time:
-          type: string
-          maxLength: 36
-          description: User group last update time
-        user_group_id:
-          type: string
-          maxLength: 36
-          description: User Group ID
-        user_group_name:
-          type: string
-          maxLength: 128
-          description: User Group Name
-      required:
-      - create_time
-      - description
-      - managed_by_scim
-      - update_time
-      - user_group_id
-      - user_group_name
-    UserGroupsListResponse:
-      type: object
-      description: UserGroupsListResponse
-      properties:
-        user_groups:
-          type: array
-          description: User Groups
-          items:
-            type: object
-            properties:
-              create_time:
-                type: string
-                maxLength: 36
-                description: User group creation time
-              description:
-                type: string
-                maxLength: 4096
-                description: Description
-              managed_by_scim:
-                type: boolean
-                description: Managed By Scim
-              member_count:
-                type: integer
-                description: Member Count
-              update_time:
-                type: string
-                maxLength: 36
-                description: User group last update time
-              user_group_id:
-                type: string
-                maxLength: 36
-                description: User Group ID
-              user_group_name:
-                type: string
-                maxLength: 128
-                description: User Group Name
-            required:
-            - create_time
-            - description
-            - managed_by_scim
-            - member_count
-            - update_time
-            - user_group_id
-            - user_group_name
-      required:
-      - user_groups
     UserGroupMembersUpdateRequestBody:
       type: object
       description: UserGroupMembersUpdateRequestBody
@@ -432,67 +444,6 @@ components:
       required:
       - member_ids
       - operation
-    UserGroupCreateRequestBody:
-      type: object
-      description: UserGroupCreateRequestBody
-      properties:
-        description:
-          type: string
-          maxLength: 4096
-          description: Description
-        user_group_name:
-          type: string
-          maxLength: 128
-          description: User Group Name
-      required:
-      - description
-      - user_group_name
-    UserGroupUpdateRequestBody:
-      type: object
-      description: UserGroupUpdateRequestBody
-      properties:
-        description:
-          type: string
-          maxLength: 4096
-          description: Description
-        user_group_name:
-          type: string
-          maxLength: 128
-          description: User Group Name
-    UserGroupUpdateResponse:
-      type: object
-      description: UserGroupUpdateResponse
-      properties:
-        create_time:
-          type: string
-          maxLength: 36
-          description: User group creation time
-        description:
-          type: string
-          maxLength: 4096
-          description: Description
-        managed_by_scim:
-          type: boolean
-          description: Managed By Scim
-        update_time:
-          type: string
-          maxLength: 36
-          description: User group last update time
-        user_group_id:
-          type: string
-          maxLength: 36
-          description: User Group ID
-        user_group_name:
-          type: string
-          maxLength: 128
-          description: User Group Name
-      required:
-      - create_time
-      - description
-      - managed_by_scim
-      - update_time
-      - user_group_id
-      - user_group_name
     UserGroupCreateResponse:
       type: object
       description: UserGroupCreateResponse
@@ -527,18 +478,67 @@ components:
       - update_time
       - user_group_id
       - user_group_name
+    UserGroupGetResponse:
+      type: object
+      description: UserGroupGetResponse
+      properties:
+        create_time:
+          type: string
+          maxLength: 36
+          description: User group creation time
+        description:
+          type: string
+          maxLength: 4096
+          description: Description
+        managed_by_scim:
+          type: boolean
+          description: Managed By Scim
+        update_time:
+          type: string
+          maxLength: 36
+          description: User group last update time
+        user_group_id:
+          type: string
+          maxLength: 36
+          description: User Group ID
+        user_group_name:
+          type: string
+          maxLength: 128
+          description: User Group Name
+      required:
+      - create_time
+      - description
+      - managed_by_scim
+      - update_time
+      - user_group_id
+      - user_group_name
+    UserGroupCreateRequestBody:
+      type: object
+      description: UserGroupCreateRequestBody
+      properties:
+        description:
+          type: string
+          maxLength: 4096
+          description: Description
+        user_group_name:
+          type: string
+          maxLength: 128
+          description: User Group Name
+      required:
+      - description
+      - user_group_name
   parameters:
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
     user_group_id:
       in: path
       name: user_group_id
       description: ID of the user group
+      schema:
+        type: string
+      required: true
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
       schema:
         type: string
       required: true

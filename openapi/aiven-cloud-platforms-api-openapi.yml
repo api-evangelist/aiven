@@ -296,6 +296,14 @@ components:
       required:
       - static_ip_address_availability
   parameters:
+    listprojectclouds_sort_by_proximity:
+      in: query
+      name: sort_by_proximity
+      description: When true, order clouds by proximity to the caller's IP (closest first).
+      schema:
+        type: boolean
+        default: true
+      required: false
     project:
       in: path
       name: project
@@ -310,14 +318,6 @@ components:
       schema:
         type: string
       required: true
-    listprojectclouds_sort_by_proximity:
-      in: query
-      name: sort_by_proximity
-      description: When true, order clouds by proximity to the caller's IP (closest first).
-      schema:
-        type: boolean
-        default: true
-      required: false
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'
