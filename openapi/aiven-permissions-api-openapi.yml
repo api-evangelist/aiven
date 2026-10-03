@@ -184,38 +184,33 @@ paths:
         - accounts:write
         - authentication:write
 components:
+  parameters:
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
+    resource_id:
+      in: path
+      name: resource_id
+      description: Resource Id
+      schema:
+        type: string
+      required: true
+    resource_type:
+      in: path
+      name: resource_type
+      description: Resource type
+      schema:
+        type: string
+        enum:
+        - project
+        - organization
+        - organization_unit
+      required: true
   schemas:
-    PermissionsSetRequestBody:
-      type: object
-      description: PermissionsSetRequestBody
-      properties:
-        permissions:
-          type: array
-          description: List of roles to set
-          items:
-            type: object
-            properties:
-              permissions:
-                type: array
-                description: List of roles
-                items:
-                  type: string
-              principal_id:
-                type: string
-                description: ID of the principal
-              principal_type:
-                type: string
-                description: An enumeration.
-                title: Type of the principal
-                enum:
-                - user
-                - user_group
-            required:
-            - permissions
-            - principal_id
-            - principal_type
-      required:
-      - permissions
     PermissionsUpdateRequestBody:
       type: object
       description: PermissionsUpdateRequestBody
@@ -297,32 +292,37 @@ components:
             - update_time
       required:
       - permissions
-  parameters:
-    resource_type:
-      in: path
-      name: resource_type
-      description: Resource type
-      schema:
-        type: string
-        enum:
-        - project
-        - organization
-        - organization_unit
-      required: true
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
-    resource_id:
-      in: path
-      name: resource_id
-      description: Resource Id
-      schema:
-        type: string
-      required: true
+    PermissionsSetRequestBody:
+      type: object
+      description: PermissionsSetRequestBody
+      properties:
+        permissions:
+          type: array
+          description: List of roles to set
+          items:
+            type: object
+            properties:
+              permissions:
+                type: array
+                description: List of roles
+                items:
+                  type: string
+              principal_id:
+                type: string
+                description: ID of the principal
+              principal_type:
+                type: string
+                description: An enumeration.
+                title: Type of the principal
+                enum:
+                - user
+                - user_group
+            required:
+            - permissions
+            - principal_id
+            - principal_type
+      required:
+      - permissions
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

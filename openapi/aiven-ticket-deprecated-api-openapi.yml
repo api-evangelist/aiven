@@ -112,7 +112,177 @@ paths:
         - projects:write
         - tickets:write
 components:
+  parameters:
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
+    ticket_id:
+      in: path
+      name: ticket_id
+      description: Ticket ID
+      schema:
+        type: string
+      required: true
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
   schemas:
+    OrganizationTicketListResponse:
+      type: object
+      description: OrganizationTicketListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        tickets:
+          type: array
+          description: List of tickets
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              create_time:
+                type: string
+                maxLength: 36
+                description: Created timestamp, ISO 8601 format
+              description:
+                type: string
+                minLength: 1
+                maxLength: 32000
+                description: Longer description
+              followers:
+                type: array
+                description: Ticket followers
+                items:
+                  type: object
+                  properties:
+                    real_name:
+                      type: string
+                      maxLength: 256
+                      description: User real name
+                    user_email:
+                      type: string
+                      maxLength: 254
+                      description: User email address
+                    user_id:
+                      type: string
+                      description: User ID
+                  required:
+                  - real_name
+                  - user_email
+                  - user_id
+              following:
+                type: boolean
+                description: Whether the current user is following this ticket
+              organization_id:
+                type: string
+                maxLength: 36
+                description: Organization ID
+              project_name:
+                type: string
+                maxLength: 63
+                description: Project name
+              service_name:
+                type: string
+                minLength: 1
+                maxLength: 64
+                description: Service name
+              severity:
+                type: string
+                description: Severity level
+                enum:
+                - critical
+                - high
+                - low
+              state:
+                type: string
+                description: Is ticket open or closed
+                enum:
+                - closed
+                - open
+              submitter:
+                type: object
+                description: User information
+                properties:
+                  real_name:
+                    type: string
+                    maxLength: 256
+                    description: User real name
+                  user_email:
+                    type: string
+                    maxLength: 254
+                    description: User email address
+                  user_id:
+                    type: string
+                    description: User ID
+                required:
+                - real_name
+                - user_email
+                - user_id
+              ticket_id:
+                type: string
+                description: Ticket ID
+              title:
+                type: string
+                minLength: 1
+                maxLength: 255
+                description: Short description
+              update_time:
+                type: string
+                maxLength: 36
+                description: Update timestamp, ISO 8601 format
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+              user_real_name:
+                type: string
+                maxLength: 256
+                description: User real name
+            required:
+            - create_time
+            - description
+            - followers
+            - service_name
+            - severity
+            - state
+            - submitter
+            - ticket_id
+            - title
+            - update_time
+            - user_email
+            - user_real_name
+      required:
+      - tickets
     ProjectTicketListResponse:
       type: object
       description: ProjectTicketListResponse
@@ -436,176 +606,6 @@ components:
           - user_real_name
       required:
       - ticket
-    OrganizationTicketListResponse:
-      type: object
-      description: OrganizationTicketListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        tickets:
-          type: array
-          description: List of tickets
-          items:
-            type: object
-            properties:
-              account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              create_time:
-                type: string
-                maxLength: 36
-                description: Created timestamp, ISO 8601 format
-              description:
-                type: string
-                minLength: 1
-                maxLength: 32000
-                description: Longer description
-              followers:
-                type: array
-                description: Ticket followers
-                items:
-                  type: object
-                  properties:
-                    real_name:
-                      type: string
-                      maxLength: 256
-                      description: User real name
-                    user_email:
-                      type: string
-                      maxLength: 254
-                      description: User email address
-                    user_id:
-                      type: string
-                      description: User ID
-                  required:
-                  - real_name
-                  - user_email
-                  - user_id
-              following:
-                type: boolean
-                description: Whether the current user is following this ticket
-              organization_id:
-                type: string
-                maxLength: 36
-                description: Organization ID
-              project_name:
-                type: string
-                maxLength: 63
-                description: Project name
-              service_name:
-                type: string
-                minLength: 1
-                maxLength: 64
-                description: Service name
-              severity:
-                type: string
-                description: Severity level
-                enum:
-                - critical
-                - high
-                - low
-              state:
-                type: string
-                description: Is ticket open or closed
-                enum:
-                - closed
-                - open
-              submitter:
-                type: object
-                description: User information
-                properties:
-                  real_name:
-                    type: string
-                    maxLength: 256
-                    description: User real name
-                  user_email:
-                    type: string
-                    maxLength: 254
-                    description: User email address
-                  user_id:
-                    type: string
-                    description: User ID
-                required:
-                - real_name
-                - user_email
-                - user_id
-              ticket_id:
-                type: string
-                description: Ticket ID
-              title:
-                type: string
-                minLength: 1
-                maxLength: 255
-                description: Short description
-              update_time:
-                type: string
-                maxLength: 36
-                description: Update timestamp, ISO 8601 format
-              user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-              user_real_name:
-                type: string
-                maxLength: 256
-                description: User real name
-            required:
-            - create_time
-            - description
-            - followers
-            - service_name
-            - severity
-            - state
-            - submitter
-            - ticket_id
-            - title
-            - update_time
-            - user_email
-            - user_real_name
-      required:
-      - tickets
-  parameters:
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
-    ticket_id:
-      in: path
-      name: ticket_id
-      description: Ticket ID
-      schema:
-        type: string
-      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

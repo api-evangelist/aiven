@@ -431,7 +431,294 @@ paths:
         oauth2:
         - billing:read
 components:
+  parameters:
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
+    payment_method_id:
+      in: path
+      name: payment_method_id
+      description: ID of the payment method
+      schema:
+        type: string
+      required: true
   schemas:
+    PaymentMethodCustomListResponse:
+      type: object
+      description: PaymentMethodCustomListResponse
+      properties:
+        custom_methods:
+          type: array
+          description: Custom Methods
+          items:
+            type: object
+            properties:
+              create_time:
+                type: string
+                maxLength: 36
+                description: Create Time
+              organization_id:
+                type: string
+                maxLength: 36
+                description: Organization's ID
+              payment_method_id:
+                type: string
+                maxLength: 36
+                description: Payment method ID
+              state:
+                type: string
+                description: Payment method state
+              type:
+                type: string
+                description: An enumeration.
+                title: PaymentMethodCustomType
+                enum:
+                - disabled
+                - no_payment_expected
+                - partner
+              update_time:
+                type: string
+                maxLength: 36
+                description: Update Time
+            required:
+            - create_time
+            - organization_id
+            - payment_method_id
+            - state
+            - type
+            - update_time
+      required:
+      - custom_methods
+    CreditCardDeleteResponse:
+      type: object
+      description: CreditCardDeleteResponse
+      properties:
+        brand:
+          type: string
+          description: Brand
+        create_time:
+          type: string
+          maxLength: 36
+          description: Create Time
+        exp_month:
+          type: integer
+          description: Exp Month
+        exp_year:
+          type: integer
+          description: Exp Year
+        last4:
+          type: string
+          description: Last4
+        name:
+          type: string
+          description: Name
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization's ID
+        payment_method_id:
+          type: string
+          maxLength: 36
+          description: Payment method ID
+        state:
+          type: string
+          description: Payment method state
+        update_time:
+          type: string
+          maxLength: 36
+          description: Update Time
+      required:
+      - brand
+      - create_time
+      - exp_month
+      - exp_year
+      - last4
+      - name
+      - organization_id
+      - payment_method_id
+      - state
+      - update_time
+    CreditCardCreateResponse:
+      type: object
+      description: CreditCardCreateResponse
+      properties:
+        brand:
+          type: string
+          description: Brand
+        create_time:
+          type: string
+          maxLength: 36
+          description: Create Time
+        exp_month:
+          type: integer
+          description: Exp Month
+        exp_year:
+          type: integer
+          description: Exp Year
+        last4:
+          type: string
+          description: Last4
+        name:
+          type: string
+          description: Name
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization's ID
+        payment_method_id:
+          type: string
+          maxLength: 36
+          description: Payment method ID
+        state:
+          type: string
+          description: Payment method state
+        update_time:
+          type: string
+          maxLength: 36
+          description: Update Time
+      required:
+      - brand
+      - create_time
+      - exp_month
+      - exp_year
+      - last4
+      - name
+      - organization_id
+      - payment_method_id
+      - state
+      - update_time
+    BankTransferGetResponse:
+      type: object
+      description: BankTransferGetResponse
+      properties:
+        create_time:
+          type: string
+          maxLength: 36
+          description: Create Time
+        currency:
+          type: string
+          description: Acceptable currencies for a billing group.
+          title: AcceptedCurrency
+          enum:
+          - AUD
+          - CAD
+          - CHF
+          - DKK
+          - EUR
+          - GBP
+          - JPY
+          - NOK
+          - NZD
+          - SEK
+          - SGD
+          - USD
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization's ID
+        payment_method_id:
+          type: string
+          maxLength: 36
+          description: Payment method ID
+        payment_terms_days:
+          type: integer
+          description: Payment Terms Days
+        state:
+          type: string
+          description: Payment method state
+        update_time:
+          type: string
+          maxLength: 36
+          description: Update Time
+      required:
+      - create_time
+      - currency
+      - organization_id
+      - payment_method_id
+      - payment_terms_days
+      - state
+      - update_time
+    PaymentMethodsListResponse:
+      type: object
+      description: PaymentMethodsListResponse
+      properties:
+        payment_methods:
+          type: array
+          description: Payment Methods
+          items:
+            type: object
+            properties:
+              payment_method_id:
+                type: string
+                maxLength: 36
+                description: Payment method ID
+              payment_method_type:
+                type: string
+                description: An enumeration.
+                title: Payment method type
+                enum:
+                - aws_subscription
+                - azure_subscription
+                - bank_transfer
+                - credit_card
+                - gcp_subscription
+                - custom
+            required:
+            - payment_method_id
+            - payment_method_type
+      required:
+      - payment_methods
+    PaymentMethodCustomGetResponse:
+      type: object
+      description: PaymentMethodCustomGetResponse
+      properties:
+        create_time:
+          type: string
+          maxLength: 36
+          description: Create Time
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization's ID
+        payment_method_id:
+          type: string
+          maxLength: 36
+          description: Payment method ID
+        state:
+          type: string
+          description: Payment method state
+        type:
+          type: string
+          description: An enumeration.
+          title: PaymentMethodCustomType
+          enum:
+          - disabled
+          - no_payment_expected
+          - partner
+        update_time:
+          type: string
+          maxLength: 36
+          description: Update Time
+      required:
+      - create_time
+      - organization_id
+      - payment_method_id
+      - state
+      - type
+      - update_time
+    CreditCardCreateRequestBody:
+      type: object
+      description: CreditCardCreateRequestBody
+      properties:
+        stripe_payment_method_id:
+          type: string
+          description: Stripe payment method ID
+      required:
+      - stripe_payment_method_id
     BankTransferListResponse:
       type: object
       description: BankTransferListResponse
@@ -491,44 +778,6 @@ components:
             - update_time
       required:
       - bank_transfers
-    PaymentMethodCustomGetResponse:
-      type: object
-      description: PaymentMethodCustomGetResponse
-      properties:
-        create_time:
-          type: string
-          maxLength: 36
-          description: Create Time
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization's ID
-        payment_method_id:
-          type: string
-          maxLength: 36
-          description: Payment method ID
-        state:
-          type: string
-          description: Payment method state
-        type:
-          type: string
-          description: An enumeration.
-          title: PaymentMethodCustomType
-          enum:
-          - disabled
-          - no_payment_expected
-          - partner
-        update_time:
-          type: string
-          maxLength: 36
-          description: Update Time
-      required:
-      - create_time
-      - organization_id
-      - payment_method_id
-      - state
-      - type
-      - update_time
     CreditCardListResponse:
       type: object
       description: CreditCardListResponse
@@ -586,191 +835,6 @@ components:
             - update_time
       required:
       - credit_cards
-    PaymentMethodCustomListResponse:
-      type: object
-      description: PaymentMethodCustomListResponse
-      properties:
-        custom_methods:
-          type: array
-          description: Custom Methods
-          items:
-            type: object
-            properties:
-              create_time:
-                type: string
-                maxLength: 36
-                description: Create Time
-              organization_id:
-                type: string
-                maxLength: 36
-                description: Organization's ID
-              payment_method_id:
-                type: string
-                maxLength: 36
-                description: Payment method ID
-              state:
-                type: string
-                description: Payment method state
-              type:
-                type: string
-                description: An enumeration.
-                title: PaymentMethodCustomType
-                enum:
-                - disabled
-                - no_payment_expected
-                - partner
-              update_time:
-                type: string
-                maxLength: 36
-                description: Update Time
-            required:
-            - create_time
-            - organization_id
-            - payment_method_id
-            - state
-            - type
-            - update_time
-      required:
-      - custom_methods
-    BankTransferGetResponse:
-      type: object
-      description: BankTransferGetResponse
-      properties:
-        create_time:
-          type: string
-          maxLength: 36
-          description: Create Time
-        currency:
-          type: string
-          description: Acceptable currencies for a billing group.
-          title: AcceptedCurrency
-          enum:
-          - AUD
-          - CAD
-          - CHF
-          - DKK
-          - EUR
-          - GBP
-          - JPY
-          - NOK
-          - NZD
-          - SEK
-          - SGD
-          - USD
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization's ID
-        payment_method_id:
-          type: string
-          maxLength: 36
-          description: Payment method ID
-        payment_terms_days:
-          type: integer
-          description: Payment Terms Days
-        state:
-          type: string
-          description: Payment method state
-        update_time:
-          type: string
-          maxLength: 36
-          description: Update Time
-      required:
-      - create_time
-      - currency
-      - organization_id
-      - payment_method_id
-      - payment_terms_days
-      - state
-      - update_time
-    CreditCardCreateResponse:
-      type: object
-      description: CreditCardCreateResponse
-      properties:
-        brand:
-          type: string
-          description: Brand
-        create_time:
-          type: string
-          maxLength: 36
-          description: Create Time
-        exp_month:
-          type: integer
-          description: Exp Month
-        exp_year:
-          type: integer
-          description: Exp Year
-        last4:
-          type: string
-          description: Last4
-        name:
-          type: string
-          description: Name
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization's ID
-        payment_method_id:
-          type: string
-          maxLength: 36
-          description: Payment method ID
-        state:
-          type: string
-          description: Payment method state
-        update_time:
-          type: string
-          maxLength: 36
-          description: Update Time
-      required:
-      - brand
-      - create_time
-      - exp_month
-      - exp_year
-      - last4
-      - name
-      - organization_id
-      - payment_method_id
-      - state
-      - update_time
-    PaymentMethodsListResponse:
-      type: object
-      description: PaymentMethodsListResponse
-      properties:
-        payment_methods:
-          type: array
-          description: Payment Methods
-          items:
-            type: object
-            properties:
-              payment_method_id:
-                type: string
-                maxLength: 36
-                description: Payment method ID
-              payment_method_type:
-                type: string
-                description: An enumeration.
-                title: Payment method type
-                enum:
-                - aws_subscription
-                - azure_subscription
-                - bank_transfer
-                - credit_card
-                - gcp_subscription
-                - custom
-            required:
-            - payment_method_id
-            - payment_method_type
-      required:
-      - payment_methods
-    CreditCardCreateRequestBody:
-      type: object
-      description: CreditCardCreateRequestBody
-      properties:
-        stripe_payment_method_id:
-          type: string
-          description: Stripe payment method ID
-      required:
-      - stripe_payment_method_id
     CreditCardGetResponse:
       type: object
       description: CreditCardGetResponse
@@ -820,70 +884,6 @@ components:
       - payment_method_id
       - state
       - update_time
-    CreditCardDeleteResponse:
-      type: object
-      description: CreditCardDeleteResponse
-      properties:
-        brand:
-          type: string
-          description: Brand
-        create_time:
-          type: string
-          maxLength: 36
-          description: Create Time
-        exp_month:
-          type: integer
-          description: Exp Month
-        exp_year:
-          type: integer
-          description: Exp Year
-        last4:
-          type: string
-          description: Last4
-        name:
-          type: string
-          description: Name
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization's ID
-        payment_method_id:
-          type: string
-          maxLength: 36
-          description: Payment method ID
-        state:
-          type: string
-          description: Payment method state
-        update_time:
-          type: string
-          maxLength: 36
-          description: Update Time
-      required:
-      - brand
-      - create_time
-      - exp_month
-      - exp_year
-      - last4
-      - name
-      - organization_id
-      - payment_method_id
-      - state
-      - update_time
-  parameters:
-    payment_method_id:
-      in: path
-      name: payment_method_id
-      description: ID of the payment method
-      schema:
-        type: string
-      required: true
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

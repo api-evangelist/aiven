@@ -209,335 +209,9 @@ paths:
         - static_ips:read
 components:
   schemas:
-    StaticIPCreateResponse:
-      type: object
-      description: StaticIPCreateResponse
-      properties:
-        cloud_name:
-          type: string
-          maxLength: 256
-          description: Target cloud
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        ip_address:
-          type: string
-          description: IPv4 address
-        message:
-          type: string
-          description: Printable result of the request
-        service_name:
-          type: string
-          minLength: 1
-          maxLength: 64
-          description: Service name
-        state:
-          type: string
-          description: Static IP address state
-          enum:
-          - creating
-          - created
-          - available
-          - assigned
-          - deleting
-          - deleted
-        static_ip_address_id:
-          type: string
-          description: Static IP address identifier
-        termination_protection:
-          type: boolean
-          description: Static IP address is protected against deletion
-      required:
-      - cloud_name
-      - ip_address
-      - service_name
-      - state
-      - static_ip_address_id
-      - termination_protection
     ProjectStaticIPPatchResponse:
       type: object
       description: ProjectStaticIPPatchResponse
-      properties:
-        cloud_name:
-          type: string
-          maxLength: 256
-          description: Target cloud
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        ip_address:
-          type: string
-          description: IPv4 address
-        message:
-          type: string
-          description: Printable result of the request
-        service_name:
-          type: string
-          minLength: 1
-          maxLength: 64
-          description: Service name
-        state:
-          type: string
-          description: Static IP address state
-          enum:
-          - creating
-          - created
-          - available
-          - assigned
-          - deleting
-          - deleted
-        static_ip_address_id:
-          type: string
-          description: Static IP address identifier
-        termination_protection:
-          type: boolean
-          description: Static IP address is protected against deletion
-      required:
-      - cloud_name
-      - ip_address
-      - service_name
-      - state
-      - static_ip_address_id
-      - termination_protection
-    StaticIPDeleteResponse:
-      type: object
-      description: StaticIPDeleteResponse
-      properties:
-        cloud_name:
-          type: string
-          maxLength: 256
-          description: Target cloud
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        ip_address:
-          type: string
-          description: IPv4 address
-        message:
-          type: string
-          description: Printable result of the request
-        service_name:
-          type: string
-          minLength: 1
-          maxLength: 64
-          description: Service name
-        state:
-          type: string
-          description: Static IP address state
-          enum:
-          - creating
-          - created
-          - available
-          - assigned
-          - deleting
-          - deleted
-        static_ip_address_id:
-          type: string
-          description: Static IP address identifier
-        termination_protection:
-          type: boolean
-          description: Static IP address is protected against deletion
-      required:
-      - cloud_name
-      - ip_address
-      - service_name
-      - state
-      - static_ip_address_id
-      - termination_protection
-    ProjectStaticIPPatchRequestBody:
-      type: object
-      description: ProjectStaticIPPatchRequestBody
-      properties:
-        termination_protection:
-          type: boolean
-          description: Static IP address is protected against deletion
-    ProjectStaticIPAssociateRequestBody:
-      type: object
-      description: ProjectStaticIPAssociateRequestBody
-      properties:
-        service_name:
-          type: string
-          minLength: 1
-          maxLength: 64
-          description: Service name
-      required:
-      - service_name
-    ProjectStaticIPDissociateResponse:
-      type: object
-      description: ProjectStaticIPDissociateResponse
-      properties:
-        cloud_name:
-          type: string
-          maxLength: 256
-          description: Target cloud
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        ip_address:
-          type: string
-          description: IPv4 address
-        message:
-          type: string
-          description: Printable result of the request
-        service_name:
-          type: string
-          minLength: 1
-          maxLength: 64
-          description: Service name
-        state:
-          type: string
-          description: Static IP address state
-          enum:
-          - creating
-          - created
-          - available
-          - assigned
-          - deleting
-          - deleted
-        static_ip_address_id:
-          type: string
-          description: Static IP address identifier
-        termination_protection:
-          type: boolean
-          description: Static IP address is protected against deletion
-      required:
-      - cloud_name
-      - ip_address
-      - service_name
-      - state
-      - static_ip_address_id
-      - termination_protection
-    StaticIPListResponse:
-      type: object
-      description: StaticIPListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        static_ips:
-          type: array
-          description: Paginated array
-          items:
-            type: object
-            properties:
-              cloud_name:
-                type: string
-                maxLength: 256
-                description: Target cloud
-              ip_address:
-                type: string
-                description: IPv4 address
-              service_name:
-                type: string
-                minLength: 1
-                maxLength: 64
-                description: Service name
-              state:
-                type: string
-                description: Static IP address state
-                enum:
-                - creating
-                - created
-                - available
-                - assigned
-                - deleting
-                - deleted
-              static_ip_address_id:
-                type: string
-                description: Static IP address identifier
-              termination_protection:
-                type: boolean
-                description: Static IP address is protected against deletion
-            required:
-            - cloud_name
-            - ip_address
-            - service_name
-            - state
-            - static_ip_address_id
-            - termination_protection
-      required:
-      - static_ips
-    ProjectStaticIPAssociateResponse:
-      type: object
-      description: ProjectStaticIPAssociateResponse
       properties:
         cloud_name:
           type: string
@@ -638,6 +312,186 @@ components:
             - price_usd
       required:
       - static_ip_address_availability
+    StaticIPDeleteResponse:
+      type: object
+      description: StaticIPDeleteResponse
+      properties:
+        cloud_name:
+          type: string
+          maxLength: 256
+          description: Target cloud
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        ip_address:
+          type: string
+          description: IPv4 address
+        message:
+          type: string
+          description: Printable result of the request
+        service_name:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Service name
+        state:
+          type: string
+          description: Static IP address state
+          enum:
+          - creating
+          - created
+          - available
+          - assigned
+          - deleting
+          - deleted
+        static_ip_address_id:
+          type: string
+          description: Static IP address identifier
+        termination_protection:
+          type: boolean
+          description: Static IP address is protected against deletion
+      required:
+      - cloud_name
+      - ip_address
+      - service_name
+      - state
+      - static_ip_address_id
+      - termination_protection
+    ProjectStaticIPDissociateResponse:
+      type: object
+      description: ProjectStaticIPDissociateResponse
+      properties:
+        cloud_name:
+          type: string
+          maxLength: 256
+          description: Target cloud
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        ip_address:
+          type: string
+          description: IPv4 address
+        message:
+          type: string
+          description: Printable result of the request
+        service_name:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Service name
+        state:
+          type: string
+          description: Static IP address state
+          enum:
+          - creating
+          - created
+          - available
+          - assigned
+          - deleting
+          - deleted
+        static_ip_address_id:
+          type: string
+          description: Static IP address identifier
+        termination_protection:
+          type: boolean
+          description: Static IP address is protected against deletion
+      required:
+      - cloud_name
+      - ip_address
+      - service_name
+      - state
+      - static_ip_address_id
+      - termination_protection
+    ProjectStaticIPAssociateResponse:
+      type: object
+      description: ProjectStaticIPAssociateResponse
+      properties:
+        cloud_name:
+          type: string
+          maxLength: 256
+          description: Target cloud
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        ip_address:
+          type: string
+          description: IPv4 address
+        message:
+          type: string
+          description: Printable result of the request
+        service_name:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Service name
+        state:
+          type: string
+          description: Static IP address state
+          enum:
+          - creating
+          - created
+          - available
+          - assigned
+          - deleting
+          - deleted
+        static_ip_address_id:
+          type: string
+          description: Static IP address identifier
+        termination_protection:
+          type: boolean
+          description: Static IP address is protected against deletion
+      required:
+      - cloud_name
+      - ip_address
+      - service_name
+      - state
+      - static_ip_address_id
+      - termination_protection
     StaticIPCreateRequestBody:
       type: object
       description: StaticIPCreateRequestBody
@@ -651,18 +505,164 @@ components:
           description: Static IP address is protected against deletion
       required:
       - cloud_name
+    StaticIPCreateResponse:
+      type: object
+      description: StaticIPCreateResponse
+      properties:
+        cloud_name:
+          type: string
+          maxLength: 256
+          description: Target cloud
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        ip_address:
+          type: string
+          description: IPv4 address
+        message:
+          type: string
+          description: Printable result of the request
+        service_name:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Service name
+        state:
+          type: string
+          description: Static IP address state
+          enum:
+          - creating
+          - created
+          - available
+          - assigned
+          - deleting
+          - deleted
+        static_ip_address_id:
+          type: string
+          description: Static IP address identifier
+        termination_protection:
+          type: boolean
+          description: Static IP address is protected against deletion
+      required:
+      - cloud_name
+      - ip_address
+      - service_name
+      - state
+      - static_ip_address_id
+      - termination_protection
+    ProjectStaticIPAssociateRequestBody:
+      type: object
+      description: ProjectStaticIPAssociateRequestBody
+      properties:
+        service_name:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Service name
+      required:
+      - service_name
+    ProjectStaticIPPatchRequestBody:
+      type: object
+      description: ProjectStaticIPPatchRequestBody
+      properties:
+        termination_protection:
+          type: boolean
+          description: Static IP address is protected against deletion
+    StaticIPListResponse:
+      type: object
+      description: StaticIPListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        static_ips:
+          type: array
+          description: Paginated array
+          items:
+            type: object
+            properties:
+              cloud_name:
+                type: string
+                maxLength: 256
+                description: Target cloud
+              ip_address:
+                type: string
+                description: IPv4 address
+              service_name:
+                type: string
+                minLength: 1
+                maxLength: 64
+                description: Service name
+              state:
+                type: string
+                description: Static IP address state
+                enum:
+                - creating
+                - created
+                - available
+                - assigned
+                - deleting
+                - deleted
+              static_ip_address_id:
+                type: string
+                description: Static IP address identifier
+              termination_protection:
+                type: boolean
+                description: Static IP address is protected against deletion
+            required:
+            - cloud_name
+            - ip_address
+            - service_name
+            - state
+            - static_ip_address_id
+            - termination_protection
+      required:
+      - static_ips
   parameters:
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
     static_ip_address_id:
       in: path
       name: static_ip_address_id
       description: Static IP address identifier
+      schema:
+        type: string
+      required: true
+    project:
+      in: path
+      name: project
+      description: Project name
       schema:
         type: string
       required: true

@@ -112,74 +112,6 @@ paths:
         - billing:read
 components:
   schemas:
-    ProjectCreditsListResponse:
-      type: object
-      description: ProjectCreditsListResponse
-      properties:
-        credits:
-          type: array
-          description: List of credits assigned to a project
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                maxLength: 1024
-                description: Credit code
-              expire_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              remaining_value:
-                type: string
-                description: Remaining credit value
-              start_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              type:
-                type: string
-                description: Credit type
-                enum:
-                - discount
-                - employee
-                - evaluation
-                - internal
-                - other
-                - outage
-                - partner
-                - promotion
-                - purchase
-                - referral
-                - sponsorship
-                - trial
-                - trial_over
-              value:
-                type: string
-                description: Original credit value, or for expired credits, the consumed credit value
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - credits
     ProjectInvoiceListResponse:
       type: object
       description: ProjectInvoiceListResponse
@@ -304,6 +236,74 @@ components:
           description: Printable result of the request
       required:
       - invoices
+    ProjectCreditsListResponse:
+      type: object
+      description: ProjectCreditsListResponse
+      properties:
+        credits:
+          type: array
+          description: List of credits assigned to a project
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                maxLength: 1024
+                description: Credit code
+              expire_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              remaining_value:
+                type: string
+                description: Remaining credit value
+              start_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              type:
+                type: string
+                description: Credit type
+                enum:
+                - discount
+                - employee
+                - evaluation
+                - internal
+                - other
+                - outage
+                - partner
+                - promotion
+                - purchase
+                - referral
+                - sponsorship
+                - trial
+                - trial_over
+              value:
+                type: string
+                description: Original credit value, or for expired credits, the consumed credit value
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - credits
     ProjectCreditsClaimResponse:
       type: object
       description: ProjectCreditsClaimResponse
@@ -371,10 +371,10 @@ components:
       required:
       - credit
   parameters:
-    project:
+    download_cookie:
       in: path
-      name: project
-      description: Project name
+      name: download_cookie
+      description: Authentication cookie for file download
       schema:
         type: string
       required: true
@@ -385,10 +385,10 @@ components:
       schema:
         type: string
       required: true
-    download_cookie:
+    project:
       in: path
-      name: download_cookie
-      description: Authentication cookie for file download
+      name: project
+      description: Project name
       schema:
         type: string
       required: true

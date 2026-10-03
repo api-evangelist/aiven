@@ -100,6 +100,31 @@ paths:
         - payments:read
 components:
   schemas:
+    UserCreditCardDeleteResponse:
+      type: object
+      description: UserCreditCardDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
     UserCreditCardUpdateResponse:
       type: object
       description: UserCreditCardUpdateResponse
@@ -348,31 +373,6 @@ components:
           description: Printable result of the request
       required:
       - cards
-    UserCreditCardDeleteResponse:
-      type: object
-      description: UserCreditCardDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
   parameters:
     card_id:
       in: path

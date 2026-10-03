@@ -265,46 +265,6 @@ paths:
                           description: 'query_validation_failed: Query validation failed'
 components:
   schemas:
-    MySQLServiceQueryValidateResponse:
-      type: object
-      description: MySQLServiceQueryValidateResponse
-      properties:
-        status:
-          type: string
-          description: Status
-      required:
-      - status
-    MySQLServiceDatabaseMetadataQueryResponse:
-      type: object
-      description: MySQLServiceDatabaseMetadataQueryResponse
-      properties:
-        metadata_query:
-          type: string
-          description: Database metadata retrieval query
-      required:
-      - metadata_query
-    MySQLServiceQueryValidateRequestBody:
-      type: object
-      description: MySQLServiceQueryValidateRequestBody
-      properties:
-        do_not_store:
-          type: boolean
-          description: Do not store details
-          default: false
-        query:
-          type: string
-          description: Query
-      required:
-      - query
-    MySQLServiceMetadataValidateResponse:
-      type: object
-      description: MySQLServiceMetadataValidateResponse
-      properties:
-        status:
-          type: string
-          description: Status
-      required:
-      - status
     MySQLServiceQueryStatisticsRequestBody:
       type: object
       description: MySQLServiceQueryStatisticsRequestBody
@@ -326,134 +286,15 @@ components:
           description: 'Sort order can be either asc or desc and multiple comma separated columns with their own order can be specified: :asc,:desc. Accepted sort columns are: avg_timer_wait, count_star, digest, digest_text, first_seen, last_seen, max_timer_wait, min_timer_wait, query_sample_seen, query_sample_text, query_sample_timer_wait, quantile_95, quantile_99, quantile_999, schema_name, sum_created_tmp_disk_tables, sum_created_tmp_tables, sum_errors, sum_lock_time, sum_no_good_index_used, sum_no_index_used, sum_rows_affected, sum_rows_examined, sum_rows_sent, sum_select_full_join, sum_select_full_range_join, sum_select_range, sum_select_range_check, sum_select_scan, sum_sort_merge_passes, sum_sort_range, sum_sort_rows, sum_sort_scan, sum_timer_wait, sum_warnings'
           title: Order in which to sort retrieved results
           default: count_star:desc
-    MySQLAccountQueryOptimizeResponse:
+    MySQLServiceQueryValidateResponse:
       type: object
-      description: MySQLAccountQueryOptimizeResponse
+      description: MySQLServiceQueryValidateResponse
       properties:
-        optimize:
-          type: object
-          description: Optimize
-          properties:
-            existing_recommended_indexes:
-              type: array
-              description: Existing Recommended Indexes
-              items:
-                type: object
-                properties:
-                  index_definition:
-                    type: string
-                    description: Index definition
-                required:
-                - index_definition
-            index_recommendations:
-              type: array
-              description: Index Recommendations
-              items:
-                type: object
-                properties:
-                  creation_cmd:
-                    type: string
-                    description: Creation command
-                  table_name:
-                    type: string
-                    description: Table name
-                required:
-                - creation_cmd
-                - table_name
-            optimization_id:
-              type: string
-              description: Optimization ID
-            optimized_query:
-              type: string
-              description: Optimized query in base64 format
-            original_query:
-              type: string
-              description: Original query in base64 format
-            recommendations:
-              type: array
-              description: Recommendations
-              items:
-                type: object
-                properties:
-                  bad_practice_sample:
-                    type: string
-                    description: Bad practice sample
-                  best_practice_sample:
-                    type: string
-                    description: Best practice sample
-                  description:
-                    type: string
-                    description: Description
-                  fixable:
-                    type: boolean
-                    description: Fixable
-                  line_number:
-                    type: integer
-                    description: Line number
-                  priority:
-                    type: integer
-                    description: Priority
-                  title:
-                    type: string
-                    description: Title
-                  type:
-                    type: integer
-                    description: Type
-                required:
-                - bad_practice_sample
-                - best_practice_sample
-                - description
-                - fixable
-                - line_number
-                - priority
-                - title
-                - type
-          required:
-          - existing_recommended_indexes
-          - index_recommendations
-          - optimized_query
-          - original_query
-          - recommendations
+        status:
+          type: string
+          description: Status
       required:
-      - optimize
-    MySQLAccountQueryOptimizeRequestBody:
-      type: object
-      description: MySQLAccountQueryOptimizeRequestBody
-      properties:
-        do_not_store:
-          type: boolean
-          description: Do not store details
-          default: false
-        flags:
-          type: array
-          description: Optimization flags
-          items:
-            type: string
-        mysql_version:
-          type: string
-          description: An enumeration.
-          title: MySQL version
-          enum:
-          - '5.0'
-          - '5.1'
-          - '5.5'
-          - '5.6'
-          - '5.7'
-          - '8.0'
-          - '8.1'
-          - '8.2'
-          - '8.3'
-          - '8.4'
-        query:
-          type: string
-          description: Query
-        schema_metadata:
-          type: string
-          description: Schema metadata
-      required:
-      - flags
-      - mysql_version
-      - query
+      - status
     MySQLServiceMetadataValidateRequestBody:
       type: object
       description: MySQLServiceMetadataValidateRequestBody
@@ -467,6 +308,28 @@ components:
       required:
       - db_version
       - metadata
+    MySQLServiceMetadataValidateResponse:
+      type: object
+      description: MySQLServiceMetadataValidateResponse
+      properties:
+        status:
+          type: string
+          description: Status
+      required:
+      - status
+    MySQLServiceQueryValidateRequestBody:
+      type: object
+      description: MySQLServiceQueryValidateRequestBody
+      properties:
+        do_not_store:
+          type: boolean
+          description: Do not store details
+          default: false
+        query:
+          type: string
+          description: Query
+      required:
+      - query
     MySQLServiceQueryStatisticsResponse:
       type: object
       description: MySQLServiceQueryStatisticsResponse
@@ -605,7 +468,151 @@ components:
                 description: Query statistic
       required:
       - queries
+    MySQLAccountQueryOptimizeResponse:
+      type: object
+      description: MySQLAccountQueryOptimizeResponse
+      properties:
+        optimize:
+          type: object
+          description: Optimize
+          properties:
+            existing_recommended_indexes:
+              type: array
+              description: Existing Recommended Indexes
+              items:
+                type: object
+                properties:
+                  index_definition:
+                    type: string
+                    description: Index definition
+                required:
+                - index_definition
+            index_recommendations:
+              type: array
+              description: Index Recommendations
+              items:
+                type: object
+                properties:
+                  creation_cmd:
+                    type: string
+                    description: Creation command
+                  table_name:
+                    type: string
+                    description: Table name
+                required:
+                - creation_cmd
+                - table_name
+            optimization_id:
+              type: string
+              description: Optimization ID
+            optimized_query:
+              type: string
+              description: Optimized query in base64 format
+            original_query:
+              type: string
+              description: Original query in base64 format
+            recommendations:
+              type: array
+              description: Recommendations
+              items:
+                type: object
+                properties:
+                  bad_practice_sample:
+                    type: string
+                    description: Bad practice sample
+                  best_practice_sample:
+                    type: string
+                    description: Best practice sample
+                  description:
+                    type: string
+                    description: Description
+                  fixable:
+                    type: boolean
+                    description: Fixable
+                  line_number:
+                    type: integer
+                    description: Line number
+                  priority:
+                    type: integer
+                    description: Priority
+                  title:
+                    type: string
+                    description: Title
+                  type:
+                    type: integer
+                    description: Type
+                required:
+                - bad_practice_sample
+                - best_practice_sample
+                - description
+                - fixable
+                - line_number
+                - priority
+                - title
+                - type
+          required:
+          - existing_recommended_indexes
+          - index_recommendations
+          - optimized_query
+          - original_query
+          - recommendations
+      required:
+      - optimize
+    MySQLAccountQueryOptimizeRequestBody:
+      type: object
+      description: MySQLAccountQueryOptimizeRequestBody
+      properties:
+        do_not_store:
+          type: boolean
+          description: Do not store details
+          default: false
+        flags:
+          type: array
+          description: Optimization flags
+          items:
+            type: string
+        mysql_version:
+          type: string
+          description: An enumeration.
+          title: MySQL version
+          enum:
+          - '5.0'
+          - '5.1'
+          - '5.5'
+          - '5.6'
+          - '5.7'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+          - '8.3'
+          - '8.4'
+        query:
+          type: string
+          description: Query
+        schema_metadata:
+          type: string
+          description: Schema metadata
+      required:
+      - flags
+      - mysql_version
+      - query
+    MySQLServiceDatabaseMetadataQueryResponse:
+      type: object
+      description: MySQLServiceDatabaseMetadataQueryResponse
+      properties:
+        metadata_query:
+          type: string
+          description: Database metadata retrieval query
+      required:
+      - metadata_query
   parameters:
+    service_name:
+      in: path
+      name: service_name
+      description: Service name
+      schema:
+        type: string
+      required: true
     account_id:
       in: path
       name: account_id
@@ -617,13 +624,6 @@ components:
       in: path
       name: project
       description: Project name
-      schema:
-        type: string
-      required: true
-    service_name:
-      in: path
-      name: service_name
-      description: Service name
       schema:
         type: string
       required: true

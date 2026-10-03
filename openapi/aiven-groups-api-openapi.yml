@@ -260,53 +260,22 @@ paths:
         oauth2:
         - accounts:write
 components:
+  parameters:
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
+    user_group_id:
+      in: path
+      name: user_group_id
+      description: ID of the user group
+      schema:
+        type: string
+      required: true
   schemas:
-    UserGroupUpdateResponse:
-      type: object
-      description: UserGroupUpdateResponse
-      properties:
-        create_time:
-          type: string
-          maxLength: 36
-          description: User group creation time
-        description:
-          type: string
-          maxLength: 4096
-          description: Description
-        managed_by_scim:
-          type: boolean
-          description: Managed By Scim
-        update_time:
-          type: string
-          maxLength: 36
-          description: User group last update time
-        user_group_id:
-          type: string
-          maxLength: 36
-          description: User Group ID
-        user_group_name:
-          type: string
-          maxLength: 128
-          description: User Group Name
-      required:
-      - create_time
-      - description
-      - managed_by_scim
-      - update_time
-      - user_group_id
-      - user_group_name
-    UserGroupUpdateRequestBody:
-      type: object
-      description: UserGroupUpdateRequestBody
-      properties:
-        description:
-          type: string
-          maxLength: 4096
-          description: Description
-        user_group_name:
-          type: string
-          maxLength: 128
-          description: User Group Name
     UserGroupsListResponse:
       type: object
       description: UserGroupsListResponse
@@ -353,6 +322,108 @@ components:
             - user_group_name
       required:
       - user_groups
+    UserGroupUpdateResponse:
+      type: object
+      description: UserGroupUpdateResponse
+      properties:
+        create_time:
+          type: string
+          maxLength: 36
+          description: User group creation time
+        description:
+          type: string
+          maxLength: 4096
+          description: Description
+        managed_by_scim:
+          type: boolean
+          description: Managed By Scim
+        update_time:
+          type: string
+          maxLength: 36
+          description: User group last update time
+        user_group_id:
+          type: string
+          maxLength: 36
+          description: User Group ID
+        user_group_name:
+          type: string
+          maxLength: 128
+          description: User Group Name
+      required:
+      - create_time
+      - description
+      - managed_by_scim
+      - update_time
+      - user_group_id
+      - user_group_name
+    UserGroupCreateResponse:
+      type: object
+      description: UserGroupCreateResponse
+      properties:
+        create_time:
+          type: string
+          maxLength: 36
+          description: User group creation time
+        description:
+          type: string
+          maxLength: 4096
+          description: Description
+        managed_by_scim:
+          type: boolean
+          description: Managed By Scim
+        update_time:
+          type: string
+          maxLength: 36
+          description: User group last update time
+        user_group_id:
+          type: string
+          maxLength: 36
+          description: User Group ID
+        user_group_name:
+          type: string
+          maxLength: 128
+          description: User Group Name
+      required:
+      - create_time
+      - description
+      - managed_by_scim
+      - update_time
+      - user_group_id
+      - user_group_name
+    UserGroupGetResponse:
+      type: object
+      description: UserGroupGetResponse
+      properties:
+        create_time:
+          type: string
+          maxLength: 36
+          description: User group creation time
+        description:
+          type: string
+          maxLength: 4096
+          description: Description
+        managed_by_scim:
+          type: boolean
+          description: Managed By Scim
+        update_time:
+          type: string
+          maxLength: 36
+          description: User group last update time
+        user_group_id:
+          type: string
+          maxLength: 36
+          description: User Group ID
+        user_group_name:
+          type: string
+          maxLength: 128
+          description: User Group Name
+      required:
+      - create_time
+      - description
+      - managed_by_scim
+      - update_time
+      - user_group_id
+      - user_group_name
     UserGroupMemberListResponse:
       type: object
       description: UserGroupMemberListResponse
@@ -424,6 +495,33 @@ components:
             - user_info
       required:
       - members
+    UserGroupCreateRequestBody:
+      type: object
+      description: UserGroupCreateRequestBody
+      properties:
+        description:
+          type: string
+          maxLength: 4096
+          description: Description
+        user_group_name:
+          type: string
+          maxLength: 128
+          description: User Group Name
+      required:
+      - description
+      - user_group_name
+    UserGroupUpdateRequestBody:
+      type: object
+      description: UserGroupUpdateRequestBody
+      properties:
+        description:
+          type: string
+          maxLength: 4096
+          description: Description
+        user_group_name:
+          type: string
+          maxLength: 128
+          description: User Group Name
     UserGroupMembersUpdateRequestBody:
       type: object
       description: UserGroupMembersUpdateRequestBody
@@ -444,104 +542,6 @@ components:
       required:
       - member_ids
       - operation
-    UserGroupCreateResponse:
-      type: object
-      description: UserGroupCreateResponse
-      properties:
-        create_time:
-          type: string
-          maxLength: 36
-          description: User group creation time
-        description:
-          type: string
-          maxLength: 4096
-          description: Description
-        managed_by_scim:
-          type: boolean
-          description: Managed By Scim
-        update_time:
-          type: string
-          maxLength: 36
-          description: User group last update time
-        user_group_id:
-          type: string
-          maxLength: 36
-          description: User Group ID
-        user_group_name:
-          type: string
-          maxLength: 128
-          description: User Group Name
-      required:
-      - create_time
-      - description
-      - managed_by_scim
-      - update_time
-      - user_group_id
-      - user_group_name
-    UserGroupGetResponse:
-      type: object
-      description: UserGroupGetResponse
-      properties:
-        create_time:
-          type: string
-          maxLength: 36
-          description: User group creation time
-        description:
-          type: string
-          maxLength: 4096
-          description: Description
-        managed_by_scim:
-          type: boolean
-          description: Managed By Scim
-        update_time:
-          type: string
-          maxLength: 36
-          description: User group last update time
-        user_group_id:
-          type: string
-          maxLength: 36
-          description: User Group ID
-        user_group_name:
-          type: string
-          maxLength: 128
-          description: User Group Name
-      required:
-      - create_time
-      - description
-      - managed_by_scim
-      - update_time
-      - user_group_id
-      - user_group_name
-    UserGroupCreateRequestBody:
-      type: object
-      description: UserGroupCreateRequestBody
-      properties:
-        description:
-          type: string
-          maxLength: 4096
-          description: Description
-        user_group_name:
-          type: string
-          maxLength: 128
-          description: User Group Name
-      required:
-      - description
-      - user_group_name
-  parameters:
-    user_group_id:
-      in: path
-      name: user_group_id
-      description: ID of the user group
-      schema:
-        type: string
-      required: true
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

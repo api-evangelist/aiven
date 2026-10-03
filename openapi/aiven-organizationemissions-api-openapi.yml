@@ -82,10 +82,27 @@ paths:
         - accounts:read
 components:
   parameters:
-    organizationemissionsget_project_id:
+    organizationemissionsget_granularity:
       in: query
-      name: project_id
-      description: Filter by project name (repeatable)
+      name: granularity
+      description: 'Time bucket granularity, default: month'
+      schema:
+        type: string
+        enum:
+        - day
+        - month
+      required: false
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
+    organizationemissionsget_billing_group_id:
+      in: query
+      name: billing_group_id
+      description: Filter to specific billing groups (repeatable)
       schema:
         type: array
       required: false
@@ -96,13 +113,13 @@ components:
       schema:
         type: string
       required: false
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
+    organizationemissionsget_starting_time:
+      in: query
+      name: starting_time
+      description: 'Start of time range (ISO 8601, default: start of last month)'
       schema:
         type: string
-      required: true
+      required: false
     organizationemissionsget_group_by:
       in: query
       name: group_by
@@ -114,29 +131,12 @@ components:
         - project
         - billing_group
       required: false
-    organizationemissionsget_granularity:
+    organizationemissionsget_project_id:
       in: query
-      name: granularity
-      description: 'Time bucket granularity, default: month'
-      schema:
-        type: string
-        enum:
-        - day
-        - month
-      required: false
-    organizationemissionsget_billing_group_id:
-      in: query
-      name: billing_group_id
-      description: Filter to specific billing groups (repeatable)
+      name: project_id
+      description: Filter by project name (repeatable)
       schema:
         type: array
-      required: false
-    organizationemissionsget_starting_time:
-      in: query
-      name: starting_time
-      description: 'Start of time range (ISO 8601, default: start of last month)'
-      schema:
-        type: string
       required: false
   schemas:
     OrganizationEmissionsGetResponse:

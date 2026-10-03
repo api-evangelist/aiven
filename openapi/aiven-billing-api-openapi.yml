@@ -445,47 +445,40 @@ paths:
         - accounts:write
         - billing:write
 components:
-  parameters:
-    address_id:
-      in: path
-      name: address_id
-      description: Address id
-      schema:
-        type: string
-      required: true
-    credit_memo_id:
-      in: path
-      name: credit_memo_id
-      description: Credit Memo ID
-      schema:
-        type: string
-      required: true
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
-    invoice_number:
-      in: path
-      name: invoice_number
-      description: Invoice number
-      schema:
-        type: string
-      required: true
-    download_cookie:
-      in: path
-      name: download_cookie
-      description: Authentication cookie for file download
-      schema:
-        type: string
-      required: true
   schemas:
-    OrganizationAddressCreateRequestBody:
+    OrganizationAddressDeleteResponse:
       type: object
-      description: OrganizationAddressCreateRequestBody
+      description: OrganizationAddressDeleteResponse
       properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    OrganizationAddressGetResponse:
+      type: object
+      description: OrganizationAddressGetResponse
+      properties:
+        address_id:
+          type: string
+          maxLength: 36
+          description: Address ID
         address_lines:
           type: array
           minItems: 1
@@ -501,56 +494,38 @@ components:
           type: string
           maxLength: 2
           description: Country Code
+        create_time:
+          type: string
+          maxLength: 36
+          description: Create Time
         name:
           type: string
-          minLength: 1
+          minLength: 0
           maxLength: 83
           description: Name
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization ID
         state:
           type: string
           maxLength: 30
           description: State
+        update_time:
+          type: string
+          maxLength: 36
+          description: Update Time
         zip_code:
           type: string
           maxLength: 36
           description: Zip Code
       required:
-      - address_lines
-      - city
+      - address_id
       - country_code
+      - create_time
       - name
-    OrganizationAddressUpdateRequestBody:
-      type: object
-      description: OrganizationAddressUpdateRequestBody
-      properties:
-        address_lines:
-          type: array
-          minItems: 1
-          maxItems: 3
-          description: Address lines
-          items:
-            type: string
-        city:
-          type: string
-          maxLength: 50
-          description: City
-        country_code:
-          type: string
-          maxLength: 2
-          description: Country Code
-        name:
-          type: string
-          minLength: 1
-          maxLength: 83
-          description: Name
-        state:
-          type: string
-          maxLength: 30
-          description: State
-        zip_code:
-          type: string
-          maxLength: 36
-          description: Zip Code
+      - organization_id
+      - update_time
     OrganizationAddressListResponse:
       type: object
       description: OrganizationAddressListResponse
@@ -614,14 +589,10 @@ components:
             - update_time
       required:
       - addresses
-    OrganizationAddressCreateResponse:
+    OrganizationAddressCreateRequestBody:
       type: object
-      description: OrganizationAddressCreateResponse
+      description: OrganizationAddressCreateRequestBody
       properties:
-        address_id:
-          type: string
-          maxLength: 36
-          description: Address ID
         address_lines:
           type: array
           minItems: 1
@@ -637,66 +608,27 @@ components:
           type: string
           maxLength: 2
           description: Country Code
-        create_time:
-          type: string
-          maxLength: 36
-          description: Create Time
         name:
           type: string
-          minLength: 0
+          minLength: 1
           maxLength: 83
           description: Name
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization ID
         state:
           type: string
           maxLength: 30
           description: State
-        update_time:
-          type: string
-          maxLength: 36
-          description: Update Time
         zip_code:
           type: string
           maxLength: 36
           description: Zip Code
       required:
-      - address_id
+      - address_lines
+      - city
       - country_code
-      - create_time
       - name
-      - organization_id
-      - update_time
-    OrganizationAddressDeleteResponse:
+    OrganizationAddressCreateResponse:
       type: object
-      description: OrganizationAddressDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    OrganizationAddressGetResponse:
-      type: object
-      description: OrganizationAddressGetResponse
+      description: OrganizationAddressCreateResponse
       properties:
         address_id:
           type: string
@@ -804,6 +736,38 @@ components:
       - name
       - organization_id
       - update_time
+    OrganizationAddressUpdateRequestBody:
+      type: object
+      description: OrganizationAddressUpdateRequestBody
+      properties:
+        address_lines:
+          type: array
+          minItems: 1
+          maxItems: 3
+          description: Address lines
+          items:
+            type: string
+        city:
+          type: string
+          maxLength: 50
+          description: City
+        country_code:
+          type: string
+          maxLength: 2
+          description: Country Code
+        name:
+          type: string
+          minLength: 1
+          maxLength: 83
+          description: Name
+        state:
+          type: string
+          maxLength: 30
+          description: State
+        zip_code:
+          type: string
+          maxLength: 36
+          description: Zip Code
     InvoiceGetResponse:
       type: object
       description: InvoiceGetResponse
@@ -882,6 +846,42 @@ components:
           - total_vat_zero
       required:
       - invoice
+  parameters:
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
+    address_id:
+      in: path
+      name: address_id
+      description: Address id
+      schema:
+        type: string
+      required: true
+    download_cookie:
+      in: path
+      name: download_cookie
+      description: Authentication cookie for file download
+      schema:
+        type: string
+      required: true
+    invoice_number:
+      in: path
+      name: invoice_number
+      description: Invoice number
+      schema:
+        type: string
+      required: true
+    credit_memo_id:
+      in: path
+      name: credit_memo_id
+      description: Credit Memo ID
+      schema:
+        type: string
+      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

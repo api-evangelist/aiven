@@ -556,207 +556,85 @@ paths:
         - accounts:write
 components:
   schemas:
-    CustomCloudEnvironmentUpdateResponse:
+    CustomCloudEnvironmentUpdateRequestBody:
       type: object
-      description: CustomCloudEnvironmentUpdateResponse
+      description: CustomCloudEnvironmentUpdateRequestBody
       properties:
-        custom_cloud_environment:
+        aws_iam_role_arn:
+          type: string
+          maxLength: 2048
+          description: Amazon Resource Name
+          title: ARN
+        cloud_provider:
+          type: string
+          description: Cloud provider for the BYOC cloud
+          enum:
+          - aws
+          - azure
+          - google
+          - oracle
+        cloud_region:
+          type: string
+          maxLength: 32
+          description: Cloud region for the BYOC cloud
+        contact_emails:
+          type: array
+          minItems: 1
+          maxItems: 10
+          description: Email addresses for notifications and alerts for this BYOC cloud
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: User email address
+              real_name:
+                type: string
+                maxLength: 256
+                description: User real name
+              role:
+                type: string
+                maxLength: 256
+                description: Role of this user
+            required:
+            - email
+        deployment_model:
+          type: string
+          description: Deployment model for the BYOC cloud
+          enum:
+          - direct_ipsec_ingress
+          - ipsec_ingress
+          - standard
+          - standard_public
+          - pci_dss
+          - hipaa
+        display_name:
+          type: string
+          maxLength: 64
+          description: Short name for this BYOC cloud
+        google_privilege_bearing_service_account_id:
+          type: string
+          maxLength: 311
+          description: Google account identifier
+          title: Account ID
+        oracle_compartment_id:
+          type: string
+          maxLength: 2048
+          description: Used to uniquely identify an asset in Oracle's cloud. May refer to a range of object types including instance, tenancy, subnet and more.
+          title: Oracle Cloud ID
+        reserved_cidr:
+          type: string
+          maxLength: 18
+          description: CIDR range reserved for Aiven provisioned networks in the BYOC cloud
+        tags:
           type: object
-          description: Custom cloud environment
-          properties:
-            aiven_aws_account_principal:
-              type: string
-              maxLength: 1024
-              description: Entity that assumes the IAM role for controlling the BYOC account
-            aiven_aws_assume_role_external_id:
-              type: string
-              minLength: 2
-              maxLength: 1224
-              description: External ID for assuming the IAM role for controlling the BYOC account
-            aiven_aws_object_storage_credentials_creator_arn:
-              type: string
-              maxLength: 2048
-              description: Amazon Resource Name
-              title: ARN of the IAM user that impersonates the object storage role to grant VMs access to storage buckets
-            aiven_aws_object_storage_user_arn:
-              type: string
-              maxLength: 2048
-              description: Amazon Resource Name
-              title: ARN of the IAM user which Aiven managed VMs will use to access the buckets
-            aiven_google_account_principal:
-              type: string
-              maxLength: 311
-              description: Google account identifier
-              title: Account ID
-            aiven_management_cidr_blocks:
-              type: array
-              description: IP address ranges for incoming connections to the bastion host from the Aiven management plane
-              items:
-                type: string
-            aiven_object_storage_credentials_creator_user:
-              type: string
-              maxLength: 311
-              description: Google account identifier
-              title: Account ID
-            aws_iam_role_arn:
-              type: string
-              maxLength: 2048
-              description: Amazon Resource Name
-              title: ARN
-            aws_subnets_bastion:
-              type: object
-              description: Subnets to build in the bastion VPC
-              properties: {}
-            aws_subnets_workload:
-              type: object
-              description: Subnets to build in the workload VPC
-              properties: {}
-            bucket_names:
-              type: object
-              description: Names and usages of buckets required for workloads
-              properties: {}
-            byoc_resource_tags:
-              type: object
-              description: Set of tags for the resources provisioned on the BYOC account
-              properties: {}
-            byoc_unique_name:
-              type: string
-              description: Name for all the resources created for the custom cloud environment
-            cloud_provider:
-              type: string
-              description: Cloud provider for the BYOC cloud
-              enum:
-              - aws
-              - azure
-              - google
-              - oracle
-            cloud_region:
-              type: string
-              maxLength: 32
-              description: Cloud region for the BYOC cloud
-            contact_emails:
-              type: array
-              maxItems: 10
-              description: Email addresses for notifications and alerts for this BYOC cloud
-              items:
-                type: object
-                properties:
-                  email:
-                    type: string
-                    maxLength: 254
-                    description: User email address
-                  real_name:
-                    type: string
-                    maxLength: 256
-                    description: User real name
-                  role:
-                    type: string
-                    maxLength: 256
-                    description: Role of this user
-                required:
-                - email
-            custom_cloud_environment_id:
-              type: string
-              minLength: 36
-              maxLength: 36
-              description: Custom cloud environment ID
-            custom_cloud_names:
-              type: array
-              description: Cloud names that can be used to provision a service on this BYOC
-              items:
-                type: string
-            deployment_model:
-              type: string
-              description: Deployment model for the BYOC cloud
-              enum:
-              - direct_ipsec_ingress
-              - ipsec_ingress
-              - standard
-              - standard_public
-              - pci_dss
-              - hipaa
-            display_name:
-              type: string
-              maxLength: 64
-              description: Short name for this BYOC cloud
-            errors:
-              type: array
-              description: List of errors for this custom cloud environment
-              items:
-                type: object
-                properties:
-                  category:
-                    type: string
-                    description: Category of this error
-                    enum:
-                    - general_error
-                  message:
-                    type: string
-                    description: Description of this error
-                required:
-                - category
-                - message
-            google_bastion_cidr:
-              type: string
-              maxLength: 18
-              description: Private IP address block for the workload VPC containing the bastion subnet
-            google_privilege_bearing_service_account_id:
-              type: string
-              maxLength: 311
-              description: Google account identifier
-              title: Account ID
-            google_workload_cidr:
-              type: string
-              maxLength: 18
-              description: Private IP address block for the workload VPC containing the workload subnet
-            oracle_compartment_id:
-              type: string
-              maxLength: 2048
-              description: Used to uniquely identify an asset in Oracle's cloud. May refer to a range of object types including instance, tenancy, subnet and more.
-              title: Oracle Cloud ID
-            oracle_subnet_bastion:
-              type: string
-              maxLength: 18
-              description: CIDR for the bastion subnet
-            oracle_subnet_workload:
-              type: string
-              maxLength: 18
-              description: CIDR for the private workload subnet
-            reserved_cidr:
-              type: string
-              maxLength: 18
-              description: CIDR range reserved for Aiven provisioned networks in the BYOC cloud
-            state:
-              type: string
-              description: State of this BYOC cloud
-              enum:
-              - draft
-              - validating
-              - creating
-              - creation_failed
-              - active
-              - disconnected
-              - reconnecting
-              - deleting
-              - deletion_failed
-              - deleted
-            tags:
-              type: object
-              description: Set of resource tags
-              properties: {}
-            update_time:
-              type: string
-              maxLength: 36
-              description: Custom cloud environment last update timestamp (ISO 8601)
-            use_customer_owned_storage:
-              type: boolean
-              description: True if this BYOC cloud is using customer owned storage
-          required:
-          - contact_emails
-          - custom_cloud_environment_id
-          - display_name
-          - state
-          - update_time
+          description: Set of resource tags
+          properties: {}
+    CustomCloudEnvironmentPermissionsSetResponse:
+      type: object
+      description: CustomCloudEnvironmentPermissionsSetResponse
+      properties:
         errors:
           type: array
           description: List of errors occurred during request processing
@@ -778,8 +656,48 @@ components:
         message:
           type: string
           description: Printable result of the request
+    CustomCloudEnvironmentPermissionsGetResponse:
+      type: object
+      description: CustomCloudEnvironmentPermissionsGetResponse
+      properties:
+        accounts:
+          type: array
+          minItems: 0
+          maxItems: 1000
+          description: Accounts
+          items:
+            type: string
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        projects:
+          type: array
+          minItems: 0
+          maxItems: 1000
+          description: Projects
+          items:
+            type: string
       required:
-      - custom_cloud_environment
+      - accounts
+      - projects
     CustomCloudEnvironmentProvisionResponse:
       type: object
       description: CustomCloudEnvironmentProvisionResponse
@@ -1004,9 +922,298 @@ components:
           description: Printable result of the request
       required:
       - custom_cloud_environment
-    CustomCloudEnvironmentGetResponse:
+    CustomCloudEnvironmentCreateRequestBody:
       type: object
-      description: CustomCloudEnvironmentGetResponse
+      description: CustomCloudEnvironmentCreateRequestBody
+      properties:
+        cloud_provider:
+          type: string
+          description: Cloud provider for the BYOC cloud
+          enum:
+          - aws
+          - azure
+          - google
+          - oracle
+        cloud_region:
+          type: string
+          maxLength: 32
+          description: Cloud region for the BYOC cloud
+        contact_emails:
+          type: array
+          maxItems: 10
+          description: Email addresses for notifications and alerts for this BYOC cloud
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: User email address
+              real_name:
+                type: string
+                maxLength: 256
+                description: User real name
+              role:
+                type: string
+                maxLength: 256
+                description: Role of this user
+            required:
+            - email
+        deployment_model:
+          type: string
+          description: Deployment model for the BYOC cloud
+          enum:
+          - direct_ipsec_ingress
+          - ipsec_ingress
+          - standard
+          - standard_public
+          - pci_dss
+          - hipaa
+        display_name:
+          type: string
+          maxLength: 64
+          description: Short name for this BYOC cloud
+        reserved_cidr:
+          type: string
+          maxLength: 18
+          description: CIDR range reserved for Aiven provisioned networks in the BYOC cloud
+        tags:
+          type: object
+          description: Set of resource tags
+          properties: {}
+      required:
+      - cloud_provider
+      - cloud_region
+      - deployment_model
+      - display_name
+      - reserved_cidr
+    CustomCloudEnvironmentUpdateResponse:
+      type: object
+      description: CustomCloudEnvironmentUpdateResponse
+      properties:
+        custom_cloud_environment:
+          type: object
+          description: Custom cloud environment
+          properties:
+            aiven_aws_account_principal:
+              type: string
+              maxLength: 1024
+              description: Entity that assumes the IAM role for controlling the BYOC account
+            aiven_aws_assume_role_external_id:
+              type: string
+              minLength: 2
+              maxLength: 1224
+              description: External ID for assuming the IAM role for controlling the BYOC account
+            aiven_aws_object_storage_credentials_creator_arn:
+              type: string
+              maxLength: 2048
+              description: Amazon Resource Name
+              title: ARN of the IAM user that impersonates the object storage role to grant VMs access to storage buckets
+            aiven_aws_object_storage_user_arn:
+              type: string
+              maxLength: 2048
+              description: Amazon Resource Name
+              title: ARN of the IAM user which Aiven managed VMs will use to access the buckets
+            aiven_google_account_principal:
+              type: string
+              maxLength: 311
+              description: Google account identifier
+              title: Account ID
+            aiven_management_cidr_blocks:
+              type: array
+              description: IP address ranges for incoming connections to the bastion host from the Aiven management plane
+              items:
+                type: string
+            aiven_object_storage_credentials_creator_user:
+              type: string
+              maxLength: 311
+              description: Google account identifier
+              title: Account ID
+            aws_iam_role_arn:
+              type: string
+              maxLength: 2048
+              description: Amazon Resource Name
+              title: ARN
+            aws_subnets_bastion:
+              type: object
+              description: Subnets to build in the bastion VPC
+              properties: {}
+            aws_subnets_workload:
+              type: object
+              description: Subnets to build in the workload VPC
+              properties: {}
+            bucket_names:
+              type: object
+              description: Names and usages of buckets required for workloads
+              properties: {}
+            byoc_resource_tags:
+              type: object
+              description: Set of tags for the resources provisioned on the BYOC account
+              properties: {}
+            byoc_unique_name:
+              type: string
+              description: Name for all the resources created for the custom cloud environment
+            cloud_provider:
+              type: string
+              description: Cloud provider for the BYOC cloud
+              enum:
+              - aws
+              - azure
+              - google
+              - oracle
+            cloud_region:
+              type: string
+              maxLength: 32
+              description: Cloud region for the BYOC cloud
+            contact_emails:
+              type: array
+              maxItems: 10
+              description: Email addresses for notifications and alerts for this BYOC cloud
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    maxLength: 254
+                    description: User email address
+                  real_name:
+                    type: string
+                    maxLength: 256
+                    description: User real name
+                  role:
+                    type: string
+                    maxLength: 256
+                    description: Role of this user
+                required:
+                - email
+            custom_cloud_environment_id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: Custom cloud environment ID
+            custom_cloud_names:
+              type: array
+              description: Cloud names that can be used to provision a service on this BYOC
+              items:
+                type: string
+            deployment_model:
+              type: string
+              description: Deployment model for the BYOC cloud
+              enum:
+              - direct_ipsec_ingress
+              - ipsec_ingress
+              - standard
+              - standard_public
+              - pci_dss
+              - hipaa
+            display_name:
+              type: string
+              maxLength: 64
+              description: Short name for this BYOC cloud
+            errors:
+              type: array
+              description: List of errors for this custom cloud environment
+              items:
+                type: object
+                properties:
+                  category:
+                    type: string
+                    description: Category of this error
+                    enum:
+                    - general_error
+                  message:
+                    type: string
+                    description: Description of this error
+                required:
+                - category
+                - message
+            google_bastion_cidr:
+              type: string
+              maxLength: 18
+              description: Private IP address block for the workload VPC containing the bastion subnet
+            google_privilege_bearing_service_account_id:
+              type: string
+              maxLength: 311
+              description: Google account identifier
+              title: Account ID
+            google_workload_cidr:
+              type: string
+              maxLength: 18
+              description: Private IP address block for the workload VPC containing the workload subnet
+            oracle_compartment_id:
+              type: string
+              maxLength: 2048
+              description: Used to uniquely identify an asset in Oracle's cloud. May refer to a range of object types including instance, tenancy, subnet and more.
+              title: Oracle Cloud ID
+            oracle_subnet_bastion:
+              type: string
+              maxLength: 18
+              description: CIDR for the bastion subnet
+            oracle_subnet_workload:
+              type: string
+              maxLength: 18
+              description: CIDR for the private workload subnet
+            reserved_cidr:
+              type: string
+              maxLength: 18
+              description: CIDR range reserved for Aiven provisioned networks in the BYOC cloud
+            state:
+              type: string
+              description: State of this BYOC cloud
+              enum:
+              - draft
+              - validating
+              - creating
+              - creation_failed
+              - active
+              - disconnected
+              - reconnecting
+              - deleting
+              - deletion_failed
+              - deleted
+            tags:
+              type: object
+              description: Set of resource tags
+              properties: {}
+            update_time:
+              type: string
+              maxLength: 36
+              description: Custom cloud environment last update timestamp (ISO 8601)
+            use_customer_owned_storage:
+              type: boolean
+              description: True if this BYOC cloud is using customer owned storage
+          required:
+          - contact_emails
+          - custom_cloud_environment_id
+          - display_name
+          - state
+          - update_time
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - custom_cloud_environment
+    CustomCloudEnvironmentCreateResponse:
+      type: object
+      description: CustomCloudEnvironmentCreateResponse
       properties:
         custom_cloud_environment:
           type: object
@@ -1247,170 +1454,34 @@ components:
           maxLength: 2048
           description: Used to uniquely identify an asset in Oracle's cloud. May refer to a range of object types including instance, tenancy, subnet and more.
           title: Oracle Cloud ID
-    CustomCloudEnvironmentUpdateRequestBody:
+    CustomCloudEnvironmentDeleteResponse:
       type: object
-      description: CustomCloudEnvironmentUpdateRequestBody
+      description: CustomCloudEnvironmentDeleteResponse
       properties:
-        aws_iam_role_arn:
-          type: string
-          maxLength: 2048
-          description: Amazon Resource Name
-          title: ARN
-        cloud_provider:
-          type: string
-          description: Cloud provider for the BYOC cloud
-          enum:
-          - aws
-          - azure
-          - google
-          - oracle
-        cloud_region:
-          type: string
-          maxLength: 32
-          description: Cloud region for the BYOC cloud
-        contact_emails:
+        errors:
           type: array
-          minItems: 1
-          maxItems: 10
-          description: Email addresses for notifications and alerts for this BYOC cloud
+          description: List of errors occurred during request processing
           items:
             type: object
             properties:
-              email:
+              message:
                 type: string
-                maxLength: 254
-                description: User email address
-              real_name:
+                description: Printable error message
+              more_info:
                 type: string
-                maxLength: 256
-                description: User real name
-              role:
-                type: string
-                maxLength: 256
-                description: Role of this user
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
             required:
-            - email
-        deployment_model:
+            - message
+            - status
+        message:
           type: string
-          description: Deployment model for the BYOC cloud
-          enum:
-          - direct_ipsec_ingress
-          - ipsec_ingress
-          - standard
-          - standard_public
-          - pci_dss
-          - hipaa
-        display_name:
-          type: string
-          maxLength: 64
-          description: Short name for this BYOC cloud
-        google_privilege_bearing_service_account_id:
-          type: string
-          maxLength: 311
-          description: Google account identifier
-          title: Account ID
-        oracle_compartment_id:
-          type: string
-          maxLength: 2048
-          description: Used to uniquely identify an asset in Oracle's cloud. May refer to a range of object types including instance, tenancy, subnet and more.
-          title: Oracle Cloud ID
-        reserved_cidr:
-          type: string
-          maxLength: 18
-          description: CIDR range reserved for Aiven provisioned networks in the BYOC cloud
-        tags:
-          type: object
-          description: Set of resource tags
-          properties: {}
-    CustomCloudEnvironmentCreateRequestBody:
+          description: Printable result of the request
+    CustomCloudEnvironmentGetResponse:
       type: object
-      description: CustomCloudEnvironmentCreateRequestBody
-      properties:
-        cloud_provider:
-          type: string
-          description: Cloud provider for the BYOC cloud
-          enum:
-          - aws
-          - azure
-          - google
-          - oracle
-        cloud_region:
-          type: string
-          maxLength: 32
-          description: Cloud region for the BYOC cloud
-        contact_emails:
-          type: array
-          maxItems: 10
-          description: Email addresses for notifications and alerts for this BYOC cloud
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: User email address
-              real_name:
-                type: string
-                maxLength: 256
-                description: User real name
-              role:
-                type: string
-                maxLength: 256
-                description: Role of this user
-            required:
-            - email
-        deployment_model:
-          type: string
-          description: Deployment model for the BYOC cloud
-          enum:
-          - direct_ipsec_ingress
-          - ipsec_ingress
-          - standard
-          - standard_public
-          - pci_dss
-          - hipaa
-        display_name:
-          type: string
-          maxLength: 64
-          description: Short name for this BYOC cloud
-        reserved_cidr:
-          type: string
-          maxLength: 18
-          description: CIDR range reserved for Aiven provisioned networks in the BYOC cloud
-        tags:
-          type: object
-          description: Set of resource tags
-          properties: {}
-      required:
-      - cloud_provider
-      - cloud_region
-      - deployment_model
-      - display_name
-      - reserved_cidr
-    CustomCloudEnvironmentPermissionsSetRequestBody:
-      type: object
-      description: CustomCloudEnvironmentPermissionsSetRequestBody
-      properties:
-        accounts:
-          type: array
-          minItems: 0
-          maxItems: 1000
-          description: Accounts
-          items:
-            type: string
-        projects:
-          type: array
-          minItems: 0
-          maxItems: 1000
-          description: Projects
-          items:
-            type: string
-      required:
-      - accounts
-      - projects
-    CustomCloudEnvironmentCreateResponse:
-      type: object
-      description: CustomCloudEnvironmentCreateResponse
+      description: CustomCloudEnvironmentGetResponse
       properties:
         custom_cloud_environment:
           type: object
@@ -1632,9 +1703,9 @@ components:
           description: Printable result of the request
       required:
       - custom_cloud_environment
-    CustomCloudEnvironmentPermissionsGetResponse:
+    CustomCloudEnvironmentPermissionsSetRequestBody:
       type: object
-      description: CustomCloudEnvironmentPermissionsGetResponse
+      description: CustomCloudEnvironmentPermissionsSetRequestBody
       properties:
         accounts:
           type: array
@@ -1643,27 +1714,6 @@ components:
           description: Accounts
           items:
             type: string
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
         projects:
           type: array
           minItems: 0
@@ -1674,68 +1724,18 @@ components:
       required:
       - accounts
       - projects
-    CustomCloudEnvironmentPermissionsSetResponse:
-      type: object
-      description: CustomCloudEnvironmentPermissionsSetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    CustomCloudEnvironmentDeleteResponse:
-      type: object
-      description: CustomCloudEnvironmentDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
   parameters:
-    custom_cloud_environment_id:
-      in: path
-      name: custom_cloud_environment_id
-      description: ID of a custom cloud environment
-      schema:
-        type: string
-      required: true
     organization_id:
       in: path
       name: organization_id
       description: ID of an organization
+      schema:
+        type: string
+      required: true
+    custom_cloud_environment_id:
+      in: path
+      name: custom_cloud_environment_id
+      description: ID of a custom cloud environment
       schema:
         type: string
       required: true

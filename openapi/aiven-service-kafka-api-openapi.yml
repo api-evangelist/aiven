@@ -1795,35 +1795,136 @@ paths:
         - services:read
 components:
   schemas:
-    ServiceKafkaAclAddRequestBody:
+    ServiceKafkaConnectEditConnectorResponse:
       type: object
-      description: ServiceKafkaAclAddRequestBody
+      description: ServiceKafkaConnectEditConnectorResponse
       properties:
-        permission:
+        connector:
+          type: object
+          description: Kafka connector information
+          properties:
+            config:
+              type: object
+              description: Connector configuration parameters
+              properties:
+                connector.class:
+                  type: string
+                  maxLength: 1024
+                  description: The Java class for the connector
+                name:
+                  type: string
+                  maxLength: 1024
+                  description: Unique name for the connector
+              required:
+              - connector.class
+              - name
+            name:
+              type: string
+              maxLength: 1024
+              description: Connector name
+            plugin:
+              type: object
+              description: Kafka Connector plugin information
+              properties:
+                author:
+                  type: string
+                  description: Connector author name
+                available_versions:
+                  type: array
+                  description: Versions available on the service
+                  items:
+                    type: object
+                    properties:
+                      deprecated:
+                        type: boolean
+                        description: If the version is deprecated.
+                      needs_maintenance:
+                        type: boolean
+                        description: Using this version requires a maintenance update.
+                      version:
+                        type: string
+                        description: Connector version number
+                class:
+                  type: string
+                  description: Connector class name
+                docURL:
+                  type: string
+                  description: Connector documentation URL
+                plugin_name:
+                  type: string
+                  description: Connector plugin name
+                preview:
+                  type: boolean
+                  description: Describes if connector is in beta
+                preview_info:
+                  type: string
+                  description: Information about beta stage of connector
+                title:
+                  type: string
+                  description: Descriptive human readable name defined by Aiven
+                type:
+                  type: string
+                  description: Describes whether data flows from or to Kafka
+                  enum:
+                  - sink
+                  - source
+                  - unknown
+                version:
+                  type: string
+                  description: Connector version number
+              required:
+              - author
+              - class
+              - docURL
+              - title
+              - type
+              - version
+            tasks:
+              type: array
+              description: List of tasks of a connector
+              items:
+                type: object
+                properties:
+                  connector:
+                    type: string
+                    description: Related connector name
+                  task:
+                    type: integer
+                    description: Task id / number
+                required:
+                - connector
+                - task
+          required:
+          - config
+          - name
+          - plugin
+          - tasks
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
           type: string
-          description: Kafka permission
-          enum:
-          - admin
-          - read
-          - readwrite
-          - write
-        topic:
-          type: string
-          minLength: 1
-          maxLength: 249
-          description: Topic name pattern
-        username:
-          type: string
-          minLength: 1
-          maxLength: 64
-          description: Username
+          description: Printable result of the request
       required:
-      - permission
-      - topic
-      - username
-    ServiceKafkaAclListResponse:
+      - connector
+    ServiceKafkaAclDeleteResponse:
       type: object
-      description: ServiceKafkaAclListResponse
+      description: ServiceKafkaAclDeleteResponse
       properties:
         acl:
           type: array
@@ -1880,171 +1981,10 @@ components:
           description: Printable result of the request
       required:
       - acl
-    ServiceSchemaRegistrySubjectConfigPutResponse:
+    ServiceKafkaTopicUpdateRequestBody:
       type: object
-      description: ServiceSchemaRegistrySubjectConfigPutResponse
+      description: ServiceKafkaTopicUpdateRequestBody
       properties:
-        compatibility:
-          type: string
-          description: Compatibility level
-          enum:
-          - BACKWARD
-          - BACKWARD_TRANSITIVE
-          - FORWARD
-          - FORWARD_TRANSITIVE
-          - FULL
-          - FULL_TRANSITIVE
-          - NONE
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - compatibility
-    ServiceKafkaAclAddResponse:
-      type: object
-      description: ServiceKafkaAclAddResponse
-      properties:
-        acl:
-          type: array
-          description: List of Aiven ACL entries for Kafka service
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                maxLength: 40
-                description: ID
-              permission:
-                type: string
-                description: Kafka permission
-                enum:
-                - admin
-                - read
-                - readwrite
-                - write
-              topic:
-                type: string
-                minLength: 1
-                maxLength: 249
-                description: Topic name pattern
-              username:
-                type: string
-                minLength: 1
-                maxLength: 64
-                description: Username
-            required:
-            - permission
-            - topic
-            - username
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - acl
-    ServiceSchemaRegistrySubjectVersionPostResponse:
-      type: object
-      description: ServiceSchemaRegistrySubjectVersionPostResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        id:
-          type: integer
-          minimum: 0
-          description: Schema Id
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - id
-    ServiceSchemaRegistrySubjectVersionDeleteResponse:
-      type: object
-      description: ServiceSchemaRegistrySubjectVersionDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceKafkaTopicCreateRequestBody:
-      type: object
-      description: ServiceKafkaTopicCreateRequestBody
-      properties:
-        cleanup_policy:
-          type: string
-          description: The retention policy to use on old segments. Possible values include 'delete', 'compact', or a comma-separated list of them. The default policy ('delete') will discard old segments when their retention time or size limit has been reached. The 'compact' setting will enable log compaction on the topic.
-          title: 'DEPRECATED: use config.cleanup_policy'
-          enum:
-          - delete
-          - compact
-          - compact,delete
         config:
           type: object
           description: Kafka topic configuration
@@ -2342,179 +2282,361 @@ components:
           minLength: 1
           maxLength: 256
           description: Topic description
-        topic_name:
+    ServiceKafkaTieredStorageSummaryResponse:
+      type: object
+      description: ServiceKafkaTieredStorageSummaryResponse
+      properties:
+        current_cost:
+          type: string
+          description: The current cost in USD of tiered storage since the beginning of the billing period
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        forecasted_cost:
+          type: string
+          description: The forecasted cost in USD of tiered storage in the billing period
+        forecasted_rate:
+          type: string
+          description: The rate on GBs/hour used to calculate the forecasted cost
+        message:
+          type: string
+          description: Printable result of the request
+        storage_usage_history:
+          type: object
+          description: History of usage and cumulative costs in the billing period
+          properties:
+            hourly:
+              type: array
+              description: History by hour
+              items:
+                type: object
+                properties:
+                  estimated_cost:
+                    type: string
+                    description: The estimated cost in USD of tiered storage for this hour
+                  hour_start:
+                    type: string
+                    maxLength: 36
+                    description: Timestamp in ISO 8601 format, always in UTC
+                  peak_stored_bytes:
+                    type: integer
+                    minimum: 0
+                    description: Peak bytes stored on object storage at this hour
+                required:
+                - hour_start
+                - peak_stored_bytes
+          required:
+          - hourly
+        total_storage_usage:
+          type: integer
+          minimum: 0
+          description: Total storage usage by tiered storage, in bytes
+      required:
+      - current_cost
+      - forecasted_cost
+      - storage_usage_history
+      - total_storage_usage
+    ServiceKafkaAclListResponse:
+      type: object
+      description: ServiceKafkaAclListResponse
+      properties:
+        acl:
+          type: array
+          description: List of Aiven ACL entries for Kafka service
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                maxLength: 40
+                description: ID
+              permission:
+                type: string
+                description: Kafka permission
+                enum:
+                - admin
+                - read
+                - readwrite
+                - write
+              topic:
+                type: string
+                minLength: 1
+                maxLength: 249
+                description: Topic name pattern
+              username:
+                type: string
+                minLength: 1
+                maxLength: 64
+                description: Username
+            required:
+            - permission
+            - topic
+            - username
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - acl
+    ServiceKafkaAclAddRequestBody:
+      type: object
+      description: ServiceKafkaAclAddRequestBody
+      properties:
+        permission:
+          type: string
+          description: Kafka permission
+          enum:
+          - admin
+          - read
+          - readwrite
+          - write
+        topic:
           type: string
           minLength: 1
           maxLength: 249
-          description: Topic name
+          description: Topic name pattern
+        username:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Username
       required:
-      - topic_name
-    ServiceKafkaNativeAclAddRequestBody:
+      - permission
+      - topic
+      - username
+    ServiceKafkaConnectListResponse:
       type: object
-      description: ServiceKafkaNativeAclAddRequestBody
+      description: ServiceKafkaConnectListResponse
       properties:
-        host:
-          type: string
-          minLength: 0
-          maxLength: 256
-          description: the host or * for all hosts
-        operation:
-          type: string
-          description: Kafka ACL operation represents an operation which an ACL grants or denies permission to perform
-          enum:
-          - All
-          - Alter
-          - AlterConfigs
-          - ClusterAction
-          - Create
-          - CreateTokens
-          - Delete
-          - Describe
-          - DescribeConfigs
-          - DescribeTokens
-          - IdempotentWrite
-          - Read
-          - Write
-        pattern_type:
-          type: string
-          description: Kafka ACL pattern type of resource name
-          default: LITERAL
-          enum:
-          - LITERAL
-          - PREFIXED
-        permission_type:
-          type: string
-          description: Kafka ACL permission type
-          default: ALLOW
-          enum:
-          - ALLOW
-          - DENY
-        principal:
-          type: string
-          minLength: 0
-          maxLength: 256
-          description: principal is in 'PrincipalType:name' format
-        resource_name:
-          type: string
-          minLength: 0
-          maxLength: 256
-          description: Resource pattern used to match specified resources
-        resource_type:
-          type: string
-          description: Kafka ACL resource type represents a type of resource which an ACL can be applied to
-          enum:
-          - Cluster
-          - DelegationToken
-          - Group
-          - Topic
-          - TransactionalId
-          - User
-      required:
-      - operation
-      - pattern_type
-      - permission_type
-      - principal
-      - resource_name
-      - resource_type
-    ServiceKafkaConnectDeleteConnectorResponse:
-      type: object
-      description: ServiceKafkaConnectDeleteConnectorResponse
-      properties:
-        errors:
+        connectors:
           type: array
-          description: List of errors occurred during request processing
+          description: List of active Kafka Connect connectors
           items:
             type: object
             properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceKafkaConnectGetConnectorConfigurationResponse:
-      type: object
-      description: ServiceKafkaConnectGetConnectorConfigurationResponse
-      properties:
-        configuration_schema:
-          type: array
-          description: List of connector configuration field definitions
-          items:
-            type: object
-            properties:
-              default_value:
-                type: string
-                description: Default value to be set if field omitted in configuration
-              display_name:
-                type: string
-                description: Human friendly name of the field
-              documentation:
-                type: string
-                description: Assisting help text
-              group:
-                type: string
-                description: Name of the field group to which the field belongs to
-              importance:
-                type: string
-                description: How important is the field
-                enum:
-                - LOW
-                - MEDIUM
-                - HIGH
+              config:
+                type: object
+                description: Connector configuration parameters
+                properties:
+                  connector.class:
+                    type: string
+                    maxLength: 1024
+                    description: The Java class for the connector
+                  name:
+                    type: string
+                    maxLength: 1024
+                    description: Unique name for the connector
+                required:
+                - connector.class
+                - name
               name:
                 type: string
-                description: Machine friendly name of the field
-              order:
-                type: integer
-                description: Position of the field in the configuration form
-              order_in_group:
-                type: integer
-                description: Position of the field in the configuration form (Kafka 4.x name, alias of order)
-              required:
-                type: boolean
-                description: Defines if the field value is mandatory or not
-              type:
-                type: string
-                description: Configuration value type
-                enum:
-                - STRING
-                - INT
-                - SHORT
-                - LONG
-                - DOUBLE
-                - BOOLEAN
-                - LIST
-                - CLASS
-                - PASSWORD
-              width:
-                type: string
-                description: Expected length of the input value
-                enum:
-                - NONE
-                - SHORT
-                - MEDIUM
-                - LONG
+                maxLength: 1024
+                description: Connector name
+              plugin:
+                type: object
+                description: Kafka Connector plugin information
+                properties:
+                  author:
+                    type: string
+                    description: Connector author name
+                  available_versions:
+                    type: array
+                    description: Versions available on the service
+                    items:
+                      type: object
+                      properties:
+                        deprecated:
+                          type: boolean
+                          description: If the version is deprecated.
+                        needs_maintenance:
+                          type: boolean
+                          description: Using this version requires a maintenance update.
+                        version:
+                          type: string
+                          description: Connector version number
+                  class:
+                    type: string
+                    description: Connector class name
+                  docURL:
+                    type: string
+                    description: Connector documentation URL
+                  plugin_name:
+                    type: string
+                    description: Connector plugin name
+                  preview:
+                    type: boolean
+                    description: Describes if connector is in beta
+                  preview_info:
+                    type: string
+                    description: Information about beta stage of connector
+                  title:
+                    type: string
+                    description: Descriptive human readable name defined by Aiven
+                  type:
+                    type: string
+                    description: Describes whether data flows from or to Kafka
+                    enum:
+                    - sink
+                    - source
+                    - unknown
+                  version:
+                    type: string
+                    description: Connector version number
+                required:
+                - author
+                - class
+                - docURL
+                - title
+                - type
+                - version
+              tasks:
+                type: array
+                description: List of tasks of a connector
+                items:
+                  type: object
+                  properties:
+                    connector:
+                      type: string
+                      description: Related connector name
+                    task:
+                      type: integer
+                      description: Task id / number
+                  required:
+                  - connector
+                  - task
             required:
-            - default_value
-            - display_name
-            - documentation
-            - group
-            - importance
+            - config
             - name
-            - order
-            - order_in_group
-            - required
-            - type
-            - width
+            - plugin
+            - tasks
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        failed_connectors:
+          type: array
+          description: List of connectors that failed plugin resolution
+          items:
+            type: object
+            properties:
+              config:
+                type: object
+                description: Connector configuration parameters
+                properties:
+                  connector.class:
+                    type: string
+                    maxLength: 1024
+                    description: The Java class for the connector
+                  name:
+                    type: string
+                    maxLength: 1024
+                    description: Unique name for the connector
+                required:
+                - connector.class
+                - name
+              error:
+                type: string
+                description: Error message explaining why the connector failed to load
+              name:
+                type: string
+                maxLength: 1024
+                description: Connector name
+            required:
+            - config
+            - error
+            - name
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - connectors
+    ServiceKafkaTopicUpdateResponse:
+      type: object
+      description: ServiceKafkaTopicUpdateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceSchemaRegistryGlobalConfigGetResponse:
+      type: object
+      description: ServiceSchemaRegistryGlobalConfigGetResponse
+      properties:
+        compatibilityLevel:
+          type: string
+          description: Compatibility level
+          enum:
+          - BACKWARD
+          - BACKWARD_TRANSITIVE
+          - FORWARD
+          - FORWARD_TRANSITIVE
+          - FULL
+          - FULL_TRANSITIVE
+          - NONE
         errors:
           type: array
           description: List of errors occurred during request processing
@@ -2537,35 +2659,220 @@ components:
           type: string
           description: Printable result of the request
       required:
-      - configuration_schema
+      - compatibilityLevel
+    ServiceKafkaTopicMessageProduceRequestBody:
+      type: object
+      description: ServiceKafkaTopicMessageProduceRequestBody
+      properties:
+        format:
+          type: string
+          description: The format of the content.
+          enum:
+          - binary
+          - json
+          - avro
+          - protobuf
+          - jsonschema
+        key_schema:
+          type: string
+          minLength: 18
+          maxLength: 2048
+          description: Full schema encoded as a string (e.g. JSON serialized for Avro data)
+        key_schema_id:
+          type: integer
+          minimum: 1
+          maximum: 50000
+          description: ID returned by a previous request using the same schema. This ID corresponds to the ID of the schema in the registry.
+        records:
+          type: array
+          maxItems: 32
+          description: List of records to produce to the topic
+          items:
+            type: object
+            properties:
+              key:
+                type: object
+                description: Key for the produced record
+                properties: {}
+              partition:
+                type: integer
+                minimum: 0
+                maximum: 10000
+                description: Optionally specify the partition where to produce the record
+              value:
+                type: object
+                description: Value for the produced record
+                properties: {}
+        value_schema:
+          type: string
+          minLength: 18
+          maxLength: 2048
+          description: Full schema encoded as a string (e.g. JSON serialized for Avro data)
+        value_schema_id:
+          type: integer
+          minimum: 1
+          maximum: 50000
+          description: ID returned by a previous request using the same schema. This ID corresponds to the ID of the schema in the registry.
+      required:
+      - format
+      - records
+    ServiceKafkaTieredStorageStorageUsageByTopicResponse:
+      type: object
+      description: ServiceKafkaTieredStorageStorageUsageByTopicResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        storage_usage:
+          type: object
+          description: Storage usage by tiered storage by topics
+          properties: {}
+      required:
+      - storage_usage
+    ServiceKafkaConnectRestartConnectorResponse:
+      type: object
+      description: ServiceKafkaConnectRestartConnectorResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceKafkaNativeAclAddResponse:
+      type: object
+      description: ServiceKafkaNativeAclAddResponse
+      properties:
+        acl:
+          type: object
+          description: Kafka-native ACL entry for Kafka service
+          properties:
+            host:
+              type: string
+              minLength: 0
+              maxLength: 256
+              description: the host or * for all hosts
+            id:
+              type: string
+              maxLength: 40
+              description: ID
+            operation:
+              type: string
+              description: Kafka ACL operation represents an operation which an ACL grants or denies permission to perform
+              enum:
+              - All
+              - Alter
+              - AlterConfigs
+              - ClusterAction
+              - Create
+              - CreateTokens
+              - Delete
+              - Describe
+              - DescribeConfigs
+              - DescribeTokens
+              - IdempotentWrite
+              - Read
+              - Write
+            pattern_type:
+              type: string
+              description: Kafka ACL pattern type of resource name
+              enum:
+              - LITERAL
+              - PREFIXED
+            permission_type:
+              type: string
+              description: Kafka ACL permission type
+              enum:
+              - ALLOW
+              - DENY
+            principal:
+              type: string
+              minLength: 0
+              maxLength: 256
+              description: principal is in 'principalType:name' format
+            resource_name:
+              type: string
+              minLength: 0
+              maxLength: 256
+              description: Resource pattern used to match specified resources
+            resource_type:
+              type: string
+              description: Kafka ACL resource type represents a type of resource which an ACL can be applied to
+              enum:
+              - Cluster
+              - DelegationToken
+              - Group
+              - Topic
+              - TransactionalId
+              - User
+          required:
+          - host
+          - id
+          - operation
+          - pattern_type
+          - permission_type
+          - principal
+          - resource_name
+          - resource_type
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - acl
     ServiceKafkaTopicCreateResponse:
       type: object
       description: ServiceKafkaTopicCreateResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceKafkaConnectPauseConnectorResponse:
-      type: object
-      description: ServiceKafkaConnectPauseConnectorResponse
       properties:
         errors:
           type: array
@@ -2686,47 +2993,1258 @@ components:
           description: Printable result of the request
       required:
       - acl
-    ServiceSchemaRegistrySubjectVersionPostRequestBody:
+    ServiceKafkaTopicMessageListResponse:
       type: object
-      description: ServiceSchemaRegistrySubjectVersionPostRequestBody
+      description: ServiceKafkaTopicMessageListResponse
       properties:
-        references:
+        errors:
           type: array
-          maxItems: 128
-          description: Schema references
+          description: List of errors occurred during request processing
           items:
             type: object
             properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        messages:
+          type: array
+          description: List of messages from topic
+          items:
+            type: object
+            properties:
+              key:
+                type: object
+                description: The message key, formatted according to the embedded format
+                properties: {}
+              offset:
+                type: integer
+                description: Offset of the message
+              partition:
+                type: integer
+                description: Partition of the message
+              topic:
+                type: string
+                description: The name of the topic
+              value:
+                type: object
+                description: The message value, formatted according to the embedded format
+                properties: {}
+    ServiceSchemaRegistryAclDeleteResponse:
+      type: object
+      description: ServiceSchemaRegistryAclDeleteResponse
+      properties:
+        acl:
+          type: array
+          description: List of Schema Registry ACL entries
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                maxLength: 40
+                description: ID
+              permission:
+                type: string
+                description: ACL entry for Schema Registry
+                enum:
+                - schema_registry_read
+                - schema_registry_write
+              resource:
+                type: string
+                minLength: 1
+                maxLength: 249
+                description: Schema Registry ACL entry resource name pattern
+              username:
+                type: string
+                minLength: 1
+                maxLength: 64
+                description: Username
+            required:
+            - permission
+            - resource
+            - username
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - acl
+    ServiceKafkaQuotaCreateRequestBody:
+      type: object
+      description: ServiceKafkaQuotaCreateRequestBody
+      properties:
+        client\-id:
+          type: string
+          maxLength: 255
+          description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
+          title: client-id
+        consumer_byte_rate:
+          type: number
+          minimum: 0
+          maximum: 1073741824
+          description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
+          title: consumer network throttle
+        producer_byte_rate:
+          type: number
+          minimum: 0
+          maximum: 1073741824
+          description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
+          title: producer network throttle
+        request_percentage:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Sets the maximum percentage of CPU time that a client group can use on request handler I/O and network threads per broker within a quota window. Exceeding this limit triggers throttling. The quota, expressed as a percentage, also indicates the total allowable CPU usage for the client groups sharing the quota.
+          title: cpu percentage throttle
+        user:
+          type: string
+          maxLength: 64
+          description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
+          title: user
+    ServiceKafkaConnectCreateConnectorResponse:
+      type: object
+      description: ServiceKafkaConnectCreateConnectorResponse
+      properties:
+        connector:
+          type: object
+          description: Kafka connector information
+          properties:
+            config:
+              type: object
+              description: Connector configuration parameters
+              properties:
+                connector.class:
+                  type: string
+                  maxLength: 1024
+                  description: The Java class for the connector
+                name:
+                  type: string
+                  maxLength: 1024
+                  description: Unique name for the connector
+              required:
+              - connector.class
+              - name
+            name:
+              type: string
+              maxLength: 1024
+              description: Connector name
+            plugin:
+              type: object
+              description: Kafka Connector plugin information
+              properties:
+                author:
+                  type: string
+                  description: Connector author name
+                available_versions:
+                  type: array
+                  description: Versions available on the service
+                  items:
+                    type: object
+                    properties:
+                      deprecated:
+                        type: boolean
+                        description: If the version is deprecated.
+                      needs_maintenance:
+                        type: boolean
+                        description: Using this version requires a maintenance update.
+                      version:
+                        type: string
+                        description: Connector version number
+                class:
+                  type: string
+                  description: Connector class name
+                docURL:
+                  type: string
+                  description: Connector documentation URL
+                plugin_name:
+                  type: string
+                  description: Connector plugin name
+                preview:
+                  type: boolean
+                  description: Describes if connector is in beta
+                preview_info:
+                  type: string
+                  description: Information about beta stage of connector
+                title:
+                  type: string
+                  description: Descriptive human readable name defined by Aiven
+                type:
+                  type: string
+                  description: Describes whether data flows from or to Kafka
+                  enum:
+                  - sink
+                  - source
+                  - unknown
+                version:
+                  type: string
+                  description: Connector version number
+              required:
+              - author
+              - class
+              - docURL
+              - title
+              - type
+              - version
+            tasks:
+              type: array
+              description: List of tasks of a connector
+              items:
+                type: object
+                properties:
+                  connector:
+                    type: string
+                    description: Related connector name
+                  task:
+                    type: integer
+                    description: Task id / number
+                required:
+                - connector
+                - task
+          required:
+          - config
+          - name
+          - plugin
+          - tasks
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - connector
+    ServiceKafkaTopicDeleteResponse:
+      type: object
+      description: ServiceKafkaTopicDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceSchemaRegistrySubjectConfigPutResponse:
+      type: object
+      description: ServiceSchemaRegistrySubjectConfigPutResponse
+      properties:
+        compatibility:
+          type: string
+          description: Compatibility level
+          enum:
+          - BACKWARD
+          - BACKWARD_TRANSITIVE
+          - FORWARD
+          - FORWARD_TRANSITIVE
+          - FULL
+          - FULL_TRANSITIVE
+          - NONE
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - compatibility
+    ServiceSchemaRegistryCompatibilityResponse:
+      type: object
+      description: ServiceSchemaRegistryCompatibilityResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        is_compatible:
+          type: boolean
+          description: Compatibility
+        message:
+          type: string
+          description: Printable result of the request
+        messages:
+          type: array
+          maxItems: 128
+          description: Compatibility check messages
+          items:
+            type: string
+      required:
+      - is_compatible
+    ServiceSchemaRegistrySubjectVersionGetResponse:
+      type: object
+      description: ServiceSchemaRegistrySubjectVersionGetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        version:
+          type: object
+          description: Version
+          properties:
+            id:
+              type: integer
+              minimum: 0
+              description: Schema Id
+            references:
+              type: array
+              maxItems: 128
+              description: Schema references
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    maxLength: 1024
+                    description: The name used to reference the provided subject and version
+                    title: Name
+                  subject:
+                    type: string
+                    maxLength: 1024
+                    description: Subject
+                  version:
+                    type: integer
+                    minimum: 0
+                    description: Version
+                required:
+                - name
+                - subject
+                - version
+            schema:
+              type: string
+              maxLength: 1048576
+              description: Schema
+            schemaType:
+              type: string
+              description: Schema type
+              enum:
+              - AVRO
+              - JSON
+              - PROTOBUF
+            subject:
+              type: string
+              maxLength: 1024
+              description: Subject
+            version:
+              type: integer
+              minimum: 0
+              description: Version
+          required:
+          - id
+          - schema
+          - subject
+          - version
+      required:
+      - version
+    ServiceSchemaRegistrySubjectVersionsGetResponse:
+      type: object
+      description: ServiceSchemaRegistrySubjectVersionsGetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        versions:
+          type: array
+          description: List of available versions for a Schema Registry subject
+          items:
+            type: integer
+      required:
+      - versions
+    ServiceSchemaRegistryAclAddResponse:
+      type: object
+      description: ServiceSchemaRegistryAclAddResponse
+      properties:
+        acl:
+          type: array
+          description: List of Schema Registry ACL entries
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                maxLength: 40
+                description: ID
+              permission:
+                type: string
+                description: ACL entry for Schema Registry
+                enum:
+                - schema_registry_read
+                - schema_registry_write
+              resource:
+                type: string
+                minLength: 1
+                maxLength: 249
+                description: Schema Registry ACL entry resource name pattern
+              username:
+                type: string
+                minLength: 1
+                maxLength: 64
+                description: Username
+            required:
+            - permission
+            - resource
+            - username
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - acl
+    ServiceSchemaRegistrySubjectVersionDeleteResponse:
+      type: object
+      description: ServiceSchemaRegistrySubjectVersionDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceKafkaConnectGetAvailableConnectorsResponse:
+      type: object
+      description: ServiceKafkaConnectGetAvailableConnectorsResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        plugins:
+          type: array
+          description: List of available Kafka Connect connector plugins
+          items:
+            type: object
+            properties:
+              author:
+                type: string
+                description: Connector author name
+              available_versions:
+                type: array
+                description: Versions available on the service
+                items:
+                  type: object
+                  properties:
+                    deprecated:
+                      type: boolean
+                      description: If the version is deprecated.
+                    needs_maintenance:
+                      type: boolean
+                      description: Using this version requires a maintenance update.
+                    version:
+                      type: string
+                      description: Connector version number
+              class:
+                type: string
+                description: Connector class name
+              docURL:
+                type: string
+                description: Connector documentation URL
+              plugin_name:
+                type: string
+                description: Connector plugin name
+              preview:
+                type: boolean
+                description: Describes if connector is in beta
+              preview_info:
+                type: string
+                description: Information about beta stage of connector
+              title:
+                type: string
+                description: Descriptive human readable name defined by Aiven
+              type:
+                type: string
+                description: Describes whether data flows from or to Kafka
+                enum:
+                - sink
+                - source
+                - unknown
+              version:
+                type: string
+                description: Connector version number
+            required:
+            - author
+            - class
+            - docURL
+            - title
+            - type
+            - version
+      required:
+      - plugins
+    ServiceKafkaConnectResumeConnectorResponse:
+      type: object
+      description: ServiceKafkaConnectResumeConnectorResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceKafkaAclAddResponse:
+      type: object
+      description: ServiceKafkaAclAddResponse
+      properties:
+        acl:
+          type: array
+          description: List of Aiven ACL entries for Kafka service
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                maxLength: 40
+                description: ID
+              permission:
+                type: string
+                description: Kafka permission
+                enum:
+                - admin
+                - read
+                - readwrite
+                - write
+              topic:
+                type: string
+                minLength: 1
+                maxLength: 249
+                description: Topic name pattern
+              username:
+                type: string
+                minLength: 1
+                maxLength: 64
+                description: Username
+            required:
+            - permission
+            - topic
+            - username
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - acl
+    ServiceKafkaTieredStorageStorageUsageTotalResponse:
+      type: object
+      description: ServiceKafkaTieredStorageStorageUsageTotalResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        total_storage_usage:
+          type: integer
+          minimum: 0
+          description: Total storage usage by tiered storage, in bytes
+      required:
+      - total_storage_usage
+    ServiceSchemaRegistrySubjectConfigPutRequestBody:
+      type: object
+      description: ServiceSchemaRegistrySubjectConfigPutRequestBody
+      properties:
+        compatibility:
+          type: string
+          description: Compatibility level
+          enum:
+          - BACKWARD
+          - BACKWARD_TRANSITIVE
+          - FORWARD
+          - FORWARD_TRANSITIVE
+          - FULL
+          - FULL_TRANSITIVE
+          - NONE
+      required:
+      - compatibility
+    ServiceKafkaConnectPauseConnectorResponse:
+      type: object
+      description: ServiceKafkaConnectPauseConnectorResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceKafkaConnectEditConnectorRequestBody:
+      type: object
+      description: ServiceKafkaConnectEditConnectorRequestBody
+      properties:
+        connector.class:
+          type: string
+          maxLength: 1024
+          description: The Java class for the connector
+        name:
+          type: string
+          maxLength: 1024
+          description: Unique name for the connector
+      required:
+      - connector.class
+      - name
+    ServiceSchemaRegistrySubjectDeleteResponse:
+      type: object
+      description: ServiceSchemaRegistrySubjectDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceSchemaRegistrySchemaGetResponse:
+      type: object
+      description: ServiceSchemaRegistrySchemaGetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceKafkaConnectRestartConnectorTaskResponse:
+      type: object
+      description: ServiceKafkaConnectRestartConnectorTaskResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceKafkaTopicListResponse:
+      type: object
+      description: ServiceKafkaTopicListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        topics:
+          type: array
+          description: List of Kafka topics
+          items:
+            type: object
+            properties:
+              cleanup_policy:
+                type: string
+                maxLength: 64
+                description: The retention policy to use on old segments. Possible values include 'delete', 'compact', or a comma-separated list of them. The default policy ('delete') will discard old segments when their retention time or size limit has been reached. The 'compact' setting will enable log compaction on the topic.
+                title: cleanup.policy
+              diskless_enable:
+                type: boolean
+                description: Indicates whether diskless should be enabled. This is only available for BYOC services with Diskless feature enabled.
+                title: diskless.enable
+              min_insync_replicas:
+                type: integer
+                minimum: 1
+                description: When a producer sets acks to 'all' (or '-1'), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful. If this minimum cannot be met, then the producer will raise an exception (either NotEnoughReplicas or NotEnoughReplicasAfterAppend). When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and produce with acks of 'all'. This will ensure that the producer raises an exception if a majority of replicas do not receive a write.
+                title: min.insync.replicas
+              owner_user_group_id:
+                type: string
+                minLength: 1
+                maxLength: 36
+                description: The user group that owns this topic
+              partitions:
+                type: integer
+                minimum: 1
+                maximum: 1000000
+                description: Number of partitions
+              remote_storage_enable:
+                type: boolean
+                description: Indicates whether tiered storage should be enabled. This is only available for services with Tiered Storage feature enabled.
+                title: remote.storage.enable
+              replication:
+                type: integer
+                minimum: 1
+                description: Number of replicas
+              retention_bytes:
+                type: integer
+                description: This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the 'delete' retention policy. By default there is no size limit only a time limit. Since this limit is enforced at the partition level, multiply it by the number of partitions to compute the topic retention in bytes.
+                title: retention.bytes
+              retention_hours:
+                type: integer
+                maximum: 2562047788015
+                description: Retention period (hours)
+              state:
+                type: string
+                description: Topic state
+                enum:
+                - ACTIVE
+                - CONFIGURING
+                - DELETING
+              tags:
+                type: array
+                minItems: 0
+                maxItems: 25
+                description: Topic tags
+                items:
+                  type: object
+                  properties:
+                    key:
+                      type: string
+                      minLength: 1
+                      maxLength: 64
+                      description: Tag key
+                    value:
+                      type: string
+                      minLength: 0
+                      maxLength: 256
+                      description: Tag value
+                  required:
+                  - key
+                  - value
+              topic_description:
+                type: string
+                minLength: 1
+                maxLength: 256
+                description: Topic description
+              topic_name:
+                type: string
+                minLength: 1
+                maxLength: 249
+                description: Topic name
+            required:
+            - cleanup_policy
+            - min_insync_replicas
+            - owner_user_group_id
+            - partitions
+            - replication
+            - retention_bytes
+            - retention_hours
+            - state
+            - tags
+            - topic_description
+            - topic_name
+      required:
+      - topics
+    ServiceKafkaQuotaCreateResponse:
+      type: object
+      description: ServiceKafkaQuotaCreateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceKafkaTopicMessageListRequestBody:
+      type: object
+      description: ServiceKafkaTopicMessageListRequestBody
+      properties:
+        format:
+          type: string
+          description: The format of consumed messages, which is used to convert messages into a JSON-compatible form. If unspecified, defaults to binary
+          enum:
+          - binary
+          - json
+          - avro
+          - protobuf
+          - jsonschema
+        max_bytes:
+          type: integer
+          minimum: 1024
+          maximum: 1000000000
+          description: The maximum number of bytes of unencoded keys and values that should be included in the response. This provides approximate control over the size of responses and the amount of memory required to store the decoded response. The actual limit will be the minimum of this setting and the server-side configuration consumer.request.max.bytes. Default is unlimited
+        partitions:
+          type: object
+          description: Object of desired partition / offset mappings
+          properties: {}
+        timeout:
+          type: integer
+          minimum: 3000
+          maximum: 40000
+          description: The maximum total time to wait for messages for a request if the maximum request size has not yet been reached
+      required:
+      - partitions
+    ServiceKafkaConnectGetConnectorStatusResponse:
+      type: object
+      description: ServiceKafkaConnectGetConnectorStatusResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        status:
+          type: object
+          description: Connector status information
+          properties:
+            state:
+              type: string
+              description: Current status of the connector
+              enum:
+              - FAILED
+              - PAUSED
+              - RUNNING
+              - STOPPED
+              - UNASSIGNED
+            tasks:
+              type: array
+              description: List of tasks currently running for the connector
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Task identifier
+                  state:
+                    type: string
+                    description: Current status of the task
+                    enum:
+                    - FAILED
+                    - PAUSED
+                    - RUNNING
+                    - STOPPED
+                    - UNASSIGNED
+                  trace:
+                    type: string
+                    description: Task error information
+                required:
+                - id
+                - state
+                - trace
+          required:
+          - state
+          - tasks
+      required:
+      - status
+    ServiceKafkaConnectGetConnectorConfigurationResponse:
+      type: object
+      description: ServiceKafkaConnectGetConnectorConfigurationResponse
+      properties:
+        configuration_schema:
+          type: array
+          description: List of connector configuration field definitions
+          items:
+            type: object
+            properties:
+              default_value:
+                type: string
+                description: Default value to be set if field omitted in configuration
+              display_name:
+                type: string
+                description: Human friendly name of the field
+              documentation:
+                type: string
+                description: Assisting help text
+              group:
+                type: string
+                description: Name of the field group to which the field belongs to
+              importance:
+                type: string
+                description: How important is the field
+                enum:
+                - LOW
+                - MEDIUM
+                - HIGH
               name:
                 type: string
-                maxLength: 1024
-                description: The name used to reference the provided subject and version
-                title: Name
-              subject:
-                type: string
-                maxLength: 1024
-                description: Subject
-              version:
+                description: Machine friendly name of the field
+              order:
                 type: integer
-                minimum: 0
-                description: Version
+                description: Position of the field in the configuration form
+              order_in_group:
+                type: integer
+                description: Position of the field in the configuration form (Kafka 4.x name, alias of order)
+              required:
+                type: boolean
+                description: Defines if the field value is mandatory or not
+              type:
+                type: string
+                description: Configuration value type
+                enum:
+                - STRING
+                - INT
+                - SHORT
+                - LONG
+                - DOUBLE
+                - BOOLEAN
+                - LIST
+                - CLASS
+                - PASSWORD
+              width:
+                type: string
+                description: Expected length of the input value
+                enum:
+                - NONE
+                - SHORT
+                - MEDIUM
+                - LONG
             required:
+            - default_value
+            - display_name
+            - documentation
+            - group
+            - importance
             - name
-            - subject
-            - version
-        schema:
+            - order
+            - order_in_group
+            - required
+            - type
+            - width
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
           type: string
-          maxLength: 1048576
-          description: Schema
-        schemaType:
-          type: string
-          description: Schema type
-          enum:
-          - AVRO
-          - JSON
-          - PROTOBUF
+          description: Printable result of the request
       required:
-      - schema
+      - configuration_schema
+    ServiceSchemaRegistryGlobalConfigPutRequestBody:
+      type: object
+      description: ServiceSchemaRegistryGlobalConfigPutRequestBody
+      properties:
+        compatibility:
+          type: string
+          description: Compatibility level
+          enum:
+          - BACKWARD
+          - BACKWARD_TRANSITIVE
+          - FORWARD
+          - FORWARD_TRANSITIVE
+          - FULL
+          - FULL_TRANSITIVE
+          - NONE
+      required:
+      - compatibility
     ServiceSchemaRegistrySubjectsResponse:
       type: object
       description: ServiceSchemaRegistrySubjectsResponse
@@ -2759,69 +4277,6 @@ components:
             type: string
       required:
       - subjects
-    ServiceKafkaQuotaDescribeResponse:
-      type: object
-      description: ServiceKafkaQuotaDescribeResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        quota:
-          type: object
-          description: kafka quota
-          properties:
-            client\-id:
-              type: string
-              maxLength: 255
-              description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
-              title: client-id
-            consumer_byte_rate:
-              type: number
-              minimum: 0
-              maximum: 1073741824
-              description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
-              title: consumer network throttle
-            producer_byte_rate:
-              type: number
-              minimum: 0
-              maximum: 1073741824
-              description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
-              title: producer network throttle
-            request_percentage:
-              type: number
-              description: Sets the maximum percentage of CPU time that a client group can use on request handler I/O and network threads per broker within a quota window. Exceeding this limit triggers throttling. The quota, expressed as a percentage, also indicates the total allowable CPU usage for the client groups sharing the quota.
-              title: cpu percentage throttle
-            user:
-              type: string
-              maxLength: 64
-              description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
-              title: user
-          required:
-          - client\-id
-          - consumer_byte_rate
-          - producer_byte_rate
-          - request_percentage
-          - user
-      required:
-      - quota
     ServiceKafkaNativeAclListResponse:
       type: object
       description: ServiceKafkaNativeAclListResponse
@@ -2955,680 +4410,6 @@ components:
       required:
       - acl
       - kafka_acl
-    ServiceKafkaQuotaDeleteResponse:
-      type: object
-      description: ServiceKafkaQuotaDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceKafkaConnectResumeConnectorResponse:
-      type: object
-      description: ServiceKafkaConnectResumeConnectorResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceSchemaRegistryAclAddRequestBody:
-      type: object
-      description: ServiceSchemaRegistryAclAddRequestBody
-      properties:
-        permission:
-          type: string
-          description: ACL entry for Schema Registry
-          enum:
-          - schema_registry_read
-          - schema_registry_write
-        resource:
-          type: string
-          minLength: 1
-          maxLength: 249
-          description: Schema Registry ACL entry resource name pattern
-        username:
-          type: string
-          minLength: 1
-          maxLength: 64
-          description: Username
-      required:
-      - permission
-      - resource
-      - username
-    ServiceKafkaNativeAclDeleteResponse:
-      type: object
-      description: ServiceKafkaNativeAclDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceSchemaRegistryAclDeleteResponse:
-      type: object
-      description: ServiceSchemaRegistryAclDeleteResponse
-      properties:
-        acl:
-          type: array
-          description: List of Schema Registry ACL entries
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                maxLength: 40
-                description: ID
-              permission:
-                type: string
-                description: ACL entry for Schema Registry
-                enum:
-                - schema_registry_read
-                - schema_registry_write
-              resource:
-                type: string
-                minLength: 1
-                maxLength: 249
-                description: Schema Registry ACL entry resource name pattern
-              username:
-                type: string
-                minLength: 1
-                maxLength: 64
-                description: Username
-            required:
-            - permission
-            - resource
-            - username
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - acl
-    ServiceSchemaRegistrySubjectVersionSchemaGetResponse:
-      type: object
-      description: ServiceSchemaRegistrySubjectVersionSchemaGetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceSchemaRegistrySubjectVersionsGetResponse:
-      type: object
-      description: ServiceSchemaRegistrySubjectVersionsGetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        versions:
-          type: array
-          description: List of available versions for a Schema Registry subject
-          items:
-            type: integer
-      required:
-      - versions
-    ServiceKafkaTopicMessageProduceResponse:
-      type: object
-      description: ServiceKafkaTopicMessageProduceResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        key_schema_id:
-          type: integer
-          description: The ID for the schema used to produce keys, or null if keys were not used
-        message:
-          type: string
-          description: Printable result of the request
-        offsets:
-          type: array
-          description: List of offsets for the produced record
-          items:
-            type: object
-            properties:
-              error:
-                type: string
-                description: An error message describing why the operation failed, or null if it succeeded
-              error_code:
-                type: integer
-                description: An error code classifying the reason this operation failed, or null if it succeeded. 1 = Non-retriable Kafka exception, 2 = Retriable Kafka exception; the message might be sent successfully if retried
-              offset:
-                type: integer
-                description: Offset of the message, or null if publishing the message failed
-              partition:
-                type: integer
-                description: Partition the message was published to, or null if publishing the message failed
-        value_schema_id:
-          type: integer
-          description: The ID for the schema used to produce values
-    ServiceKafkaQuotaListResponse:
-      type: object
-      description: ServiceKafkaQuotaListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        quotas:
-          type: array
-          description: List of kafka quotas
-          items:
-            type: object
-            properties:
-              client\-id:
-                type: string
-                maxLength: 255
-                description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
-                title: client-id
-              consumer_byte_rate:
-                type: number
-                minimum: 0
-                maximum: 1073741824
-                description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
-                title: consumer network throttle
-              producer_byte_rate:
-                type: number
-                minimum: 0
-                maximum: 1073741824
-                description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
-                title: producer network throttle
-              request_percentage:
-                type: number
-                description: Sets the maximum percentage of CPU time that a client group can use on request handler I/O and network threads per broker within a quota window. Exceeding this limit triggers throttling. The quota, expressed as a percentage, also indicates the total allowable CPU usage for the client groups sharing the quota.
-                title: cpu percentage throttle
-              user:
-                type: string
-                maxLength: 64
-                description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
-                title: user
-            required:
-            - client\-id
-            - consumer_byte_rate
-            - producer_byte_rate
-            - request_percentage
-            - user
-      required:
-      - quotas
-    ServiceKafkaTieredStorageSummaryResponse:
-      type: object
-      description: ServiceKafkaTieredStorageSummaryResponse
-      properties:
-        current_cost:
-          type: string
-          description: The current cost in USD of tiered storage since the beginning of the billing period
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        forecasted_cost:
-          type: string
-          description: The forecasted cost in USD of tiered storage in the billing period
-        forecasted_rate:
-          type: string
-          description: The rate on GBs/hour used to calculate the forecasted cost
-        message:
-          type: string
-          description: Printable result of the request
-        storage_usage_history:
-          type: object
-          description: History of usage and cumulative costs in the billing period
-          properties:
-            hourly:
-              type: array
-              description: History by hour
-              items:
-                type: object
-                properties:
-                  estimated_cost:
-                    type: string
-                    description: The estimated cost in USD of tiered storage for this hour
-                  hour_start:
-                    type: string
-                    maxLength: 36
-                    description: Timestamp in ISO 8601 format, always in UTC
-                  peak_stored_bytes:
-                    type: integer
-                    minimum: 0
-                    description: Peak bytes stored on object storage at this hour
-                required:
-                - hour_start
-                - peak_stored_bytes
-          required:
-          - hourly
-        total_storage_usage:
-          type: integer
-          minimum: 0
-          description: Total storage usage by tiered storage, in bytes
-      required:
-      - current_cost
-      - forecasted_cost
-      - storage_usage_history
-      - total_storage_usage
-    ServiceKafkaTopicMessageListResponse:
-      type: object
-      description: ServiceKafkaTopicMessageListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        messages:
-          type: array
-          description: List of messages from topic
-          items:
-            type: object
-            properties:
-              key:
-                type: object
-                description: The message key, formatted according to the embedded format
-                properties: {}
-              offset:
-                type: integer
-                description: Offset of the message
-              partition:
-                type: integer
-                description: Partition of the message
-              topic:
-                type: string
-                description: The name of the topic
-              value:
-                type: object
-                description: The message value, formatted according to the embedded format
-                properties: {}
-    ServiceKafkaConnectCreateConnectorRequestBody:
-      type: object
-      description: ServiceKafkaConnectCreateConnectorRequestBody
-      properties:
-        connector.class:
-          type: string
-          maxLength: 1024
-          description: The Java class for the connector
-        name:
-          type: string
-          maxLength: 1024
-          description: Unique name for the connector
-      required:
-      - connector.class
-      - name
-    ServiceKafkaConnectGetAvailableConnectorsResponse:
-      type: object
-      description: ServiceKafkaConnectGetAvailableConnectorsResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        plugins:
-          type: array
-          description: List of available Kafka Connect connector plugins
-          items:
-            type: object
-            properties:
-              author:
-                type: string
-                description: Connector author name
-              available_versions:
-                type: array
-                description: Versions available on the service
-                items:
-                  type: object
-                  properties:
-                    deprecated:
-                      type: boolean
-                      description: If the version is deprecated.
-                    needs_maintenance:
-                      type: boolean
-                      description: Using this version requires a maintenance update.
-                    version:
-                      type: string
-                      description: Connector version number
-              class:
-                type: string
-                description: Connector class name
-              docURL:
-                type: string
-                description: Connector documentation URL
-              plugin_name:
-                type: string
-                description: Connector plugin name
-              preview:
-                type: boolean
-                description: Describes if connector is in beta
-              preview_info:
-                type: string
-                description: Information about beta stage of connector
-              title:
-                type: string
-                description: Descriptive human readable name defined by Aiven
-              type:
-                type: string
-                description: Describes whether data flows from or to Kafka
-                enum:
-                - sink
-                - source
-                - unknown
-              version:
-                type: string
-                description: Connector version number
-            required:
-            - author
-            - class
-            - docURL
-            - title
-            - type
-            - version
-      required:
-      - plugins
-    ServiceSchemaRegistrySubjectDeleteResponse:
-      type: object
-      description: ServiceSchemaRegistrySubjectDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceKafkaTieredStorageStorageUsageTotalResponse:
-      type: object
-      description: ServiceKafkaTieredStorageStorageUsageTotalResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        total_storage_usage:
-          type: integer
-          minimum: 0
-          description: Total storage usage by tiered storage, in bytes
-      required:
-      - total_storage_usage
-    ServiceKafkaConnectStopConnectorResponse:
-      type: object
-      description: ServiceKafkaConnectStopConnectorResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceSchemaRegistryGlobalConfigPutRequestBody:
-      type: object
-      description: ServiceSchemaRegistryGlobalConfigPutRequestBody
-      properties:
-        compatibility:
-          type: string
-          description: Compatibility level
-          enum:
-          - BACKWARD
-          - BACKWARD_TRANSITIVE
-          - FORWARD
-          - FORWARD_TRANSITIVE
-          - FULL
-          - FULL_TRANSITIVE
-          - NONE
-      required:
-      - compatibility
-    ServiceKafkaTieredStorageStorageUsageByTopicResponse:
-      type: object
-      description: ServiceKafkaTieredStorageStorageUsageByTopicResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        storage_usage:
-          type: object
-          description: Storage usage by tiered storage by topics
-          properties: {}
-      required:
-      - storage_usage
     ServiceKafkaTopicGetResponse:
       type: object
       description: ServiceKafkaTopicGetResponse
@@ -5380,10 +6161,40 @@ components:
           - topic_name
       required:
       - topic
-    ServiceSchemaRegistryCompatibilityResponse:
+    ServiceSchemaRegistryAclListResponse:
       type: object
-      description: ServiceSchemaRegistryCompatibilityResponse
+      description: ServiceSchemaRegistryAclListResponse
       properties:
+        acl:
+          type: array
+          description: List of Schema Registry ACL entries
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                maxLength: 40
+                description: ID
+              permission:
+                type: string
+                description: ACL entry for Schema Registry
+                enum:
+                - schema_registry_read
+                - schema_registry_write
+              resource:
+                type: string
+                minLength: 1
+                maxLength: 249
+                description: Schema Registry ACL entry resource name pattern
+              username:
+                type: string
+                minLength: 1
+                maxLength: 64
+                description: Username
+            required:
+            - permission
+            - resource
+            - username
         errors:
           type: array
           description: List of errors occurred during request processing
@@ -5402,201 +6213,76 @@ components:
             required:
             - message
             - status
-        is_compatible:
-          type: boolean
-          description: Compatibility
         message:
           type: string
           description: Printable result of the request
-        messages:
+      required:
+      - acl
+    ServiceSchemaRegistryAclAddRequestBody:
+      type: object
+      description: ServiceSchemaRegistryAclAddRequestBody
+      properties:
+        permission:
+          type: string
+          description: ACL entry for Schema Registry
+          enum:
+          - schema_registry_read
+          - schema_registry_write
+        resource:
+          type: string
+          minLength: 1
+          maxLength: 249
+          description: Schema Registry ACL entry resource name pattern
+        username:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Username
+      required:
+      - permission
+      - resource
+      - username
+    ServiceSchemaRegistrySubjectVersionPostRequestBody:
+      type: object
+      description: ServiceSchemaRegistrySubjectVersionPostRequestBody
+      properties:
+        references:
           type: array
           maxItems: 128
-          description: Compatibility check messages
-          items:
-            type: string
-      required:
-      - is_compatible
-    ServiceKafkaConnectRestartConnectorTaskResponse:
-      type: object
-      description: ServiceKafkaConnectRestartConnectorTaskResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
+          description: Schema references
           items:
             type: object
             properties:
-              message:
+              name:
                 type: string
-                description: Printable error message
-              more_info:
+                maxLength: 1024
+                description: The name used to reference the provided subject and version
+                title: Name
+              subject:
                 type: string
-                description: URL to the documentation of the error
-              status:
+                maxLength: 1024
+                description: Subject
+              version:
                 type: integer
-                description: HTTP error status code
+                minimum: 0
+                description: Version
             required:
-            - message
-            - status
-        message:
+            - name
+            - subject
+            - version
+        schema:
           type: string
-          description: Printable result of the request
-    ServiceKafkaConnectEditConnectorResponse:
-      type: object
-      description: ServiceKafkaConnectEditConnectorResponse
-      properties:
-        connector:
-          type: object
-          description: Kafka connector information
-          properties:
-            config:
-              type: object
-              description: Connector configuration parameters
-              properties:
-                connector.class:
-                  type: string
-                  maxLength: 1024
-                  description: The Java class for the connector
-                name:
-                  type: string
-                  maxLength: 1024
-                  description: Unique name for the connector
-              required:
-              - connector.class
-              - name
-            name:
-              type: string
-              maxLength: 1024
-              description: Connector name
-            plugin:
-              type: object
-              description: Kafka Connector plugin information
-              properties:
-                author:
-                  type: string
-                  description: Connector author name
-                available_versions:
-                  type: array
-                  description: Versions available on the service
-                  items:
-                    type: object
-                    properties:
-                      deprecated:
-                        type: boolean
-                        description: If the version is deprecated.
-                      needs_maintenance:
-                        type: boolean
-                        description: Using this version requires a maintenance update.
-                      version:
-                        type: string
-                        description: Connector version number
-                class:
-                  type: string
-                  description: Connector class name
-                docURL:
-                  type: string
-                  description: Connector documentation URL
-                plugin_name:
-                  type: string
-                  description: Connector plugin name
-                preview:
-                  type: boolean
-                  description: Describes if connector is in beta
-                preview_info:
-                  type: string
-                  description: Information about beta stage of connector
-                title:
-                  type: string
-                  description: Descriptive human readable name defined by Aiven
-                type:
-                  type: string
-                  description: Describes whether data flows from or to Kafka
-                  enum:
-                  - sink
-                  - source
-                  - unknown
-                version:
-                  type: string
-                  description: Connector version number
-              required:
-              - author
-              - class
-              - docURL
-              - title
-              - type
-              - version
-            tasks:
-              type: array
-              description: List of tasks of a connector
-              items:
-                type: object
-                properties:
-                  connector:
-                    type: string
-                    description: Related connector name
-                  task:
-                    type: integer
-                    description: Task id / number
-                required:
-                - connector
-                - task
-          required:
-          - config
-          - name
-          - plugin
-          - tasks
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
+          maxLength: 1048576
+          description: Schema
+        schemaType:
           type: string
-          description: Printable result of the request
-      required:
-      - connector
-    ServiceKafkaTopicMessageListRequestBody:
-      type: object
-      description: ServiceKafkaTopicMessageListRequestBody
-      properties:
-        format:
-          type: string
-          description: The format of consumed messages, which is used to convert messages into a JSON-compatible form. If unspecified, defaults to binary
+          description: Schema type
           enum:
-          - binary
-          - json
-          - avro
-          - protobuf
-          - jsonschema
-        max_bytes:
-          type: integer
-          minimum: 1024
-          maximum: 1000000000
-          description: The maximum number of bytes of unencoded keys and values that should be included in the response. This provides approximate control over the size of responses and the amount of memory required to store the decoded response. The actual limit will be the minimum of this setting and the server-side configuration consumer.request.max.bytes. Default is unlimited
-        partitions:
-          type: object
-          description: Object of desired partition / offset mappings
-          properties: {}
-        timeout:
-          type: integer
-          minimum: 3000
-          maximum: 40000
-          description: The maximum total time to wait for messages for a request if the maximum request size has not yet been reached
+          - AVRO
+          - JSON
+          - PROTOBUF
       required:
-      - partitions
+      - schema
     ServiceSchemaRegistryCompatibilityRequestBody:
       type: object
       description: ServiceSchemaRegistryCompatibilityRequestBody
@@ -5614,9 +6300,9 @@ components:
           - PROTOBUF
       required:
       - schema
-    ServiceKafkaQuotaCreateResponse:
+    ServiceSchemaRegistrySubjectVersionSchemaGetResponse:
       type: object
-      description: ServiceKafkaQuotaCreateResponse
+      description: ServiceSchemaRegistrySubjectVersionSchemaGetResponse
       properties:
         errors:
           type: array
@@ -5639,9 +6325,9 @@ components:
         message:
           type: string
           description: Printable result of the request
-    ServiceKafkaTopicUpdateResponse:
+    ServiceKafkaQuotaListResponse:
       type: object
-      description: ServiceKafkaTopicUpdateResponse
+      description: ServiceKafkaQuotaListResponse
       properties:
         errors:
           type: array
@@ -5664,6 +6350,142 @@ components:
         message:
           type: string
           description: Printable result of the request
+        quotas:
+          type: array
+          description: List of kafka quotas
+          items:
+            type: object
+            properties:
+              client\-id:
+                type: string
+                maxLength: 255
+                description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
+                title: client-id
+              consumer_byte_rate:
+                type: number
+                minimum: 0
+                maximum: 1073741824
+                description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
+                title: consumer network throttle
+              producer_byte_rate:
+                type: number
+                minimum: 0
+                maximum: 1073741824
+                description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
+                title: producer network throttle
+              request_percentage:
+                type: number
+                description: Sets the maximum percentage of CPU time that a client group can use on request handler I/O and network threads per broker within a quota window. Exceeding this limit triggers throttling. The quota, expressed as a percentage, also indicates the total allowable CPU usage for the client groups sharing the quota.
+                title: cpu percentage throttle
+              user:
+                type: string
+                maxLength: 64
+                description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
+                title: user
+            required:
+            - client\-id
+            - consumer_byte_rate
+            - producer_byte_rate
+            - request_percentage
+            - user
+      required:
+      - quotas
+    ServiceKafkaConnectDeleteConnectorResponse:
+      type: object
+      description: ServiceKafkaConnectDeleteConnectorResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceSchemaRegistrySubjectVersionPostResponse:
+      type: object
+      description: ServiceSchemaRegistrySubjectVersionPostResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        id:
+          type: integer
+          minimum: 0
+          description: Schema Id
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - id
+    ServiceKafkaNativeAclDeleteResponse:
+      type: object
+      description: ServiceKafkaNativeAclDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceKafkaConnectCreateConnectorRequestBody:
+      type: object
+      description: ServiceKafkaConnectCreateConnectorRequestBody
+      properties:
+        connector.class:
+          type: string
+          maxLength: 1024
+          description: The Java class for the connector
+        name:
+          type: string
+          maxLength: 1024
+          description: Unique name for the connector
+      required:
+      - connector.class
+      - name
     ServiceSchemaRegistrySubjectConfigGetResponse:
       type: object
       description: ServiceSchemaRegistrySubjectConfigGetResponse
@@ -5702,574 +6524,180 @@ components:
           description: Printable result of the request
       required:
       - compatibilityLevel
-    ServiceKafkaConnectCreateConnectorResponse:
+    ServiceKafkaQuotaDeleteResponse:
       type: object
-      description: ServiceKafkaConnectCreateConnectorResponse
+      description: ServiceKafkaQuotaDeleteResponse
       properties:
-        connector:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceKafkaConnectStopConnectorResponse:
+      type: object
+      description: ServiceKafkaConnectStopConnectorResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    ServiceKafkaTopicMessageProduceResponse:
+      type: object
+      description: ServiceKafkaTopicMessageProduceResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        key_schema_id:
+          type: integer
+          description: The ID for the schema used to produce keys, or null if keys were not used
+        message:
+          type: string
+          description: Printable result of the request
+        offsets:
+          type: array
+          description: List of offsets for the produced record
+          items:
+            type: object
+            properties:
+              error:
+                type: string
+                description: An error message describing why the operation failed, or null if it succeeded
+              error_code:
+                type: integer
+                description: An error code classifying the reason this operation failed, or null if it succeeded. 1 = Non-retriable Kafka exception, 2 = Retriable Kafka exception; the message might be sent successfully if retried
+              offset:
+                type: integer
+                description: Offset of the message, or null if publishing the message failed
+              partition:
+                type: integer
+                description: Partition the message was published to, or null if publishing the message failed
+        value_schema_id:
+          type: integer
+          description: The ID for the schema used to produce values
+    ServiceKafkaQuotaDescribeResponse:
+      type: object
+      description: ServiceKafkaQuotaDescribeResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        quota:
           type: object
-          description: Kafka connector information
+          description: kafka quota
           properties:
-            config:
-              type: object
-              description: Connector configuration parameters
-              properties:
-                connector.class:
-                  type: string
-                  maxLength: 1024
-                  description: The Java class for the connector
-                name:
-                  type: string
-                  maxLength: 1024
-                  description: Unique name for the connector
-              required:
-              - connector.class
-              - name
-            name:
+            client\-id:
               type: string
-              maxLength: 1024
-              description: Connector name
-            plugin:
-              type: object
-              description: Kafka Connector plugin information
-              properties:
-                author:
-                  type: string
-                  description: Connector author name
-                available_versions:
-                  type: array
-                  description: Versions available on the service
-                  items:
-                    type: object
-                    properties:
-                      deprecated:
-                        type: boolean
-                        description: If the version is deprecated.
-                      needs_maintenance:
-                        type: boolean
-                        description: Using this version requires a maintenance update.
-                      version:
-                        type: string
-                        description: Connector version number
-                class:
-                  type: string
-                  description: Connector class name
-                docURL:
-                  type: string
-                  description: Connector documentation URL
-                plugin_name:
-                  type: string
-                  description: Connector plugin name
-                preview:
-                  type: boolean
-                  description: Describes if connector is in beta
-                preview_info:
-                  type: string
-                  description: Information about beta stage of connector
-                title:
-                  type: string
-                  description: Descriptive human readable name defined by Aiven
-                type:
-                  type: string
-                  description: Describes whether data flows from or to Kafka
-                  enum:
-                  - sink
-                  - source
-                  - unknown
-                version:
-                  type: string
-                  description: Connector version number
-              required:
-              - author
-              - class
-              - docURL
-              - title
-              - type
-              - version
-            tasks:
-              type: array
-              description: List of tasks of a connector
-              items:
-                type: object
-                properties:
-                  connector:
-                    type: string
-                    description: Related connector name
-                  task:
-                    type: integer
-                    description: Task id / number
-                required:
-                - connector
-                - task
-          required:
-          - config
-          - name
-          - plugin
-          - tasks
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - connector
-    ServiceKafkaConnectRestartConnectorResponse:
-      type: object
-      description: ServiceKafkaConnectRestartConnectorResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceKafkaTopicListResponse:
-      type: object
-      description: ServiceKafkaTopicListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        topics:
-          type: array
-          description: List of Kafka topics
-          items:
-            type: object
-            properties:
-              cleanup_policy:
-                type: string
-                maxLength: 64
-                description: The retention policy to use on old segments. Possible values include 'delete', 'compact', or a comma-separated list of them. The default policy ('delete') will discard old segments when their retention time or size limit has been reached. The 'compact' setting will enable log compaction on the topic.
-                title: cleanup.policy
-              diskless_enable:
-                type: boolean
-                description: Indicates whether diskless should be enabled. This is only available for BYOC services with Diskless feature enabled.
-                title: diskless.enable
-              min_insync_replicas:
-                type: integer
-                minimum: 1
-                description: When a producer sets acks to 'all' (or '-1'), this configuration specifies the minimum number of replicas that must acknowledge a write for the write to be considered successful. If this minimum cannot be met, then the producer will raise an exception (either NotEnoughReplicas or NotEnoughReplicasAfterAppend). When used together, min.insync.replicas and acks allow you to enforce greater durability guarantees. A typical scenario would be to create a topic with a replication factor of 3, set min.insync.replicas to 2, and produce with acks of 'all'. This will ensure that the producer raises an exception if a majority of replicas do not receive a write.
-                title: min.insync.replicas
-              owner_user_group_id:
-                type: string
-                minLength: 1
-                maxLength: 36
-                description: The user group that owns this topic
-              partitions:
-                type: integer
-                minimum: 1
-                maximum: 1000000
-                description: Number of partitions
-              remote_storage_enable:
-                type: boolean
-                description: Indicates whether tiered storage should be enabled. This is only available for services with Tiered Storage feature enabled.
-                title: remote.storage.enable
-              replication:
-                type: integer
-                minimum: 1
-                description: Number of replicas
-              retention_bytes:
-                type: integer
-                description: This configuration controls the maximum size a partition (which consists of log segments) can grow to before we will discard old log segments to free up space if we are using the 'delete' retention policy. By default there is no size limit only a time limit. Since this limit is enforced at the partition level, multiply it by the number of partitions to compute the topic retention in bytes.
-                title: retention.bytes
-              retention_hours:
-                type: integer
-                maximum: 2562047788015
-                description: Retention period (hours)
-              state:
-                type: string
-                description: Topic state
-                enum:
-                - ACTIVE
-                - CONFIGURING
-                - DELETING
-              tags:
-                type: array
-                minItems: 0
-                maxItems: 25
-                description: Topic tags
-                items:
-                  type: object
-                  properties:
-                    key:
-                      type: string
-                      minLength: 1
-                      maxLength: 64
-                      description: Tag key
-                    value:
-                      type: string
-                      minLength: 0
-                      maxLength: 256
-                      description: Tag value
-                  required:
-                  - key
-                  - value
-              topic_description:
-                type: string
-                minLength: 1
-                maxLength: 256
-                description: Topic description
-              topic_name:
-                type: string
-                minLength: 1
-                maxLength: 249
-                description: Topic name
-            required:
-            - cleanup_policy
-            - min_insync_replicas
-            - owner_user_group_id
-            - partitions
-            - replication
-            - retention_bytes
-            - retention_hours
-            - state
-            - tags
-            - topic_description
-            - topic_name
-      required:
-      - topics
-    ServiceSchemaRegistrySubjectVersionGetResponse:
-      type: object
-      description: ServiceSchemaRegistrySubjectVersionGetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        version:
-          type: object
-          description: Version
-          properties:
-            id:
-              type: integer
+              maxLength: 255
+              description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
+              title: client-id
+            consumer_byte_rate:
+              type: number
               minimum: 0
-              description: Schema Id
-            references:
-              type: array
-              maxItems: 128
-              description: Schema references
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    maxLength: 1024
-                    description: The name used to reference the provided subject and version
-                    title: Name
-                  subject:
-                    type: string
-                    maxLength: 1024
-                    description: Subject
-                  version:
-                    type: integer
-                    minimum: 0
-                    description: Version
-                required:
-                - name
-                - subject
-                - version
-            schema:
-              type: string
-              maxLength: 1048576
-              description: Schema
-            schemaType:
-              type: string
-              description: Schema type
-              enum:
-              - AVRO
-              - JSON
-              - PROTOBUF
-            subject:
-              type: string
-              maxLength: 1024
-              description: Subject
-            version:
-              type: integer
+              maximum: 1073741824
+              description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
+              title: consumer network throttle
+            producer_byte_rate:
+              type: number
               minimum: 0
-              description: Version
+              maximum: 1073741824
+              description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
+              title: producer network throttle
+            request_percentage:
+              type: number
+              description: Sets the maximum percentage of CPU time that a client group can use on request handler I/O and network threads per broker within a quota window. Exceeding this limit triggers throttling. The quota, expressed as a percentage, also indicates the total allowable CPU usage for the client groups sharing the quota.
+              title: cpu percentage throttle
+            user:
+              type: string
+              maxLength: 64
+              description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
+              title: user
           required:
-          - id
-          - schema
-          - subject
-          - version
+          - client\-id
+          - consumer_byte_rate
+          - producer_byte_rate
+          - request_percentage
+          - user
       required:
-      - version
-    ServiceSchemaRegistryGlobalConfigPutResponse:
+      - quota
+    ServiceKafkaTopicCreateRequestBody:
       type: object
-      description: ServiceSchemaRegistryGlobalConfigPutResponse
+      description: ServiceKafkaTopicCreateRequestBody
       properties:
-        compatibility:
+        cleanup_policy:
           type: string
-          description: Compatibility level
+          description: The retention policy to use on old segments. Possible values include 'delete', 'compact', or a comma-separated list of them. The default policy ('delete') will discard old segments when their retention time or size limit has been reached. The 'compact' setting will enable log compaction on the topic.
+          title: 'DEPRECATED: use config.cleanup_policy'
           enum:
-          - BACKWARD
-          - BACKWARD_TRANSITIVE
-          - FORWARD
-          - FORWARD_TRANSITIVE
-          - FULL
-          - FULL_TRANSITIVE
-          - NONE
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - compatibility
-    ServiceSchemaRegistrySubjectConfigPutRequestBody:
-      type: object
-      description: ServiceSchemaRegistrySubjectConfigPutRequestBody
-      properties:
-        compatibility:
-          type: string
-          description: Compatibility level
-          enum:
-          - BACKWARD
-          - BACKWARD_TRANSITIVE
-          - FORWARD
-          - FORWARD_TRANSITIVE
-          - FULL
-          - FULL_TRANSITIVE
-          - NONE
-      required:
-      - compatibility
-    ServiceSchemaRegistryGlobalConfigGetResponse:
-      type: object
-      description: ServiceSchemaRegistryGlobalConfigGetResponse
-      properties:
-        compatibilityLevel:
-          type: string
-          description: Compatibility level
-          enum:
-          - BACKWARD
-          - BACKWARD_TRANSITIVE
-          - FORWARD
-          - FORWARD_TRANSITIVE
-          - FULL
-          - FULL_TRANSITIVE
-          - NONE
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - compatibilityLevel
-    ServiceKafkaConnectEditConnectorRequestBody:
-      type: object
-      description: ServiceKafkaConnectEditConnectorRequestBody
-      properties:
-        connector.class:
-          type: string
-          maxLength: 1024
-          description: The Java class for the connector
-        name:
-          type: string
-          maxLength: 1024
-          description: Unique name for the connector
-      required:
-      - connector.class
-      - name
-    ServiceKafkaNativeAclAddResponse:
-      type: object
-      description: ServiceKafkaNativeAclAddResponse
-      properties:
-        acl:
-          type: object
-          description: Kafka-native ACL entry for Kafka service
-          properties:
-            host:
-              type: string
-              minLength: 0
-              maxLength: 256
-              description: the host or * for all hosts
-            id:
-              type: string
-              maxLength: 40
-              description: ID
-            operation:
-              type: string
-              description: Kafka ACL operation represents an operation which an ACL grants or denies permission to perform
-              enum:
-              - All
-              - Alter
-              - AlterConfigs
-              - ClusterAction
-              - Create
-              - CreateTokens
-              - Delete
-              - Describe
-              - DescribeConfigs
-              - DescribeTokens
-              - IdempotentWrite
-              - Read
-              - Write
-            pattern_type:
-              type: string
-              description: Kafka ACL pattern type of resource name
-              enum:
-              - LITERAL
-              - PREFIXED
-            permission_type:
-              type: string
-              description: Kafka ACL permission type
-              enum:
-              - ALLOW
-              - DENY
-            principal:
-              type: string
-              minLength: 0
-              maxLength: 256
-              description: principal is in 'principalType:name' format
-            resource_name:
-              type: string
-              minLength: 0
-              maxLength: 256
-              description: Resource pattern used to match specified resources
-            resource_type:
-              type: string
-              description: Kafka ACL resource type represents a type of resource which an ACL can be applied to
-              enum:
-              - Cluster
-              - DelegationToken
-              - Group
-              - Topic
-              - TransactionalId
-              - User
-          required:
-          - host
-          - id
-          - operation
-          - pattern_type
-          - permission_type
-          - principal
-          - resource_name
-          - resource_type
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - acl
-    ServiceKafkaTopicUpdateRequestBody:
-      type: object
-      description: ServiceKafkaTopicUpdateRequestBody
-      properties:
+          - delete
+          - compact
+          - compact,delete
         config:
           type: object
           description: Kafka topic configuration
@@ -6567,582 +6995,119 @@ components:
           minLength: 1
           maxLength: 256
           description: Topic description
-    ServiceKafkaAclDeleteResponse:
-      type: object
-      description: ServiceKafkaAclDeleteResponse
-      properties:
-        acl:
-          type: array
-          description: List of Aiven ACL entries for Kafka service
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                maxLength: 40
-                description: ID
-              permission:
-                type: string
-                description: Kafka permission
-                enum:
-                - admin
-                - read
-                - readwrite
-                - write
-              topic:
-                type: string
-                minLength: 1
-                maxLength: 249
-                description: Topic name pattern
-              username:
-                type: string
-                minLength: 1
-                maxLength: 64
-                description: Username
-            required:
-            - permission
-            - topic
-            - username
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
+        topic_name:
           type: string
-          description: Printable result of the request
+          minLength: 1
+          maxLength: 249
+          description: Topic name
       required:
-      - acl
-    ServiceKafkaConnectListResponse:
+      - topic_name
+    ServiceSchemaRegistryGlobalConfigPutResponse:
       type: object
-      description: ServiceKafkaConnectListResponse
+      description: ServiceSchemaRegistryGlobalConfigPutResponse
       properties:
-        connectors:
-          type: array
-          description: List of active Kafka Connect connectors
-          items:
-            type: object
-            properties:
-              config:
-                type: object
-                description: Connector configuration parameters
-                properties:
-                  connector.class:
-                    type: string
-                    maxLength: 1024
-                    description: The Java class for the connector
-                  name:
-                    type: string
-                    maxLength: 1024
-                    description: Unique name for the connector
-                required:
-                - connector.class
-                - name
-              name:
-                type: string
-                maxLength: 1024
-                description: Connector name
-              plugin:
-                type: object
-                description: Kafka Connector plugin information
-                properties:
-                  author:
-                    type: string
-                    description: Connector author name
-                  available_versions:
-                    type: array
-                    description: Versions available on the service
-                    items:
-                      type: object
-                      properties:
-                        deprecated:
-                          type: boolean
-                          description: If the version is deprecated.
-                        needs_maintenance:
-                          type: boolean
-                          description: Using this version requires a maintenance update.
-                        version:
-                          type: string
-                          description: Connector version number
-                  class:
-                    type: string
-                    description: Connector class name
-                  docURL:
-                    type: string
-                    description: Connector documentation URL
-                  plugin_name:
-                    type: string
-                    description: Connector plugin name
-                  preview:
-                    type: boolean
-                    description: Describes if connector is in beta
-                  preview_info:
-                    type: string
-                    description: Information about beta stage of connector
-                  title:
-                    type: string
-                    description: Descriptive human readable name defined by Aiven
-                  type:
-                    type: string
-                    description: Describes whether data flows from or to Kafka
-                    enum:
-                    - sink
-                    - source
-                    - unknown
-                  version:
-                    type: string
-                    description: Connector version number
-                required:
-                - author
-                - class
-                - docURL
-                - title
-                - type
-                - version
-              tasks:
-                type: array
-                description: List of tasks of a connector
-                items:
-                  type: object
-                  properties:
-                    connector:
-                      type: string
-                      description: Related connector name
-                    task:
-                      type: integer
-                      description: Task id / number
-                  required:
-                  - connector
-                  - task
-            required:
-            - config
-            - name
-            - plugin
-            - tasks
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        failed_connectors:
-          type: array
-          description: List of connectors that failed plugin resolution
-          items:
-            type: object
-            properties:
-              config:
-                type: object
-                description: Connector configuration parameters
-                properties:
-                  connector.class:
-                    type: string
-                    maxLength: 1024
-                    description: The Java class for the connector
-                  name:
-                    type: string
-                    maxLength: 1024
-                    description: Unique name for the connector
-                required:
-                - connector.class
-                - name
-              error:
-                type: string
-                description: Error message explaining why the connector failed to load
-              name:
-                type: string
-                maxLength: 1024
-                description: Connector name
-            required:
-            - config
-            - error
-            - name
-        message:
+        compatibility:
           type: string
-          description: Printable result of the request
-      required:
-      - connectors
-    ServiceSchemaRegistryAclAddResponse:
-      type: object
-      description: ServiceSchemaRegistryAclAddResponse
-      properties:
-        acl:
-          type: array
-          description: List of Schema Registry ACL entries
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                maxLength: 40
-                description: ID
-              permission:
-                type: string
-                description: ACL entry for Schema Registry
-                enum:
-                - schema_registry_read
-                - schema_registry_write
-              resource:
-                type: string
-                minLength: 1
-                maxLength: 249
-                description: Schema Registry ACL entry resource name pattern
-              username:
-                type: string
-                minLength: 1
-                maxLength: 64
-                description: Username
-            required:
-            - permission
-            - resource
-            - username
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - acl
-    ServiceKafkaConnectGetConnectorStatusResponse:
-      type: object
-      description: ServiceKafkaConnectGetConnectorStatusResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        status:
-          type: object
-          description: Connector status information
-          properties:
-            state:
-              type: string
-              description: Current status of the connector
-              enum:
-              - FAILED
-              - PAUSED
-              - RUNNING
-              - STOPPED
-              - UNASSIGNED
-            tasks:
-              type: array
-              description: List of tasks currently running for the connector
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    description: Task identifier
-                  state:
-                    type: string
-                    description: Current status of the task
-                    enum:
-                    - FAILED
-                    - PAUSED
-                    - RUNNING
-                    - STOPPED
-                    - UNASSIGNED
-                  trace:
-                    type: string
-                    description: Task error information
-                required:
-                - id
-                - state
-                - trace
-          required:
-          - state
-          - tasks
-      required:
-      - status
-    ServiceSchemaRegistrySchemaGetResponse:
-      type: object
-      description: ServiceSchemaRegistrySchemaGetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceSchemaRegistryAclListResponse:
-      type: object
-      description: ServiceSchemaRegistryAclListResponse
-      properties:
-        acl:
-          type: array
-          description: List of Schema Registry ACL entries
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                maxLength: 40
-                description: ID
-              permission:
-                type: string
-                description: ACL entry for Schema Registry
-                enum:
-                - schema_registry_read
-                - schema_registry_write
-              resource:
-                type: string
-                minLength: 1
-                maxLength: 249
-                description: Schema Registry ACL entry resource name pattern
-              username:
-                type: string
-                minLength: 1
-                maxLength: 64
-                description: Username
-            required:
-            - permission
-            - resource
-            - username
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - acl
-    ServiceKafkaTopicDeleteResponse:
-      type: object
-      description: ServiceKafkaTopicDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    ServiceKafkaTopicMessageProduceRequestBody:
-      type: object
-      description: ServiceKafkaTopicMessageProduceRequestBody
-      properties:
-        format:
-          type: string
-          description: The format of the content.
+          description: Compatibility level
           enum:
-          - binary
-          - json
-          - avro
-          - protobuf
-          - jsonschema
-        key_schema:
-          type: string
-          minLength: 18
-          maxLength: 2048
-          description: Full schema encoded as a string (e.g. JSON serialized for Avro data)
-        key_schema_id:
-          type: integer
-          minimum: 1
-          maximum: 50000
-          description: ID returned by a previous request using the same schema. This ID corresponds to the ID of the schema in the registry.
-        records:
+          - BACKWARD
+          - BACKWARD_TRANSITIVE
+          - FORWARD
+          - FORWARD_TRANSITIVE
+          - FULL
+          - FULL_TRANSITIVE
+          - NONE
+        errors:
           type: array
-          maxItems: 32
-          description: List of records to produce to the topic
+          description: List of errors occurred during request processing
           items:
             type: object
             properties:
-              key:
-                type: object
-                description: Key for the produced record
-                properties: {}
-              partition:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
                 type: integer
-                minimum: 0
-                maximum: 10000
-                description: Optionally specify the partition where to produce the record
-              value:
-                type: object
-                description: Value for the produced record
-                properties: {}
-        value_schema:
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
           type: string
-          minLength: 18
-          maxLength: 2048
-          description: Full schema encoded as a string (e.g. JSON serialized for Avro data)
-        value_schema_id:
-          type: integer
-          minimum: 1
-          maximum: 50000
-          description: ID returned by a previous request using the same schema. This ID corresponds to the ID of the schema in the registry.
+          description: Printable result of the request
       required:
-      - format
-      - records
-    ServiceKafkaQuotaCreateRequestBody:
+      - compatibility
+    ServiceKafkaNativeAclAddRequestBody:
       type: object
-      description: ServiceKafkaQuotaCreateRequestBody
+      description: ServiceKafkaNativeAclAddRequestBody
       properties:
-        client\-id:
+        host:
           type: string
-          maxLength: 255
-          description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
-          title: client-id
-        consumer_byte_rate:
-          type: number
-          minimum: 0
-          maximum: 1073741824
-          description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
-          title: consumer network throttle
-        producer_byte_rate:
-          type: number
-          minimum: 0
-          maximum: 1073741824
-          description: Defines the bandwidth limit in bytes/sec for each group of clients sharing a quota. Every distinct client group is allocated a specific quota, as defined by the cluster, on a per-broker basis. Exceeding this limit results in client throttling.
-          title: producer network throttle
-        request_percentage:
-          type: number
-          minimum: 0
-          maximum: 100
-          description: Sets the maximum percentage of CPU time that a client group can use on request handler I/O and network threads per broker within a quota window. Exceeding this limit triggers throttling. The quota, expressed as a percentage, also indicates the total allowable CPU usage for the client groups sharing the quota.
-          title: cpu percentage throttle
-        user:
+          minLength: 0
+          maxLength: 256
+          description: the host or * for all hosts
+        operation:
           type: string
-          maxLength: 64
-          description: Represents a logical group of clients, assigned a unique name by the client application. Quotas can be applied based on user, client-id, or both. The most relevant quota is chosen for each connection. All connections within a quota group share the same quota.
-          title: user
+          description: Kafka ACL operation represents an operation which an ACL grants or denies permission to perform
+          enum:
+          - All
+          - Alter
+          - AlterConfigs
+          - ClusterAction
+          - Create
+          - CreateTokens
+          - Delete
+          - Describe
+          - DescribeConfigs
+          - DescribeTokens
+          - IdempotentWrite
+          - Read
+          - Write
+        pattern_type:
+          type: string
+          description: Kafka ACL pattern type of resource name
+          default: LITERAL
+          enum:
+          - LITERAL
+          - PREFIXED
+        permission_type:
+          type: string
+          description: Kafka ACL permission type
+          default: ALLOW
+          enum:
+          - ALLOW
+          - DENY
+        principal:
+          type: string
+          minLength: 0
+          maxLength: 256
+          description: principal is in 'PrincipalType:name' format
+        resource_name:
+          type: string
+          minLength: 0
+          maxLength: 256
+          description: Resource pattern used to match specified resources
+        resource_type:
+          type: string
+          description: Kafka ACL resource type represents a type of resource which an ACL can be applied to
+          enum:
+          - Cluster
+          - DelegationToken
+          - Group
+          - Topic
+          - TransactionalId
+          - User
+      required:
+      - operation
+      - pattern_type
+      - permission_type
+      - principal
+      - resource_name
+      - resource_type
   parameters:
-    connector_name:
-      in: path
-      name: connector_name
-      description: Connector name
-      schema:
-        type: string
-      required: true
-    subject_name:
-      in: path
-      name: subject_name
-      description: Subject name
-      schema:
-        type: string
-      required: true
-    servicekafkaquotadescribe_client-id:
-      in: query
-      name: client-id
-      description: Client ID.
-      schema:
-        type: string
-      required: false
-    servicekafkaquotadelete_user:
-      in: query
-      name: user
-      description: Username.
-      schema:
-        type: string
-      required: false
-    kafka_acl_id:
-      in: path
-      name: kafka_acl_id
-      description: Kafka ACL ID
-      schema:
-        type: string
-      required: true
     servicekafkaquotadelete_client-id:
       in: query
       name: client-id
@@ -7150,24 +7115,45 @@ components:
       schema:
         type: string
       required: false
-    service_name:
-      in: path
-      name: service_name
-      description: Service name
-      schema:
-        type: string
-      required: true
-    task_id:
-      in: path
-      name: task_id
-      description: Service task
-      schema:
-        type: string
-      required: true
     schema_id:
       in: path
       name: schema_id
       description: Schema Id
+      schema:
+        type: string
+      required: true
+    topic_name:
+      in: path
+      name: topic_name
+      description: Kafka topic name
+      schema:
+        type: string
+      required: true
+    servicekafkaquotadelete_user:
+      in: query
+      name: user
+      description: Username.
+      schema:
+        type: string
+      required: false
+    connector_name:
+      in: path
+      name: connector_name
+      description: Connector name
+      schema:
+        type: string
+      required: true
+    version_id:
+      in: path
+      name: version_id
+      description: Version Id
+      schema:
+        type: string
+      required: true
+    service_name:
+      in: path
+      name: service_name
+      description: Service name
       schema:
         type: string
       required: true
@@ -7178,17 +7164,17 @@ components:
       schema:
         type: string
       required: false
-    topic_name:
-      in: path
-      name: topic_name
-      description: Kafka topic name
+    servicekafkaquotadescribe_client-id:
+      in: query
+      name: client-id
+      description: Client ID.
       schema:
         type: string
-      required: true
-    project:
+      required: false
+    kafka_acl_id:
       in: path
-      name: project
-      description: Project name
+      name: kafka_acl_id
+      description: Kafka ACL ID
       schema:
         type: string
       required: true
@@ -7199,10 +7185,24 @@ components:
       schema:
         type: string
       required: true
-    version_id:
+    project:
       in: path
-      name: version_id
-      description: Version Id
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    task_id:
+      in: path
+      name: task_id
+      description: Service task
+      schema:
+        type: string
+      required: true
+    subject_name:
+      in: path
+      name: subject_name
+      description: Subject name
       schema:
         type: string
       required: true
