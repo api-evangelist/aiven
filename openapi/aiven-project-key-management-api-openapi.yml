@@ -44,14 +44,6 @@ paths:
         oauth2:
         - projects:read
 components:
-  parameters:
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
   schemas:
     ProjectKmsGetCAResponse:
       type: object
@@ -83,6 +75,14 @@ components:
           description: Printable result of the request
       required:
       - certificate
+  parameters:
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

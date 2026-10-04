@@ -737,167 +737,6 @@ paths:
         - billing:read
 components:
   schemas:
-    OrganizationBillingCreditMemoGetResponse:
-      type: object
-      description: OrganizationBillingCreditMemoGetResponse
-      properties:
-        create_time:
-          type: string
-          maxLength: 36
-          description: The date when this credit memo was created
-        credit_memo_id:
-          type: string
-          description: Credit memo ID
-        currency:
-          type: string
-          description: Acceptable currencies for a billing group.
-          title: Credit memo currency
-          enum:
-          - AUD
-          - CAD
-          - CHF
-          - DKK
-          - EUR
-          - GBP
-          - JPY
-          - NOK
-          - NZD
-          - SEK
-          - SGD
-          - USD
-        invoice_number:
-          type: string
-          description: Invoice ID
-        invoice_period:
-          type: object
-          description: The period this credit memo refers to
-          properties:
-            begin_time:
-              type: string
-              maxLength: 36
-              description: The start date of the period this invoice refers to
-            end_time:
-              type: string
-              maxLength: 36
-              description: The end date of the period this invoice refers to
-          required:
-          - begin_time
-          - end_time
-        issue_time:
-          type: string
-          maxLength: 36
-          description: The date the credit memo was issued
-        net:
-          type: string
-          description: Total credit memo amount without taxes in local currency
-        net_usd:
-          type: string
-          description: Total credit memo amount without taxes in USD
-        send_time:
-          type: string
-          maxLength: 36
-          description: The date when this credit memo was sent
-        state:
-          type: string
-          description: State of the credit memo
-          enum:
-          - draft
-          - ready
-          - sent
-        total:
-          type: string
-          description: Total credit memo amount in local currency
-      required:
-      - create_time
-      - credit_memo_id
-      - currency
-      - invoice_number
-      - invoice_period
-      - net
-      - net_usd
-      - state
-      - total
-    OrganizationBillingInvoiceLinesListResponse:
-      type: object
-      description: OrganizationBillingInvoiceLinesListResponse
-      properties:
-        lines:
-          type: array
-          description: Lines
-          items:
-            type: object
-            properties:
-              begin_time:
-                type: string
-                description: Start timestamp of the line item
-              cloud:
-                type: string
-                description: Name of the cloud provider
-              currency:
-                type: string
-                description: Acceptable currencies for a billing group.
-                title: Local currency code
-                enum:
-                - AUD
-                - CAD
-                - CHF
-                - DKK
-                - EUR
-                - GBP
-                - JPY
-                - NOK
-                - NZD
-                - SEK
-                - SGD
-                - USD
-              description:
-                type: string
-                description: Description of the line item
-              end_time:
-                type: string
-                description: End timestamp of the line item
-              line_type:
-                type: string
-                description: An enumeration.
-                title: Type of line item
-                enum:
-                - commitment_fee
-                - credit_consumption
-                - extra_charge
-                - multiplier
-                - other_event
-                - pro_platform_charge
-                - rounding
-                - service_charge
-                - support_charge
-              plan:
-                type: string
-                description: Plan of the service
-              project_id:
-                type: string
-                description: Name of the project
-              service_id:
-                type: string
-                description: ID of the service
-              service_type:
-                type: string
-                description: Type of service
-              tags:
-                type: object
-                description: Associated tags (key-value pairs)
-                properties: {}
-              total:
-                type: string
-                description: Total amount in local currency
-              total_usd:
-                type: string
-                description: Total amount in USD
-            required:
-            - line_type
-            - total
-            - total_usd
-      required:
-      - lines
     OrganizationBillingGroupListResponse:
       type: object
       description: OrganizationBillingGroupListResponse
@@ -996,243 +835,6 @@ components:
             - shipping_address_id
       required:
       - billing_groups
-    OrganizationBillingGroupCreateRequestBody:
-      type: object
-      description: OrganizationBillingGroupCreateRequestBody
-      properties:
-        billing_address_id:
-          type: string
-          maxLength: 36
-          description: Billing address ID
-        billing_contact_emails:
-          type: array
-          description: List of billing contact emails
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Email
-            required:
-            - email
-        billing_emails:
-          type: array
-          description: List of billing contact emails
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Email
-            required:
-            - email
-        billing_group_name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Billing Group Name
-        custom_invoice_text:
-          type: string
-          maxLength: 256
-          description: Extra billing text
-        payment_method:
-          type: object
-          description: Payment method
-          properties:
-            payment_method_id:
-              type: string
-              maxLength: 36
-              description: Payment method ID
-            payment_method_type:
-              type: string
-              description: An enumeration.
-              title: Payment method type
-              enum:
-              - aws_subscription
-              - azure_subscription
-              - bank_transfer
-              - credit_card
-              - gcp_subscription
-              - custom
-          required:
-          - payment_method_id
-          - payment_method_type
-        shipping_address_id:
-          type: string
-          maxLength: 36
-          description: Shipping address ID
-        vat_id:
-          type: string
-          description: VAT ID
-      required:
-      - billing_address_id
-      - billing_contact_emails
-      - billing_emails
-      - billing_group_name
-      - payment_method
-      - shipping_address_id
-    OrganizationBillingGroupUpdateRequestBody:
-      type: object
-      description: OrganizationBillingGroupUpdateRequestBody
-      properties:
-        billing_address_id:
-          type: string
-          maxLength: 36
-          description: Billing address ID
-        billing_contact_emails:
-          type: array
-          description: List of billing contact emails
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Email
-            required:
-            - email
-        billing_emails:
-          type: array
-          description: List of billing contact emails
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Email
-            required:
-            - email
-        billing_group_name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Billing group name
-        custom_invoice_text:
-          type: string
-          maxLength: 254
-          description: Extra billing text
-        payment_method:
-          type: object
-          description: Payment method
-          properties:
-            payment_method_id:
-              type: string
-              maxLength: 36
-              description: Payment method ID
-            payment_method_type:
-              type: string
-              description: An enumeration.
-              title: Payment method type
-              enum:
-              - aws_subscription
-              - azure_subscription
-              - bank_transfer
-              - credit_card
-              - gcp_subscription
-              - custom
-          required:
-          - payment_method_id
-          - payment_method_type
-        shipping_address_id:
-          type: string
-          maxLength: 36
-          description: Shipping address ID
-        vat_id:
-          type: string
-          description: VAT ID
-    OrganizationBillingGroupCreateResponse:
-      type: object
-      description: OrganizationBillingGroupCreateResponse
-      properties:
-        billing_address_id:
-          type: string
-          maxLength: 36
-          description: Billing address ID
-        billing_contact_emails:
-          type: array
-          description: List of billing contact emails
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Email
-            required:
-            - email
-        billing_emails:
-          type: array
-          description: List of billing contact emails
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Email
-            required:
-            - email
-        billing_group_id:
-          type: string
-          description: Billing group ID
-        billing_group_name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Billing Group Name
-        create_time:
-          type: string
-          maxLength: 36
-          description: The date when this billing group was created
-        custom_invoice_text:
-          type: string
-          maxLength: 256
-          description: Extra billing text
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization ID
-        payment_method:
-          type: object
-          description: Payment method
-          properties:
-            payment_method_id:
-              type: string
-              maxLength: 36
-              description: Payment method ID
-            payment_method_type:
-              type: string
-              description: An enumeration.
-              title: Payment method type
-              enum:
-              - aws_subscription
-              - azure_subscription
-              - bank_transfer
-              - credit_card
-              - gcp_subscription
-              - custom
-          required:
-          - payment_method_id
-          - payment_method_type
-        shipping_address_id:
-          type: string
-          maxLength: 36
-          description: Shipping address ID
-        vat_id:
-          type: string
-          description: VAT ID
-      required:
-      - billing_address_id
-      - billing_contact_emails
-      - billing_emails
-      - billing_group_id
-      - billing_group_name
-      - create_time
-      - organization_id
-      - shipping_address_id
     OrganizationBillingInvoiceListResponse:
       type: object
       description: OrganizationBillingInvoiceListResponse
@@ -1346,6 +948,492 @@ components:
             - total_usd
       required:
       - invoices
+    OrganizationBillingGroupCreateResponse:
+      type: object
+      description: OrganizationBillingGroupCreateResponse
+      properties:
+        billing_address_id:
+          type: string
+          maxLength: 36
+          description: Billing address ID
+        billing_contact_emails:
+          type: array
+          description: List of billing contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Email
+            required:
+            - email
+        billing_emails:
+          type: array
+          description: List of billing contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Email
+            required:
+            - email
+        billing_group_id:
+          type: string
+          description: Billing group ID
+        billing_group_name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Billing Group Name
+        create_time:
+          type: string
+          maxLength: 36
+          description: The date when this billing group was created
+        custom_invoice_text:
+          type: string
+          maxLength: 256
+          description: Extra billing text
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization ID
+        payment_method:
+          type: object
+          description: Payment method
+          properties:
+            payment_method_id:
+              type: string
+              maxLength: 36
+              description: Payment method ID
+            payment_method_type:
+              type: string
+              description: An enumeration.
+              title: Payment method type
+              enum:
+              - aws_subscription
+              - azure_subscription
+              - bank_transfer
+              - credit_card
+              - gcp_subscription
+              - custom
+          required:
+          - payment_method_id
+          - payment_method_type
+        shipping_address_id:
+          type: string
+          maxLength: 36
+          description: Shipping address ID
+        vat_id:
+          type: string
+          description: VAT ID
+      required:
+      - billing_address_id
+      - billing_contact_emails
+      - billing_emails
+      - billing_group_id
+      - billing_group_name
+      - create_time
+      - organization_id
+      - shipping_address_id
+    OrganizationBillingGroupCreateRequestBody:
+      type: object
+      description: OrganizationBillingGroupCreateRequestBody
+      properties:
+        billing_address_id:
+          type: string
+          maxLength: 36
+          description: Billing address ID
+        billing_contact_emails:
+          type: array
+          description: List of billing contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Email
+            required:
+            - email
+        billing_emails:
+          type: array
+          description: List of billing contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Email
+            required:
+            - email
+        billing_group_name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Billing Group Name
+        custom_invoice_text:
+          type: string
+          maxLength: 256
+          description: Extra billing text
+        payment_method:
+          type: object
+          description: Payment method
+          properties:
+            payment_method_id:
+              type: string
+              maxLength: 36
+              description: Payment method ID
+            payment_method_type:
+              type: string
+              description: An enumeration.
+              title: Payment method type
+              enum:
+              - aws_subscription
+              - azure_subscription
+              - bank_transfer
+              - credit_card
+              - gcp_subscription
+              - custom
+          required:
+          - payment_method_id
+          - payment_method_type
+        shipping_address_id:
+          type: string
+          maxLength: 36
+          description: Shipping address ID
+        vat_id:
+          type: string
+          description: VAT ID
+      required:
+      - billing_address_id
+      - billing_contact_emails
+      - billing_emails
+      - billing_group_name
+      - payment_method
+      - shipping_address_id
+    OrganizationBillingCreditMemosListResponse:
+      type: object
+      description: OrganizationBillingCreditMemosListResponse
+      properties:
+        credit_memos:
+          type: array
+          description: A list of billing credit memos belonging to the organization
+          items:
+            type: object
+            properties:
+              create_time:
+                type: string
+                maxLength: 36
+                description: The date when this credit memo was created
+              credit_memo_id:
+                type: string
+                description: Credit memo ID
+              currency:
+                type: string
+                description: Acceptable currencies for a billing group.
+                title: Credit memo currency
+                enum:
+                - AUD
+                - CAD
+                - CHF
+                - DKK
+                - EUR
+                - GBP
+                - JPY
+                - NOK
+                - NZD
+                - SEK
+                - SGD
+                - USD
+              invoice_number:
+                type: string
+                description: Invoice ID
+              invoice_period:
+                type: object
+                description: The period this credit memo refers to
+                properties:
+                  begin_time:
+                    type: string
+                    maxLength: 36
+                    description: The start date of the period this invoice refers to
+                  end_time:
+                    type: string
+                    maxLength: 36
+                    description: The end date of the period this invoice refers to
+                required:
+                - begin_time
+                - end_time
+              issue_time:
+                type: string
+                maxLength: 36
+                description: The date the credit memo was issued
+              net:
+                type: string
+                description: Total credit memo amount without taxes in local currency
+              net_usd:
+                type: string
+                description: Total credit memo amount without taxes in USD
+              send_time:
+                type: string
+                maxLength: 36
+                description: The date when this credit memo was sent
+              state:
+                type: string
+                description: State of the credit memo
+                enum:
+                - draft
+                - ready
+                - sent
+              total:
+                type: string
+                description: Total credit memo amount in local currency
+            required:
+            - create_time
+            - credit_memo_id
+            - currency
+            - invoice_number
+            - invoice_period
+            - net
+            - net_usd
+            - state
+            - total
+      required:
+      - credit_memos
+    OrganizationBillingInvoiceLinesListResponse:
+      type: object
+      description: OrganizationBillingInvoiceLinesListResponse
+      properties:
+        lines:
+          type: array
+          description: Lines
+          items:
+            type: object
+            properties:
+              begin_time:
+                type: string
+                description: Start timestamp of the line item
+              cloud:
+                type: string
+                description: Name of the cloud provider
+              currency:
+                type: string
+                description: Acceptable currencies for a billing group.
+                title: Local currency code
+                enum:
+                - AUD
+                - CAD
+                - CHF
+                - DKK
+                - EUR
+                - GBP
+                - JPY
+                - NOK
+                - NZD
+                - SEK
+                - SGD
+                - USD
+              description:
+                type: string
+                description: Description of the line item
+              end_time:
+                type: string
+                description: End timestamp of the line item
+              line_type:
+                type: string
+                description: An enumeration.
+                title: Type of line item
+                enum:
+                - commitment_fee
+                - credit_consumption
+                - extra_charge
+                - multiplier
+                - other_event
+                - pro_platform_charge
+                - rounding
+                - service_charge
+                - support_charge
+              plan:
+                type: string
+                description: Plan of the service
+              project_id:
+                type: string
+                description: Name of the project
+              service_id:
+                type: string
+                description: ID of the service
+              service_type:
+                type: string
+                description: Type of service
+              tags:
+                type: object
+                description: Associated tags (key-value pairs)
+                properties: {}
+              total:
+                type: string
+                description: Total amount in local currency
+              total_usd:
+                type: string
+                description: Total amount in USD
+            required:
+            - line_type
+            - total
+            - total_usd
+      required:
+      - lines
+    OrganizationBillingCreditMemoGetResponse:
+      type: object
+      description: OrganizationBillingCreditMemoGetResponse
+      properties:
+        create_time:
+          type: string
+          maxLength: 36
+          description: The date when this credit memo was created
+        credit_memo_id:
+          type: string
+          description: Credit memo ID
+        currency:
+          type: string
+          description: Acceptable currencies for a billing group.
+          title: Credit memo currency
+          enum:
+          - AUD
+          - CAD
+          - CHF
+          - DKK
+          - EUR
+          - GBP
+          - JPY
+          - NOK
+          - NZD
+          - SEK
+          - SGD
+          - USD
+        invoice_number:
+          type: string
+          description: Invoice ID
+        invoice_period:
+          type: object
+          description: The period this credit memo refers to
+          properties:
+            begin_time:
+              type: string
+              maxLength: 36
+              description: The start date of the period this invoice refers to
+            end_time:
+              type: string
+              maxLength: 36
+              description: The end date of the period this invoice refers to
+          required:
+          - begin_time
+          - end_time
+        issue_time:
+          type: string
+          maxLength: 36
+          description: The date the credit memo was issued
+        net:
+          type: string
+          description: Total credit memo amount without taxes in local currency
+        net_usd:
+          type: string
+          description: Total credit memo amount without taxes in USD
+        send_time:
+          type: string
+          maxLength: 36
+          description: The date when this credit memo was sent
+        state:
+          type: string
+          description: State of the credit memo
+          enum:
+          - draft
+          - ready
+          - sent
+        total:
+          type: string
+          description: Total credit memo amount in local currency
+      required:
+      - create_time
+      - credit_memo_id
+      - currency
+      - invoice_number
+      - invoice_period
+      - net
+      - net_usd
+      - state
+      - total
+    OrganizationBillingGroupUpdateRequestBody:
+      type: object
+      description: OrganizationBillingGroupUpdateRequestBody
+      properties:
+        billing_address_id:
+          type: string
+          maxLength: 36
+          description: Billing address ID
+        billing_contact_emails:
+          type: array
+          description: List of billing contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Email
+            required:
+            - email
+        billing_emails:
+          type: array
+          description: List of billing contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Email
+            required:
+            - email
+        billing_group_name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Billing group name
+        custom_invoice_text:
+          type: string
+          maxLength: 254
+          description: Extra billing text
+        payment_method:
+          type: object
+          description: Payment method
+          properties:
+            payment_method_id:
+              type: string
+              maxLength: 36
+              description: Payment method ID
+            payment_method_type:
+              type: string
+              description: An enumeration.
+              title: Payment method type
+              enum:
+              - aws_subscription
+              - azure_subscription
+              - bank_transfer
+              - credit_card
+              - gcp_subscription
+              - custom
+          required:
+          - payment_method_id
+          - payment_method_type
+        shipping_address_id:
+          type: string
+          maxLength: 36
+          description: Shipping address ID
+        vat_id:
+          type: string
+          description: VAT ID
     OrganizationBillingInvoiceGetResponse:
       type: object
       description: OrganizationBillingInvoiceGetResponse
@@ -1451,184 +1539,6 @@ components:
       - state
       - total
       - total_usd
-    OrganizationBillingGroupGetResponse:
-      type: object
-      description: OrganizationBillingGroupGetResponse
-      properties:
-        billing_address_id:
-          type: string
-          maxLength: 36
-          description: Billing address ID
-        billing_contact_emails:
-          type: array
-          description: List of billing contact emails
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Email
-            required:
-            - email
-        billing_emails:
-          type: array
-          description: List of billing contact emails
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: Email
-            required:
-            - email
-        billing_group_id:
-          type: string
-          description: Billing group ID
-        billing_group_name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Billing Group Name
-        create_time:
-          type: string
-          maxLength: 36
-          description: The date when this billing group was created
-        custom_invoice_text:
-          type: string
-          maxLength: 256
-          description: Extra billing text
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization ID
-        payment_method:
-          type: object
-          description: Payment method
-          properties:
-            payment_method_id:
-              type: string
-              maxLength: 36
-              description: Payment method ID
-            payment_method_type:
-              type: string
-              description: An enumeration.
-              title: Payment method type
-              enum:
-              - aws_subscription
-              - azure_subscription
-              - bank_transfer
-              - credit_card
-              - gcp_subscription
-              - custom
-          required:
-          - payment_method_id
-          - payment_method_type
-        shipping_address_id:
-          type: string
-          maxLength: 36
-          description: Shipping address ID
-        vat_id:
-          type: string
-          description: VAT ID
-      required:
-      - billing_address_id
-      - billing_contact_emails
-      - billing_emails
-      - billing_group_id
-      - billing_group_name
-      - create_time
-      - organization_id
-      - shipping_address_id
-    OrganizationBillingCreditMemosListResponse:
-      type: object
-      description: OrganizationBillingCreditMemosListResponse
-      properties:
-        credit_memos:
-          type: array
-          description: A list of billing credit memos belonging to the organization
-          items:
-            type: object
-            properties:
-              create_time:
-                type: string
-                maxLength: 36
-                description: The date when this credit memo was created
-              credit_memo_id:
-                type: string
-                description: Credit memo ID
-              currency:
-                type: string
-                description: Acceptable currencies for a billing group.
-                title: Credit memo currency
-                enum:
-                - AUD
-                - CAD
-                - CHF
-                - DKK
-                - EUR
-                - GBP
-                - JPY
-                - NOK
-                - NZD
-                - SEK
-                - SGD
-                - USD
-              invoice_number:
-                type: string
-                description: Invoice ID
-              invoice_period:
-                type: object
-                description: The period this credit memo refers to
-                properties:
-                  begin_time:
-                    type: string
-                    maxLength: 36
-                    description: The start date of the period this invoice refers to
-                  end_time:
-                    type: string
-                    maxLength: 36
-                    description: The end date of the period this invoice refers to
-                required:
-                - begin_time
-                - end_time
-              issue_time:
-                type: string
-                maxLength: 36
-                description: The date the credit memo was issued
-              net:
-                type: string
-                description: Total credit memo amount without taxes in local currency
-              net_usd:
-                type: string
-                description: Total credit memo amount without taxes in USD
-              send_time:
-                type: string
-                maxLength: 36
-                description: The date when this credit memo was sent
-              state:
-                type: string
-                description: State of the credit memo
-                enum:
-                - draft
-                - ready
-                - sent
-              total:
-                type: string
-                description: Total credit memo amount in local currency
-            required:
-            - create_time
-            - credit_memo_id
-            - currency
-            - invoice_number
-            - invoice_period
-            - net
-            - net_usd
-            - state
-            - total
-      required:
-      - credit_memos
     OrganizationBillingGroupUpdateResponse:
       type: object
       description: OrganizationBillingGroupUpdateResponse
@@ -1719,21 +1629,97 @@ components:
       - create_time
       - organization_id
       - shipping_address_id
+    OrganizationBillingGroupGetResponse:
+      type: object
+      description: OrganizationBillingGroupGetResponse
+      properties:
+        billing_address_id:
+          type: string
+          maxLength: 36
+          description: Billing address ID
+        billing_contact_emails:
+          type: array
+          description: List of billing contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Email
+            required:
+            - email
+        billing_emails:
+          type: array
+          description: List of billing contact emails
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: Email
+            required:
+            - email
+        billing_group_id:
+          type: string
+          description: Billing group ID
+        billing_group_name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Billing Group Name
+        create_time:
+          type: string
+          maxLength: 36
+          description: The date when this billing group was created
+        custom_invoice_text:
+          type: string
+          maxLength: 256
+          description: Extra billing text
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization ID
+        payment_method:
+          type: object
+          description: Payment method
+          properties:
+            payment_method_id:
+              type: string
+              maxLength: 36
+              description: Payment method ID
+            payment_method_type:
+              type: string
+              description: An enumeration.
+              title: Payment method type
+              enum:
+              - aws_subscription
+              - azure_subscription
+              - bank_transfer
+              - credit_card
+              - gcp_subscription
+              - custom
+          required:
+          - payment_method_id
+          - payment_method_type
+        shipping_address_id:
+          type: string
+          maxLength: 36
+          description: Shipping address ID
+        vat_id:
+          type: string
+          description: VAT ID
+      required:
+      - billing_address_id
+      - billing_contact_emails
+      - billing_emails
+      - billing_group_id
+      - billing_group_name
+      - create_time
+      - organization_id
+      - shipping_address_id
   parameters:
-    billing_group_id:
-      in: path
-      name: billing_group_id
-      description: Billing group id
-      schema:
-        type: string
-      required: true
-    organizationbillinginvoicelist_ending_date:
-      in: query
-      name: ending_date
-      description: ending date in the invoice time period
-      schema:
-        type: string
-      required: false
     invoice_number:
       in: path
       name: invoice_number
@@ -1741,10 +1727,17 @@ components:
       schema:
         type: string
       required: true
-    credit_memo_id:
+    organizationbillinginvoicelist_state:
+      in: query
+      name: state
+      description: refers to state of the invoice
+      schema:
+        type: array
+      required: false
+    billing_group_id:
       in: path
-      name: credit_memo_id
-      description: Credit Memo ID
+      name: billing_group_id
+      description: Billing group id
       schema:
         type: string
       required: true
@@ -1755,13 +1748,6 @@ components:
       schema:
         type: string
       required: false
-    organizationbillinginvoicelist_state:
-      in: query
-      name: state
-      description: refers to state of the invoice
-      schema:
-        type: array
-      required: false
     organization_id:
       in: path
       name: organization_id
@@ -1769,6 +1755,13 @@ components:
       schema:
         type: string
       required: true
+    organizationbillinginvoicelist_ending_date:
+      in: query
+      name: ending_date
+      description: ending date in the invoice time period
+      schema:
+        type: string
+      required: false
     organizationbillinginvoicelist_billing_group_ids:
       in: query
       name: billing_group_ids
@@ -1776,6 +1769,13 @@ components:
       schema:
         type: array
       required: false
+    credit_memo_id:
+      in: path
+      name: credit_memo_id
+      description: Credit Memo ID
+      schema:
+        type: string
+      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

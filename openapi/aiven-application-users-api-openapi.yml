@@ -372,105 +372,6 @@ paths:
         - accounts:write
 components:
   schemas:
-    ApplicationUsersListResponse:
-      type: object
-      description: ApplicationUsersListResponse
-      properties:
-        application_users:
-          type: array
-          description: Application Users
-          items:
-            type: object
-            properties:
-              create_time:
-                type: string
-                maxLength: 36
-                description: Time this application user was created
-              is_super_admin:
-                type: boolean
-                description: Super admin state of the organization application user
-              name:
-                type: string
-                description: Name
-              user_email:
-                type: string
-                maxLength: 254
-                description: User Email
-              user_id:
-                type: string
-                description: User ID
-            required:
-            - create_time
-            - is_super_admin
-            - name
-            - user_email
-            - user_id
-      required:
-      - application_users
-    ApplicationUserCreateRequestBody:
-      type: object
-      description: ApplicationUserCreateRequestBody
-      properties:
-        is_super_admin:
-          type: boolean
-          description: Alters super admin state of the organization application user
-        name:
-          type: string
-          description: Name
-      required:
-      - name
-    ApplicationUserAccessTokenCreateResponse:
-      type: object
-      description: ApplicationUserAccessTokenCreateResponse
-      properties:
-        full_token:
-          type: string
-          description: Full Token
-        token_prefix:
-          type: string
-          description: Token Prefix
-      required:
-      - full_token
-      - token_prefix
-    ApplicationUserGetResponse:
-      type: object
-      description: ApplicationUserGetResponse
-      properties:
-        create_time:
-          type: string
-          maxLength: 36
-          description: Time this application user was created
-        is_super_admin:
-          type: boolean
-          description: Super admin state of the organization application user
-        name:
-          type: string
-          description: Name
-        user_email:
-          type: string
-          maxLength: 254
-          description: User Email
-        user_id:
-          type: string
-          description: User ID
-      required:
-      - create_time
-      - is_super_admin
-      - name
-      - user_email
-      - user_id
-    ApplicationUserUpdateRequestBody:
-      type: object
-      description: ApplicationUserUpdateRequestBody
-      properties:
-        is_super_admin:
-          type: boolean
-          description: Alters super admin state of the organization application user
-        name:
-          type: string
-          description: Name
-      required:
-      - name
     ApplicationUserCreateResponse:
       type: object
       description: ApplicationUserCreateResponse
@@ -570,6 +471,33 @@ components:
             - token_prefix
       required:
       - tokens
+    ApplicationUserGetResponse:
+      type: object
+      description: ApplicationUserGetResponse
+      properties:
+        create_time:
+          type: string
+          maxLength: 36
+          description: Time this application user was created
+        is_super_admin:
+          type: boolean
+          description: Super admin state of the organization application user
+        name:
+          type: string
+          description: Name
+        user_email:
+          type: string
+          maxLength: 254
+          description: User Email
+        user_id:
+          type: string
+          description: User ID
+      required:
+      - create_time
+      - is_super_admin
+      - name
+      - user_email
+      - user_id
     ApplicationUserAccessTokenCreateRequestBody:
       type: object
       description: ApplicationUserAccessTokenCreateRequestBody
@@ -628,6 +556,78 @@ components:
       - name
       - user_email
       - user_id
+    ApplicationUserUpdateRequestBody:
+      type: object
+      description: ApplicationUserUpdateRequestBody
+      properties:
+        is_super_admin:
+          type: boolean
+          description: Alters super admin state of the organization application user
+        name:
+          type: string
+          description: Name
+      required:
+      - name
+    ApplicationUserAccessTokenCreateResponse:
+      type: object
+      description: ApplicationUserAccessTokenCreateResponse
+      properties:
+        full_token:
+          type: string
+          description: Full Token
+        token_prefix:
+          type: string
+          description: Token Prefix
+      required:
+      - full_token
+      - token_prefix
+    ApplicationUserCreateRequestBody:
+      type: object
+      description: ApplicationUserCreateRequestBody
+      properties:
+        is_super_admin:
+          type: boolean
+          description: Alters super admin state of the organization application user
+        name:
+          type: string
+          description: Name
+      required:
+      - name
+    ApplicationUsersListResponse:
+      type: object
+      description: ApplicationUsersListResponse
+      properties:
+        application_users:
+          type: array
+          description: Application Users
+          items:
+            type: object
+            properties:
+              create_time:
+                type: string
+                maxLength: 36
+                description: Time this application user was created
+              is_super_admin:
+                type: boolean
+                description: Super admin state of the organization application user
+              name:
+                type: string
+                description: Name
+              user_email:
+                type: string
+                maxLength: 254
+                description: User Email
+              user_id:
+                type: string
+                description: User ID
+            required:
+            - create_time
+            - is_super_admin
+            - name
+            - user_email
+            - user_id
+      required:
+      - application_users
   parameters:
     organization_id:
       in: path

@@ -237,6 +237,13 @@ paths:
         - accounts:write
 components:
   parameters:
+    authentication_method_id:
+      in: path
+      name: authentication_method_id
+      description: Organization authentication method ID
+      schema:
+        type: string
+      required: true
     organization_id:
       in: path
       name: organization_id
@@ -248,13 +255,6 @@ components:
       in: path
       name: domain_id
       description: ID of a domain
-      schema:
-        type: string
-      required: true
-    authentication_method_id:
-      in: path
-      name: authentication_method_id
-      description: Organization authentication method ID
       schema:
         type: string
       required: true

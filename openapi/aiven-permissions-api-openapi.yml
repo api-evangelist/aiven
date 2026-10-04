@@ -185,20 +185,6 @@ paths:
         - authentication:write
 components:
   parameters:
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
-    resource_id:
-      in: path
-      name: resource_id
-      description: Resource Id
-      schema:
-        type: string
-      required: true
     resource_type:
       in: path
       name: resource_type
@@ -209,6 +195,20 @@ components:
         - project
         - organization
         - organization_unit
+      required: true
+    resource_id:
+      in: path
+      name: resource_id
+      description: Resource Id
+      schema:
+        type: string
+      required: true
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
       required: true
   schemas:
     PermissionsUpdateRequestBody:
@@ -227,6 +227,37 @@ components:
         permissions:
           type: array
           description: List of roles to adjust
+          items:
+            type: object
+            properties:
+              permissions:
+                type: array
+                description: List of roles
+                items:
+                  type: string
+              principal_id:
+                type: string
+                description: ID of the principal
+              principal_type:
+                type: string
+                description: An enumeration.
+                title: Type of the principal
+                enum:
+                - user
+                - user_group
+            required:
+            - permissions
+            - principal_id
+            - principal_type
+      required:
+      - permissions
+    PermissionsSetRequestBody:
+      type: object
+      description: PermissionsSetRequestBody
+      properties:
+        permissions:
+          type: array
+          description: List of roles to set
           items:
             type: object
             properties:
@@ -290,37 +321,6 @@ components:
             - principal_id
             - principal_type
             - update_time
-      required:
-      - permissions
-    PermissionsSetRequestBody:
-      type: object
-      description: PermissionsSetRequestBody
-      properties:
-        permissions:
-          type: array
-          description: List of roles to set
-          items:
-            type: object
-            properties:
-              permissions:
-                type: array
-                description: List of roles
-                items:
-                  type: string
-              principal_id:
-                type: string
-                description: ID of the principal
-              principal_type:
-                type: string
-                description: An enumeration.
-                title: Type of the principal
-                enum:
-                - user
-                - user_group
-            required:
-            - permissions
-            - principal_id
-            - principal_type
       required:
       - permissions
   securitySchemes:

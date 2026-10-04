@@ -111,7 +111,95 @@ paths:
         - projects:read
         - billing:read
 components:
+  parameters:
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    download_cookie:
+      in: path
+      name: download_cookie
+      description: Authentication cookie for file download
+      schema:
+        type: string
+      required: true
+    invoice_number:
+      in: path
+      name: invoice_number
+      description: Invoice number
+      schema:
+        type: string
+      required: true
   schemas:
+    ProjectCreditsClaimResponse:
+      type: object
+      description: ProjectCreditsClaimResponse
+      properties:
+        credit:
+          type: object
+          description: Assigned credit
+          properties:
+            code:
+              type: string
+              maxLength: 1024
+              description: Credit code
+            expire_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            remaining_value:
+              type: string
+              description: Remaining credit value
+            start_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            type:
+              type: string
+              description: Credit type
+              enum:
+              - discount
+              - employee
+              - evaluation
+              - internal
+              - other
+              - outage
+              - partner
+              - promotion
+              - purchase
+              - referral
+              - sponsorship
+              - trial
+              - trial_over
+            value:
+              type: string
+              description: Original credit value, or for expired credits, the consumed credit value
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - credit
     ProjectInvoiceListResponse:
       type: object
       description: ProjectInvoiceListResponse
@@ -304,94 +392,6 @@ components:
           description: Printable result of the request
       required:
       - credits
-    ProjectCreditsClaimResponse:
-      type: object
-      description: ProjectCreditsClaimResponse
-      properties:
-        credit:
-          type: object
-          description: Assigned credit
-          properties:
-            code:
-              type: string
-              maxLength: 1024
-              description: Credit code
-            expire_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-            remaining_value:
-              type: string
-              description: Remaining credit value
-            start_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-            type:
-              type: string
-              description: Credit type
-              enum:
-              - discount
-              - employee
-              - evaluation
-              - internal
-              - other
-              - outage
-              - partner
-              - promotion
-              - purchase
-              - referral
-              - sponsorship
-              - trial
-              - trial_over
-            value:
-              type: string
-              description: Original credit value, or for expired credits, the consumed credit value
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - credit
-  parameters:
-    download_cookie:
-      in: path
-      name: download_cookie
-      description: Authentication cookie for file download
-      schema:
-        type: string
-      required: true
-    invoice_number:
-      in: path
-      name: invoice_number
-      description: Invoice number
-      schema:
-        type: string
-      required: true
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

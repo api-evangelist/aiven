@@ -82,6 +82,13 @@ paths:
         - accounts:read
 components:
   parameters:
+    organizationemissionsget_project_id:
+      in: query
+      name: project_id
+      description: Filter by project name (repeatable)
+      schema:
+        type: array
+      required: false
     organizationemissionsget_granularity:
       in: query
       name: granularity
@@ -92,13 +99,6 @@ components:
         - day
         - month
       required: false
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
     organizationemissionsget_billing_group_id:
       in: query
       name: billing_group_id
@@ -106,6 +106,13 @@ components:
       schema:
         type: array
       required: false
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
     organizationemissionsget_ending_time:
       in: query
       name: ending_time
@@ -130,13 +137,6 @@ components:
         - none
         - project
         - billing_group
-      required: false
-    organizationemissionsget_project_id:
-      in: query
-      name: project_id
-      description: Filter by project name (repeatable)
-      schema:
-        type: array
       required: false
   schemas:
     OrganizationEmissionsGetResponse:

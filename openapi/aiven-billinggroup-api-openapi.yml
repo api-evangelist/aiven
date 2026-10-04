@@ -391,10 +391,53 @@ paths:
         oauth2:
         - billing:write
 components:
+  parameters:
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    invoice_number:
+      in: path
+      name: invoice_number
+      description: Invoice number
+      schema:
+        type: string
+      required: true
+    billinggroupinvoicecsvget_cookie:
+      in: query
+      name: cookie
+      description: Download cookie signature.
+      schema:
+        type: string
+      required: true
+    download_cookie:
+      in: path
+      name: download_cookie
+      description: Authentication cookie for file download
+      schema:
+        type: string
+      required: true
+    billing_group_id:
+      in: path
+      name: billing_group_id
+      description: Billing group id
+      schema:
+        type: string
+      required: true
+    billinggroupinvoicecsvget_project:
+      in: query
+      name: project
+      description: Project name. Only required if the provided cookie comes from the Project Billing API.
+      schema:
+        type: string
+      required: false
   schemas:
-    BillingGroupDeleteResponse:
+    BillingGroupEventListResponse:
       type: object
-      description: BillingGroupDeleteResponse
+      description: BillingGroupEventListResponse
       properties:
         errors:
           type: array
@@ -414,169 +457,46 @@ components:
             required:
             - message
             - status
-        message:
-          type: string
-          description: Printable result of the request
-    BillingGroupCreditsClaimResponse:
-      type: object
-      description: BillingGroupCreditsClaimResponse
-      properties:
-        credit:
-          type: object
-          description: Assigned credit
-          properties:
-            code:
-              type: string
-              maxLength: 1024
-              description: Credit code
-            expire_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-            remaining_value:
-              type: string
-              description: Remaining credit value
-            start_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-            type:
-              type: string
-              description: Credit type
-              enum:
-              - discount
-              - employee
-              - evaluation
-              - internal
-              - other
-              - outage
-              - partner
-              - promotion
-              - purchase
-              - referral
-              - sponsorship
-              - trial
-              - trial_over
-            value:
-              type: string
-              description: Original credit value, or for expired credits, the consumed credit value
-        errors:
+        events:
           type: array
-          description: List of errors occurred during request processing
+          description: List of events related to a billing group
           items:
             type: object
             properties:
-              message:
+              actor:
                 type: string
-                description: Printable error message
-              more_info:
+                description: Initiator of the event
+              billing_group_id:
                 type: string
-                description: URL to the documentation of the error
-              status:
+                minLength: 36
+                maxLength: 36
+                description: Billing group ID
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              event_desc:
+                type: string
+                description: Event description
+              event_type:
+                type: string
+                description: Event type identifier
+              log_entry_id:
                 type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
+                description: Entry ID
+              project_id:
+                type: string
+                maxLength: 36
+                description: Identifier of a project
+              project_name:
+                type: string
+                maxLength: 63
+                description: Project name
         message:
           type: string
           description: Printable result of the request
       required:
-      - credit
-    BillingGroupInvoiceGetResponse:
-      type: object
-      description: BillingGroupInvoiceGetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        invoice:
-          type: object
-          description: A single invoice
-          properties:
-            due_date:
-              type: string
-              description: The time when the invoice is due
-            generated_at:
-              type: string
-              description: The time when the invoice was generated
-            invoice_number:
-              type: string
-              maxLength: 128
-              description: Unique invoice reference code
-            invoice_state:
-              type: string
-              description: State of this invoice
-              enum:
-              - accrual
-              - consolidated
-              - due
-              - estimate
-              - failed_credit_card_charge
-              - failed_no_credit_card
-              - mailed
-              - no_payment_expected
-              - paid
-              - partner_metering
-              - uncollectible
-              - waived
-              - due_only_project_charges_calculated
-              - estimate_only_project_charges_calculated
-            local_inc_vat:
-              type: string
-              description: Invoice total in chosen billing currency, after VAT
-            local_vat_zero:
-              type: string
-              description: Invoice total in chosen billing currency, before VAT
-          required:
-          - invoice_number
-          - local_inc_vat
-          - local_vat_zero
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - invoice
-    BillingGroupProjectsAssignResponse:
-      type: object
-      description: BillingGroupProjectsAssignResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
+      - events
     BillingGroupInvoiceListResponse:
       type: object
       description: BillingGroupInvoiceListResponse
@@ -701,9 +621,9 @@ components:
           description: Printable result of the request
       required:
       - invoices
-    BillingGroupGetResponse:
+    BillingGroupUpdateResponse:
       type: object
-      description: BillingGroupGetResponse
+      description: BillingGroupUpdateResponse
       properties:
         billing_group:
           type: object
@@ -939,9 +859,9 @@ components:
           description: Printable result of the request
       required:
       - billing_group
-    BillingGroupEventListResponse:
+    BillingGroupProjectsAssignResponse:
       type: object
-      description: BillingGroupEventListResponse
+      description: BillingGroupProjectsAssignResponse
       properties:
         errors:
           type: array
@@ -961,46 +881,874 @@ components:
             required:
             - message
             - status
-        events:
+        message:
+          type: string
+          description: Printable result of the request
+    BillingGroupInvoiceLinesListResponse:
+      type: object
+      description: BillingGroupInvoiceLinesListResponse
+      properties:
+        errors:
           type: array
-          description: List of events related to a billing group
+          description: List of errors occurred during request processing
           items:
             type: object
             properties:
-              actor:
+              message:
                 type: string
-                description: Initiator of the event
-              billing_group_id:
+                description: Printable error message
+              more_info:
                 type: string
-                minLength: 36
-                maxLength: 36
-                description: Billing group ID
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              event_desc:
-                type: string
-                description: Event description
-              event_type:
-                type: string
-                description: Event type identifier
-              log_entry_id:
+                description: URL to the documentation of the error
+              status:
                 type: integer
-                description: Entry ID
-              project_id:
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        lines:
+          type: array
+          description: List of invoice lines
+          items:
+            type: object
+            properties:
+              cloud_name:
                 type: string
-                maxLength: 36
-                description: Identifier of a project
+                description: Name of the cloud, if billed resource is associated with a cloud resource
+              commitment_name:
+                type: string
+                description: Name of the commitment which is referred to this invoice line
+              description:
+                type: string
+                description: Human-readable short description of the invoice line
+              line_pre_discount_local:
+                type: string
+                description: Pre-tax sum of invoice line, in local currency, before any discounts
+              line_total_local:
+                type: string
+                description: Pre-tax sum of invoice line, in the local currency configured for the invoice
+              line_total_usd:
+                type: string
+                description: Pre-tax sum of invoice line, in USD
+              line_type:
+                type: string
+                description: Type of the invoice line
+                enum:
+                - commitment_fee
+                - credit_consumption
+                - extra_charge
+                - multiplier
+                - other_event
+                - pro_platform_charge
+                - rounding
+                - service_charge
+                - support_charge
+              local_currency:
+                type: string
+                description: Currency used for line_local_total
               project_name:
                 type: string
-                maxLength: 63
-                description: Project name
+                description: Name of the project this line is associated with, if any
+              service_name:
+                type: string
+                description: Name of the service, if invoice line is for service use
+              service_plan:
+                type: string
+                description: Service plan name, if invoice line is for service use
+              service_type:
+                type: string
+                description: Service type, if invoice line is for service use
+                enum:
+                - alertmanager
+                - application
+                - clickhouse
+                - datahub
+                - dragonfly
+                - elasticsearch
+                - flink
+                - grafana
+                - kafka
+                - kafka_connect
+                - kafka_mirrormaker
+                - mysql
+                - nomadclient
+                - opensearch
+                - pg
+                - sparkpool
+                - stresstester
+                - sw
+                - thanos
+                - thanoscompactor
+                - thanosparquet
+                - thanosquery
+                - thanosreceiver
+                - thanosruler
+                - thanosstore
+                - valkey
+                - vector
+                - vmalert
+              tags:
+                type: object
+                description: Billing tags
+                properties: {}
+              timestamp_begin:
+                type: string
+                description: Begin timestamp of the billed time period, for resources billed by time
+              timestamp_end:
+                type: string
+                description: End timestamp of the billed time period, for resources billed by time
+            required:
+            - description
+            - line_total_usd
+            - line_type
+        message:
+          type: string
+          description: Printable result of the request
+    BillingGroupProjectAssignResponse:
+      type: object
+      description: BillingGroupProjectAssignResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    BillingGroupCreateRequestBody:
+      type: object
+      description: BillingGroupCreateRequestBody
+      properties:
+        account_id:
+          type: string
+          maxLength: 36
+          description: Account ID
+        address_lines:
+          type: array
+          maxItems: 3
+          description: Address lines
+          items:
+            type: string
+        billing_address_id:
+          type: string
+          maxLength: 36
+          description: Address ID
+        billing_contact_emails:
+          type: array
+          maxItems: 10
+          description: List of billing groups contact email addresses
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - email
+        billing_currency:
+          type: string
+          description: Billing currency
+          enum:
+          - AUD
+          - CAD
+          - CHF
+          - DKK
+          - EUR
+          - GBP
+          - JPY
+          - NOK
+          - NZD
+          - SEK
+          - SGD
+          - USD
+        billing_emails:
+          type: array
+          maxItems: 10
+          description: List of project billing email addresses
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - email
+        billing_extra_text:
+          type: string
+          maxLength: 1000
+          description: Extra text to be included in all project invoices, e.g. purchase order or cost center number
+        billing_group_name:
+          type: string
+          maxLength: 128
+          description: Billing group name
+        card_id:
+          type: string
+          maxLength: 64
+          description: Credit card ID
+        city:
+          type: string
+          maxLength: 50
+          description: Address city
+        company:
+          type: string
+          maxLength: 83
+          description: Name of a company
+        copy_from_billing_group:
+          type: string
+          minLength: 36
+          maxLength: 36
+          description: Billing group ID
+        country_code:
+          type: string
+          maxLength: 2
+          description: Two letter country code for billing country
+        shipping_address_id:
+          type: string
+          maxLength: 36
+          description: Address ID
+        state:
+          type: string
+          maxLength: 30
+          description: Address state or province
+        vat_id:
+          type: string
+          maxLength: 64
+          description: EU VAT Identification Number
+        zip_code:
+          type: string
+          maxLength: 36
+          description: Address zip code
+      required:
+      - billing_group_name
+    BillingGroupInvoiceGetResponse:
+      type: object
+      description: BillingGroupInvoiceGetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        invoice:
+          type: object
+          description: A single invoice
+          properties:
+            due_date:
+              type: string
+              description: The time when the invoice is due
+            generated_at:
+              type: string
+              description: The time when the invoice was generated
+            invoice_number:
+              type: string
+              maxLength: 128
+              description: Unique invoice reference code
+            invoice_state:
+              type: string
+              description: State of this invoice
+              enum:
+              - accrual
+              - consolidated
+              - due
+              - estimate
+              - failed_credit_card_charge
+              - failed_no_credit_card
+              - mailed
+              - no_payment_expected
+              - paid
+              - partner_metering
+              - uncollectible
+              - waived
+              - due_only_project_charges_calculated
+              - estimate_only_project_charges_calculated
+            local_inc_vat:
+              type: string
+              description: Invoice total in chosen billing currency, after VAT
+            local_vat_zero:
+              type: string
+              description: Invoice total in chosen billing currency, before VAT
+          required:
+          - invoice_number
+          - local_inc_vat
+          - local_vat_zero
         message:
           type: string
           description: Printable result of the request
       required:
-      - events
+      - invoice
+    BillingGroupCreateResponse:
+      type: object
+      description: BillingGroupCreateResponse
+      properties:
+        billing_group:
+          type: object
+          description: Billing group information
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            account_name:
+              type: string
+              maxLength: 83
+              description: Account name
+            address_lines:
+              type: array
+              maxItems: 3
+              description: Address lines
+              items:
+                type: string
+            billing_address:
+              type: string
+              maxLength: 1000
+              description: 'DEPRECATED: use split address fields like company, address_lines, zip_code, city and state instead'
+            billing_address_id:
+              type: string
+              maxLength: 36
+              description: Address ID
+            billing_contact_emails:
+              type: array
+              maxItems: 10
+              description: List of billing groups contact email addresses
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    maxLength: 254
+                    description: User email address
+                required:
+                - email
+            billing_currency:
+              type: string
+              description: Billing currency
+              enum:
+              - AUD
+              - CAD
+              - CHF
+              - DKK
+              - EUR
+              - GBP
+              - JPY
+              - NOK
+              - NZD
+              - SEK
+              - SGD
+              - USD
+            billing_emails:
+              type: array
+              maxItems: 10
+              description: List of project billing email addresses
+              items:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    maxLength: 254
+                    description: User email address
+                required:
+                - email
+            billing_extra_text:
+              type: string
+              maxLength: 1000
+              description: Extra text to be included in all project invoices, e.g. purchase order or cost center number
+            billing_group_id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: Billing group ID
+            billing_group_name:
+              type: string
+              maxLength: 128
+              description: Billing group name
+            billing_type:
+              type: string
+              description: Method of charging/invoicing this project
+            card_info:
+              type: object
+              description: Credit card assigned to the project
+              properties:
+                brand:
+                  type: string
+                  description: Brand
+                card_id:
+                  type: string
+                  maxLength: 64
+                  description: Credit card ID
+                country:
+                  type: string
+                  maxLength: 128
+                  description: Country
+                country_code:
+                  type: string
+                  maxLength: 2
+                  description: Two letter ISO country code
+                exp_month:
+                  type: integer
+                  minimum: 1
+                  maximum: 12
+                  description: Expiration month
+                exp_year:
+                  type: integer
+                  minimum: 2015
+                  maximum: 2100
+                  description: Expiration year
+                last4:
+                  type: string
+                  description: Credit card last four digits
+                name:
+                  type: string
+                  maxLength: 256
+                  description: Name on the credit card
+                user_email:
+                  type: string
+                  maxLength: 254
+                  description: User email address
+              required:
+              - brand
+              - card_id
+              - country
+              - country_code
+              - exp_month
+              - exp_year
+              - last4
+              - name
+              - user_email
+            city:
+              type: string
+              maxLength: 50
+              description: Address city
+            company:
+              type: string
+              maxLength: 83
+              description: Name of a company
+            country:
+              type: string
+              maxLength: 128
+              description: Billing country
+            country_code:
+              type: string
+              maxLength: 2
+              description: Two letter ISO country code
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            estimated_balance_local:
+              type: string
+              description: Estimated balance in billing currency, before tax
+            estimated_balance_usd:
+              type: string
+              description: Estimated balance in USD, before tax
+            payment_method:
+              type: string
+              description: Payment method
+              enum:
+              - accrual
+              - card
+              - disabled
+              - email
+              - no_payment_expected
+              - partner
+            shipping_address_id:
+              type: string
+              maxLength: 36
+              description: Address ID
+            state:
+              type: string
+              maxLength: 30
+              description: Address state or province
+            vat_id:
+              type: string
+              maxLength: 64
+              description: EU VAT Identification Number
+            zip_code:
+              type: string
+              maxLength: 36
+              description: Address zip code
+          required:
+          - account_id
+          - account_name
+          - address_lines
+          - billing_address_id
+          - billing_contact_emails
+          - billing_currency
+          - billing_emails
+          - billing_extra_text
+          - billing_group_id
+          - billing_group_name
+          - billing_type
+          - card_info
+          - city
+          - company
+          - country
+          - country_code
+          - create_time
+          - estimated_balance_local
+          - estimated_balance_usd
+          - payment_method
+          - shipping_address_id
+          - state
+          - vat_id
+          - zip_code
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - billing_group
+    BillingGroupDeleteResponse:
+      type: object
+      description: BillingGroupDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    BillingGroupCreditsClaimResponse:
+      type: object
+      description: BillingGroupCreditsClaimResponse
+      properties:
+        credit:
+          type: object
+          description: Assigned credit
+          properties:
+            code:
+              type: string
+              maxLength: 1024
+              description: Credit code
+            expire_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            remaining_value:
+              type: string
+              description: Remaining credit value
+            start_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            type:
+              type: string
+              description: Credit type
+              enum:
+              - discount
+              - employee
+              - evaluation
+              - internal
+              - other
+              - outage
+              - partner
+              - promotion
+              - purchase
+              - referral
+              - sponsorship
+              - trial
+              - trial_over
+            value:
+              type: string
+              description: Original credit value, or for expired credits, the consumed credit value
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - credit
+    BillingGroupCreditsListResponse:
+      type: object
+      description: BillingGroupCreditsListResponse
+      properties:
+        credits:
+          type: array
+          description: List of credits assigned to a billing group
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                maxLength: 1024
+                description: Credit code
+              expire_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              remaining_value:
+                type: string
+                description: Remaining credit value
+              start_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              type:
+                type: string
+                description: Credit type
+                enum:
+                - discount
+                - employee
+                - evaluation
+                - internal
+                - other
+                - outage
+                - partner
+                - promotion
+                - purchase
+                - referral
+                - sponsorship
+                - trial
+                - trial_over
+              value:
+                type: string
+                description: Original credit value, or for expired credits, the consumed credit value
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - credits
+    BillingGroupUpdateRequestBody:
+      type: object
+      description: BillingGroupUpdateRequestBody
+      properties:
+        account_id:
+          type: string
+          maxLength: 36
+          description: Account ID
+        address_lines:
+          type: array
+          maxItems: 3
+          description: Address lines
+          items:
+            type: string
+        billing_address_id:
+          type: string
+          maxLength: 36
+          description: Address ID
+        billing_contact_emails:
+          type: array
+          maxItems: 10
+          description: List of billing groups contact email addresses
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - email
+        billing_currency:
+          type: string
+          description: Billing currency
+          enum:
+          - AUD
+          - CAD
+          - CHF
+          - DKK
+          - EUR
+          - GBP
+          - JPY
+          - NOK
+          - NZD
+          - SEK
+          - SGD
+          - USD
+        billing_emails:
+          type: array
+          maxItems: 10
+          description: List of project billing email addresses
+          items:
+            type: object
+            properties:
+              email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - email
+        billing_extra_text:
+          type: string
+          maxLength: 1000
+          description: Extra text to be included in all project invoices, e.g. purchase order or cost center number
+        billing_group_name:
+          type: string
+          maxLength: 128
+          description: Billing group name
+        card_id:
+          type: string
+          maxLength: 64
+          description: Credit card ID
+        city:
+          type: string
+          maxLength: 50
+          description: Address city
+        company:
+          type: string
+          maxLength: 83
+          description: Name of a company
+        country_code:
+          type: string
+          maxLength: 2
+          description: Two letter country code for billing country
+        shipping_address_id:
+          type: string
+          maxLength: 36
+          description: Address ID
+        state:
+          type: string
+          maxLength: 30
+          description: Address state or province
+        vat_id:
+          type: string
+          maxLength: 64
+          description: EU VAT Identification Number
+        zip_code:
+          type: string
+          maxLength: 36
+          description: Address zip code
+    BillingGroupProjectListResponse:
+      type: object
+      description: BillingGroupProjectListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        projects:
+          type: array
+          description: List of projects assigned to billing group
+          items:
+            type: object
+            properties:
+              available_credits:
+                type: string
+                description: Available credits
+              estimated_balance:
+                type: string
+                description: Estimated balance
+              project_name:
+                type: string
+                maxLength: 63
+                description: Project name
+            required:
+            - available_credits
+            - estimated_balance
+            - project_name
+      required:
+      - projects
     BillingGroupCreditsClaimRequestBody:
       type: object
       description: BillingGroupCreditsClaimRequestBody
@@ -1011,6 +1759,19 @@ components:
           description: Credit code
       required:
       - code
+    BillingGroupProjectsAssignRequestBody:
+      type: object
+      description: BillingGroupProjectsAssignRequestBody
+      properties:
+        projects_names:
+          type: array
+          minItems: 1
+          maxItems: 1024
+          description: Projects names
+          items:
+            type: string
+      required:
+      - projects_names
     BillingGroupListResponse:
       type: object
       description: BillingGroupListResponse
@@ -1251,34 +2012,9 @@ components:
           description: Printable result of the request
       required:
       - billing_groups
-    BillingGroupProjectAssignResponse:
+    BillingGroupGetResponse:
       type: object
-      description: BillingGroupProjectAssignResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    BillingGroupCreateResponse:
-      type: object
-      description: BillingGroupCreateResponse
+      description: BillingGroupGetResponse
       properties:
         billing_group:
           type: object
@@ -1514,742 +2250,6 @@ components:
           description: Printable result of the request
       required:
       - billing_group
-    BillingGroupProjectListResponse:
-      type: object
-      description: BillingGroupProjectListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        projects:
-          type: array
-          description: List of projects assigned to billing group
-          items:
-            type: object
-            properties:
-              available_credits:
-                type: string
-                description: Available credits
-              estimated_balance:
-                type: string
-                description: Estimated balance
-              project_name:
-                type: string
-                maxLength: 63
-                description: Project name
-            required:
-            - available_credits
-            - estimated_balance
-            - project_name
-      required:
-      - projects
-    BillingGroupUpdateResponse:
-      type: object
-      description: BillingGroupUpdateResponse
-      properties:
-        billing_group:
-          type: object
-          description: Billing group information
-          properties:
-            account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            account_name:
-              type: string
-              maxLength: 83
-              description: Account name
-            address_lines:
-              type: array
-              maxItems: 3
-              description: Address lines
-              items:
-                type: string
-            billing_address:
-              type: string
-              maxLength: 1000
-              description: 'DEPRECATED: use split address fields like company, address_lines, zip_code, city and state instead'
-            billing_address_id:
-              type: string
-              maxLength: 36
-              description: Address ID
-            billing_contact_emails:
-              type: array
-              maxItems: 10
-              description: List of billing groups contact email addresses
-              items:
-                type: object
-                properties:
-                  email:
-                    type: string
-                    maxLength: 254
-                    description: User email address
-                required:
-                - email
-            billing_currency:
-              type: string
-              description: Billing currency
-              enum:
-              - AUD
-              - CAD
-              - CHF
-              - DKK
-              - EUR
-              - GBP
-              - JPY
-              - NOK
-              - NZD
-              - SEK
-              - SGD
-              - USD
-            billing_emails:
-              type: array
-              maxItems: 10
-              description: List of project billing email addresses
-              items:
-                type: object
-                properties:
-                  email:
-                    type: string
-                    maxLength: 254
-                    description: User email address
-                required:
-                - email
-            billing_extra_text:
-              type: string
-              maxLength: 1000
-              description: Extra text to be included in all project invoices, e.g. purchase order or cost center number
-            billing_group_id:
-              type: string
-              minLength: 36
-              maxLength: 36
-              description: Billing group ID
-            billing_group_name:
-              type: string
-              maxLength: 128
-              description: Billing group name
-            billing_type:
-              type: string
-              description: Method of charging/invoicing this project
-            card_info:
-              type: object
-              description: Credit card assigned to the project
-              properties:
-                brand:
-                  type: string
-                  description: Brand
-                card_id:
-                  type: string
-                  maxLength: 64
-                  description: Credit card ID
-                country:
-                  type: string
-                  maxLength: 128
-                  description: Country
-                country_code:
-                  type: string
-                  maxLength: 2
-                  description: Two letter ISO country code
-                exp_month:
-                  type: integer
-                  minimum: 1
-                  maximum: 12
-                  description: Expiration month
-                exp_year:
-                  type: integer
-                  minimum: 2015
-                  maximum: 2100
-                  description: Expiration year
-                last4:
-                  type: string
-                  description: Credit card last four digits
-                name:
-                  type: string
-                  maxLength: 256
-                  description: Name on the credit card
-                user_email:
-                  type: string
-                  maxLength: 254
-                  description: User email address
-              required:
-              - brand
-              - card_id
-              - country
-              - country_code
-              - exp_month
-              - exp_year
-              - last4
-              - name
-              - user_email
-            city:
-              type: string
-              maxLength: 50
-              description: Address city
-            company:
-              type: string
-              maxLength: 83
-              description: Name of a company
-            country:
-              type: string
-              maxLength: 128
-              description: Billing country
-            country_code:
-              type: string
-              maxLength: 2
-              description: Two letter ISO country code
-            create_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-            estimated_balance_local:
-              type: string
-              description: Estimated balance in billing currency, before tax
-            estimated_balance_usd:
-              type: string
-              description: Estimated balance in USD, before tax
-            payment_method:
-              type: string
-              description: Payment method
-              enum:
-              - accrual
-              - card
-              - disabled
-              - email
-              - no_payment_expected
-              - partner
-            shipping_address_id:
-              type: string
-              maxLength: 36
-              description: Address ID
-            state:
-              type: string
-              maxLength: 30
-              description: Address state or province
-            vat_id:
-              type: string
-              maxLength: 64
-              description: EU VAT Identification Number
-            zip_code:
-              type: string
-              maxLength: 36
-              description: Address zip code
-          required:
-          - account_id
-          - account_name
-          - address_lines
-          - billing_address_id
-          - billing_contact_emails
-          - billing_currency
-          - billing_emails
-          - billing_extra_text
-          - billing_group_id
-          - billing_group_name
-          - billing_type
-          - card_info
-          - city
-          - company
-          - country
-          - country_code
-          - create_time
-          - estimated_balance_local
-          - estimated_balance_usd
-          - payment_method
-          - shipping_address_id
-          - state
-          - vat_id
-          - zip_code
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - billing_group
-    BillingGroupCreateRequestBody:
-      type: object
-      description: BillingGroupCreateRequestBody
-      properties:
-        account_id:
-          type: string
-          maxLength: 36
-          description: Account ID
-        address_lines:
-          type: array
-          maxItems: 3
-          description: Address lines
-          items:
-            type: string
-        billing_address_id:
-          type: string
-          maxLength: 36
-          description: Address ID
-        billing_contact_emails:
-          type: array
-          maxItems: 10
-          description: List of billing groups contact email addresses
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: User email address
-            required:
-            - email
-        billing_currency:
-          type: string
-          description: Billing currency
-          enum:
-          - AUD
-          - CAD
-          - CHF
-          - DKK
-          - EUR
-          - GBP
-          - JPY
-          - NOK
-          - NZD
-          - SEK
-          - SGD
-          - USD
-        billing_emails:
-          type: array
-          maxItems: 10
-          description: List of project billing email addresses
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: User email address
-            required:
-            - email
-        billing_extra_text:
-          type: string
-          maxLength: 1000
-          description: Extra text to be included in all project invoices, e.g. purchase order or cost center number
-        billing_group_name:
-          type: string
-          maxLength: 128
-          description: Billing group name
-        card_id:
-          type: string
-          maxLength: 64
-          description: Credit card ID
-        city:
-          type: string
-          maxLength: 50
-          description: Address city
-        company:
-          type: string
-          maxLength: 83
-          description: Name of a company
-        copy_from_billing_group:
-          type: string
-          minLength: 36
-          maxLength: 36
-          description: Billing group ID
-        country_code:
-          type: string
-          maxLength: 2
-          description: Two letter country code for billing country
-        shipping_address_id:
-          type: string
-          maxLength: 36
-          description: Address ID
-        state:
-          type: string
-          maxLength: 30
-          description: Address state or province
-        vat_id:
-          type: string
-          maxLength: 64
-          description: EU VAT Identification Number
-        zip_code:
-          type: string
-          maxLength: 36
-          description: Address zip code
-      required:
-      - billing_group_name
-    BillingGroupCreditsListResponse:
-      type: object
-      description: BillingGroupCreditsListResponse
-      properties:
-        credits:
-          type: array
-          description: List of credits assigned to a billing group
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-                maxLength: 1024
-                description: Credit code
-              expire_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              remaining_value:
-                type: string
-                description: Remaining credit value
-              start_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              type:
-                type: string
-                description: Credit type
-                enum:
-                - discount
-                - employee
-                - evaluation
-                - internal
-                - other
-                - outage
-                - partner
-                - promotion
-                - purchase
-                - referral
-                - sponsorship
-                - trial
-                - trial_over
-              value:
-                type: string
-                description: Original credit value, or for expired credits, the consumed credit value
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - credits
-    BillingGroupProjectsAssignRequestBody:
-      type: object
-      description: BillingGroupProjectsAssignRequestBody
-      properties:
-        projects_names:
-          type: array
-          minItems: 1
-          maxItems: 1024
-          description: Projects names
-          items:
-            type: string
-      required:
-      - projects_names
-    BillingGroupUpdateRequestBody:
-      type: object
-      description: BillingGroupUpdateRequestBody
-      properties:
-        account_id:
-          type: string
-          maxLength: 36
-          description: Account ID
-        address_lines:
-          type: array
-          maxItems: 3
-          description: Address lines
-          items:
-            type: string
-        billing_address_id:
-          type: string
-          maxLength: 36
-          description: Address ID
-        billing_contact_emails:
-          type: array
-          maxItems: 10
-          description: List of billing groups contact email addresses
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: User email address
-            required:
-            - email
-        billing_currency:
-          type: string
-          description: Billing currency
-          enum:
-          - AUD
-          - CAD
-          - CHF
-          - DKK
-          - EUR
-          - GBP
-          - JPY
-          - NOK
-          - NZD
-          - SEK
-          - SGD
-          - USD
-        billing_emails:
-          type: array
-          maxItems: 10
-          description: List of project billing email addresses
-          items:
-            type: object
-            properties:
-              email:
-                type: string
-                maxLength: 254
-                description: User email address
-            required:
-            - email
-        billing_extra_text:
-          type: string
-          maxLength: 1000
-          description: Extra text to be included in all project invoices, e.g. purchase order or cost center number
-        billing_group_name:
-          type: string
-          maxLength: 128
-          description: Billing group name
-        card_id:
-          type: string
-          maxLength: 64
-          description: Credit card ID
-        city:
-          type: string
-          maxLength: 50
-          description: Address city
-        company:
-          type: string
-          maxLength: 83
-          description: Name of a company
-        country_code:
-          type: string
-          maxLength: 2
-          description: Two letter country code for billing country
-        shipping_address_id:
-          type: string
-          maxLength: 36
-          description: Address ID
-        state:
-          type: string
-          maxLength: 30
-          description: Address state or province
-        vat_id:
-          type: string
-          maxLength: 64
-          description: EU VAT Identification Number
-        zip_code:
-          type: string
-          maxLength: 36
-          description: Address zip code
-    BillingGroupInvoiceLinesListResponse:
-      type: object
-      description: BillingGroupInvoiceLinesListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        lines:
-          type: array
-          description: List of invoice lines
-          items:
-            type: object
-            properties:
-              cloud_name:
-                type: string
-                description: Name of the cloud, if billed resource is associated with a cloud resource
-              commitment_name:
-                type: string
-                description: Name of the commitment which is referred to this invoice line
-              description:
-                type: string
-                description: Human-readable short description of the invoice line
-              line_pre_discount_local:
-                type: string
-                description: Pre-tax sum of invoice line, in local currency, before any discounts
-              line_total_local:
-                type: string
-                description: Pre-tax sum of invoice line, in the local currency configured for the invoice
-              line_total_usd:
-                type: string
-                description: Pre-tax sum of invoice line, in USD
-              line_type:
-                type: string
-                description: Type of the invoice line
-                enum:
-                - commitment_fee
-                - credit_consumption
-                - extra_charge
-                - multiplier
-                - other_event
-                - pro_platform_charge
-                - rounding
-                - service_charge
-                - support_charge
-              local_currency:
-                type: string
-                description: Currency used for line_local_total
-              project_name:
-                type: string
-                description: Name of the project this line is associated with, if any
-              service_name:
-                type: string
-                description: Name of the service, if invoice line is for service use
-              service_plan:
-                type: string
-                description: Service plan name, if invoice line is for service use
-              service_type:
-                type: string
-                description: Service type, if invoice line is for service use
-                enum:
-                - alertmanager
-                - application
-                - clickhouse
-                - datahub
-                - dragonfly
-                - elasticsearch
-                - flink
-                - grafana
-                - kafka
-                - kafka_connect
-                - kafka_mirrormaker
-                - mysql
-                - nomadclient
-                - opensearch
-                - pg
-                - sparkpool
-                - stresstester
-                - sw
-                - thanos
-                - thanoscompactor
-                - thanosparquet
-                - thanosquery
-                - thanosreceiver
-                - thanosruler
-                - thanosstore
-                - valkey
-                - vector
-                - vmalert
-              tags:
-                type: object
-                description: Billing tags
-                properties: {}
-              timestamp_begin:
-                type: string
-                description: Begin timestamp of the billed time period, for resources billed by time
-              timestamp_end:
-                type: string
-                description: End timestamp of the billed time period, for resources billed by time
-            required:
-            - description
-            - line_total_usd
-            - line_type
-        message:
-          type: string
-          description: Printable result of the request
-  parameters:
-    billing_group_id:
-      in: path
-      name: billing_group_id
-      description: Billing group id
-      schema:
-        type: string
-      required: true
-    billinggroupinvoicecsvget_project:
-      in: query
-      name: project
-      description: Project name. Only required if the provided cookie comes from the Project Billing API.
-      schema:
-        type: string
-      required: false
-    download_cookie:
-      in: path
-      name: download_cookie
-      description: Authentication cookie for file download
-      schema:
-        type: string
-      required: true
-    billinggroupinvoicecsvget_cookie:
-      in: query
-      name: cookie
-      description: Download cookie signature.
-      schema:
-        type: string
-      required: true
-    invoice_number:
-      in: path
-      name: invoice_number
-      description: Invoice number
-      schema:
-        type: string
-      required: true
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

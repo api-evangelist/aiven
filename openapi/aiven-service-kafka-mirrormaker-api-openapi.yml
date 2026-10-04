@@ -194,32 +194,228 @@ paths:
         oauth2:
         - services:write
 components:
+  parameters:
+    source_cluster:
+      in: path
+      name: source_cluster
+      description: Source cluster alias
+      schema:
+        type: string
+      required: true
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    service_name:
+      in: path
+      name: service_name
+      description: Service name
+      schema:
+        type: string
+      required: true
+    target_cluster:
+      in: path
+      name: target_cluster
+      description: Target cluster alias
+      schema:
+        type: string
+      required: true
   schemas:
-    ServiceKafkaMirrorMakerDeleteReplicationFlowResponse:
+    ServiceKafkaMirrorMakerPatchReplicationFlowRequestBody:
       type: object
-      description: ServiceKafkaMirrorMakerDeleteReplicationFlowResponse
+      description: ServiceKafkaMirrorMakerPatchReplicationFlowRequestBody
       properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
+        config_properties_exclude:
           type: string
-          description: Printable result of the request
+          maxLength: 2048
+          description: A comma separated list of topic configuration properties and/or regexes that should not be replicated. If omitted, MirrorMaker will use default list of exclusions. For stability reasons, we always include the unclean.leader.election.enable field in the excluded parameters. If you have specific requirements for this configuration, please reach out to our support team for assistance.
+          title: Topic configuration properties that should not be replicated
+        emit_backward_heartbeats_enabled:
+          type: boolean
+          description: Whether to emit heartbeats to the direction opposite to the flow, i.e. to the source cluster
+          title: Emit backward heartbeats enabled
+        emit_heartbeats_enabled:
+          type: boolean
+          description: Whether to emit heartbeats to the target cluster
+          title: Emit heartbeats enabled
+        enabled:
+          type: boolean
+          description: Is replication flow enabled
+        exactly_once_delivery_enabled:
+          type: boolean
+          description: Whether to enable exactly-once message delivery. We recommend you set this to enabled for new replications.
+          title: Enable exactly-once message delivery
+        follower_fetching_enabled:
+          type: boolean
+          description: Assigns a Rack ID based on the availability-zone to enable follower fetching and rack awareness per replication flow.
+          title: Enable follower fetching
+        offset_lag_max:
+          type: integer
+          minimum: 0
+          description: 'How out-of-sync a remote partition can be before it is resynced (default: 100)'
+          title: How out-of-sync a remote partition can be before it is resynced
+        offset_syncs_topic_location:
+          type: string
+          description: The location of the offset-syncs topic
+          title: Offset syncs topic location
+          enum:
+          - source
+          - target
+        replication_factor:
+          type: integer
+          minimum: 1
+          description: Replication factor used when creating the remote topics. If the replication factor surpasses the number of nodes in the target cluster, topic creation will fail.
+          title: Replication factor
+        replication_policy_class:
+          type: string
+          description: Class which defines the remote topic naming convention
+          title: Replication policy class
+          enum:
+          - org.apache.kafka.connect.mirror.DefaultReplicationPolicy
+          - org.apache.kafka.connect.mirror.IdentityReplicationPolicy
+        sync_group_offsets_enabled:
+          type: boolean
+          description: Whether to periodically write the translated offsets of replicated consumer groups (in the source cluster) to __consumer_offsets topic in target cluster, as long as no active consumers in that group are connected to the target cluster
+          title: Sync consumer group offsets
+        sync_group_offsets_interval_seconds:
+          type: integer
+          minimum: 1
+          description: 'Frequency at which consumer group offsets are synced (default: 60, every minute)'
+          title: Frequency of consumer group offset sync
+        topics:
+          type: array
+          maxItems: 8192
+          description: Topic names and regular expressions that match topic names that should be replicated. MirrorMaker will replicate these topics if they are not matched by &quot;topics.exclude&quot;. Currently defaults to [&quot;.*&quot;].
+          title: List of topics and/or regular expressions to replicate.
+          items:
+            type: string
+        topics.blacklist:
+          type: array
+          maxItems: 8192
+          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
+          title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
+          items:
+            type: string
+        topics.exclude:
+          type: array
+          maxItems: 8192
+          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
+          title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
+          items:
+            type: string
+        topics_exclude:
+          type: array
+          maxItems: 8192
+          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
+          title: List of topics and/or regular expressions to not replicate.
+          items:
+            type: string
+    ServiceKafkaMirrorMakerCreateReplicationFlowRequestBody:
+      type: object
+      description: ServiceKafkaMirrorMakerCreateReplicationFlowRequestBody
+      properties:
+        config_properties_exclude:
+          type: string
+          maxLength: 2048
+          description: A comma separated list of topic configuration properties and/or regexes that should not be replicated. If omitted, MirrorMaker will use default list of exclusions. For stability reasons, we always include the unclean.leader.election.enable field in the excluded parameters. If you have specific requirements for this configuration, please reach out to our support team for assistance.
+          title: Topic configuration properties that should not be replicated
+        emit_backward_heartbeats_enabled:
+          type: boolean
+          description: Whether to emit heartbeats to the direction opposite to the flow, i.e. to the source cluster
+          title: Emit backward heartbeats enabled
+        emit_heartbeats_enabled:
+          type: boolean
+          description: Whether to emit heartbeats to the target cluster
+          title: Emit heartbeats enabled
+        enabled:
+          type: boolean
+          description: Is replication flow enabled
+        exactly_once_delivery_enabled:
+          type: boolean
+          description: Whether to enable exactly-once message delivery. We recommend you set this to enabled for new replications.
+          title: Enable exactly-once message delivery
+        follower_fetching_enabled:
+          type: boolean
+          description: Assigns a Rack ID based on the availability-zone to enable follower fetching and rack awareness per replication flow.
+          title: Enable follower fetching
+        offset_lag_max:
+          type: integer
+          minimum: 0
+          description: 'How out-of-sync a remote partition can be before it is resynced (default: 100)'
+          title: How out-of-sync a remote partition can be before it is resynced
+        offset_syncs_topic_location:
+          type: string
+          description: The location of the offset-syncs topic
+          title: Offset syncs topic location
+          enum:
+          - source
+          - target
+        replication_factor:
+          type: integer
+          minimum: 1
+          description: Replication factor used when creating the remote topics. If the replication factor surpasses the number of nodes in the target cluster, topic creation will fail.
+          title: Replication factor
+        replication_policy_class:
+          type: string
+          description: Class which defines the remote topic naming convention
+          title: Replication policy class
+          enum:
+          - org.apache.kafka.connect.mirror.DefaultReplicationPolicy
+          - org.apache.kafka.connect.mirror.IdentityReplicationPolicy
+        source_cluster:
+          type: string
+          maxLength: 128
+          description: 'The alias of the source cluster to use in this replication flow. Can contain the following symbols: ASCII alphanumerics, ''.'', ''_'', and ''-''.'
+          title: Source cluster alias
+        sync_group_offsets_enabled:
+          type: boolean
+          description: Whether to periodically write the translated offsets of replicated consumer groups (in the source cluster) to __consumer_offsets topic in target cluster, as long as no active consumers in that group are connected to the target cluster
+          title: Sync consumer group offsets
+        sync_group_offsets_interval_seconds:
+          type: integer
+          minimum: 1
+          description: 'Frequency at which consumer group offsets are synced (default: 60, every minute)'
+          title: Frequency of consumer group offset sync
+        target_cluster:
+          type: string
+          maxLength: 128
+          description: 'The alias of the target cluster to use in this replication flow. Can contain the following symbols: ASCII alphanumerics, ''.'', ''_'', and ''-''.'
+          title: Target cluster alias
+        topics:
+          type: array
+          maxItems: 8192
+          description: Topic names and regular expressions that match topic names that should be replicated. MirrorMaker will replicate these topics if they are not matched by &quot;topics.exclude&quot;. Currently defaults to [&quot;.*&quot;].
+          title: List of topics and/or regular expressions to replicate.
+          items:
+            type: string
+        topics.blacklist:
+          type: array
+          maxItems: 8192
+          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
+          title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
+          items:
+            type: string
+        topics.exclude:
+          type: array
+          maxItems: 8192
+          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
+          title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
+          items:
+            type: string
+        topics_exclude:
+          type: array
+          maxItems: 8192
+          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
+          title: List of topics and/or regular expressions to not replicate.
+          items:
+            type: string
+      required:
+      - enabled
+      - source_cluster
+      - target_cluster
     ServiceKafkaMirrorMakerGetReplicationFlowResponse:
       type: object
       description: ServiceKafkaMirrorMakerGetReplicationFlowResponse
@@ -356,270 +552,6 @@ components:
           - target_cluster
       required:
       - replication_flow
-    ServiceKafkaMirrorMakerCreateReplicationFlowRequestBody:
-      type: object
-      description: ServiceKafkaMirrorMakerCreateReplicationFlowRequestBody
-      properties:
-        config_properties_exclude:
-          type: string
-          maxLength: 2048
-          description: A comma separated list of topic configuration properties and/or regexes that should not be replicated. If omitted, MirrorMaker will use default list of exclusions. For stability reasons, we always include the unclean.leader.election.enable field in the excluded parameters. If you have specific requirements for this configuration, please reach out to our support team for assistance.
-          title: Topic configuration properties that should not be replicated
-        emit_backward_heartbeats_enabled:
-          type: boolean
-          description: Whether to emit heartbeats to the direction opposite to the flow, i.e. to the source cluster
-          title: Emit backward heartbeats enabled
-        emit_heartbeats_enabled:
-          type: boolean
-          description: Whether to emit heartbeats to the target cluster
-          title: Emit heartbeats enabled
-        enabled:
-          type: boolean
-          description: Is replication flow enabled
-        exactly_once_delivery_enabled:
-          type: boolean
-          description: Whether to enable exactly-once message delivery. We recommend you set this to enabled for new replications.
-          title: Enable exactly-once message delivery
-        follower_fetching_enabled:
-          type: boolean
-          description: Assigns a Rack ID based on the availability-zone to enable follower fetching and rack awareness per replication flow.
-          title: Enable follower fetching
-        offset_lag_max:
-          type: integer
-          minimum: 0
-          description: 'How out-of-sync a remote partition can be before it is resynced (default: 100)'
-          title: How out-of-sync a remote partition can be before it is resynced
-        offset_syncs_topic_location:
-          type: string
-          description: The location of the offset-syncs topic
-          title: Offset syncs topic location
-          enum:
-          - source
-          - target
-        replication_factor:
-          type: integer
-          minimum: 1
-          description: Replication factor used when creating the remote topics. If the replication factor surpasses the number of nodes in the target cluster, topic creation will fail.
-          title: Replication factor
-        replication_policy_class:
-          type: string
-          description: Class which defines the remote topic naming convention
-          title: Replication policy class
-          enum:
-          - org.apache.kafka.connect.mirror.DefaultReplicationPolicy
-          - org.apache.kafka.connect.mirror.IdentityReplicationPolicy
-        source_cluster:
-          type: string
-          maxLength: 128
-          description: 'The alias of the source cluster to use in this replication flow. Can contain the following symbols: ASCII alphanumerics, ''.'', ''_'', and ''-''.'
-          title: Source cluster alias
-        sync_group_offsets_enabled:
-          type: boolean
-          description: Whether to periodically write the translated offsets of replicated consumer groups (in the source cluster) to __consumer_offsets topic in target cluster, as long as no active consumers in that group are connected to the target cluster
-          title: Sync consumer group offsets
-        sync_group_offsets_interval_seconds:
-          type: integer
-          minimum: 1
-          description: 'Frequency at which consumer group offsets are synced (default: 60, every minute)'
-          title: Frequency of consumer group offset sync
-        target_cluster:
-          type: string
-          maxLength: 128
-          description: 'The alias of the target cluster to use in this replication flow. Can contain the following symbols: ASCII alphanumerics, ''.'', ''_'', and ''-''.'
-          title: Target cluster alias
-        topics:
-          type: array
-          maxItems: 8192
-          description: Topic names and regular expressions that match topic names that should be replicated. MirrorMaker will replicate these topics if they are not matched by &quot;topics.exclude&quot;. Currently defaults to [&quot;.*&quot;].
-          title: List of topics and/or regular expressions to replicate.
-          items:
-            type: string
-        topics.blacklist:
-          type: array
-          maxItems: 8192
-          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
-          title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
-          items:
-            type: string
-        topics.exclude:
-          type: array
-          maxItems: 8192
-          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
-          title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
-          items:
-            type: string
-        topics_exclude:
-          type: array
-          maxItems: 8192
-          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
-          title: List of topics and/or regular expressions to not replicate.
-          items:
-            type: string
-      required:
-      - enabled
-      - source_cluster
-      - target_cluster
-    ServiceKafkaMirrorMakerPatchReplicationFlowResponse:
-      type: object
-      description: ServiceKafkaMirrorMakerPatchReplicationFlowResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        replication_flow:
-          type: object
-          description: Replication flow
-          properties:
-            config_properties_exclude:
-              type: string
-              maxLength: 2048
-              description: A comma separated list of topic configuration properties and/or regexes that should not be replicated. If omitted, MirrorMaker will use default list of exclusions. For stability reasons, we always include the unclean.leader.election.enable field in the excluded parameters. If you have specific requirements for this configuration, please reach out to our support team for assistance.
-              title: Topic configuration properties that should not be replicated
-            emit_backward_heartbeats_enabled:
-              type: boolean
-              description: Whether to emit heartbeats to the direction opposite to the flow, i.e. to the source cluster
-              title: Emit backward heartbeats enabled
-            emit_heartbeats_enabled:
-              type: boolean
-              description: Whether to emit heartbeats to the target cluster
-              title: Emit heartbeats enabled
-            enabled:
-              type: boolean
-              description: Is replication flow enabled
-            exactly_once_delivery_enabled:
-              type: boolean
-              description: Whether to enable exactly-once message delivery. We recommend you set this to enabled for new replications.
-              title: Enable exactly-once message delivery
-            follower_fetching_enabled:
-              type: boolean
-              description: Assigns a Rack ID based on the availability-zone to enable follower fetching and rack awareness per replication flow.
-              title: Enable follower fetching
-            offset_lag_max:
-              type: integer
-              minimum: 0
-              description: 'How out-of-sync a remote partition can be before it is resynced (default: 100)'
-              title: How out-of-sync a remote partition can be before it is resynced
-            offset_syncs_topic_location:
-              type: string
-              description: The location of the offset-syncs topic
-              title: Offset syncs topic location
-              enum:
-              - source
-              - target
-            replication_factor:
-              type: integer
-              minimum: 1
-              description: Replication factor used when creating the remote topics. If the replication factor surpasses the number of nodes in the target cluster, topic creation will fail.
-              title: Replication factor
-            replication_policy_class:
-              type: string
-              description: Class which defines the remote topic naming convention
-              title: Replication policy class
-              enum:
-              - org.apache.kafka.connect.mirror.DefaultReplicationPolicy
-              - org.apache.kafka.connect.mirror.IdentityReplicationPolicy
-            replication_progress:
-              type: number
-              minimum: 0
-              maximum: 1
-              description: The overall progress of replication across topics
-              title: Replication progress
-            source_cluster:
-              type: string
-              maxLength: 128
-              description: 'The alias of the source cluster to use in this replication flow. Can contain the following symbols: ASCII alphanumerics, ''.'', ''_'', and ''-''.'
-              title: Source cluster alias
-            sync_group_offsets_enabled:
-              type: boolean
-              description: Whether to periodically write the translated offsets of replicated consumer groups (in the source cluster) to __consumer_offsets topic in target cluster, as long as no active consumers in that group are connected to the target cluster
-              title: Sync consumer group offsets
-            sync_group_offsets_interval_seconds:
-              type: integer
-              minimum: 1
-              description: 'Frequency at which consumer group offsets are synced (default: 60, every minute)'
-              title: Frequency of consumer group offset sync
-            target_cluster:
-              type: string
-              maxLength: 128
-              description: 'The alias of the target cluster to use in this replication flow. Can contain the following symbols: ASCII alphanumerics, ''.'', ''_'', and ''-''.'
-              title: Target cluster alias
-            topics:
-              type: array
-              maxItems: 8192
-              description: Topic names and regular expressions that match topic names that should be replicated. MirrorMaker will replicate these topics if they are not matched by &quot;topics.exclude&quot;. Currently defaults to [&quot;.*&quot;].
-              title: List of topics and/or regular expressions to replicate.
-              items:
-                type: string
-            topics.blacklist:
-              type: array
-              maxItems: 8192
-              description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
-              title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
-              items:
-                type: string
-            topics.exclude:
-              type: array
-              maxItems: 8192
-              description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
-              title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
-              items:
-                type: string
-            topics_exclude:
-              type: array
-              maxItems: 8192
-              description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
-              title: List of topics and/or regular expressions to not replicate.
-              items:
-                type: string
-          required:
-          - enabled
-          - source_cluster
-          - target_cluster
-      required:
-      - replication_flow
-    ServiceKafkaMirrorMakerCreateReplicationFlowResponse:
-      type: object
-      description: ServiceKafkaMirrorMakerCreateReplicationFlowResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
     ServiceKafkaMirrorMakerGetReplicationFlowsResponse:
       type: object
       description: ServiceKafkaMirrorMakerGetReplicationFlowsResponse
@@ -760,124 +692,192 @@ components:
             - target_cluster
       required:
       - replication_flows
-    ServiceKafkaMirrorMakerPatchReplicationFlowRequestBody:
+    ServiceKafkaMirrorMakerDeleteReplicationFlowResponse:
       type: object
-      description: ServiceKafkaMirrorMakerPatchReplicationFlowRequestBody
+      description: ServiceKafkaMirrorMakerDeleteReplicationFlowResponse
       properties:
-        config_properties_exclude:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
           type: string
-          maxLength: 2048
-          description: A comma separated list of topic configuration properties and/or regexes that should not be replicated. If omitted, MirrorMaker will use default list of exclusions. For stability reasons, we always include the unclean.leader.election.enable field in the excluded parameters. If you have specific requirements for this configuration, please reach out to our support team for assistance.
-          title: Topic configuration properties that should not be replicated
-        emit_backward_heartbeats_enabled:
-          type: boolean
-          description: Whether to emit heartbeats to the direction opposite to the flow, i.e. to the source cluster
-          title: Emit backward heartbeats enabled
-        emit_heartbeats_enabled:
-          type: boolean
-          description: Whether to emit heartbeats to the target cluster
-          title: Emit heartbeats enabled
-        enabled:
-          type: boolean
-          description: Is replication flow enabled
-        exactly_once_delivery_enabled:
-          type: boolean
-          description: Whether to enable exactly-once message delivery. We recommend you set this to enabled for new replications.
-          title: Enable exactly-once message delivery
-        follower_fetching_enabled:
-          type: boolean
-          description: Assigns a Rack ID based on the availability-zone to enable follower fetching and rack awareness per replication flow.
-          title: Enable follower fetching
-        offset_lag_max:
-          type: integer
-          minimum: 0
-          description: 'How out-of-sync a remote partition can be before it is resynced (default: 100)'
-          title: How out-of-sync a remote partition can be before it is resynced
-        offset_syncs_topic_location:
+          description: Printable result of the request
+    ServiceKafkaMirrorMakerCreateReplicationFlowResponse:
+      type: object
+      description: ServiceKafkaMirrorMakerCreateReplicationFlowResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
           type: string
-          description: The location of the offset-syncs topic
-          title: Offset syncs topic location
-          enum:
-          - source
-          - target
-        replication_factor:
-          type: integer
-          minimum: 1
-          description: Replication factor used when creating the remote topics. If the replication factor surpasses the number of nodes in the target cluster, topic creation will fail.
-          title: Replication factor
-        replication_policy_class:
+          description: Printable result of the request
+    ServiceKafkaMirrorMakerPatchReplicationFlowResponse:
+      type: object
+      description: ServiceKafkaMirrorMakerPatchReplicationFlowResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
           type: string
-          description: Class which defines the remote topic naming convention
-          title: Replication policy class
-          enum:
-          - org.apache.kafka.connect.mirror.DefaultReplicationPolicy
-          - org.apache.kafka.connect.mirror.IdentityReplicationPolicy
-        sync_group_offsets_enabled:
-          type: boolean
-          description: Whether to periodically write the translated offsets of replicated consumer groups (in the source cluster) to __consumer_offsets topic in target cluster, as long as no active consumers in that group are connected to the target cluster
-          title: Sync consumer group offsets
-        sync_group_offsets_interval_seconds:
-          type: integer
-          minimum: 1
-          description: 'Frequency at which consumer group offsets are synced (default: 60, every minute)'
-          title: Frequency of consumer group offset sync
-        topics:
-          type: array
-          maxItems: 8192
-          description: Topic names and regular expressions that match topic names that should be replicated. MirrorMaker will replicate these topics if they are not matched by &quot;topics.exclude&quot;. Currently defaults to [&quot;.*&quot;].
-          title: List of topics and/or regular expressions to replicate.
-          items:
-            type: string
-        topics.blacklist:
-          type: array
-          maxItems: 8192
-          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
-          title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
-          items:
-            type: string
-        topics.exclude:
-          type: array
-          maxItems: 8192
-          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
-          title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
-          items:
-            type: string
-        topics_exclude:
-          type: array
-          maxItems: 8192
-          description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
-          title: List of topics and/or regular expressions to not replicate.
-          items:
-            type: string
-  parameters:
-    target_cluster:
-      in: path
-      name: target_cluster
-      description: Target cluster alias
-      schema:
-        type: string
-      required: true
-    service_name:
-      in: path
-      name: service_name
-      description: Service name
-      schema:
-        type: string
-      required: true
-    source_cluster:
-      in: path
-      name: source_cluster
-      description: Source cluster alias
-      schema:
-        type: string
-      required: true
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
+          description: Printable result of the request
+        replication_flow:
+          type: object
+          description: Replication flow
+          properties:
+            config_properties_exclude:
+              type: string
+              maxLength: 2048
+              description: A comma separated list of topic configuration properties and/or regexes that should not be replicated. If omitted, MirrorMaker will use default list of exclusions. For stability reasons, we always include the unclean.leader.election.enable field in the excluded parameters. If you have specific requirements for this configuration, please reach out to our support team for assistance.
+              title: Topic configuration properties that should not be replicated
+            emit_backward_heartbeats_enabled:
+              type: boolean
+              description: Whether to emit heartbeats to the direction opposite to the flow, i.e. to the source cluster
+              title: Emit backward heartbeats enabled
+            emit_heartbeats_enabled:
+              type: boolean
+              description: Whether to emit heartbeats to the target cluster
+              title: Emit heartbeats enabled
+            enabled:
+              type: boolean
+              description: Is replication flow enabled
+            exactly_once_delivery_enabled:
+              type: boolean
+              description: Whether to enable exactly-once message delivery. We recommend you set this to enabled for new replications.
+              title: Enable exactly-once message delivery
+            follower_fetching_enabled:
+              type: boolean
+              description: Assigns a Rack ID based on the availability-zone to enable follower fetching and rack awareness per replication flow.
+              title: Enable follower fetching
+            offset_lag_max:
+              type: integer
+              minimum: 0
+              description: 'How out-of-sync a remote partition can be before it is resynced (default: 100)'
+              title: How out-of-sync a remote partition can be before it is resynced
+            offset_syncs_topic_location:
+              type: string
+              description: The location of the offset-syncs topic
+              title: Offset syncs topic location
+              enum:
+              - source
+              - target
+            replication_factor:
+              type: integer
+              minimum: 1
+              description: Replication factor used when creating the remote topics. If the replication factor surpasses the number of nodes in the target cluster, topic creation will fail.
+              title: Replication factor
+            replication_policy_class:
+              type: string
+              description: Class which defines the remote topic naming convention
+              title: Replication policy class
+              enum:
+              - org.apache.kafka.connect.mirror.DefaultReplicationPolicy
+              - org.apache.kafka.connect.mirror.IdentityReplicationPolicy
+            replication_progress:
+              type: number
+              minimum: 0
+              maximum: 1
+              description: The overall progress of replication across topics
+              title: Replication progress
+            source_cluster:
+              type: string
+              maxLength: 128
+              description: 'The alias of the source cluster to use in this replication flow. Can contain the following symbols: ASCII alphanumerics, ''.'', ''_'', and ''-''.'
+              title: Source cluster alias
+            sync_group_offsets_enabled:
+              type: boolean
+              description: Whether to periodically write the translated offsets of replicated consumer groups (in the source cluster) to __consumer_offsets topic in target cluster, as long as no active consumers in that group are connected to the target cluster
+              title: Sync consumer group offsets
+            sync_group_offsets_interval_seconds:
+              type: integer
+              minimum: 1
+              description: 'Frequency at which consumer group offsets are synced (default: 60, every minute)'
+              title: Frequency of consumer group offset sync
+            target_cluster:
+              type: string
+              maxLength: 128
+              description: 'The alias of the target cluster to use in this replication flow. Can contain the following symbols: ASCII alphanumerics, ''.'', ''_'', and ''-''.'
+              title: Target cluster alias
+            topics:
+              type: array
+              maxItems: 8192
+              description: Topic names and regular expressions that match topic names that should be replicated. MirrorMaker will replicate these topics if they are not matched by &quot;topics.exclude&quot;. Currently defaults to [&quot;.*&quot;].
+              title: List of topics and/or regular expressions to replicate.
+              items:
+                type: string
+            topics.blacklist:
+              type: array
+              maxItems: 8192
+              description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
+              title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
+              items:
+                type: string
+            topics.exclude:
+              type: array
+              maxItems: 8192
+              description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
+              title: List of topics and/or regular expressions to not replicate. Deprecated property, use 'topics_exclude instead'.
+              items:
+                type: string
+            topics_exclude:
+              type: array
+              maxItems: 8192
+              description: Topic names and regular expressions that match topic names that should not be replicated. MirrorMaker will not replicate these topics even if they are matched by &quot;topics&quot;. If not set, MM2 uses the default exclusion.
+              title: List of topics and/or regular expressions to not replicate.
+              items:
+                type: string
+          required:
+          - enabled
+          - source_cluster
+          - target_cluster
+      required:
+      - replication_flow
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

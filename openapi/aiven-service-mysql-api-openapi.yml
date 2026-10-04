@@ -264,37 +264,38 @@ paths:
                           title: Machine processable error code. Clients must be prepared to handle new codes.
                           description: 'query_validation_failed: Query validation failed'
 components:
+  parameters:
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    account_id:
+      in: path
+      name: account_id
+      description: Account ID
+      schema:
+        type: string
+      required: true
+    service_name:
+      in: path
+      name: service_name
+      description: Service name
+      schema:
+        type: string
+      required: true
   schemas:
-    MySQLServiceQueryStatisticsRequestBody:
+    MySQLServiceDatabaseMetadataQueryResponse:
       type: object
-      description: MySQLServiceQueryStatisticsRequestBody
+      description: MySQLServiceDatabaseMetadataQueryResponse
       properties:
-        limit:
-          type: integer
-          minimum: 1
-          maximum: 5000
-          description: Limit for number of results
-          default: 100
-        offset:
-          type: integer
-          minimum: 0
-          description: Offset for retrieved results based on sort order
-          default: 0
-        order_by:
+        metadata_query:
           type: string
-          maxLength: 256
-          description: 'Sort order can be either asc or desc and multiple comma separated columns with their own order can be specified: :asc,:desc. Accepted sort columns are: avg_timer_wait, count_star, digest, digest_text, first_seen, last_seen, max_timer_wait, min_timer_wait, query_sample_seen, query_sample_text, query_sample_timer_wait, quantile_95, quantile_99, quantile_999, schema_name, sum_created_tmp_disk_tables, sum_created_tmp_tables, sum_errors, sum_lock_time, sum_no_good_index_used, sum_no_index_used, sum_rows_affected, sum_rows_examined, sum_rows_sent, sum_select_full_join, sum_select_full_range_join, sum_select_range, sum_select_range_check, sum_select_scan, sum_sort_merge_passes, sum_sort_range, sum_sort_rows, sum_sort_scan, sum_timer_wait, sum_warnings'
-          title: Order in which to sort retrieved results
-          default: count_star:desc
-    MySQLServiceQueryValidateResponse:
-      type: object
-      description: MySQLServiceQueryValidateResponse
-      properties:
-        status:
-          type: string
-          description: Status
+          description: Database metadata retrieval query
       required:
-      - status
+      - metadata_query
     MySQLServiceMetadataValidateRequestBody:
       type: object
       description: MySQLServiceMetadataValidateRequestBody
@@ -308,28 +309,6 @@ components:
       required:
       - db_version
       - metadata
-    MySQLServiceMetadataValidateResponse:
-      type: object
-      description: MySQLServiceMetadataValidateResponse
-      properties:
-        status:
-          type: string
-          description: Status
-      required:
-      - status
-    MySQLServiceQueryValidateRequestBody:
-      type: object
-      description: MySQLServiceQueryValidateRequestBody
-      properties:
-        do_not_store:
-          type: boolean
-          description: Do not store details
-          default: false
-        query:
-          type: string
-          description: Query
-      required:
-      - query
     MySQLServiceQueryStatisticsResponse:
       type: object
       description: MySQLServiceQueryStatisticsResponse
@@ -468,6 +447,83 @@ components:
                 description: Query statistic
       required:
       - queries
+    MySQLServiceQueryValidateResponse:
+      type: object
+      description: MySQLServiceQueryValidateResponse
+      properties:
+        status:
+          type: string
+          description: Status
+      required:
+      - status
+    MySQLAccountQueryOptimizeRequestBody:
+      type: object
+      description: MySQLAccountQueryOptimizeRequestBody
+      properties:
+        do_not_store:
+          type: boolean
+          description: Do not store details
+          default: false
+        flags:
+          type: array
+          description: Optimization flags
+          items:
+            type: string
+        mysql_version:
+          type: string
+          description: An enumeration.
+          title: MySQL version
+          enum:
+          - '5.0'
+          - '5.1'
+          - '5.5'
+          - '5.6'
+          - '5.7'
+          - '8.0'
+          - '8.1'
+          - '8.2'
+          - '8.3'
+          - '8.4'
+        query:
+          type: string
+          description: Query
+        schema_metadata:
+          type: string
+          description: Schema metadata
+      required:
+      - flags
+      - mysql_version
+      - query
+    MySQLServiceQueryStatisticsRequestBody:
+      type: object
+      description: MySQLServiceQueryStatisticsRequestBody
+      properties:
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 5000
+          description: Limit for number of results
+          default: 100
+        offset:
+          type: integer
+          minimum: 0
+          description: Offset for retrieved results based on sort order
+          default: 0
+        order_by:
+          type: string
+          maxLength: 256
+          description: 'Sort order can be either asc or desc and multiple comma separated columns with their own order can be specified: :asc,:desc. Accepted sort columns are: avg_timer_wait, count_star, digest, digest_text, first_seen, last_seen, max_timer_wait, min_timer_wait, query_sample_seen, query_sample_text, query_sample_timer_wait, quantile_95, quantile_99, quantile_999, schema_name, sum_created_tmp_disk_tables, sum_created_tmp_tables, sum_errors, sum_lock_time, sum_no_good_index_used, sum_no_index_used, sum_rows_affected, sum_rows_examined, sum_rows_sent, sum_select_full_join, sum_select_full_range_join, sum_select_range, sum_select_range_check, sum_select_scan, sum_sort_merge_passes, sum_sort_range, sum_sort_rows, sum_sort_scan, sum_timer_wait, sum_warnings'
+          title: Order in which to sort retrieved results
+          default: count_star:desc
+    MySQLServiceMetadataValidateResponse:
+      type: object
+      description: MySQLServiceMetadataValidateResponse
+      properties:
+        status:
+          type: string
+          description: Status
+      required:
+      - status
     MySQLAccountQueryOptimizeResponse:
       type: object
       description: MySQLAccountQueryOptimizeResponse
@@ -558,75 +614,19 @@ components:
           - recommendations
       required:
       - optimize
-    MySQLAccountQueryOptimizeRequestBody:
+    MySQLServiceQueryValidateRequestBody:
       type: object
-      description: MySQLAccountQueryOptimizeRequestBody
+      description: MySQLServiceQueryValidateRequestBody
       properties:
         do_not_store:
           type: boolean
           description: Do not store details
           default: false
-        flags:
-          type: array
-          description: Optimization flags
-          items:
-            type: string
-        mysql_version:
-          type: string
-          description: An enumeration.
-          title: MySQL version
-          enum:
-          - '5.0'
-          - '5.1'
-          - '5.5'
-          - '5.6'
-          - '5.7'
-          - '8.0'
-          - '8.1'
-          - '8.2'
-          - '8.3'
-          - '8.4'
         query:
           type: string
           description: Query
-        schema_metadata:
-          type: string
-          description: Schema metadata
       required:
-      - flags
-      - mysql_version
       - query
-    MySQLServiceDatabaseMetadataQueryResponse:
-      type: object
-      description: MySQLServiceDatabaseMetadataQueryResponse
-      properties:
-        metadata_query:
-          type: string
-          description: Database metadata retrieval query
-      required:
-      - metadata_query
-  parameters:
-    service_name:
-      in: path
-      name: service_name
-      description: Service name
-      schema:
-        type: string
-      required: true
-    account_id:
-      in: path
-      name: account_id
-      description: Account ID
-      schema:
-        type: string
-      required: true
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

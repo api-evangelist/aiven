@@ -92,151 +92,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/PublicStaticIPAvailabilityListResponse'
 components:
+  parameters:
+    listprojectclouds_sort_by_proximity:
+      in: query
+      name: sort_by_proximity
+      description: When true, order clouds by proximity to the caller's IP (closest first).
+      schema:
+        type: boolean
+        default: true
+      required: false
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    tenant:
+      in: path
+      name: tenant
+      description: Aiven tenant ID
+      schema:
+        type: string
+      required: true
   schemas:
-    PublicStaticIPAvailabilityListResponse:
-      type: object
-      description: PublicStaticIPAvailabilityListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        static_ip_address_availability:
-          type: array
-          description: Paginated array
-          items:
-            type: object
-            properties:
-              cloud_name:
-                type: string
-                maxLength: 256
-                description: Target cloud
-              price_usd:
-                type: string
-                description: Hourly static IP address price in this cloud region
-            required:
-            - cloud_name
-            - price_usd
-      required:
-      - static_ip_address_availability
-    PublicPrivatelinkAvailabilityListResponse:
-      type: object
-      description: PublicPrivatelinkAvailabilityListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        privatelink_availability:
-          type: array
-          description: Privatelink pricing information for supported clouds
-          items:
-            type: object
-            properties:
-              cloud_name:
-                type: string
-                maxLength: 256
-                description: Target cloud
-              price_usd:
-                type: string
-                description: Hourly privatelink price in this cloud region
-            required:
-            - cloud_name
-            - price_usd
-      required:
-      - privatelink_availability
-    ListCloudsResponse:
-      type: object
-      description: ListCloudsResponse
-      properties:
-        clouds:
-          type: array
-          description: List of available clouds
-          items:
-            type: object
-            properties:
-              cloud_description:
-                type: string
-                description: Cloud provider and location
-              cloud_name:
-                type: string
-                maxLength: 256
-                description: Target cloud
-              geo_latitude:
-                type: number
-                description: Approximate geographic latitude of the datacenters
-              geo_longitude:
-                type: number
-                description: Approximate geographic longitude of the datacenters
-              geo_region:
-                type: string
-                description: Geographical region
-              provider:
-                type: string
-                description: Cloud provider name
-              provider_description:
-                type: string
-                description: Cloud provider description
-            required:
-            - cloud_name
-            - geo_region
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - clouds
     ListProjectCloudsResponse:
       type: object
       description: ListProjectCloudsResponse
@@ -295,29 +174,150 @@ components:
           description: Printable result of the request
       required:
       - clouds
-  parameters:
-    listprojectclouds_sort_by_proximity:
-      in: query
-      name: sort_by_proximity
-      description: When true, order clouds by proximity to the caller's IP (closest first).
-      schema:
-        type: boolean
-        default: true
-      required: false
-    tenant:
-      in: path
-      name: tenant
-      description: Aiven tenant ID
-      schema:
-        type: string
-      required: true
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
+    PublicStaticIPAvailabilityListResponse:
+      type: object
+      description: PublicStaticIPAvailabilityListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        static_ip_address_availability:
+          type: array
+          description: Paginated array
+          items:
+            type: object
+            properties:
+              cloud_name:
+                type: string
+                maxLength: 256
+                description: Target cloud
+              price_usd:
+                type: string
+                description: Hourly static IP address price in this cloud region
+            required:
+            - cloud_name
+            - price_usd
+      required:
+      - static_ip_address_availability
+    ListCloudsResponse:
+      type: object
+      description: ListCloudsResponse
+      properties:
+        clouds:
+          type: array
+          description: List of available clouds
+          items:
+            type: object
+            properties:
+              cloud_description:
+                type: string
+                description: Cloud provider and location
+              cloud_name:
+                type: string
+                maxLength: 256
+                description: Target cloud
+              geo_latitude:
+                type: number
+                description: Approximate geographic latitude of the datacenters
+              geo_longitude:
+                type: number
+                description: Approximate geographic longitude of the datacenters
+              geo_region:
+                type: string
+                description: Geographical region
+              provider:
+                type: string
+                description: Cloud provider name
+              provider_description:
+                type: string
+                description: Cloud provider description
+            required:
+            - cloud_name
+            - geo_region
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - clouds
+    PublicPrivatelinkAvailabilityListResponse:
+      type: object
+      description: PublicPrivatelinkAvailabilityListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        privatelink_availability:
+          type: array
+          description: Privatelink pricing information for supported clouds
+          items:
+            type: object
+            properties:
+              cloud_name:
+                type: string
+                maxLength: 256
+                description: Target cloud
+              price_usd:
+                type: string
+                description: Hourly privatelink price in this cloud region
+            required:
+            - cloud_name
+            - price_usd
+      required:
+      - privatelink_availability
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

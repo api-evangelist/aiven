@@ -208,67 +208,22 @@ paths:
         oauth2:
         - static_ips:read
 components:
+  parameters:
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    static_ip_address_id:
+      in: path
+      name: static_ip_address_id
+      description: Static IP address identifier
+      schema:
+        type: string
+      required: true
   schemas:
-    ProjectStaticIPPatchResponse:
-      type: object
-      description: ProjectStaticIPPatchResponse
-      properties:
-        cloud_name:
-          type: string
-          maxLength: 256
-          description: Target cloud
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        ip_address:
-          type: string
-          description: IPv4 address
-        message:
-          type: string
-          description: Printable result of the request
-        service_name:
-          type: string
-          minLength: 1
-          maxLength: 64
-          description: Service name
-        state:
-          type: string
-          description: Static IP address state
-          enum:
-          - creating
-          - created
-          - available
-          - assigned
-          - deleting
-          - deleted
-        static_ip_address_id:
-          type: string
-          description: Static IP address identifier
-        termination_protection:
-          type: boolean
-          description: Static IP address is protected against deletion
-      required:
-      - cloud_name
-      - ip_address
-      - service_name
-      - state
-      - static_ip_address_id
-      - termination_protection
     ProjectStaticIPAvailabilityListResponse:
       type: object
       description: ProjectStaticIPAvailabilityListResponse
@@ -312,9 +267,9 @@ components:
             - price_usd
       required:
       - static_ip_address_availability
-    StaticIPDeleteResponse:
+    StaticIPCreateResponse:
       type: object
-      description: StaticIPDeleteResponse
+      description: StaticIPCreateResponse
       properties:
         cloud_name:
           type: string
@@ -372,6 +327,19 @@ components:
       - state
       - static_ip_address_id
       - termination_protection
+    StaticIPCreateRequestBody:
+      type: object
+      description: StaticIPCreateRequestBody
+      properties:
+        cloud_name:
+          type: string
+          maxLength: 256
+          description: Target cloud
+        termination_protection:
+          type: boolean
+          description: Static IP address is protected against deletion
+      required:
+      - cloud_name
     ProjectStaticIPDissociateResponse:
       type: object
       description: ProjectStaticIPDissociateResponse
@@ -492,22 +460,9 @@ components:
       - state
       - static_ip_address_id
       - termination_protection
-    StaticIPCreateRequestBody:
+    StaticIPDeleteResponse:
       type: object
-      description: StaticIPCreateRequestBody
-      properties:
-        cloud_name:
-          type: string
-          maxLength: 256
-          description: Target cloud
-        termination_protection:
-          type: boolean
-          description: Static IP address is protected against deletion
-      required:
-      - cloud_name
-    StaticIPCreateResponse:
-      type: object
-      description: StaticIPCreateResponse
+      description: StaticIPDeleteResponse
       properties:
         cloud_name:
           type: string
@@ -565,17 +520,6 @@ components:
       - state
       - static_ip_address_id
       - termination_protection
-    ProjectStaticIPAssociateRequestBody:
-      type: object
-      description: ProjectStaticIPAssociateRequestBody
-      properties:
-        service_name:
-          type: string
-          minLength: 1
-          maxLength: 64
-          description: Service name
-      required:
-      - service_name
     ProjectStaticIPPatchRequestBody:
       type: object
       description: ProjectStaticIPPatchRequestBody
@@ -651,21 +595,77 @@ components:
             - termination_protection
       required:
       - static_ips
-  parameters:
-    static_ip_address_id:
-      in: path
-      name: static_ip_address_id
-      description: Static IP address identifier
-      schema:
-        type: string
-      required: true
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
+    ProjectStaticIPAssociateRequestBody:
+      type: object
+      description: ProjectStaticIPAssociateRequestBody
+      properties:
+        service_name:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Service name
+      required:
+      - service_name
+    ProjectStaticIPPatchResponse:
+      type: object
+      description: ProjectStaticIPPatchResponse
+      properties:
+        cloud_name:
+          type: string
+          maxLength: 256
+          description: Target cloud
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        ip_address:
+          type: string
+          description: IPv4 address
+        message:
+          type: string
+          description: Printable result of the request
+        service_name:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Service name
+        state:
+          type: string
+          description: Static IP address state
+          enum:
+          - creating
+          - created
+          - available
+          - assigned
+          - deleting
+          - deleted
+        static_ip_address_id:
+          type: string
+          description: Static IP address identifier
+        termination_protection:
+          type: boolean
+          description: Static IP address is protected against deletion
+      required:
+      - cloud_name
+      - ip_address
+      - service_name
+      - state
+      - static_ip_address_id
+      - termination_protection
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'
