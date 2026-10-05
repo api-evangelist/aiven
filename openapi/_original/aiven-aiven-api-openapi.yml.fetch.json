@@ -1,0 +1,12 @@
+{
+ "url": "https://api.aiven.io/doc/openapi.json",
+ "requested_url": "https://aiven.io/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 1977690,
+ "sha256": "16b24e652cdd56a18a1630ac0143ca88c2aa753f65009b286d4b4a420d4a0ca2",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.905), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
