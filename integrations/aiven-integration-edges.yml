@@ -53,3 +53,19 @@ edges:
     OpenSearch is an open sour
   detected_by: sweep-shape-compat.py
   first_seen: '2026-10-13'
+- partner_name: Apache Kafka
+  partner: apache-kafka
+  partner_match: shape-anchor
+  channel: provider-built
+  relationship: compatible
+  direction: provider-built
+  shape: kafka-protocol
+  type: docs
+  degree: full
+  evidence: https://aiven.io/docs/products/kafka
+  evidence_kind: own-docs
+  evidence_file: https://github.com/api-evangelist/aiven/blob/main/evidence/compatibility/aiven-kafka-protocol-1.md
+  quote: Aiven for Apache Kafka® is a fully managed Apache Kafka service for building event-driven applications,
+    data pipelines, and stream processing systems.
+  detected_by: sweep-shape-compat.py
+  first_seen: '2026-10-13'
