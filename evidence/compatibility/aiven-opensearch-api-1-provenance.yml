@@ -1,0 +1,14 @@
+fetched: '2026-10-13'
+method: fetched
+source: https://aiven.io/docs/products/opensearch
+page: https://aiven.io/docs/products/opensearch
+file: aiven-opensearch-api-1.md
+bytes: 5155
+sha256: 6d38c445904bfa9aadb396b10c9e627e08dc53d89a3be2ae3815a47450770ef9
+anchor: opensearch
+shape: opensearch-api
+classification: declares-compatibility
+quote: Aiven for OpenSearch® is a fully managed distributed search and analytics suite, deployable in the cloud
+  of your choice. Ideal for logs management, application and website search, analytical aggregations and more. OpenSearch
+  is an open source fork derived from Elasticsearch.
+note: text extracted from the provider's own page (tags stripped), saved for evidence

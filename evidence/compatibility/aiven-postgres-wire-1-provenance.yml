@@ -1,0 +1,12 @@
+fetched: '2026-10-13'
+method: fetched
+source: https://aiven.io/docs/products/postgresql
+page: https://aiven.io/docs/products/postgresql
+file: aiven-postgres-wire-1.md
+bytes: 2879
+sha256: 73b67688745785631e5cd9acc551228d9226b7ccbcc1c51789c2d0551cc77c77
+anchor: postgresql
+shape: postgres-wire
+classification: no-compatibility-statement
+quote: null
+note: text extracted from the provider's own page (tags stripped), saved for evidence

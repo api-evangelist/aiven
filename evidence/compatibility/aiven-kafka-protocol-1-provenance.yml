@@ -1,0 +1,13 @@
+fetched: '2026-10-13'
+method: fetched
+source: https://aiven.io/docs/products/kafka
+page: https://aiven.io/docs/products/kafka
+file: aiven-kafka-protocol-1.md
+bytes: 3846
+sha256: 4107a22c261c22a02986ef3cd70ba83b3ce792a5deb158041e3b66b6891d331e
+anchor: apache-kafka
+shape: kafka-protocol
+classification: declares-compatibility
+quote: Aiven for Apache Kafka® is a fully managed Apache Kafka service for building event-driven applications, data
+  pipelines, and stream processing systems.
+note: text extracted from the provider's own page (tags stripped), saved for evidence
