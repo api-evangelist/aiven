@@ -3,6 +3,7 @@ method: searched
 checked:
 - https://aws.amazon.com/marketplace/
 - https://azuremarketplace.microsoft.com/
+- https://plugins.jetbrains.com/
 marketplace_apps: []
 edges:
 - partner_name: AWS Marketplace
@@ -69,3 +70,23 @@ edges:
     data pipelines, and stream processing systems.
   detected_by: sweep-shape-compat.py
   first_seen: '2026-10-13'
+- partner_name: JetBrains Marketplace
+  partner: jetbrains
+  partner_match: aggregator
+  type: marketplace
+  marketplace: jetbrains
+  channel: partner-built
+  relationship: platform-app
+  direction: third-party
+  evidence: https://plugins.jetbrains.com/vendor/EverSQL
+  listing_count: 2
+  apps:
+  - SQL Optimizer, SQL Formatter, SQL Minifier, PostgreSQL and MySQL
+  - 'Kafka UI: Manage your Kafka clusters, Produce and View Messages'
+  publisher_name: Aiven
+  badges:
+  - Verified vendor
+  detected_by: sweep-devtools.py
+  detected: '2026-10-14'
+source:
+- https://plugins.jetbrains.com/
