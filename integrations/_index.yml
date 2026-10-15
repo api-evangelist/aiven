@@ -27,28 +27,6 @@
   relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
-- slug: aiven-opensearch
-  label: OpenSearch
-  partner: opensearch
-  partner_name: OpenSearch
-  type: docs
-  channel: provider-built
-  evidence: https://aiven.io/docs/products/opensearch
-  source: edge
-  relationship: compatible
-  status: not-a-workflow
-  arazzo: null
-- slug: aiven-apache-kafka
-  label: Apache Kafka
-  partner: apache-kafka
-  partner_name: Apache Kafka
-  type: docs
-  channel: provider-built
-  evidence: https://aiven.io/docs/products/kafka
-  source: edge
-  relationship: compatible
-  status: not-a-workflow
-  arazzo: null
 - slug: aiven-jetbrains-marketplace
   label: JetBrains Marketplace
   partner: jetbrains
@@ -78,6 +56,28 @@
     register_id: io.aiven/mcp
     detected_by: sweep-agent-tools.py
     detected: '2026-10-14'
+  status: not-a-workflow
+  arazzo: null
+- slug: aiven-apache-kafka
+  label: Apache Kafka
+  partner: apache-kafka
+  partner_name: Apache Kafka
+  type: docs
+  channel: provider-built
+  evidence: https://aiven.io/docs/products/kafka
+  source: edge
+  relationship: compatible
+  status: not-a-workflow
+  arazzo: null
+- slug: aiven-opensearch
+  label: OpenSearch
+  partner: opensearch
+  partner_name: OpenSearch
+  type: docs
+  channel: provider-built
+  evidence: https://aiven.io/docs/products/opensearch
+  source: edge
+  relationship: compatible
   status: not-a-workflow
   arazzo: null
 - slug: aiven-okta-own
