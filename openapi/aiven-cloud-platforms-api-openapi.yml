@@ -93,6 +93,13 @@ paths:
                 $ref: '#/components/schemas/PublicStaticIPAvailabilityListResponse'
 components:
   parameters:
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
     listprojectclouds_sort_by_proximity:
       in: query
       name: sort_by_proximity
@@ -101,13 +108,6 @@ components:
         type: boolean
         default: true
       required: false
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
     tenant:
       in: path
       name: tenant
@@ -116,6 +116,49 @@ components:
         type: string
       required: true
   schemas:
+    PublicPrivatelinkAvailabilityListResponse:
+      type: object
+      description: PublicPrivatelinkAvailabilityListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        privatelink_availability:
+          type: array
+          description: Privatelink pricing information for supported clouds
+          items:
+            type: object
+            properties:
+              cloud_name:
+                type: string
+                maxLength: 256
+                description: Target cloud
+              price_usd:
+                type: string
+                description: Hourly privatelink price in this cloud region
+            required:
+            - cloud_name
+            - price_usd
+      required:
+      - privatelink_availability
     ListProjectCloudsResponse:
       type: object
       description: ListProjectCloudsResponse
@@ -275,49 +318,6 @@ components:
           description: Printable result of the request
       required:
       - clouds
-    PublicPrivatelinkAvailabilityListResponse:
-      type: object
-      description: PublicPrivatelinkAvailabilityListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        privatelink_availability:
-          type: array
-          description: Privatelink pricing information for supported clouds
-          items:
-            type: object
-            properties:
-              cloud_name:
-                type: string
-                maxLength: 256
-                description: Target cloud
-              price_usd:
-                type: string
-                description: Hourly privatelink price in this cloud region
-            required:
-            - cloud_name
-            - price_usd
-      required:
-      - privatelink_availability
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

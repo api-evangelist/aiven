@@ -1017,24 +1017,10 @@ paths:
         - accounts:read
 components:
   parameters:
-    project:
+    account_authentication_method_id:
       in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
-    account_id:
-      in: path
-      name: account_id
-      description: Account ID
-      schema:
-        type: string
-      required: true
-    user_email:
-      in: path
-      name: user_email
-      description: Email address
+      name: account_authentication_method_id
+      description: Account authentication method ID
       schema:
         type: string
       required: true
@@ -1045,10 +1031,10 @@ components:
       schema:
         type: string
       required: true
-    account_authentication_method_id:
+    invite_verification_code:
       in: path
-      name: account_authentication_method_id
-      description: Account authentication method ID
+      name: invite_verification_code
+      description: Verification code received via email
       schema:
         type: string
       required: true
@@ -1056,6 +1042,27 @@ components:
       in: path
       name: card_id
       description: Credit card ID
+      schema:
+        type: string
+      required: true
+    user_email:
+      in: path
+      name: user_email
+      description: Email address
+      schema:
+        type: string
+      required: true
+    account_id:
+      in: path
+      name: account_id
+      description: Account ID
+      schema:
+        type: string
+      required: true
+    project:
+      in: path
+      name: project
+      description: Project name
       schema:
         type: string
       required: true
@@ -1073,14 +1080,247 @@ components:
       schema:
         type: string
       required: true
-    invite_verification_code:
-      in: path
-      name: invite_verification_code
-      description: Verification code received via email
-      schema:
-        type: string
-      required: true
   schemas:
+    AccountTeamProjectAssociateResponse:
+      type: object
+      description: AccountTeamProjectAssociateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountTeamMembersListResponse:
+      type: object
+      description: AccountTeamMembersListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        members:
+          type: array
+          description: List of account team members
+          items:
+            type: object
+            properties:
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              real_name:
+                type: string
+                maxLength: 256
+                description: User real name
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              update_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+              user_id:
+                type: string
+                description: User ID
+            required:
+            - create_time
+            - real_name
+            - team_id
+            - team_name
+            - update_time
+            - user_email
+            - user_id
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - members
+    AccountMoveRequestBody:
+      type: object
+      description: AccountMoveRequestBody
+      properties:
+        parent_account_id:
+          type: string
+          maxLength: 36
+          description: Account ID
+      required:
+      - parent_account_id
+    AccountGetResponse:
+      type: object
+      description: AccountGetResponse
+      properties:
+        account:
+          type: object
+          description: Account details
+          properties:
+            access_source:
+              type: string
+              description: Describe the source of the account
+              enum:
+              - descendant_membership
+              - organization_membership
+              - project_membership
+              - team_membership
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            account_name:
+              type: string
+              maxLength: 83
+              description: Account name
+            account_owner_team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            features:
+              type: object
+              description: Feature flags
+              properties: {}
+            is_account_member:
+              type: boolean
+              description: If true, user is part of a team of this or a parent account
+            is_account_owner:
+              type: boolean
+              description: If true, user is part of the owners team for this account
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            parent_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            primary_billing_group_id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: Primary billing group ID - deprecated, always null
+            root_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            tenant_id:
+              type: string
+              maxLength: 64
+              description: Tenant identifier
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - account_id
+          - account_name
+          - account_owner_team_id
+          - create_time
+          - is_account_owner
+          - organization_id
+          - primary_billing_group_id
+          - root_account_id
+          - update_time
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account
+    AccountTeamMemberVerifyInviteResponse:
+      type: object
+      description: AccountTeamMemberVerifyInviteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        invite_details:
+          type: object
+          description: Details of verified invite
+          properties:
+            user_email:
+              type: string
+              maxLength: 254
+              description: User email address
+          required:
+          - user_email
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - invite_details
     AccountEventListResponse:
       type: object
       description: AccountEventListResponse
@@ -1151,6 +1391,108 @@ components:
           description: Printable result of the request
       required:
       - events
+    AccountListResponse:
+      type: object
+      description: AccountListResponse
+      properties:
+        accounts:
+          type: array
+          description: List of accounts
+          items:
+            type: object
+            properties:
+              access_source:
+                type: string
+                description: Describe the source of the account
+                enum:
+                - descendant_membership
+                - organization_membership
+                - project_membership
+                - team_membership
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              account_owner_team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              features:
+                type: object
+                description: Feature flags
+                properties: {}
+              is_account_member:
+                type: boolean
+                description: If true, user is part of a team of this or a parent account
+              is_account_owner:
+                type: boolean
+                description: If true, user is part of the owners team for this account
+              organization_id:
+                type: string
+                maxLength: 36
+                description: Organization ID
+              parent_account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              primary_billing_group_id:
+                type: string
+                minLength: 36
+                maxLength: 36
+                description: Primary billing group ID - deprecated, always null
+              root_account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              tenant_id:
+                type: string
+                maxLength: 64
+                description: Tenant identifier
+              update_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+            required:
+            - account_id
+            - account_name
+            - account_owner_team_id
+            - create_time
+            - is_account_owner
+            - organization_id
+            - primary_billing_group_id
+            - root_account_id
+            - update_time
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - accounts
     AccountTeamListResponse:
       type: object
       description: AccountTeamListResponse
@@ -1207,6 +1549,109 @@ components:
             - team_name
       required:
       - teams
+    AccountTeamDeleteResponse:
+      type: object
+      description: AccountTeamDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    AccountTeamInvitesListResponse:
+      type: object
+      description: AccountTeamInvitesListResponse
+      properties:
+        account_invites:
+          type: array
+          description: List of invites
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              invited_by_user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - account_id
+            - account_name
+            - create_time
+            - invited_by_user_email
+            - team_id
+            - team_name
+            - user_email
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account_invites
+    AccountAuthenticationMethodDeleteResponse:
+      type: object
+      description: AccountAuthenticationMethodDeleteResponse
+      properties:
+        message:
+          type: string
+          description: Response message field
+      required:
+      - message
     AccountCreateResponse:
       type: object
       description: AccountCreateResponse
@@ -1307,6 +1752,70 @@ components:
           description: Printable result of the request
       required:
       - account
+    AccountTeamUpdateRequestBody:
+      type: object
+      description: AccountTeamUpdateRequestBody
+      properties:
+        team_name:
+          type: string
+          maxLength: 128
+          description: Team name
+      required:
+      - team_name
+    AccountTeamGetResponse:
+      type: object
+      description: AccountTeamGetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        team:
+          type: object
+          description: Account Team details
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            team_name:
+              type: string
+              maxLength: 128
+              description: Team name
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - team_id
+          - team_name
+      required:
+      - team
     AccountAuthenticationMethodUpdateResponse:
       type: object
       description: AccountAuthenticationMethodUpdateResponse
@@ -1518,152 +2027,9 @@ components:
           - update_time
       required:
       - authentication_method
-    AccountPaymentMethodsListResponse:
+    AccountTeamProjectAssociationUpdateResponse:
       type: object
-      description: AccountPaymentMethodsListResponse
-      properties:
-        cards:
-          type: array
-          description: List of account's credit cards
-          items:
-            type: object
-            properties:
-              brand:
-                type: string
-                description: Brand
-              card_id:
-                type: string
-                maxLength: 64
-                description: Credit card ID
-              country:
-                type: string
-                maxLength: 128
-                description: Country
-              country_code:
-                type: string
-                maxLength: 2
-                description: Two letter ISO country code
-              exp_month:
-                type: integer
-                minimum: 1
-                maximum: 12
-                description: Expiration month
-              exp_year:
-                type: integer
-                minimum: 2015
-                maximum: 2100
-                description: Expiration year
-              last4:
-                type: string
-                description: Credit card last four digits
-              name:
-                type: string
-                maxLength: 256
-                description: Name on the credit card
-            required:
-            - brand
-            - card_id
-            - country
-            - country_code
-            - exp_month
-            - exp_year
-            - last4
-            - name
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - cards
-    AccountTeamInvitesListResponse:
-      type: object
-      description: AccountTeamInvitesListResponse
-      properties:
-        account_invites:
-          type: array
-          description: List of invites
-          items:
-            type: object
-            properties:
-              account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              account_name:
-                type: string
-                maxLength: 83
-                description: Account name
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              invited_by_user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-              team_id:
-                type: string
-                maxLength: 32
-                description: Team ID
-              team_name:
-                type: string
-                maxLength: 128
-                description: Team name
-              user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-            required:
-            - account_id
-            - account_name
-            - create_time
-            - invited_by_user_email
-            - team_id
-            - team_name
-            - user_email
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - account_invites
-    AccountTeamProjectAssociateResponse:
-      type: object
-      description: AccountTeamProjectAssociateResponse
+      description: AccountTeamProjectAssociationUpdateResponse
       properties:
         errors:
           type: array
@@ -1686,880 +2052,17 @@ components:
         message:
           type: string
           description: Printable result of the request
-    AccountAuthenticationMethodGetResponse:
+    AccountAttachPaymentMethodRequestBody:
       type: object
-      description: AccountAuthenticationMethodGetResponse
+      description: AccountAttachPaymentMethodRequestBody
       properties:
-        authentication_method:
-          type: object
-          description: AuthenticationMethod
-          properties:
-            account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            auth_token_extend_when_used:
-              type: boolean
-              description: Extend authentication token validity when used
-            auth_token_max_age_seconds:
-              type: integer
-              minimum: 300
-              maximum: 1296000
-              description: Auth Token Max Age Seconds
-            authentication_method_enabled:
-              type: boolean
-              description: If true, authentication method can be used to access account/projects in account. If false, authentication method can still be used to sign in
-            authentication_method_id:
-              type: string
-              description: Authentication Method ID
-            authentication_method_name:
-              type: string
-              maxLength: 128
-              description: Authentication Method Name
-            authentication_method_type:
-              type: string
-              description: An enumeration.
-              title: Authentication method type
-              enum:
-              - internal
-              - saml
-            auto_join_team_id:
-              type: string
-              maxLength: 32
-              description: Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null.
-            auto_join_user_group_id:
-              type: string
-              maxLength: 36
-              description: Automatically add users to a group, when user signs up using this authentication method
-            create_time:
-              type: string
-              maxLength: 36
-              description: Create Time
-            delete_time:
-              type: string
-              maxLength: 36
-              description: Delete Time
-            internal_mcp_enabled:
-              type: boolean
-              description: MCP connections enabled
-            organization_id:
-              type: string
-              maxLength: 36
-              description: Organization ID
-            saml_acs_url:
-              type: string
-              maxLength: 2048
-              description: Saml Acs Url
-            saml_assertion_signed_enabled:
-              type: boolean
-              description: Set to 'true' to enable WantAssertionsSigned
-            saml_authn_requests_signed_enabled:
-              type: boolean
-              description: Set to 'true' to enable AuthnRequestsSigned
-            saml_cert:
-              type: string
-              description: An enumeration.
-              title: SAMLVariant
-              enum:
-              - adfs
-            saml_certificate:
-              type: string
-              maxLength: 16384
-              description: Identity provider's certificate
-            saml_certificate_issuer:
-              type: string
-              description: Saml Certificate Issuer
-            saml_certificate_not_valid_after:
-              type: string
-              maxLength: 36
-              description: Saml Certificate Not Valid After
-            saml_certificate_not_valid_before:
-              type: string
-              maxLength: 36
-              description: Saml Certificate Not Valid Before
-            saml_certificate_subject:
-              type: string
-              description: Saml Certificate Subject
-            saml_digest_algorithm:
-              type: string
-              description: An enumeration.
-              title: Digest algorithm. This is an advanced option that typically does not need to be set.
-              default: sha256
-              enum:
-              - sha1
-              - sha256
-              - sha384
-              - sha512
-            saml_entity_id:
-              type: string
-              maxLength: 2048
-              description: Saml Entity ID
-            saml_field_mapping:
-              type: object
-              description: SAMLFieldMapping
-              properties:
-                email:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user email
-                  default: email
-                first_name:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user's first name
-                  default: first_name
-                groups:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.
-                  default: groups
-                identity:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.
-                  default: email
-                last_name:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user's lastname
-                  default: last_name
-                real_name:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user's full name. If specified, first_name and last_name mappings are ignored
-            saml_idp_login_allowed:
-              type: boolean
-              description: Set to 'true' to enable IdP initiated login
-            saml_idp_url:
-              type: string
-              maxLength: 2048
-              description: Saml Idp Url
-            saml_join_groups:
-              type: boolean
-              description: SAML join groups enabled
-            saml_metadata_url:
-              type: string
-              maxLength: 2048
-              description: Saml Metadata Url
-            saml_requested_authn_context_enabled:
-              type: boolean
-              description: Set to 'false' to disable RequestedAuthnContext
-            saml_signature_algorithm:
-              type: string
-              description: An enumeration.
-              title: SAMLSignatureAlgorithm
-              default: rsa-sha256
-              enum:
-              - rsa-sha1
-              - dsa-sha1
-              - rsa-sha256
-              - rsa-sha384
-              - rsa-sha512
-            saml_sp_certificate:
-              type: string
-              maxLength: 16384
-              description: Saml Sp Certificate
-            saml_variant:
-              type: string
-              description: An enumeration.
-              title: SAMLVariant
-              enum:
-              - adfs
-            scim_enabled:
-              type: boolean
-              description: SCIM API enabled
-            scim_url:
-              type: string
-              maxLength: 2048
-              description: Scim Url
-            state:
-              type: string
-              description: An enumeration.
-              title: AuthenticationMethodState
-              enum:
-              - active
-              - deleted
-              - pending_configuration
-            update_time:
-              type: string
-              maxLength: 36
-              description: Update Time
-          required:
-          - account_id
-          - authentication_method_enabled
-          - authentication_method_id
-          - authentication_method_type
-          - auto_join_team_id
-          - auto_join_user_group_id
-          - create_time
-          - delete_time
-          - state
-          - update_time
+        payment_method_id:
+          type: string
+          minLength: 10
+          maxLength: 64
+          description: Unique identifier for a Stripe payment method
       required:
-      - authentication_method
-    AccountUpdateRequestBody:
-      type: object
-      description: AccountUpdateRequestBody
-      properties:
-        account_name:
-          type: string
-          maxLength: 83
-          description: Account name
-        primary_billing_group_id:
-          type: string
-          minLength: 36
-          maxLength: 36
-          description: Billing group ID
-    AccountProjectsTeamsListResponse:
-      type: object
-      description: AccountProjectsTeamsListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        teams:
-          type: array
-          description: List of teams
-          items:
-            type: object
-            properties:
-              account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              team_id:
-                type: string
-                maxLength: 32
-                description: Team ID
-              team_name:
-                type: string
-                maxLength: 128
-                description: Team name
-              team_type:
-                type: string
-                description: Team type (permission level)
-                enum:
-                - admin
-                - operator
-                - developer
-                - read_only
-                - project:integrations:read
-                - project:integrations:write
-                - project:networking:read
-                - project:networking:write
-                - project:permissions:read
-                - service:configuration:write
-                - service:logs:read
-                - project:services:read
-                - project:services:write
-                - project:audit_logs:read
-                - service:data:write
-                - service:secrets:read
-                - service:users:write
-                - service:metrics:read
-                - role:project:admin
-                - role:services:maintenance
-                - role:services:recover
-                - organization:projects:write
-                - organization:billing:read
-                - organization:billing:write
-                - organization:audit_logs:read
-                - organization:users:write
-                - organization:app_users:write
-                - organization:groups:write
-                - organization:domains:write
-                - organization:networking:read
-                - organization:networking:write
-                - role:organization:admin
-              update_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-            required:
-            - team_id
-            - team_name
-      required:
-      - teams
-    AccountGetResponse:
-      type: object
-      description: AccountGetResponse
-      properties:
-        account:
-          type: object
-          description: Account details
-          properties:
-            access_source:
-              type: string
-              description: Describe the source of the account
-              enum:
-              - descendant_membership
-              - organization_membership
-              - project_membership
-              - team_membership
-            account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            account_name:
-              type: string
-              maxLength: 83
-              description: Account name
-            account_owner_team_id:
-              type: string
-              maxLength: 32
-              description: Team ID
-            create_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-            features:
-              type: object
-              description: Feature flags
-              properties: {}
-            is_account_member:
-              type: boolean
-              description: If true, user is part of a team of this or a parent account
-            is_account_owner:
-              type: boolean
-              description: If true, user is part of the owners team for this account
-            organization_id:
-              type: string
-              maxLength: 36
-              description: Organization ID
-            parent_account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            primary_billing_group_id:
-              type: string
-              minLength: 36
-              maxLength: 36
-              description: Primary billing group ID - deprecated, always null
-            root_account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            tenant_id:
-              type: string
-              maxLength: 64
-              description: Tenant identifier
-            update_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-          required:
-          - account_id
-          - account_name
-          - account_owner_team_id
-          - create_time
-          - is_account_owner
-          - organization_id
-          - primary_billing_group_id
-          - root_account_id
-          - update_time
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - account
-    AccountAuthenticationMethodCreateResponse:
-      type: object
-      description: AccountAuthenticationMethodCreateResponse
-      properties:
-        authentication_method:
-          type: object
-          description: AuthenticationMethod
-          properties:
-            account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            auth_token_extend_when_used:
-              type: boolean
-              description: Extend authentication token validity when used
-            auth_token_max_age_seconds:
-              type: integer
-              minimum: 300
-              maximum: 1296000
-              description: Auth Token Max Age Seconds
-            authentication_method_enabled:
-              type: boolean
-              description: If true, authentication method can be used to access account/projects in account. If false, authentication method can still be used to sign in
-            authentication_method_id:
-              type: string
-              description: Authentication Method ID
-            authentication_method_name:
-              type: string
-              maxLength: 128
-              description: Authentication Method Name
-            authentication_method_type:
-              type: string
-              description: An enumeration.
-              title: Authentication method type
-              enum:
-              - internal
-              - saml
-            auto_join_team_id:
-              type: string
-              maxLength: 32
-              description: Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null.
-            auto_join_user_group_id:
-              type: string
-              maxLength: 36
-              description: Automatically add users to a group, when user signs up using this authentication method
-            create_time:
-              type: string
-              maxLength: 36
-              description: Create Time
-            delete_time:
-              type: string
-              maxLength: 36
-              description: Delete Time
-            internal_mcp_enabled:
-              type: boolean
-              description: MCP connections enabled
-            organization_id:
-              type: string
-              maxLength: 36
-              description: Organization ID
-            saml_acs_url:
-              type: string
-              maxLength: 2048
-              description: Saml Acs Url
-            saml_assertion_signed_enabled:
-              type: boolean
-              description: Set to 'true' to enable WantAssertionsSigned
-            saml_authn_requests_signed_enabled:
-              type: boolean
-              description: Set to 'true' to enable AuthnRequestsSigned
-            saml_cert:
-              type: string
-              description: An enumeration.
-              title: SAMLVariant
-              enum:
-              - adfs
-            saml_certificate:
-              type: string
-              maxLength: 16384
-              description: Identity provider's certificate
-            saml_certificate_issuer:
-              type: string
-              description: Saml Certificate Issuer
-            saml_certificate_not_valid_after:
-              type: string
-              maxLength: 36
-              description: Saml Certificate Not Valid After
-            saml_certificate_not_valid_before:
-              type: string
-              maxLength: 36
-              description: Saml Certificate Not Valid Before
-            saml_certificate_subject:
-              type: string
-              description: Saml Certificate Subject
-            saml_digest_algorithm:
-              type: string
-              description: An enumeration.
-              title: Digest algorithm. This is an advanced option that typically does not need to be set.
-              default: sha256
-              enum:
-              - sha1
-              - sha256
-              - sha384
-              - sha512
-            saml_entity_id:
-              type: string
-              maxLength: 2048
-              description: Saml Entity ID
-            saml_field_mapping:
-              type: object
-              description: SAMLFieldMapping
-              properties:
-                email:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user email
-                  default: email
-                first_name:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user's first name
-                  default: first_name
-                groups:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.
-                  default: groups
-                identity:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.
-                  default: email
-                last_name:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user's lastname
-                  default: last_name
-                real_name:
-                  type: string
-                  maxLength: 256
-                  description: Field name for user's full name. If specified, first_name and last_name mappings are ignored
-            saml_idp_login_allowed:
-              type: boolean
-              description: Set to 'true' to enable IdP initiated login
-            saml_idp_url:
-              type: string
-              maxLength: 2048
-              description: Saml Idp Url
-            saml_join_groups:
-              type: boolean
-              description: SAML join groups enabled
-            saml_metadata_url:
-              type: string
-              maxLength: 2048
-              description: Saml Metadata Url
-            saml_requested_authn_context_enabled:
-              type: boolean
-              description: Set to 'false' to disable RequestedAuthnContext
-            saml_signature_algorithm:
-              type: string
-              description: An enumeration.
-              title: SAMLSignatureAlgorithm
-              default: rsa-sha256
-              enum:
-              - rsa-sha1
-              - dsa-sha1
-              - rsa-sha256
-              - rsa-sha384
-              - rsa-sha512
-            saml_sp_certificate:
-              type: string
-              maxLength: 16384
-              description: Saml Sp Certificate
-            saml_variant:
-              type: string
-              description: An enumeration.
-              title: SAMLVariant
-              enum:
-              - adfs
-            scim_enabled:
-              type: boolean
-              description: SCIM API enabled
-            scim_url:
-              type: string
-              maxLength: 2048
-              description: Scim Url
-            state:
-              type: string
-              description: An enumeration.
-              title: AuthenticationMethodState
-              enum:
-              - active
-              - deleted
-              - pending_configuration
-            update_time:
-              type: string
-              maxLength: 36
-              description: Update Time
-          required:
-          - account_id
-          - authentication_method_enabled
-          - authentication_method_id
-          - authentication_method_type
-          - auto_join_team_id
-          - auto_join_user_group_id
-          - create_time
-          - delete_time
-          - state
-          - update_time
-      required:
-      - authentication_method
-    AccountPaymentMethodDeleteResponse:
-      type: object
-      description: AccountPaymentMethodDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    AccountTeamUpdateRequestBody:
-      type: object
-      description: AccountTeamUpdateRequestBody
-      properties:
-        team_name:
-          type: string
-          maxLength: 128
-          description: Team name
-      required:
-      - team_name
-    AccountMoveResponse:
-      type: object
-      description: AccountMoveResponse
-      properties:
-        account:
-          type: object
-          description: Account details
-          properties:
-            access_source:
-              type: string
-              description: Describe the source of the account
-              enum:
-              - descendant_membership
-              - organization_membership
-              - project_membership
-              - team_membership
-            account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            account_name:
-              type: string
-              maxLength: 83
-              description: Account name
-            account_owner_team_id:
-              type: string
-              maxLength: 32
-              description: Team ID
-            create_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-            features:
-              type: object
-              description: Feature flags
-              properties: {}
-            is_account_member:
-              type: boolean
-              description: If true, user is part of a team of this or a parent account
-            is_account_owner:
-              type: boolean
-              description: If true, user is part of the owners team for this account
-            organization_id:
-              type: string
-              maxLength: 36
-              description: Organization ID
-            parent_account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            primary_billing_group_id:
-              type: string
-              minLength: 36
-              maxLength: 36
-              description: Primary billing group ID - deprecated, always null
-            root_account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            tenant_id:
-              type: string
-              maxLength: 64
-              description: Tenant identifier
-            update_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-          required:
-          - account_id
-          - account_name
-          - account_owner_team_id
-          - create_time
-          - is_account_owner
-          - organization_id
-          - primary_billing_group_id
-          - root_account_id
-          - update_time
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - account
-    AccountListResponse:
-      type: object
-      description: AccountListResponse
-      properties:
-        accounts:
-          type: array
-          description: List of accounts
-          items:
-            type: object
-            properties:
-              access_source:
-                type: string
-                description: Describe the source of the account
-                enum:
-                - descendant_membership
-                - organization_membership
-                - project_membership
-                - team_membership
-              account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              account_name:
-                type: string
-                maxLength: 83
-                description: Account name
-              account_owner_team_id:
-                type: string
-                maxLength: 32
-                description: Team ID
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              features:
-                type: object
-                description: Feature flags
-                properties: {}
-              is_account_member:
-                type: boolean
-                description: If true, user is part of a team of this or a parent account
-              is_account_owner:
-                type: boolean
-                description: If true, user is part of the owners team for this account
-              organization_id:
-                type: string
-                maxLength: 36
-                description: Organization ID
-              parent_account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              primary_billing_group_id:
-                type: string
-                minLength: 36
-                maxLength: 36
-                description: Primary billing group ID - deprecated, always null
-              root_account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              tenant_id:
-                type: string
-                maxLength: 64
-                description: Tenant identifier
-              update_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-            required:
-            - account_id
-            - account_name
-            - account_owner_team_id
-            - create_time
-            - is_account_owner
-            - organization_id
-            - primary_billing_group_id
-            - root_account_id
-            - update_time
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - accounts
-    AccountMoveRequestBody:
-      type: object
-      description: AccountMoveRequestBody
-      properties:
-        parent_account_id:
-          type: string
-          maxLength: 36
-          description: Account ID
-      required:
-      - parent_account_id
+      - payment_method_id
     AccountCreateRequestBody:
       type: object
       description: AccountCreateRequestBody
@@ -2579,9 +2082,57 @@ components:
           description: Billing group ID
       required:
       - account_name
-    AccountTeamProjectAssociationUpdateRequestBody:
+    AccountUsersSearchResponse:
       type: object
-      description: AccountTeamProjectAssociationUpdateRequestBody
+      description: AccountUsersSearchResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        users:
+          type: array
+          description: List of users
+          items:
+            type: object
+            properties:
+              real_name:
+                type: string
+                maxLength: 256
+                description: User real name
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+              user_id:
+                type: string
+                description: User ID
+            required:
+            - real_name
+            - user_email
+            - user_id
+      required:
+      - users
+    AccountTeamProjectAssociateRequestBody:
+      type: object
+      description: AccountTeamProjectAssociateRequestBody
       properties:
         team_type:
           type: string
@@ -2619,292 +2170,133 @@ components:
           - organization:networking:read
           - organization:networking:write
           - role:organization:admin
-    AccountTeamUpdateResponse:
+      required:
+      - team_type
+    AccountUpdateResponse:
       type: object
-      description: AccountTeamUpdateResponse
+      description: AccountUpdateResponse
       properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        team:
+        account:
           type: object
-          description: Account Team details
+          description: Account details
           properties:
+            access_source:
+              type: string
+              description: Describe the source of the account
+              enum:
+              - descendant_membership
+              - organization_membership
+              - project_membership
+              - team_membership
             account_id:
               type: string
               maxLength: 36
               description: Account ID
+            account_name:
+              type: string
+              maxLength: 83
+              description: Account name
+            account_owner_team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
             create_time:
               type: string
               maxLength: 36
               description: Timestamp in ISO 8601 format, always in UTC
-            team_id:
-              type: string
-              maxLength: 32
-              description: Team ID
-            team_name:
-              type: string
-              maxLength: 128
-              description: Team name
-            update_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-          required:
-          - team_id
-          - team_name
-      required:
-      - team
-    AccountAttachPaymentMethodResponse:
-      type: object
-      description: AccountAttachPaymentMethodResponse
-      properties:
-        card:
-          type: object
-          description: User credit card information
-          properties:
-            brand:
-              type: string
-              description: Brand
-            card_id:
-              type: string
-              maxLength: 64
-              description: Credit card ID
-            country:
-              type: string
-              maxLength: 128
-              description: Country
-            country_code:
-              type: string
-              maxLength: 2
-              description: Two letter ISO country code
-            exp_month:
-              type: integer
-              minimum: 1
-              maximum: 12
-              description: Expiration month
-            exp_year:
-              type: integer
-              minimum: 2015
-              maximum: 2100
-              description: Expiration year
-            last4:
-              type: string
-              description: Credit card last four digits
-            name:
-              type: string
-              maxLength: 256
-              description: Name on the credit card
+            features:
+              type: object
+              description: Feature flags
+              properties: {}
+            is_account_member:
+              type: boolean
+              description: If true, user is part of a team of this or a parent account
+            is_account_owner:
+              type: boolean
+              description: If true, user is part of the owners team for this account
             organization_id:
               type: string
               maxLength: 36
               description: Organization ID
-            projects:
-              type: array
-              description: List of projects the card is assigned to
-              items:
-                type: string
-          required:
-          - brand
-          - card_id
-          - country
-          - country_code
-          - exp_month
-          - exp_year
-          - last4
-          - name
-          - projects
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - card
-    AccountAuthenticationMethodDeleteResponse:
-      type: object
-      description: AccountAuthenticationMethodDeleteResponse
-      properties:
-        message:
-          type: string
-          description: Response message field
-      required:
-      - message
-    AccountTeamMemberVerifyInviteResponse:
-      type: object
-      description: AccountTeamMemberVerifyInviteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        invite_details:
-          type: object
-          description: Details of verified invite
-          properties:
-            user_email:
-              type: string
-              maxLength: 254
-              description: User email address
-          required:
-          - user_email
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - invite_details
-    AccountUsersSearchRequestBody:
-      type: object
-      description: AccountUsersSearchRequestBody
-      properties:
-        limit:
-          type: integer
-          minimum: 1
-          maximum: 500
-          description: Maximum number of results to return
-          default: 100
-        order_by:
-          type: string
-          description: Sorting criteria; desc is descending order and asc ascending
-          enum:
-          - user_email:asc
-          - user_email:desc
-          - user_id:asc
-          - user_id:desc
-          - real_name:asc
-          - real_name:desc
-        query:
-          type: string
-          maxLength: 128
-          description: Very simple filtering is used; a single word is recommended
-          title: Filter keyword
-    AccountTeamProjectAssociationUpdateResponse:
-      type: object
-      description: AccountTeamProjectAssociationUpdateResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    AccountTeamGetResponse:
-      type: object
-      description: AccountTeamGetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        team:
-          type: object
-          description: Account Team details
-          properties:
-            account_id:
+            parent_account_id:
               type: string
               maxLength: 36
               description: Account ID
-            create_time:
+            primary_billing_group_id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: Primary billing group ID - deprecated, always null
+            root_account_id:
               type: string
               maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-            team_id:
+              description: Account ID
+            tenant_id:
               type: string
-              maxLength: 32
-              description: Team ID
-            team_name:
-              type: string
-              maxLength: 128
-              description: Team name
+              maxLength: 64
+              description: Tenant identifier
             update_time:
               type: string
               maxLength: 36
               description: Timestamp in ISO 8601 format, always in UTC
           required:
-          - team_id
-          - team_name
+          - account_id
+          - account_name
+          - account_owner_team_id
+          - create_time
+          - is_account_owner
+          - organization_id
+          - primary_billing_group_id
+          - root_account_id
+          - update_time
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
       required:
-      - team
+      - account
+    AccountTeamMemberCancelInviteResponse:
+      type: object
+      description: AccountTeamMemberCancelInviteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
     AccountAuthenticationMethodCreateRequestBody:
       type: object
       description: AccountAuthenticationMethodCreateRequestBody
@@ -3163,9 +2555,88 @@ components:
         scim_enabled:
           type: boolean
           description: SCIM enabled
-    AccountTeamProjectAssociateRequestBody:
+    AccountUsersSearchRequestBody:
       type: object
-      description: AccountTeamProjectAssociateRequestBody
+      description: AccountUsersSearchRequestBody
+      properties:
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 500
+          description: Maximum number of results to return
+          default: 100
+        order_by:
+          type: string
+          description: Sorting criteria; desc is descending order and asc ascending
+          enum:
+          - user_email:asc
+          - user_email:desc
+          - user_id:asc
+          - user_id:desc
+          - real_name:asc
+          - real_name:desc
+        query:
+          type: string
+          maxLength: 128
+          description: Very simple filtering is used; a single word is recommended
+          title: Filter keyword
+    AccountUserTeamsListResponse:
+      type: object
+      description: AccountUserTeamsListResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        teams:
+          type: array
+          description: List of teams
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+            required:
+            - account_id
+            - account_name
+            - team_id
+            - team_name
+      required:
+      - teams
+    AccountTeamProjectAssociationUpdateRequestBody:
+      type: object
+      description: AccountTeamProjectAssociationUpdateRequestBody
       properties:
         team_type:
           type: string
@@ -3203,11 +2674,22 @@ components:
           - organization:networking:read
           - organization:networking:write
           - role:organization:admin
-      required:
-      - team_type
-    AccountDeleteResponse:
+    AccountUpdateRequestBody:
       type: object
-      description: AccountDeleteResponse
+      description: AccountUpdateRequestBody
+      properties:
+        account_name:
+          type: string
+          maxLength: 83
+          description: Account name
+        primary_billing_group_id:
+          type: string
+          minLength: 36
+          maxLength: 36
+          description: Billing group ID
+    AccountProjectsTeamsListResponse:
+      type: object
+      description: AccountProjectsTeamsListResponse
       properties:
         errors:
           type: array
@@ -3230,6 +2712,209 @@ components:
         message:
           type: string
           description: Printable result of the request
+        teams:
+          type: array
+          description: List of teams
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              team_type:
+                type: string
+                description: Team type (permission level)
+                enum:
+                - admin
+                - operator
+                - developer
+                - read_only
+                - project:integrations:read
+                - project:integrations:write
+                - project:networking:read
+                - project:networking:write
+                - project:permissions:read
+                - service:configuration:write
+                - service:logs:read
+                - project:services:read
+                - project:services:write
+                - project:audit_logs:read
+                - service:data:write
+                - service:secrets:read
+                - service:users:write
+                - service:metrics:read
+                - role:project:admin
+                - role:services:maintenance
+                - role:services:recover
+                - organization:projects:write
+                - organization:billing:read
+                - organization:billing:write
+                - organization:audit_logs:read
+                - organization:users:write
+                - organization:app_users:write
+                - organization:groups:write
+                - organization:domains:write
+                - organization:networking:read
+                - organization:networking:write
+                - role:organization:admin
+              update_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+            required:
+            - team_id
+            - team_name
+      required:
+      - teams
+    AccountTeamCreateResponse:
+      type: object
+      description: AccountTeamCreateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        team:
+          type: object
+          description: Account Team details
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            team_name:
+              type: string
+              maxLength: 128
+              description: Team name
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - team_id
+          - team_name
+      required:
+      - team
+    AccountAttachPaymentMethodResponse:
+      type: object
+      description: AccountAttachPaymentMethodResponse
+      properties:
+        card:
+          type: object
+          description: User credit card information
+          properties:
+            brand:
+              type: string
+              description: Brand
+            card_id:
+              type: string
+              maxLength: 64
+              description: Credit card ID
+            country:
+              type: string
+              maxLength: 128
+              description: Country
+            country_code:
+              type: string
+              maxLength: 2
+              description: Two letter ISO country code
+            exp_month:
+              type: integer
+              minimum: 1
+              maximum: 12
+              description: Expiration month
+            exp_year:
+              type: integer
+              minimum: 2015
+              maximum: 2100
+              description: Expiration year
+            last4:
+              type: string
+              description: Credit card last four digits
+            name:
+              type: string
+              maxLength: 256
+              description: Name on the credit card
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            projects:
+              type: array
+              description: List of projects the card is assigned to
+              items:
+                type: string
+          required:
+          - brand
+          - card_id
+          - country
+          - country_code
+          - exp_month
+          - exp_year
+          - last4
+          - name
+          - projects
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - card
     AccountUserProjectsListResponse:
       type: object
       description: AccountUserProjectsListResponse
@@ -3339,6 +3024,31 @@ components:
             - user_email
       required:
       - user_projects
+    AccountTeamMembersDeleteResponse:
+      type: object
+      description: AccountTeamMembersDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
     AccountTeamProjectDisassociateResponse:
       type: object
       description: AccountTeamProjectDisassociateResponse
@@ -3364,137 +3074,57 @@ components:
         message:
           type: string
           description: Printable result of the request
-    AccountTeamCreateResponse:
+    AccountPaymentMethodsListResponse:
       type: object
-      description: AccountTeamCreateResponse
+      description: AccountPaymentMethodsListResponse
       properties:
-        errors:
+        cards:
           type: array
-          description: List of errors occurred during request processing
+          description: List of account's credit cards
           items:
             type: object
             properties:
-              message:
+              brand:
                 type: string
-                description: Printable error message
-              more_info:
+                description: Brand
+              card_id:
                 type: string
-                description: URL to the documentation of the error
-              status:
+                maxLength: 64
+                description: Credit card ID
+              country:
+                type: string
+                maxLength: 128
+                description: Country
+              country_code:
+                type: string
+                maxLength: 2
+                description: Two letter ISO country code
+              exp_month:
                 type: integer
-                description: HTTP error status code
+                minimum: 1
+                maximum: 12
+                description: Expiration month
+              exp_year:
+                type: integer
+                minimum: 2015
+                maximum: 2100
+                description: Expiration year
+              last4:
+                type: string
+                description: Credit card last four digits
+              name:
+                type: string
+                maxLength: 256
+                description: Name on the credit card
             required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        team:
-          type: object
-          description: Account Team details
-          properties:
-            account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            create_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-            team_id:
-              type: string
-              maxLength: 32
-              description: Team ID
-            team_name:
-              type: string
-              maxLength: 128
-              description: Team name
-            update_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-          required:
-          - team_id
-          - team_name
-      required:
-      - team
-    AccountUpdateResponse:
-      type: object
-      description: AccountUpdateResponse
-      properties:
-        account:
-          type: object
-          description: Account details
-          properties:
-            access_source:
-              type: string
-              description: Describe the source of the account
-              enum:
-              - descendant_membership
-              - organization_membership
-              - project_membership
-              - team_membership
-            account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            account_name:
-              type: string
-              maxLength: 83
-              description: Account name
-            account_owner_team_id:
-              type: string
-              maxLength: 32
-              description: Team ID
-            create_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-            features:
-              type: object
-              description: Feature flags
-              properties: {}
-            is_account_member:
-              type: boolean
-              description: If true, user is part of a team of this or a parent account
-            is_account_owner:
-              type: boolean
-              description: If true, user is part of the owners team for this account
-            organization_id:
-              type: string
-              maxLength: 36
-              description: Organization ID
-            parent_account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            primary_billing_group_id:
-              type: string
-              minLength: 36
-              maxLength: 36
-              description: Primary billing group ID - deprecated, always null
-            root_account_id:
-              type: string
-              maxLength: 36
-              description: Account ID
-            tenant_id:
-              type: string
-              maxLength: 64
-              description: Tenant identifier
-            update_time:
-              type: string
-              maxLength: 36
-              description: Timestamp in ISO 8601 format, always in UTC
-          required:
-          - account_id
-          - account_name
-          - account_owner_team_id
-          - create_time
-          - is_account_owner
-          - organization_id
-          - primary_billing_group_id
-          - root_account_id
-          - update_time
+            - brand
+            - card_id
+            - country
+            - country_code
+            - exp_month
+            - exp_year
+            - last4
+            - name
         errors:
           type: array
           description: List of errors occurred during request processing
@@ -3517,18 +3147,7 @@ components:
           type: string
           description: Printable result of the request
       required:
-      - account
-    AccountAttachPaymentMethodRequestBody:
-      type: object
-      description: AccountAttachPaymentMethodRequestBody
-      properties:
-        payment_method_id:
-          type: string
-          minLength: 10
-          maxLength: 64
-          description: Unique identifier for a Stripe payment method
-      required:
-      - payment_method_id
+      - cards
     AccountAuthenticationMethodsListResponse:
       type: object
       description: AccountAuthenticationMethodsListResponse
@@ -3742,9 +3361,249 @@ components:
             - update_time
       required:
       - authentication_methods
-    AccountUserTeamsListResponse:
+    AccountBillingGroupListResponse:
       type: object
-      description: AccountUserTeamsListResponse
+      description: AccountBillingGroupListResponse
+      properties:
+        account_billing_groups:
+          type: array
+          description: List of billing groups
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              address_lines:
+                type: array
+                maxItems: 3
+                description: Address lines
+                items:
+                  type: string
+              billing_address:
+                type: string
+                maxLength: 1000
+                description: 'DEPRECATED: use split address fields like company, address_lines, zip_code, city and state instead'
+              billing_address_id:
+                type: string
+                maxLength: 36
+                description: Address ID
+              billing_contact_emails:
+                type: array
+                maxItems: 10
+                description: List of billing groups contact email addresses
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      maxLength: 254
+                      description: User email address
+                  required:
+                  - email
+              billing_currency:
+                type: string
+                description: Billing currency
+                enum:
+                - AUD
+                - CAD
+                - CHF
+                - DKK
+                - EUR
+                - GBP
+                - JPY
+                - NOK
+                - NZD
+                - SEK
+                - SGD
+                - USD
+              billing_emails:
+                type: array
+                maxItems: 10
+                description: List of project billing email addresses
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      maxLength: 254
+                      description: User email address
+                  required:
+                  - email
+              billing_extra_text:
+                type: string
+                maxLength: 1000
+                description: Extra text to be included in all project invoices, e.g. purchase order or cost center number
+              billing_group_id:
+                type: string
+                minLength: 36
+                maxLength: 36
+                description: Billing group ID
+              billing_group_name:
+                type: string
+                maxLength: 128
+                description: Billing group name
+              billing_type:
+                type: string
+                description: Method of charging/invoicing this project
+              card_info:
+                type: object
+                description: Credit card assigned to the project
+                properties:
+                  brand:
+                    type: string
+                    description: Brand
+                  card_id:
+                    type: string
+                    maxLength: 64
+                    description: Credit card ID
+                  country:
+                    type: string
+                    maxLength: 128
+                    description: Country
+                  country_code:
+                    type: string
+                    maxLength: 2
+                    description: Two letter ISO country code
+                  exp_month:
+                    type: integer
+                    minimum: 1
+                    maximum: 12
+                    description: Expiration month
+                  exp_year:
+                    type: integer
+                    minimum: 2015
+                    maximum: 2100
+                    description: Expiration year
+                  last4:
+                    type: string
+                    description: Credit card last four digits
+                  name:
+                    type: string
+                    maxLength: 256
+                    description: Name on the credit card
+                  user_email:
+                    type: string
+                    maxLength: 254
+                    description: User email address
+                required:
+                - brand
+                - card_id
+                - country
+                - country_code
+                - exp_month
+                - exp_year
+                - last4
+                - name
+                - user_email
+              city:
+                type: string
+                maxLength: 50
+                description: Address city
+              company:
+                type: string
+                maxLength: 83
+                description: Name of a company
+              country:
+                type: string
+                maxLength: 128
+                description: Billing country
+              country_code:
+                type: string
+                maxLength: 2
+                description: Two letter ISO country code
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              estimated_balance_local:
+                type: string
+                description: Estimated balance in billing currency, before tax
+              estimated_balance_usd:
+                type: string
+                description: Estimated balance in USD, before tax
+              payment_method:
+                type: string
+                description: Payment method
+                enum:
+                - accrual
+                - card
+                - disabled
+                - email
+                - no_payment_expected
+                - partner
+              shipping_address_id:
+                type: string
+                maxLength: 36
+                description: Address ID
+              state:
+                type: string
+                maxLength: 30
+                description: Address state or province
+              vat_id:
+                type: string
+                maxLength: 64
+                description: EU VAT Identification Number
+              zip_code:
+                type: string
+                maxLength: 36
+                description: Address zip code
+            required:
+            - account_id
+            - account_name
+            - address_lines
+            - billing_address_id
+            - billing_contact_emails
+            - billing_currency
+            - billing_emails
+            - billing_extra_text
+            - billing_group_id
+            - billing_group_name
+            - billing_type
+            - card_info
+            - city
+            - company
+            - country
+            - country_code
+            - create_time
+            - estimated_balance_local
+            - estimated_balance_usd
+            - payment_method
+            - shipping_address_id
+            - state
+            - vat_id
+            - zip_code
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account_billing_groups
+    AccountTeamProjectListResponse:
+      type: object
+      description: AccountTeamProjectListResponse
       properties:
         errors:
           type: array
@@ -3767,35 +3626,268 @@ components:
         message:
           type: string
           description: Printable result of the request
-        teams:
+        projects:
           type: array
-          description: List of teams
+          description: List of projects associated to a team
           items:
             type: object
             properties:
-              account_id:
+              project_name:
                 type: string
-                maxLength: 36
-                description: Account ID
-              account_name:
+                maxLength: 63
+                description: Project name
+              team_type:
                 type: string
-                maxLength: 83
-                description: Account name
-              team_id:
-                type: string
-                maxLength: 32
-                description: Team ID
-              team_name:
-                type: string
-                maxLength: 128
-                description: Team name
+                description: Team type (permission level)
+                enum:
+                - admin
+                - operator
+                - developer
+                - read_only
+                - project:integrations:read
+                - project:integrations:write
+                - project:networking:read
+                - project:networking:write
+                - project:permissions:read
+                - service:configuration:write
+                - service:logs:read
+                - project:services:read
+                - project:services:write
+                - project:audit_logs:read
+                - service:data:write
+                - service:secrets:read
+                - service:users:write
+                - service:metrics:read
+                - role:project:admin
+                - role:services:maintenance
+                - role:services:recover
+                - organization:projects:write
+                - organization:billing:read
+                - organization:billing:write
+                - organization:audit_logs:read
+                - organization:users:write
+                - organization:app_users:write
+                - organization:groups:write
+                - organization:domains:write
+                - organization:networking:read
+                - organization:networking:write
+                - role:organization:admin
             required:
-            - account_id
-            - account_name
-            - team_id
-            - team_name
+            - project_name
+            - team_type
       required:
-      - teams
+      - projects
+    AccountAuthenticationMethodCreateResponse:
+      type: object
+      description: AccountAuthenticationMethodCreateResponse
+      properties:
+        authentication_method:
+          type: object
+          description: AuthenticationMethod
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            auth_token_extend_when_used:
+              type: boolean
+              description: Extend authentication token validity when used
+            auth_token_max_age_seconds:
+              type: integer
+              minimum: 300
+              maximum: 1296000
+              description: Auth Token Max Age Seconds
+            authentication_method_enabled:
+              type: boolean
+              description: If true, authentication method can be used to access account/projects in account. If false, authentication method can still be used to sign in
+            authentication_method_id:
+              type: string
+              description: Authentication Method ID
+            authentication_method_name:
+              type: string
+              maxLength: 128
+              description: Authentication Method Name
+            authentication_method_type:
+              type: string
+              description: An enumeration.
+              title: Authentication method type
+              enum:
+              - internal
+              - saml
+            auto_join_team_id:
+              type: string
+              maxLength: 32
+              description: Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null.
+            auto_join_user_group_id:
+              type: string
+              maxLength: 36
+              description: Automatically add users to a group, when user signs up using this authentication method
+            create_time:
+              type: string
+              maxLength: 36
+              description: Create Time
+            delete_time:
+              type: string
+              maxLength: 36
+              description: Delete Time
+            internal_mcp_enabled:
+              type: boolean
+              description: MCP connections enabled
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            saml_acs_url:
+              type: string
+              maxLength: 2048
+              description: Saml Acs Url
+            saml_assertion_signed_enabled:
+              type: boolean
+              description: Set to 'true' to enable WantAssertionsSigned
+            saml_authn_requests_signed_enabled:
+              type: boolean
+              description: Set to 'true' to enable AuthnRequestsSigned
+            saml_cert:
+              type: string
+              description: An enumeration.
+              title: SAMLVariant
+              enum:
+              - adfs
+            saml_certificate:
+              type: string
+              maxLength: 16384
+              description: Identity provider's certificate
+            saml_certificate_issuer:
+              type: string
+              description: Saml Certificate Issuer
+            saml_certificate_not_valid_after:
+              type: string
+              maxLength: 36
+              description: Saml Certificate Not Valid After
+            saml_certificate_not_valid_before:
+              type: string
+              maxLength: 36
+              description: Saml Certificate Not Valid Before
+            saml_certificate_subject:
+              type: string
+              description: Saml Certificate Subject
+            saml_digest_algorithm:
+              type: string
+              description: An enumeration.
+              title: Digest algorithm. This is an advanced option that typically does not need to be set.
+              default: sha256
+              enum:
+              - sha1
+              - sha256
+              - sha384
+              - sha512
+            saml_entity_id:
+              type: string
+              maxLength: 2048
+              description: Saml Entity ID
+            saml_field_mapping:
+              type: object
+              description: SAMLFieldMapping
+              properties:
+                email:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user email
+                  default: email
+                first_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's first name
+                  default: first_name
+                groups:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.
+                  default: groups
+                identity:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.
+                  default: email
+                last_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's lastname
+                  default: last_name
+                real_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's full name. If specified, first_name and last_name mappings are ignored
+            saml_idp_login_allowed:
+              type: boolean
+              description: Set to 'true' to enable IdP initiated login
+            saml_idp_url:
+              type: string
+              maxLength: 2048
+              description: Saml Idp Url
+            saml_join_groups:
+              type: boolean
+              description: SAML join groups enabled
+            saml_metadata_url:
+              type: string
+              maxLength: 2048
+              description: Saml Metadata Url
+            saml_requested_authn_context_enabled:
+              type: boolean
+              description: Set to 'false' to disable RequestedAuthnContext
+            saml_signature_algorithm:
+              type: string
+              description: An enumeration.
+              title: SAMLSignatureAlgorithm
+              default: rsa-sha256
+              enum:
+              - rsa-sha1
+              - dsa-sha1
+              - rsa-sha256
+              - rsa-sha384
+              - rsa-sha512
+            saml_sp_certificate:
+              type: string
+              maxLength: 16384
+              description: Saml Sp Certificate
+            saml_variant:
+              type: string
+              description: An enumeration.
+              title: SAMLVariant
+              enum:
+              - adfs
+            scim_enabled:
+              type: boolean
+              description: SCIM API enabled
+            scim_url:
+              type: string
+              maxLength: 2048
+              description: Scim Url
+            state:
+              type: string
+              description: An enumeration.
+              title: AuthenticationMethodState
+              enum:
+              - active
+              - deleted
+              - pending_configuration
+            update_time:
+              type: string
+              maxLength: 36
+              description: Update Time
+          required:
+          - account_id
+          - authentication_method_enabled
+          - authentication_method_id
+          - authentication_method_type
+          - auto_join_team_id
+          - auto_join_user_group_id
+          - create_time
+          - delete_time
+          - state
+          - update_time
+      required:
+      - authentication_method
     AccountTeamMembersInviteResponse:
       type: object
       description: AccountTeamMembersInviteResponse
@@ -3821,10 +3913,294 @@ components:
         message:
           type: string
           description: Printable result of the request
-    AccountTeamMembersDeleteResponse:
+    AccountAuthenticationMethodGetResponse:
       type: object
-      description: AccountTeamMembersDeleteResponse
+      description: AccountAuthenticationMethodGetResponse
       properties:
+        authentication_method:
+          type: object
+          description: AuthenticationMethod
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            auth_token_extend_when_used:
+              type: boolean
+              description: Extend authentication token validity when used
+            auth_token_max_age_seconds:
+              type: integer
+              minimum: 300
+              maximum: 1296000
+              description: Auth Token Max Age Seconds
+            authentication_method_enabled:
+              type: boolean
+              description: If true, authentication method can be used to access account/projects in account. If false, authentication method can still be used to sign in
+            authentication_method_id:
+              type: string
+              description: Authentication Method ID
+            authentication_method_name:
+              type: string
+              maxLength: 128
+              description: Authentication Method Name
+            authentication_method_type:
+              type: string
+              description: An enumeration.
+              title: Authentication method type
+              enum:
+              - internal
+              - saml
+            auto_join_team_id:
+              type: string
+              maxLength: 32
+              description: Deprecated; always null. Teams are being sunset, so this value is ignored on writes and always returned as null.
+            auto_join_user_group_id:
+              type: string
+              maxLength: 36
+              description: Automatically add users to a group, when user signs up using this authentication method
+            create_time:
+              type: string
+              maxLength: 36
+              description: Create Time
+            delete_time:
+              type: string
+              maxLength: 36
+              description: Delete Time
+            internal_mcp_enabled:
+              type: boolean
+              description: MCP connections enabled
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            saml_acs_url:
+              type: string
+              maxLength: 2048
+              description: Saml Acs Url
+            saml_assertion_signed_enabled:
+              type: boolean
+              description: Set to 'true' to enable WantAssertionsSigned
+            saml_authn_requests_signed_enabled:
+              type: boolean
+              description: Set to 'true' to enable AuthnRequestsSigned
+            saml_cert:
+              type: string
+              description: An enumeration.
+              title: SAMLVariant
+              enum:
+              - adfs
+            saml_certificate:
+              type: string
+              maxLength: 16384
+              description: Identity provider's certificate
+            saml_certificate_issuer:
+              type: string
+              description: Saml Certificate Issuer
+            saml_certificate_not_valid_after:
+              type: string
+              maxLength: 36
+              description: Saml Certificate Not Valid After
+            saml_certificate_not_valid_before:
+              type: string
+              maxLength: 36
+              description: Saml Certificate Not Valid Before
+            saml_certificate_subject:
+              type: string
+              description: Saml Certificate Subject
+            saml_digest_algorithm:
+              type: string
+              description: An enumeration.
+              title: Digest algorithm. This is an advanced option that typically does not need to be set.
+              default: sha256
+              enum:
+              - sha1
+              - sha256
+              - sha384
+              - sha512
+            saml_entity_id:
+              type: string
+              maxLength: 2048
+              description: Saml Entity ID
+            saml_field_mapping:
+              type: object
+              description: SAMLFieldMapping
+              properties:
+                email:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user email
+                  default: email
+                first_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's first name
+                  default: first_name
+                groups:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's groups memberships. Contents of this field are used to handle group memberships when SCIM is not available and SAML is used to manage group memberships.
+                  default: groups
+                identity:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's identity. This field must always exist in responses, and must be immutable and unique. Contents of this field are used to identify the user. Using user ID (such as unix user ID) is highly recommended, as email address may change, requiring relinking user to Aiven user.
+                  default: email
+                last_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's lastname
+                  default: last_name
+                real_name:
+                  type: string
+                  maxLength: 256
+                  description: Field name for user's full name. If specified, first_name and last_name mappings are ignored
+            saml_idp_login_allowed:
+              type: boolean
+              description: Set to 'true' to enable IdP initiated login
+            saml_idp_url:
+              type: string
+              maxLength: 2048
+              description: Saml Idp Url
+            saml_join_groups:
+              type: boolean
+              description: SAML join groups enabled
+            saml_metadata_url:
+              type: string
+              maxLength: 2048
+              description: Saml Metadata Url
+            saml_requested_authn_context_enabled:
+              type: boolean
+              description: Set to 'false' to disable RequestedAuthnContext
+            saml_signature_algorithm:
+              type: string
+              description: An enumeration.
+              title: SAMLSignatureAlgorithm
+              default: rsa-sha256
+              enum:
+              - rsa-sha1
+              - dsa-sha1
+              - rsa-sha256
+              - rsa-sha384
+              - rsa-sha512
+            saml_sp_certificate:
+              type: string
+              maxLength: 16384
+              description: Saml Sp Certificate
+            saml_variant:
+              type: string
+              description: An enumeration.
+              title: SAMLVariant
+              enum:
+              - adfs
+            scim_enabled:
+              type: boolean
+              description: SCIM API enabled
+            scim_url:
+              type: string
+              maxLength: 2048
+              description: Scim Url
+            state:
+              type: string
+              description: An enumeration.
+              title: AuthenticationMethodState
+              enum:
+              - active
+              - deleted
+              - pending_configuration
+            update_time:
+              type: string
+              maxLength: 36
+              description: Update Time
+          required:
+          - account_id
+          - authentication_method_enabled
+          - authentication_method_id
+          - authentication_method_type
+          - auto_join_team_id
+          - auto_join_user_group_id
+          - create_time
+          - delete_time
+          - state
+          - update_time
+      required:
+      - authentication_method
+    AccountMoveResponse:
+      type: object
+      description: AccountMoveResponse
+      properties:
+        account:
+          type: object
+          description: Account details
+          properties:
+            access_source:
+              type: string
+              description: Describe the source of the account
+              enum:
+              - descendant_membership
+              - organization_membership
+              - project_membership
+              - team_membership
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            account_name:
+              type: string
+              maxLength: 83
+              description: Account name
+            account_owner_team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            features:
+              type: object
+              description: Feature flags
+              properties: {}
+            is_account_member:
+              type: boolean
+              description: If true, user is part of a team of this or a parent account
+            is_account_owner:
+              type: boolean
+              description: If true, user is part of the owners team for this account
+            organization_id:
+              type: string
+              maxLength: 36
+              description: Organization ID
+            parent_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            primary_billing_group_id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: Primary billing group ID - deprecated, always null
+            root_account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            tenant_id:
+              type: string
+              maxLength: 64
+              description: Tenant identifier
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - account_id
+          - account_name
+          - account_owner_team_id
+          - create_time
+          - is_account_owner
+          - organization_id
+          - primary_billing_group_id
+          - root_account_id
+          - update_time
         errors:
           type: array
           description: List of errors occurred during request processing
@@ -3843,80 +4219,14 @@ components:
             required:
             - message
             - status
-        message:
-          type: string
-          description: Printable result of the request
-    AccountTeamMembersListResponse:
-      type: object
-      description: AccountTeamMembersListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        members:
-          type: array
-          description: List of account team members
-          items:
-            type: object
-            properties:
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              real_name:
-                type: string
-                maxLength: 256
-                description: User real name
-              team_id:
-                type: string
-                maxLength: 32
-                description: Team ID
-              team_name:
-                type: string
-                maxLength: 128
-                description: Team name
-              update_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-              user_id:
-                type: string
-                description: User ID
-            required:
-            - create_time
-            - real_name
-            - team_id
-            - team_name
-            - update_time
-            - user_email
-            - user_id
         message:
           type: string
           description: Printable result of the request
       required:
-      - members
-    AccountTeamDeleteResponse:
+      - account
+    AccountPaymentMethodDeleteResponse:
       type: object
-      description: AccountTeamDeleteResponse
+      description: AccountPaymentMethodDeleteResponse
       properties:
         errors:
           type: array
@@ -3939,6 +4249,60 @@ components:
         message:
           type: string
           description: Printable result of the request
+    AccountTeamUpdateResponse:
+      type: object
+      description: AccountTeamUpdateResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        team:
+          type: object
+          description: Account Team details
+          properties:
+            account_id:
+              type: string
+              maxLength: 36
+              description: Account ID
+            create_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+            team_id:
+              type: string
+              maxLength: 32
+              description: Team ID
+            team_name:
+              type: string
+              maxLength: 128
+              description: Team name
+            update_time:
+              type: string
+              maxLength: 36
+              description: Timestamp in ISO 8601 format, always in UTC
+          required:
+          - team_id
+          - team_name
+      required:
+      - team
     AccountProjectsListResponse:
       type: object
       description: AccountProjectsListResponse
@@ -4196,9 +4560,9 @@ components:
           description: Total count of projects associated to account.
       required:
       - projects
-    AccountTeamProjectListResponse:
+    AccountDeleteResponse:
       type: object
-      description: AccountTeamProjectListResponse
+      description: AccountDeleteResponse
       properties:
         errors:
           type: array
@@ -4221,370 +4585,6 @@ components:
         message:
           type: string
           description: Printable result of the request
-        projects:
-          type: array
-          description: List of projects associated to a team
-          items:
-            type: object
-            properties:
-              project_name:
-                type: string
-                maxLength: 63
-                description: Project name
-              team_type:
-                type: string
-                description: Team type (permission level)
-                enum:
-                - admin
-                - operator
-                - developer
-                - read_only
-                - project:integrations:read
-                - project:integrations:write
-                - project:networking:read
-                - project:networking:write
-                - project:permissions:read
-                - service:configuration:write
-                - service:logs:read
-                - project:services:read
-                - project:services:write
-                - project:audit_logs:read
-                - service:data:write
-                - service:secrets:read
-                - service:users:write
-                - service:metrics:read
-                - role:project:admin
-                - role:services:maintenance
-                - role:services:recover
-                - organization:projects:write
-                - organization:billing:read
-                - organization:billing:write
-                - organization:audit_logs:read
-                - organization:users:write
-                - organization:app_users:write
-                - organization:groups:write
-                - organization:domains:write
-                - organization:networking:read
-                - organization:networking:write
-                - role:organization:admin
-            required:
-            - project_name
-            - team_type
-      required:
-      - projects
-    AccountUsersSearchResponse:
-      type: object
-      description: AccountUsersSearchResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        users:
-          type: array
-          description: List of users
-          items:
-            type: object
-            properties:
-              real_name:
-                type: string
-                maxLength: 256
-                description: User real name
-              user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-              user_id:
-                type: string
-                description: User ID
-            required:
-            - real_name
-            - user_email
-            - user_id
-      required:
-      - users
-    AccountTeamMemberCancelInviteResponse:
-      type: object
-      description: AccountTeamMemberCancelInviteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    AccountBillingGroupListResponse:
-      type: object
-      description: AccountBillingGroupListResponse
-      properties:
-        account_billing_groups:
-          type: array
-          description: List of billing groups
-          items:
-            type: object
-            properties:
-              account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              account_name:
-                type: string
-                maxLength: 83
-                description: Account name
-              address_lines:
-                type: array
-                maxItems: 3
-                description: Address lines
-                items:
-                  type: string
-              billing_address:
-                type: string
-                maxLength: 1000
-                description: 'DEPRECATED: use split address fields like company, address_lines, zip_code, city and state instead'
-              billing_address_id:
-                type: string
-                maxLength: 36
-                description: Address ID
-              billing_contact_emails:
-                type: array
-                maxItems: 10
-                description: List of billing groups contact email addresses
-                items:
-                  type: object
-                  properties:
-                    email:
-                      type: string
-                      maxLength: 254
-                      description: User email address
-                  required:
-                  - email
-              billing_currency:
-                type: string
-                description: Billing currency
-                enum:
-                - AUD
-                - CAD
-                - CHF
-                - DKK
-                - EUR
-                - GBP
-                - JPY
-                - NOK
-                - NZD
-                - SEK
-                - SGD
-                - USD
-              billing_emails:
-                type: array
-                maxItems: 10
-                description: List of project billing email addresses
-                items:
-                  type: object
-                  properties:
-                    email:
-                      type: string
-                      maxLength: 254
-                      description: User email address
-                  required:
-                  - email
-              billing_extra_text:
-                type: string
-                maxLength: 1000
-                description: Extra text to be included in all project invoices, e.g. purchase order or cost center number
-              billing_group_id:
-                type: string
-                minLength: 36
-                maxLength: 36
-                description: Billing group ID
-              billing_group_name:
-                type: string
-                maxLength: 128
-                description: Billing group name
-              billing_type:
-                type: string
-                description: Method of charging/invoicing this project
-              card_info:
-                type: object
-                description: Credit card assigned to the project
-                properties:
-                  brand:
-                    type: string
-                    description: Brand
-                  card_id:
-                    type: string
-                    maxLength: 64
-                    description: Credit card ID
-                  country:
-                    type: string
-                    maxLength: 128
-                    description: Country
-                  country_code:
-                    type: string
-                    maxLength: 2
-                    description: Two letter ISO country code
-                  exp_month:
-                    type: integer
-                    minimum: 1
-                    maximum: 12
-                    description: Expiration month
-                  exp_year:
-                    type: integer
-                    minimum: 2015
-                    maximum: 2100
-                    description: Expiration year
-                  last4:
-                    type: string
-                    description: Credit card last four digits
-                  name:
-                    type: string
-                    maxLength: 256
-                    description: Name on the credit card
-                  user_email:
-                    type: string
-                    maxLength: 254
-                    description: User email address
-                required:
-                - brand
-                - card_id
-                - country
-                - country_code
-                - exp_month
-                - exp_year
-                - last4
-                - name
-                - user_email
-              city:
-                type: string
-                maxLength: 50
-                description: Address city
-              company:
-                type: string
-                maxLength: 83
-                description: Name of a company
-              country:
-                type: string
-                maxLength: 128
-                description: Billing country
-              country_code:
-                type: string
-                maxLength: 2
-                description: Two letter ISO country code
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              estimated_balance_local:
-                type: string
-                description: Estimated balance in billing currency, before tax
-              estimated_balance_usd:
-                type: string
-                description: Estimated balance in USD, before tax
-              payment_method:
-                type: string
-                description: Payment method
-                enum:
-                - accrual
-                - card
-                - disabled
-                - email
-                - no_payment_expected
-                - partner
-              shipping_address_id:
-                type: string
-                maxLength: 36
-                description: Address ID
-              state:
-                type: string
-                maxLength: 30
-                description: Address state or province
-              vat_id:
-                type: string
-                maxLength: 64
-                description: EU VAT Identification Number
-              zip_code:
-                type: string
-                maxLength: 36
-                description: Address zip code
-            required:
-            - account_id
-            - account_name
-            - address_lines
-            - billing_address_id
-            - billing_contact_emails
-            - billing_currency
-            - billing_emails
-            - billing_extra_text
-            - billing_group_id
-            - billing_group_name
-            - billing_type
-            - card_info
-            - city
-            - company
-            - country
-            - country_code
-            - create_time
-            - estimated_balance_local
-            - estimated_balance_usd
-            - payment_method
-            - shipping_address_id
-            - state
-            - vat_id
-            - zip_code
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - account_billing_groups
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

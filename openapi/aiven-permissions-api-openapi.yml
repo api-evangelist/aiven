@@ -196,17 +196,17 @@ components:
         - organization
         - organization_unit
       required: true
-    resource_id:
-      in: path
-      name: resource_id
-      description: Resource Id
-      schema:
-        type: string
-      required: true
     organization_id:
       in: path
       name: organization_id
       description: ID of an organization
+      schema:
+        type: string
+      required: true
+    resource_id:
+      in: path
+      name: resource_id
+      description: Resource Id
       schema:
         type: string
       required: true

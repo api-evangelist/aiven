@@ -237,17 +237,17 @@ paths:
         - accounts:write
 components:
   parameters:
-    authentication_method_id:
-      in: path
-      name: authentication_method_id
-      description: Organization authentication method ID
-      schema:
-        type: string
-      required: true
     organization_id:
       in: path
       name: organization_id
       description: ID of an organization
+      schema:
+        type: string
+      required: true
+    authentication_method_id:
+      in: path
+      name: authentication_method_id
+      description: Organization authentication method ID
       schema:
         type: string
       required: true

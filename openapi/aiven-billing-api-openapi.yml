@@ -445,10 +445,46 @@ paths:
         - accounts:write
         - billing:write
 components:
+  parameters:
+    organization_id:
+      in: path
+      name: organization_id
+      description: ID of an organization
+      schema:
+        type: string
+      required: true
+    address_id:
+      in: path
+      name: address_id
+      description: Address id
+      schema:
+        type: string
+      required: true
+    credit_memo_id:
+      in: path
+      name: credit_memo_id
+      description: Credit Memo ID
+      schema:
+        type: string
+      required: true
+    download_cookie:
+      in: path
+      name: download_cookie
+      description: Authentication cookie for file download
+      schema:
+        type: string
+      required: true
+    invoice_number:
+      in: path
+      name: invoice_number
+      description: Invoice number
+      schema:
+        type: string
+      required: true
   schemas:
-    OrganizationAddressCreateRequestBody:
+    OrganizationAddressUpdateRequestBody:
       type: object
-      description: OrganizationAddressCreateRequestBody
+      description: OrganizationAddressUpdateRequestBody
       properties:
         address_lines:
           type: array
@@ -478,144 +514,6 @@ components:
           type: string
           maxLength: 36
           description: Zip Code
-      required:
-      - address_lines
-      - city
-      - country_code
-      - name
-    OrganizationAddressCreateResponse:
-      type: object
-      description: OrganizationAddressCreateResponse
-      properties:
-        address_id:
-          type: string
-          maxLength: 36
-          description: Address ID
-        address_lines:
-          type: array
-          minItems: 1
-          maxItems: 3
-          description: Address lines
-          items:
-            type: string
-        city:
-          type: string
-          maxLength: 50
-          description: City
-        country_code:
-          type: string
-          maxLength: 2
-          description: Country Code
-        create_time:
-          type: string
-          maxLength: 36
-          description: Create Time
-        name:
-          type: string
-          minLength: 0
-          maxLength: 83
-          description: Name
-        organization_id:
-          type: string
-          maxLength: 36
-          description: Organization ID
-        state:
-          type: string
-          maxLength: 30
-          description: State
-        update_time:
-          type: string
-          maxLength: 36
-          description: Update Time
-        zip_code:
-          type: string
-          maxLength: 36
-          description: Zip Code
-      required:
-      - address_id
-      - country_code
-      - create_time
-      - name
-      - organization_id
-      - update_time
-    InvoiceGetResponse:
-      type: object
-      description: InvoiceGetResponse
-      properties:
-        invoice:
-          type: object
-          description: InvoiceModel
-          properties:
-            billing_group_id:
-              type: string
-              minLength: 36
-              maxLength: 36
-              description: Billing Group ID
-            billing_group_name:
-              type: string
-              minLength: 1
-              maxLength: 128
-              description: Billing Group Name
-            billing_group_state:
-              type: string
-              description: Billing group state
-            currency:
-              type: string
-              maxLength: 16
-              description: Currency
-            download_cookie:
-              type: string
-              description: Download Cookie
-            due_date:
-              type: string
-              maxLength: 36
-              description: Due Date
-            generated_at:
-              type: string
-              maxLength: 36
-              description: Generated At
-            invoice_number:
-              type: string
-              minLength: 1
-              description: Invoice Number
-            issue_date:
-              type: string
-              maxLength: 36
-              description: Issue Date
-            period_begin:
-              type: string
-              maxLength: 36
-              description: Period Begin
-            period_end:
-              type: string
-              maxLength: 36
-              description: Period End
-            state:
-              type: string
-              maxLength: 36
-              description: State
-            total_inc_vat:
-              type: string
-              maxLength: 16
-              description: Total Inc Vat
-            total_vat_zero:
-              type: string
-              maxLength: 16
-              description: Total Vat Zero
-          required:
-          - billing_group_id
-          - billing_group_name
-          - billing_group_state
-          - currency
-          - generated_at
-          - invoice_number
-          - period_begin
-          - period_end
-          - state
-          - total_inc_vat
-          - total_vat_zero
-      required:
-      - invoice
     OrganizationAddressUpdateResponse:
       type: object
       description: OrganizationAddressUpdateResponse
@@ -671,38 +569,6 @@ components:
       - name
       - organization_id
       - update_time
-    OrganizationAddressUpdateRequestBody:
-      type: object
-      description: OrganizationAddressUpdateRequestBody
-      properties:
-        address_lines:
-          type: array
-          minItems: 1
-          maxItems: 3
-          description: Address lines
-          items:
-            type: string
-        city:
-          type: string
-          maxLength: 50
-          description: City
-        country_code:
-          type: string
-          maxLength: 2
-          description: Country Code
-        name:
-          type: string
-          minLength: 1
-          maxLength: 83
-          description: Name
-        state:
-          type: string
-          maxLength: 30
-          description: State
-        zip_code:
-          type: string
-          maxLength: 36
-          description: Zip Code
     OrganizationAddressListResponse:
       type: object
       description: OrganizationAddressListResponse
@@ -791,6 +657,121 @@ components:
         message:
           type: string
           description: Printable result of the request
+    InvoiceGetResponse:
+      type: object
+      description: InvoiceGetResponse
+      properties:
+        invoice:
+          type: object
+          description: InvoiceModel
+          properties:
+            billing_group_id:
+              type: string
+              minLength: 36
+              maxLength: 36
+              description: Billing Group ID
+            billing_group_name:
+              type: string
+              minLength: 1
+              maxLength: 128
+              description: Billing Group Name
+            billing_group_state:
+              type: string
+              description: Billing group state
+            currency:
+              type: string
+              maxLength: 16
+              description: Currency
+            download_cookie:
+              type: string
+              description: Download Cookie
+            due_date:
+              type: string
+              maxLength: 36
+              description: Due Date
+            generated_at:
+              type: string
+              maxLength: 36
+              description: Generated At
+            invoice_number:
+              type: string
+              minLength: 1
+              description: Invoice Number
+            issue_date:
+              type: string
+              maxLength: 36
+              description: Issue Date
+            period_begin:
+              type: string
+              maxLength: 36
+              description: Period Begin
+            period_end:
+              type: string
+              maxLength: 36
+              description: Period End
+            state:
+              type: string
+              maxLength: 36
+              description: State
+            total_inc_vat:
+              type: string
+              maxLength: 16
+              description: Total Inc Vat
+            total_vat_zero:
+              type: string
+              maxLength: 16
+              description: Total Vat Zero
+          required:
+          - billing_group_id
+          - billing_group_name
+          - billing_group_state
+          - currency
+          - generated_at
+          - invoice_number
+          - period_begin
+          - period_end
+          - state
+          - total_inc_vat
+          - total_vat_zero
+      required:
+      - invoice
+    OrganizationAddressCreateRequestBody:
+      type: object
+      description: OrganizationAddressCreateRequestBody
+      properties:
+        address_lines:
+          type: array
+          minItems: 1
+          maxItems: 3
+          description: Address lines
+          items:
+            type: string
+        city:
+          type: string
+          maxLength: 50
+          description: City
+        country_code:
+          type: string
+          maxLength: 2
+          description: Country Code
+        name:
+          type: string
+          minLength: 1
+          maxLength: 83
+          description: Name
+        state:
+          type: string
+          maxLength: 30
+          description: State
+        zip_code:
+          type: string
+          maxLength: 36
+          description: Zip Code
+      required:
+      - address_lines
+      - city
+      - country_code
+      - name
     OrganizationAddressGetResponse:
       type: object
       description: OrganizationAddressGetResponse
@@ -846,42 +827,61 @@ components:
       - name
       - organization_id
       - update_time
-  parameters:
-    address_id:
-      in: path
-      name: address_id
-      description: Address id
-      schema:
-        type: string
-      required: true
-    download_cookie:
-      in: path
-      name: download_cookie
-      description: Authentication cookie for file download
-      schema:
-        type: string
-      required: true
-    organization_id:
-      in: path
-      name: organization_id
-      description: ID of an organization
-      schema:
-        type: string
-      required: true
-    credit_memo_id:
-      in: path
-      name: credit_memo_id
-      description: Credit Memo ID
-      schema:
-        type: string
-      required: true
-    invoice_number:
-      in: path
-      name: invoice_number
-      description: Invoice number
-      schema:
-        type: string
-      required: true
+    OrganizationAddressCreateResponse:
+      type: object
+      description: OrganizationAddressCreateResponse
+      properties:
+        address_id:
+          type: string
+          maxLength: 36
+          description: Address ID
+        address_lines:
+          type: array
+          minItems: 1
+          maxItems: 3
+          description: Address lines
+          items:
+            type: string
+        city:
+          type: string
+          maxLength: 50
+          description: City
+        country_code:
+          type: string
+          maxLength: 2
+          description: Country Code
+        create_time:
+          type: string
+          maxLength: 36
+          description: Create Time
+        name:
+          type: string
+          minLength: 0
+          maxLength: 83
+          description: Name
+        organization_id:
+          type: string
+          maxLength: 36
+          description: Organization ID
+        state:
+          type: string
+          maxLength: 30
+          description: State
+        update_time:
+          type: string
+          maxLength: 36
+          description: Update Time
+        zip_code:
+          type: string
+          maxLength: 36
+          description: Zip Code
+      required:
+      - address_id
+      - country_code
+      - create_time
+      - name
+      - organization_id
+      - update_time
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

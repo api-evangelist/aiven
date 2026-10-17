@@ -372,33 +372,18 @@ paths:
         - accounts:write
 components:
   schemas:
-    ApplicationUserCreateResponse:
+    ApplicationUserCreateRequestBody:
       type: object
-      description: ApplicationUserCreateResponse
+      description: ApplicationUserCreateRequestBody
       properties:
-        create_time:
-          type: string
-          maxLength: 36
-          description: Time this application user was created
         is_super_admin:
           type: boolean
-          description: Super admin state of the organization application user
+          description: Alters super admin state of the organization application user
         name:
           type: string
           description: Name
-        user_email:
-          type: string
-          maxLength: 254
-          description: User Email
-        user_id:
-          type: string
-          description: User ID
       required:
-      - create_time
-      - is_super_admin
       - name
-      - user_email
-      - user_id
     ApplicationUserAccessTokensListResponse:
       type: object
       description: ApplicationUserAccessTokensListResponse
@@ -498,40 +483,9 @@ components:
       - name
       - user_email
       - user_id
-    ApplicationUserAccessTokenCreateRequestBody:
+    ApplicationUserCreateResponse:
       type: object
-      description: ApplicationUserAccessTokenCreateRequestBody
-      properties:
-        description:
-          type: string
-          maxLength: 1000
-          description: Description
-        extend_when_used:
-          type: boolean
-          description: Extend token expiration time when token is used. Only applicable if max_age_seconds is specified.
-          default: false
-        ip_allowlist:
-          type: array
-          maxItems: 100
-          description: List of allowed IP ranges
-          items:
-            type: string
-        max_age_seconds:
-          type: integer
-          minimum: 600
-          maximum: 315360000
-          description: Time the token remains valid since creation (or since last use if extend_when_used is true)
-        scopes:
-          type: array
-          maxItems: 100
-          description: Scopes this token is restricted to if specified
-          items:
-            type: string
-      required:
-      - description
-    ApplicationUserUpdateResponse:
-      type: object
-      description: ApplicationUserUpdateResponse
+      description: ApplicationUserCreateResponse
       properties:
         create_time:
           type: string
@@ -556,43 +510,6 @@ components:
       - name
       - user_email
       - user_id
-    ApplicationUserUpdateRequestBody:
-      type: object
-      description: ApplicationUserUpdateRequestBody
-      properties:
-        is_super_admin:
-          type: boolean
-          description: Alters super admin state of the organization application user
-        name:
-          type: string
-          description: Name
-      required:
-      - name
-    ApplicationUserAccessTokenCreateResponse:
-      type: object
-      description: ApplicationUserAccessTokenCreateResponse
-      properties:
-        full_token:
-          type: string
-          description: Full Token
-        token_prefix:
-          type: string
-          description: Token Prefix
-      required:
-      - full_token
-      - token_prefix
-    ApplicationUserCreateRequestBody:
-      type: object
-      description: ApplicationUserCreateRequestBody
-      properties:
-        is_super_admin:
-          type: boolean
-          description: Alters super admin state of the organization application user
-        name:
-          type: string
-          description: Name
-      required:
-      - name
     ApplicationUsersListResponse:
       type: object
       description: ApplicationUsersListResponse
@@ -628,6 +545,89 @@ components:
             - user_id
       required:
       - application_users
+    ApplicationUserAccessTokenCreateRequestBody:
+      type: object
+      description: ApplicationUserAccessTokenCreateRequestBody
+      properties:
+        description:
+          type: string
+          maxLength: 1000
+          description: Description
+        extend_when_used:
+          type: boolean
+          description: Extend token expiration time when token is used. Only applicable if max_age_seconds is specified.
+          default: false
+        ip_allowlist:
+          type: array
+          maxItems: 100
+          description: List of allowed IP ranges
+          items:
+            type: string
+        max_age_seconds:
+          type: integer
+          minimum: 600
+          maximum: 315360000
+          description: Time the token remains valid since creation (or since last use if extend_when_used is true)
+        scopes:
+          type: array
+          maxItems: 100
+          description: Scopes this token is restricted to if specified
+          items:
+            type: string
+      required:
+      - description
+    ApplicationUserUpdateRequestBody:
+      type: object
+      description: ApplicationUserUpdateRequestBody
+      properties:
+        is_super_admin:
+          type: boolean
+          description: Alters super admin state of the organization application user
+        name:
+          type: string
+          description: Name
+      required:
+      - name
+    ApplicationUserUpdateResponse:
+      type: object
+      description: ApplicationUserUpdateResponse
+      properties:
+        create_time:
+          type: string
+          maxLength: 36
+          description: Time this application user was created
+        is_super_admin:
+          type: boolean
+          description: Super admin state of the organization application user
+        name:
+          type: string
+          description: Name
+        user_email:
+          type: string
+          maxLength: 254
+          description: User Email
+        user_id:
+          type: string
+          description: User ID
+      required:
+      - create_time
+      - is_super_admin
+      - name
+      - user_email
+      - user_id
+    ApplicationUserAccessTokenCreateResponse:
+      type: object
+      description: ApplicationUserAccessTokenCreateResponse
+      properties:
+        full_token:
+          type: string
+          description: Full Token
+        token_prefix:
+          type: string
+          description: Token Prefix
+      required:
+      - full_token
+      - token_prefix
   parameters:
     organization_id:
       in: path
@@ -636,17 +636,17 @@ components:
       schema:
         type: string
       required: true
-    user_id:
-      in: path
-      name: user_id
-      description: User ID
-      schema:
-        type: string
-      required: true
     token_prefix:
       in: path
       name: token_prefix
       description: Access token prefix
+      schema:
+        type: string
+      required: true
+    user_id:
+      in: path
+      name: user_id
+      description: User ID
       schema:
         type: string
       required: true

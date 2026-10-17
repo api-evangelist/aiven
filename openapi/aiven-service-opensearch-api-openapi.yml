@@ -2264,67 +2264,512 @@ paths:
         oauth2:
         - services:read
 components:
-  parameters:
-    project:
-      in: path
-      name: project
-      description: Project name
-      schema:
-        type: string
-      required: true
-    snapshot_name:
-      in: path
-      name: snapshot_name
-      description: Snapshot name
-      schema:
-        type: string
-      required: true
-    repository_name:
-      in: path
-      name: repository_name
-      description: Repository name
-      schema:
-        type: string
-      required: true
-    index_pattern:
-      in: path
-      name: index_pattern
-      description: OpenSearch index name, comma-separated list or pattern
-      schema:
-        type: string
-      required: true
-    service_name:
-      in: path
-      name: service_name
-      description: Service name
-      schema:
-        type: string
-      required: true
   schemas:
-    ServiceOpenSearchIndexCloseMultipleRequestBody:
+    ServiceOpenSearchIndexOpenResponse:
       type: object
-      description: ServiceOpenSearchIndexCloseMultipleRequestBody
+      description: ServiceOpenSearchIndexOpenResponse
       properties:
-        indices:
+        acknowledged:
+          type: boolean
+          description: Opening index acknowledged
+        errors:
           type: array
-          maxItems: 10000
-          description: Indices list to close
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - acknowledged
+    ServiceOpensearchCustomRepoShowSnapshotResponse:
+      type: object
+      description: ServiceOpensearchCustomRepoShowSnapshotResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        snapshots:
+          type: array
+          description: List of running snapshots
+          items:
+            type: object
+            properties:
+              snapshot:
+                type: string
+                description: Snapshot name
+            required:
+            - snapshot
+      required:
+      - snapshots
+    ServiceOpenSearchAclSetResponse:
+      type: object
+      description: ServiceOpenSearchAclSetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        opensearch_acl_config:
+          type: object
+          description: OpenSearch ACL configuration
+          properties:
+            acls:
+              type: array
+              maxItems: 512
+              description: List of OpenSearch ACLs
+              items:
+                type: object
+                properties:
+                  rules:
+                    type: array
+                    maxItems: 256
+                    description: OpenSearch rules
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: string
+                          minLength: 1
+                          maxLength: 249
+                          description: OpenSearch index pattern
+                        permission:
+                          type: string
+                          description: OpenSearch permission
+                          enum:
+                          - deny
+                          - admin
+                          - read
+                          - readwrite
+                          - write
+                      required:
+                      - index
+                      - permission
+                  username:
+                    type: string
+                    minLength: 1
+                    maxLength: 64
+                    description: Username
+                required:
+                - rules
+                - username
+            enabled:
+              type: boolean
+              description: Enable OpenSearch ACLs. When disabled authenticated service users have unrestricted access.
+          required:
+          - acls
+          - enabled
+      required:
+      - opensearch_acl_config
+    ServiceOpensearchCustomRepoShowSnapshotStatusResponse:
+      type: object
+      description: ServiceOpensearchCustomRepoShowSnapshotStatusResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        snapshots:
+          type: array
+          description: List of running snapshots
+          items:
+            type: object
+            properties:
+              snapshot:
+                type: string
+                description: Snapshot name
+            required:
+            - snapshot
+      required:
+      - snapshots
+    ServiceOpensearchListRestorationsInProgressResponse:
+      type: object
+      description: ServiceOpensearchListRestorationsInProgressResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        snapshots:
+          type: array
+          description: List of running restorations
+          items:
+            type: object
+            properties:
+              repo_name:
+                type: string
+                description: Repository name
+              running_time_in_nanos:
+                type: integer
+                description: Running time in nanoseconds
+              snapshot_name:
+                type: string
+                description: Snapshot name
+              start_time_in_millis:
+                type: integer
+                description: Restoration start time in milliseconds
+            required:
+            - snapshot_name
+    ServiceOpensearchCustomRepoRestoreSnapshotRequestBody:
+      type: object
+      description: ServiceOpensearchCustomRepoRestoreSnapshotRequestBody
+      properties:
+        ignore_index_settings:
+          type: string
+          maxLength: 4096
+          description: Comma-delimited list of index settings to ignore
+        ignore_unavailable:
+          type: boolean
+          description: Ignore indices that are missing or closed
+        include_aliases:
+          type: boolean
+          description: Include aliases
+        include_global_state:
+          type: boolean
+          description: Restore global state
+        index_settings:
+          type: string
+          maxLength: 4096
+          description: Comma-delimited list of index settings to override.
+        indices:
+          type: string
+          maxLength: 4096
+          description: Comma-separated list of index patterns to restore
+        partial:
+          type: boolean
+          description: Allows to restore snapshot of indices with unavailable shards
+        rename_alias_pattern:
+          type: string
+          maxLength: 4096
+          description: Rename pattern for aliases
+        rename_alias_replacement:
+          type: string
+          maxLength: 4096
+          description: Rename replacement for aliases
+        rename_pattern:
+          type: string
+          maxLength: 4096
+          description: Rename pattern for indices
+        rename_replacement:
+          type: string
+          maxLength: 4096
+          description: Rename replacement for indices
+      required:
+      - indices
+    ServiceOpensearchCustomRepoDeleteSnapshotResponse:
+      type: object
+      description: ServiceOpensearchCustomRepoDeleteSnapshotResponse
+      properties:
+        acknowledged:
+          type: boolean
+          description: Snapshot deletion acknowledged
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - acknowledged
+    ServiceOpenSearchSecurityResetResponse:
+      type: object
+      description: ServiceOpenSearchSecurityResetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        security_plugin_admin_enabled:
+          type: boolean
+          description: security plugin admin defined
+        security_plugin_available:
+          type: boolean
+          description: Opensearch security available for the service
+        security_plugin_enabled:
+          type: boolean
+          description: Opensearch security enabled for the service
+      required:
+      - security_plugin_admin_enabled
+      - security_plugin_available
+    ServiceOpensearchCustomRepoRestoreSnapshotCheckResponse:
+      type: object
+      description: ServiceOpensearchCustomRepoRestoreSnapshotCheckResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        indices_to_close:
+          type: array
+          description: List of indices to close before restoration
+          items:
+            type: string
+        matched_indices:
+          type: array
+          description: List of matched indices for closing
+          items:
+            type: string
+        message:
+          type: string
+          description: Printable result of the request
+        target_indices:
+          type: array
+          description: List of target indices for restoration
           items:
             type: string
       required:
-      - indices
-    ServiceOpenSearchIndexOpenMultipleRequestBody:
+      - indices_to_close
+      - matched_indices
+      - target_indices
+    ServiceOpenSearchIndexListResponse:
       type: object
-      description: ServiceOpenSearchIndexOpenMultipleRequestBody
+      description: ServiceOpenSearchIndexListResponse
       properties:
-        indices:
+        errors:
           type: array
-          maxItems: 10000
-          description: Indices list to open
+          description: List of errors occurred during request processing
           items:
-            type: string
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        indexes:
+          type: array
+          description: List of OpenSearch indexes
+          items:
+            type: object
+            properties:
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              docs:
+                type: integer
+                description: Number of documents in index. -1 means not available.
+              health:
+                type: string
+                description: Index health
+                enum:
+                - green
+                - yellow
+                - red
+                - red*
+                - unknown
+              index_name:
+                type: string
+                description: Index name
+              number_of_replicas:
+                type: integer
+                minimum: 0
+                description: Number of replicas for an index
+              number_of_shards:
+                type: integer
+                minimum: 1
+                description: Number of shards in an index
+              read_only_allow_delete:
+                type: boolean
+                description: Whether an index is set as read-only (but allows deletion). null means unknown.
+              replication:
+                type: object
+                description: Index replication
+                properties:
+                  leader_index:
+                    type: string
+                    description: Leader index name
+                  leader_project:
+                    type: string
+                    description: Leader project name
+                  leader_service:
+                    type: string
+                    description: Leader service name
+              size:
+                type: integer
+                description: Index size in bytes. -1 means not available.
+              status:
+                type: string
+                description: Index status
+                enum:
+                - unknown
+                - open
+                - close
+                - none
+            required:
+            - create_time
+            - index_name
+            - number_of_replicas
+            - number_of_shards
+        message:
+          type: string
+          description: Printable result of the request
       required:
-      - indices
+      - indexes
+    ServiceOpensearchCustomRepoNameVerifyResponse:
+      type: object
+      description: ServiceOpensearchCustomRepoNameVerifyResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        nodes:
+          type: object
+          description: Nodes connected to the snapshot repository
+          properties: {}
     ServiceOpensearchTieredStorageSummaryResponse:
       type: object
       description: ServiceOpensearchTieredStorageSummaryResponse
@@ -2424,10 +2869,13 @@ components:
           description: Printable result of the request
       required:
       - accepted
-    ServiceOpenSearchIndexDeleteResponse:
+    ServiceOpensearchCustomRepoRestoreSnapshotResponse:
       type: object
-      description: ServiceOpenSearchIndexDeleteResponse
+      description: ServiceOpensearchCustomRepoRestoreSnapshotResponse
       properties:
+        accepted:
+          type: boolean
+          description: Snapshot creation accepted
         errors:
           type: array
           description: List of errors occurred during request processing
@@ -2449,120 +2897,8 @@ components:
         message:
           type: string
           description: Printable result of the request
-    ServiceOpensearchCustomRepoShowSnapshotStatusResponse:
-      type: object
-      description: ServiceOpensearchCustomRepoShowSnapshotStatusResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        snapshots:
-          type: array
-          description: List of running snapshots
-          items:
-            type: object
-            properties:
-              snapshot:
-                type: string
-                description: Snapshot name
-            required:
-            - snapshot
       required:
-      - snapshots
-    ServiceOpenSearchAclGetResponse:
-      type: object
-      description: ServiceOpenSearchAclGetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        opensearch_acl_config:
-          type: object
-          description: OpenSearch ACL configuration
-          properties:
-            acls:
-              type: array
-              maxItems: 512
-              description: List of OpenSearch ACLs
-              items:
-                type: object
-                properties:
-                  rules:
-                    type: array
-                    maxItems: 256
-                    description: OpenSearch rules
-                    items:
-                      type: object
-                      properties:
-                        index:
-                          type: string
-                          minLength: 1
-                          maxLength: 249
-                          description: OpenSearch index pattern
-                        permission:
-                          type: string
-                          description: OpenSearch permission
-                          enum:
-                          - deny
-                          - admin
-                          - read
-                          - readwrite
-                          - write
-                      required:
-                      - index
-                      - permission
-                  username:
-                    type: string
-                    minLength: 1
-                    maxLength: 64
-                    description: Username
-                required:
-                - rules
-                - username
-            enabled:
-              type: boolean
-              description: Enable OpenSearch ACLs. When disabled authenticated service users have unrestricted access.
-          required:
-          - acls
-          - enabled
-      required:
-      - opensearch_acl_config
+      - accepted
     ServiceOpenSearchSecurityGetResponse:
       type: object
       description: ServiceOpenSearchSecurityGetResponse
@@ -2600,222 +2936,10 @@ components:
       required:
       - security_plugin_admin_enabled
       - security_plugin_available
-    ServiceOpenSearchIndexOpenMultipleResponse:
+    ServiceOpenSearchAclUpdateRequestBody:
       type: object
-      description: ServiceOpenSearchIndexOpenMultipleResponse
+      description: ServiceOpenSearchAclUpdateRequestBody
       properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        opened_indices:
-          type: array
-          maxItems: 10000
-          description: Successfully opened indices
-          items:
-            type: string
-      required:
-      - opened_indices
-    ServiceOpensearchListRestorationsInProgressResponse:
-      type: object
-      description: ServiceOpensearchListRestorationsInProgressResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        snapshots:
-          type: array
-          description: List of running restorations
-          items:
-            type: object
-            properties:
-              repo_name:
-                type: string
-                description: Repository name
-              running_time_in_nanos:
-                type: integer
-                description: Running time in nanoseconds
-              snapshot_name:
-                type: string
-                description: Snapshot name
-              start_time_in_millis:
-                type: integer
-                description: Restoration start time in milliseconds
-            required:
-            - snapshot_name
-    ServiceOpensearchCustomRepoListSnapshotsResponse:
-      type: object
-      description: ServiceOpensearchCustomRepoListSnapshotsResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        snapshots:
-          type: array
-          description: List of running snapshots
-          items:
-            type: object
-            properties:
-              snapshot:
-                type: string
-                description: Snapshot name
-            required:
-            - snapshot
-      required:
-      - snapshots
-    ServiceOpensearchCustomRepoRestoreSnapshotRequestBody:
-      type: object
-      description: ServiceOpensearchCustomRepoRestoreSnapshotRequestBody
-      properties:
-        ignore_index_settings:
-          type: string
-          maxLength: 4096
-          description: Comma-delimited list of index settings to ignore
-        ignore_unavailable:
-          type: boolean
-          description: Ignore indices that are missing or closed
-        include_aliases:
-          type: boolean
-          description: Include aliases
-        include_global_state:
-          type: boolean
-          description: Restore global state
-        index_settings:
-          type: string
-          maxLength: 4096
-          description: Comma-delimited list of index settings to override.
-        indices:
-          type: string
-          maxLength: 4096
-          description: Comma-separated list of index patterns to restore
-        partial:
-          type: boolean
-          description: Allows to restore snapshot of indices with unavailable shards
-        rename_alias_pattern:
-          type: string
-          maxLength: 4096
-          description: Rename pattern for aliases
-        rename_alias_replacement:
-          type: string
-          maxLength: 4096
-          description: Rename replacement for aliases
-        rename_pattern:
-          type: string
-          maxLength: 4096
-          description: Rename pattern for indices
-        rename_replacement:
-          type: string
-          maxLength: 4096
-          description: Rename replacement for indices
-      required:
-      - indices
-    ServiceOpensearchCustomRepoNameVerifyResponse:
-      type: object
-      description: ServiceOpensearchCustomRepoNameVerifyResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        nodes:
-          type: object
-          description: Nodes connected to the snapshot repository
-          properties: {}
-    ServiceOpenSearchAclSetResponse:
-      type: object
-      description: ServiceOpenSearchAclSetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
         opensearch_acl_config:
           type: object
           description: OpenSearch ACL configuration
@@ -2862,14 +2986,23 @@ components:
             enabled:
               type: boolean
               description: Enable OpenSearch ACLs. When disabled authenticated service users have unrestricted access.
-          required:
-          - acls
-          - enabled
+              default: false
       required:
       - opensearch_acl_config
-    ServiceOpensearchCustomRepoShowSnapshotResponse:
+    ServiceOpenSearchSecuritySetRequestBody:
       type: object
-      description: ServiceOpensearchCustomRepoShowSnapshotResponse
+      description: ServiceOpenSearchSecuritySetRequestBody
+      properties:
+        admin_password:
+          type: string
+          minLength: 8
+          maxLength: 256
+          description: os-sec-admin password
+      required:
+      - admin_password
+    ServiceOpenSearchIndexOpenMultipleResponse:
+      type: object
+      description: ServiceOpenSearchIndexOpenMultipleResponse
       properties:
         errors:
           type: array
@@ -2892,41 +3025,83 @@ components:
         message:
           type: string
           description: Printable result of the request
-        snapshots:
+        opened_indices:
           type: array
-          description: List of running snapshots
+          maxItems: 10000
+          description: Successfully opened indices
+          items:
+            type: string
+      required:
+      - opened_indices
+    ServiceOpenSearchSecurityResetRequestBody:
+      type: object
+      description: ServiceOpenSearchSecurityResetRequestBody
+      properties:
+        admin_password:
+          type: string
+          minLength: 8
+          maxLength: 256
+          description: Current os-sec-admin password
+        new_password:
+          type: string
+          minLength: 8
+          maxLength: 256
+          description: New os-sec-admin password
+      required:
+      - admin_password
+      - new_password
+    ServiceOpenSearchIndexCloseResponse:
+      type: object
+      description: ServiceOpenSearchIndexCloseResponse
+      properties:
+        acknowledged:
+          type: boolean
+          description: Closing index acknowledged
+        errors:
+          type: array
+          description: List of errors occurred during request processing
           items:
             type: object
             properties:
-              snapshot:
+              message:
                 type: string
-                description: Snapshot name
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
             required:
-            - snapshot
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
       required:
-      - snapshots
-    ServiceOpensearchCustomRepoRestoreSnapshotCheckRequestBody:
+      - acknowledged
+    ServiceOpenSearchIndexCloseMultipleRequestBody:
       type: object
-      description: ServiceOpensearchCustomRepoRestoreSnapshotCheckRequestBody
+      description: ServiceOpenSearchIndexCloseMultipleRequestBody
       properties:
-        ignore_unavailable:
-          type: boolean
-          description: Ignore indices that are missing or closed
-        include_aliases:
-          type: boolean
-          description: Include aliases
         indices:
-          type: string
-          maxLength: 4096
-          description: Comma-separated list of index patterns to check
-        rename_pattern:
-          type: string
-          maxLength: 4096
-          description: Rename pattern for indices
-        rename_replacement:
-          type: string
-          maxLength: 4096
-          description: Rename replacement for indices
+          type: array
+          maxItems: 10000
+          description: Indices list to close
+          items:
+            type: string
+      required:
+      - indices
+    ServiceOpenSearchIndexOpenMultipleRequestBody:
+      type: object
+      description: ServiceOpenSearchIndexOpenMultipleRequestBody
+      properties:
+        indices:
+          type: array
+          maxItems: 10000
+          description: Indices list to open
+          items:
+            type: string
       required:
       - indices
     ServiceOpenSearchAclUpdateResponse:
@@ -3005,9 +3180,9 @@ components:
           - enabled
       required:
       - opensearch_acl_config
-    ServiceOpenSearchSecurityResetResponse:
+    ServiceOpenSearchAclGetResponse:
       type: object
-      description: ServiceOpenSearchSecurityResetResponse
+      description: ServiceOpenSearchAclGetResponse
       properties:
         errors:
           type: array
@@ -3030,208 +3205,6 @@ components:
         message:
           type: string
           description: Printable result of the request
-        security_plugin_admin_enabled:
-          type: boolean
-          description: security plugin admin defined
-        security_plugin_available:
-          type: boolean
-          description: Opensearch security available for the service
-        security_plugin_enabled:
-          type: boolean
-          description: Opensearch security enabled for the service
-      required:
-      - security_plugin_admin_enabled
-      - security_plugin_available
-    ServiceOpensearchCustomRepoRestoreSnapshotCheckResponse:
-      type: object
-      description: ServiceOpensearchCustomRepoRestoreSnapshotCheckResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        indices_to_close:
-          type: array
-          description: List of indices to close before restoration
-          items:
-            type: string
-        matched_indices:
-          type: array
-          description: List of matched indices for closing
-          items:
-            type: string
-        message:
-          type: string
-          description: Printable result of the request
-        target_indices:
-          type: array
-          description: List of target indices for restoration
-          items:
-            type: string
-      required:
-      - indices_to_close
-      - matched_indices
-      - target_indices
-    ServiceOpensearchCustomRepoCreateSnapshotRequestBody:
-      type: object
-      description: ServiceOpensearchCustomRepoCreateSnapshotRequestBody
-      properties:
-        ignore_unavailable:
-          type: boolean
-          description: Ignore indices that do not exist
-          default: false
-        include_global_state:
-          type: boolean
-          description: Include global state
-          default: true
-        indices:
-          type: string
-          maxLength: 4096
-          description: Comma separated list of index patterns to snapshot
-        partial:
-          type: boolean
-          description: Allow partial snapshots
-          default: false
-    ServiceOpenSearchIndexListResponse:
-      type: object
-      description: ServiceOpenSearchIndexListResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        indexes:
-          type: array
-          description: List of OpenSearch indexes
-          items:
-            type: object
-            properties:
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              docs:
-                type: integer
-                description: Number of documents in index. -1 means not available.
-              health:
-                type: string
-                description: Index health
-                enum:
-                - green
-                - yellow
-                - red
-                - red*
-                - unknown
-              index_name:
-                type: string
-                description: Index name
-              number_of_replicas:
-                type: integer
-                minimum: 0
-                description: Number of replicas for an index
-              number_of_shards:
-                type: integer
-                minimum: 1
-                description: Number of shards in an index
-              read_only_allow_delete:
-                type: boolean
-                description: Whether an index is set as read-only (but allows deletion). null means unknown.
-              replication:
-                type: object
-                description: Index replication
-                properties:
-                  leader_index:
-                    type: string
-                    description: Leader index name
-                  leader_project:
-                    type: string
-                    description: Leader project name
-                  leader_service:
-                    type: string
-                    description: Leader service name
-              size:
-                type: integer
-                description: Index size in bytes. -1 means not available.
-              status:
-                type: string
-                description: Index status
-                enum:
-                - unknown
-                - open
-                - close
-                - none
-            required:
-            - create_time
-            - index_name
-            - number_of_replicas
-            - number_of_shards
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - indexes
-    ServiceOpensearchCustomRepoRestoreSnapshotResponse:
-      type: object
-      description: ServiceOpensearchCustomRepoRestoreSnapshotResponse
-      properties:
-        accepted:
-          type: boolean
-          description: Snapshot creation accepted
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - accepted
-    ServiceOpenSearchAclSetRequestBody:
-      type: object
-      description: ServiceOpenSearchAclSetRequestBody
-      properties:
         opensearch_acl_config:
           type: object
           description: OpenSearch ACL configuration
@@ -3278,7 +3251,6 @@ components:
             enabled:
               type: boolean
               description: Enable OpenSearch ACLs. When disabled authenticated service users have unrestricted access.
-              default: false
           required:
           - acls
           - enabled
@@ -3354,175 +3326,30 @@ components:
           description: Printable result of the request
       required:
       - closed_indices
-    ServiceOpenSearchAclUpdateRequestBody:
+    ServiceOpensearchCustomRepoCreateSnapshotRequestBody:
       type: object
-      description: ServiceOpenSearchAclUpdateRequestBody
+      description: ServiceOpensearchCustomRepoCreateSnapshotRequestBody
       properties:
-        opensearch_acl_config:
-          type: object
-          description: OpenSearch ACL configuration
-          properties:
-            acls:
-              type: array
-              maxItems: 512
-              description: List of OpenSearch ACLs
-              items:
-                type: object
-                properties:
-                  rules:
-                    type: array
-                    maxItems: 256
-                    description: OpenSearch rules
-                    items:
-                      type: object
-                      properties:
-                        index:
-                          type: string
-                          minLength: 1
-                          maxLength: 249
-                          description: OpenSearch index pattern
-                        permission:
-                          type: string
-                          description: OpenSearch permission
-                          enum:
-                          - deny
-                          - admin
-                          - read
-                          - readwrite
-                          - write
-                      required:
-                      - index
-                      - permission
-                  username:
-                    type: string
-                    minLength: 1
-                    maxLength: 64
-                    description: Username
-                required:
-                - rules
-                - username
-            enabled:
-              type: boolean
-              description: Enable OpenSearch ACLs. When disabled authenticated service users have unrestricted access.
-              default: false
-      required:
-      - opensearch_acl_config
-    ServiceOpenSearchIndexOpenResponse:
-      type: object
-      description: ServiceOpenSearchIndexOpenResponse
-      properties:
-        acknowledged:
+        ignore_unavailable:
           type: boolean
-          description: Opening index acknowledged
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - acknowledged
-    ServiceOpenSearchIndexCloseResponse:
-      type: object
-      description: ServiceOpenSearchIndexCloseResponse
-      properties:
-        acknowledged:
+          description: Ignore indices that do not exist
+          default: false
+        include_global_state:
           type: boolean
-          description: Closing index acknowledged
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
+          description: Include global state
+          default: true
+        indices:
           type: string
-          description: Printable result of the request
-      required:
-      - acknowledged
-    ServiceOpensearchCustomRepoSnapshotsInProgressResponse:
-      type: object
-      description: ServiceOpensearchCustomRepoSnapshotsInProgressResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        snapshots:
-          type: array
-          description: List of running snapshots
-          items:
-            type: object
-            properties:
-              snapshot:
-                type: string
-                description: Snapshot name
-            required:
-            - snapshot
-      required:
-      - snapshots
-    ServiceOpenSearchSecuritySetRequestBody:
-      type: object
-      description: ServiceOpenSearchSecuritySetRequestBody
-      properties:
-        admin_password:
-          type: string
-          minLength: 8
-          maxLength: 256
-          description: os-sec-admin password
-      required:
-      - admin_password
-    ServiceOpensearchCustomRepoDeleteSnapshotResponse:
-      type: object
-      description: ServiceOpensearchCustomRepoDeleteSnapshotResponse
-      properties:
-        acknowledged:
+          maxLength: 4096
+          description: Comma separated list of index patterns to snapshot
+        partial:
           type: boolean
-          description: Snapshot deletion acknowledged
+          description: Allow partial snapshots
+          default: false
+    ServiceOpenSearchIndexDeleteResponse:
+      type: object
+      description: ServiceOpenSearchIndexDeleteResponse
+      properties:
         errors:
           type: array
           description: List of errors occurred during request processing
@@ -3544,8 +3371,6 @@ components:
         message:
           type: string
           description: Printable result of the request
-      required:
-      - acknowledged
     ServiceOpensearchListCustomReposResponse:
       type: object
       description: ServiceOpensearchListCustomReposResponse
@@ -3598,23 +3423,198 @@ components:
             - type
       required:
       - repositories
-    ServiceOpenSearchSecurityResetRequestBody:
+    ServiceOpenSearchAclSetRequestBody:
       type: object
-      description: ServiceOpenSearchSecurityResetRequestBody
+      description: ServiceOpenSearchAclSetRequestBody
       properties:
-        admin_password:
-          type: string
-          minLength: 8
-          maxLength: 256
-          description: Current os-sec-admin password
-        new_password:
-          type: string
-          minLength: 8
-          maxLength: 256
-          description: New os-sec-admin password
+        opensearch_acl_config:
+          type: object
+          description: OpenSearch ACL configuration
+          properties:
+            acls:
+              type: array
+              maxItems: 512
+              description: List of OpenSearch ACLs
+              items:
+                type: object
+                properties:
+                  rules:
+                    type: array
+                    maxItems: 256
+                    description: OpenSearch rules
+                    items:
+                      type: object
+                      properties:
+                        index:
+                          type: string
+                          minLength: 1
+                          maxLength: 249
+                          description: OpenSearch index pattern
+                        permission:
+                          type: string
+                          description: OpenSearch permission
+                          enum:
+                          - deny
+                          - admin
+                          - read
+                          - readwrite
+                          - write
+                      required:
+                      - index
+                      - permission
+                  username:
+                    type: string
+                    minLength: 1
+                    maxLength: 64
+                    description: Username
+                required:
+                - rules
+                - username
+            enabled:
+              type: boolean
+              description: Enable OpenSearch ACLs. When disabled authenticated service users have unrestricted access.
+              default: false
+          required:
+          - acls
+          - enabled
       required:
-      - admin_password
-      - new_password
+      - opensearch_acl_config
+    ServiceOpensearchCustomRepoRestoreSnapshotCheckRequestBody:
+      type: object
+      description: ServiceOpensearchCustomRepoRestoreSnapshotCheckRequestBody
+      properties:
+        ignore_unavailable:
+          type: boolean
+          description: Ignore indices that are missing or closed
+        include_aliases:
+          type: boolean
+          description: Include aliases
+        indices:
+          type: string
+          maxLength: 4096
+          description: Comma-separated list of index patterns to check
+        rename_pattern:
+          type: string
+          maxLength: 4096
+          description: Rename pattern for indices
+        rename_replacement:
+          type: string
+          maxLength: 4096
+          description: Rename replacement for indices
+      required:
+      - indices
+    ServiceOpensearchCustomRepoSnapshotsInProgressResponse:
+      type: object
+      description: ServiceOpensearchCustomRepoSnapshotsInProgressResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        snapshots:
+          type: array
+          description: List of running snapshots
+          items:
+            type: object
+            properties:
+              snapshot:
+                type: string
+                description: Snapshot name
+            required:
+            - snapshot
+      required:
+      - snapshots
+    ServiceOpensearchCustomRepoListSnapshotsResponse:
+      type: object
+      description: ServiceOpensearchCustomRepoListSnapshotsResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+        snapshots:
+          type: array
+          description: List of running snapshots
+          items:
+            type: object
+            properties:
+              snapshot:
+                type: string
+                description: Snapshot name
+            required:
+            - snapshot
+      required:
+      - snapshots
+  parameters:
+    repository_name:
+      in: path
+      name: repository_name
+      description: Repository name
+      schema:
+        type: string
+      required: true
+    project:
+      in: path
+      name: project
+      description: Project name
+      schema:
+        type: string
+      required: true
+    index_pattern:
+      in: path
+      name: index_pattern
+      description: OpenSearch index name, comma-separated list or pattern
+      schema:
+        type: string
+      required: true
+    snapshot_name:
+      in: path
+      name: snapshot_name
+      description: Snapshot name
+      schema:
+        type: string
+      required: true
+    service_name:
+      in: path
+      name: service_name
+      description: Service name
+      schema:
+        type: string
+      required: true
   securitySchemes:
     tokenAuth:
       description: 'Header should be of the format `authorization: aivenv1 <TOKEN>`. Tokens can be obtained from [your Aiven profile page](https://console.aiven.io/profile/auth)'

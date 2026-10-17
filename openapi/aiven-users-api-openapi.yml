@@ -933,9 +933,34 @@ paths:
                 $ref: '#/components/schemas/ValidateReferralCodeResponse'
 components:
   schemas:
-    UserPasswordChangeResponse:
+    UserPasswordChangeRequestBody:
       type: object
-      description: UserPasswordChangeResponse
+      description: UserPasswordChangeRequestBody
+      properties:
+        new_password:
+          type: string
+          maxLength: 256
+          description: New password
+        password:
+          type: string
+          maxLength: 256
+          description: Current password
+      required:
+      - new_password
+      - password
+    AccessTokenUpdateRequestBody:
+      type: object
+      description: AccessTokenUpdateRequestBody
+      properties:
+        description:
+          type: string
+          maxLength: 1000
+          description: Name / description of an access token
+      required:
+      - description
+    UserAuthResponse:
+      type: object
+      description: UserAuthResponse
       properties:
         errors:
           type: array
@@ -958,11 +983,236 @@ components:
         message:
           type: string
           description: Printable result of the request
+        return_url:
+          type: string
+          description: Return URL
+        state:
+          type: string
+          description: User account state
+        tenant:
+          type: string
+          maxLength: 64
+          description: Tenant identifier
         token:
           type: string
           description: API session authentication token
+        user_email:
+          type: string
+          maxLength: 254
+          description: User email address
       required:
+      - state
       - token
+      - user_email
+    UserAccountInvitesAcceptResponse:
+      type: object
+      description: UserAccountInvitesAcceptResponse
+      properties:
+        account_invites:
+          type: array
+          description: List of invites
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              invited_by_user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - account_id
+            - account_name
+            - create_time
+            - invited_by_user_email
+            - team_id
+            - team_name
+            - user_email
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account_invites
+    CheckPasswordStrengthExistingUserRequestBody:
+      type: object
+      description: CheckPasswordStrengthExistingUserRequestBody
+      properties:
+        new_password:
+          type: string
+          maxLength: 256
+          description: New password
+        old_password:
+          type: string
+          maxLength: 256
+          description: User password
+      required:
+      - new_password
+      - old_password
+    UserAuthenticationMethodDeleteResponse:
+      type: object
+      description: UserAuthenticationMethodDeleteResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    UserAccountInvitesListResponse:
+      type: object
+      description: UserAccountInvitesListResponse
+      properties:
+        account_invites:
+          type: array
+          description: List of invites
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              invited_by_user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - account_id
+            - account_name
+            - create_time
+            - invited_by_user_email
+            - team_id
+            - team_name
+            - user_email
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account_invites
+    AccessTokenCreateRequestBody:
+      type: object
+      description: AccessTokenCreateRequestBody
+      properties:
+        description:
+          type: string
+          maxLength: 1000
+          description: Name / description of an access token
+        extend_when_used:
+          type: boolean
+          description: Extend token expiration time when token is used. Only applicable if max_age_seconds is specified.
+          default: false
+        ip_allowlist:
+          type: array
+          maxItems: 100
+          description: List of allowed IP ranges
+          items:
+            type: string
+        max_age_seconds:
+          type: number
+          minimum: 600
+          maximum: 315360000
+          description: Time the token remains valid since creation (or since last use if extend_when_used is true)
+        scopes:
+          type: array
+          maxItems: 100
+          description: Scopes this token is restricted to, if specified
+          items:
+            type: string
+      required:
+      - description
     ValidateCreditCodeResponse:
       type: object
       description: ValidateCreditCodeResponse
@@ -988,35 +1238,224 @@ components:
         message:
           type: string
           description: Printable result of the request
-    UserUpdateRequestBody:
+    UserPasswordResetRequestRequestBody:
       type: object
-      description: UserUpdateRequestBody
+      description: UserPasswordResetRequestRequestBody
       properties:
-        city:
+        email:
           type: string
-          maxLength: 256
-          description: City
-        country:
-          type: string
-          maxLength: 256
-          description: Country code ISO 3166-1 alpha-2
-        department:
-          type: string
-          maxLength: 256
-          description: Job department
-        job_title:
-          type: string
-          maxLength: 256
-          description: Job title
-        real_name:
-          type: string
-          maxLength: 256
-          description: User real name
+          maxLength: 254
+          description: User email address
       required:
-      - real_name
-    AccessTokenCreateResponse:
+      - email
+    UserExpireTokensResponse:
       type: object
-      description: AccessTokenCreateResponse
+      description: UserExpireTokensResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    UserVerifyEmailResponse:
+      type: object
+      description: UserVerifyEmailResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        invite_details:
+          type: object
+          description: Details of verified invite
+          properties:
+            user_email:
+              type: string
+              maxLength: 254
+              description: User email address
+          required:
+          - user_email
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - invite_details
+    OrganizationUserTokensListResponse:
+      type: object
+      description: OrganizationUserTokensListResponse
+      properties:
+        tokens:
+          type: array
+          description: List of user tokens accessible to the organization
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                description: Description
+              ip_allowlist:
+                type: array
+                description: List of IP addresses that are allowed to use the token
+                items:
+                  type: string
+              last_ip:
+                type: string
+                description: Last-used IP
+              last_used_time:
+                type: string
+                maxLength: 36
+                description: Last-used time
+              last_user_agent:
+                type: string
+                description: Last-used user agent
+              token_prefix:
+                type: string
+                description: Token prefix
+            required:
+            - description
+            - ip_allowlist
+            - last_ip
+            - last_used_time
+            - last_user_agent
+            - token_prefix
+      required:
+      - tokens
+    UserAuthRequestBody:
+      type: object
+      description: UserAuthRequestBody
+      properties:
+        email:
+          type: string
+          maxLength: 254
+          description: User email address
+        otp:
+          type: string
+          maxLength: 6
+          description: One-time password
+        password:
+          type: string
+          maxLength: 256
+          description: User password
+      required:
+      - email
+      - password
+    UserAccountInvitesRejectResponse:
+      type: object
+      description: UserAccountInvitesRejectResponse
+      properties:
+        account_invites:
+          type: array
+          description: List of invites
+          items:
+            type: object
+            properties:
+              account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              account_name:
+                type: string
+                maxLength: 83
+                description: Account name
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              invited_by_user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+              team_id:
+                type: string
+                maxLength: 32
+                description: Team ID
+              team_name:
+                type: string
+                maxLength: 128
+                description: Team name
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - account_id
+            - account_name
+            - create_time
+            - invited_by_user_email
+            - team_id
+            - team_name
+            - user_email
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+      required:
+      - account_invites
+    TwoFactorAuthConfigureRequestBody:
+      type: object
+      description: TwoFactorAuthConfigureRequestBody
+      properties:
+        method:
+          type: string
+          maxLength: 32
+          description: Two-factor authentication method being used, if any
+        password:
+          type: string
+          maxLength: 256
+          description: Current password
+      required:
+      - method
+      - password
+    AccessTokenUpdateResponse:
+      type: object
+      description: AccessTokenUpdateResponse
       properties:
         create_time:
           type: string
@@ -1055,9 +1494,6 @@ components:
         extend_when_used:
           type: boolean
           description: Extend token expiration time when token is used. Only applicable if max_age_seconds is specified.
-        full_token:
-          type: string
-          description: This full access token can be used to make API calls. This can also be used to update or revoke tokens. Note that when using this token with the update and revoke APIs it must be URL encoded because it may contain /, + and = characters (/ =&gt; %2F, + =&gt; %2B, = =&gt; %3D).
         ip_allowlist:
           type: array
           maxItems: 100
@@ -1095,34 +1531,103 @@ components:
           description: First characters of the actual token value. Full value is only exposed after creation. This value is used when updating or revoking tokens. Note that the value may contain /, + and = characters and must be URL encoded when used (/ =&gt; %2F, + =&gt; %2B, = =&gt; %3D).
       required:
       - create_time
-      - created_manually
       - extend_when_used
-      - full_token
       - max_age_seconds
       - token_prefix
-    TwoFactorAuthConfigureOTPRequestBody:
+    UserAuthenticationMethodsListResponse:
       type: object
-      description: TwoFactorAuthConfigureOTPRequestBody
+      description: UserAuthenticationMethodsListResponse
       properties:
-        otp:
+        authentication_methods:
+          type: array
+          description: List of linked authentication methods
+          items:
+            type: object
+            properties:
+              authentication_method_account_id:
+                type: string
+                maxLength: 36
+                description: Account ID
+              create_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              currently_active:
+                type: boolean
+                description: true if API was accessed with this authentication method
+              delete_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              last_used_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              method_id:
+                type: string
+                description: Unique ID for authentication method
+              name:
+                type: string
+                maxLength: 128
+                description: Authentication method name
+              public_remote_identity:
+                type: string
+                description: Identity on remote provider, if available. May be email address, but not necessarily.
+              remote_provider_id:
+                type: string
+                description: Provider ID
+              state:
+                type: string
+                description: State for authentication method
+                enum:
+                - active
+                - deleted
+              update_time:
+                type: string
+                maxLength: 36
+                description: Timestamp in ISO 8601 format, always in UTC
+              user_email:
+                type: string
+                maxLength: 254
+                description: User email address
+            required:
+            - authentication_method_account_id
+            - create_time
+            - currently_active
+            - delete_time
+            - last_used_time
+            - method_id
+            - public_remote_identity
+            - remote_provider_id
+            - state
+            - update_time
+            - user_email
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
           type: string
-          maxLength: 6
-          description: One-time password
-        password:
-          type: string
-          maxLength: 256
-          description: Current password
-        uri:
-          type: string
-          maxLength: 2048
-          description: URI describing the TOTP
+          description: Printable result of the request
       required:
-      - otp
-      - password
-      - uri
-    UserLogoutResponse:
+      - authentication_methods
+    UserPasswordChangeResponse:
       type: object
-      description: UserLogoutResponse
+      description: UserPasswordChangeResponse
       properties:
         errors:
           type: array
@@ -1145,31 +1650,11 @@ components:
         message:
           type: string
           description: Printable result of the request
-    AccessTokenRevokeResponse:
-      type: object
-      description: AccessTokenRevokeResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
+        token:
           type: string
-          description: Printable result of the request
+          description: API session authentication token
+      required:
+      - token
     UserUpdateResponse:
       type: object
       description: UserUpdateResponse
@@ -1350,121 +1835,10 @@ components:
           - user_id
       required:
       - user
-    AccessTokenUpdateRequestBody:
+    TwoFactorAuthConfigureResponse:
       type: object
-      description: AccessTokenUpdateRequestBody
+      description: TwoFactorAuthConfigureResponse
       properties:
-        description:
-          type: string
-          maxLength: 1000
-          description: Name / description of an access token
-      required:
-      - description
-    OrganizationUserUpdateResponse:
-      type: object
-      description: OrganizationUserUpdateResponse
-      properties:
-        is_super_admin:
-          type: boolean
-          description: Super admin state of the organization user
-        join_time:
-          type: string
-          maxLength: 36
-          description: Join time
-        last_activity_time:
-          type: string
-          maxLength: 36
-          description: Last activity time
-        user_id:
-          type: string
-          description: User ID
-        user_info:
-          type: object
-          description: OrganizationUserInfo
-          properties:
-            city:
-              type: string
-              maxLength: 512
-              description: City
-            country:
-              type: string
-              description: Country
-            create_time:
-              type: string
-              maxLength: 36
-              description: Creation time
-            department:
-              type: string
-              description: Department
-            is_application_user:
-              type: boolean
-              description: Is Application User
-            job_title:
-              type: string
-              description: Job Title
-            managed_by_scim:
-              type: boolean
-              description: Managed By Scim
-            managing_organization_id:
-              type: string
-              maxLength: 36
-              description: Managing Organization ID
-            real_name:
-              type: string
-              maxLength: 256
-              description: Real Name
-            state:
-              type: string
-              description: State
-            user_email:
-              type: string
-              maxLength: 254
-              description: User Email
-          required:
-          - create_time
-          - is_application_user
-          - managed_by_scim
-          - real_name
-          - state
-          - user_email
-      required:
-      - is_super_admin
-      - join_time
-      - last_activity_time
-      - user_id
-      - user_info
-    TwoFactorAuthConfigureRequestBody:
-      type: object
-      description: TwoFactorAuthConfigureRequestBody
-      properties:
-        method:
-          type: string
-          maxLength: 32
-          description: Two-factor authentication method being used, if any
-        password:
-          type: string
-          maxLength: 256
-          description: Current password
-      required:
-      - method
-      - password
-    AccessTokenUpdateResponse:
-      type: object
-      description: AccessTokenUpdateResponse
-      properties:
-        create_time:
-          type: string
-          description: Timestamp when the access token was created
-        created_manually:
-          type: boolean
-          description: True for tokens explicitly created via the access_tokens API, false for tokens created via login.
-        currently_active:
-          type: boolean
-          description: true if API request was made with this access token
-        description:
-          type: string
-          maxLength: 1000
-          description: Name / description of an access token
         errors:
           type: array
           description: List of errors occurred during request processing
@@ -1483,98 +1857,181 @@ components:
             required:
             - message
             - status
-        expiry_time:
-          type: string
-          description: Timestamp when the access token will expire unless extended, if ever
-        extend_when_used:
-          type: boolean
-          description: Extend token expiration time when token is used. Only applicable if max_age_seconds is specified.
-        ip_allowlist:
-          type: array
-          maxItems: 100
-          description: List of allowed IP ranges
-          items:
-            type: string
-        last_ip:
-          type: string
-          description: IP address the access token was last used from in case it has ever been used
-        last_used_time:
-          type: string
-          description: Timestamp when the access token was last used, if ever
-        last_user_agent:
-          type: string
-          description: User agent string of the client that last used the token in case it has ever been used
-        last_user_agent_human_readable:
-          type: string
-          description: Human readable user agent string of the client that last used the token in case user agent is known
-        max_age_seconds:
-          type: number
-          minimum: 600
-          maximum: 315360000
-          description: Time the token remains valid since creation (or since last use if extend_when_used is true)
         message:
           type: string
           description: Printable result of the request
-        scopes:
-          type: array
-          maxItems: 100
-          description: Scopes this token is restricted to, if specified
-          items:
-            type: string
-        token_prefix:
+        method:
           type: string
-          description: First characters of the actual token value. Full value is only exposed after creation. This value is used when updating or revoking tokens. Note that the value may contain /, + and = characters and must be URL encoded when used (/ =&gt; %2F, + =&gt; %2B, = =&gt; %3D).
+          maxLength: 32
+          description: Two-factor authentication method being used, if any
+        qrcode:
+          type: string
+          description: QR code describing the TOTP as a base64-encoded PNG
+        uri:
+          type: string
+          maxLength: 2048
+          description: URI describing the TOTP
       required:
-      - create_time
-      - extend_when_used
-      - max_age_seconds
-      - token_prefix
-    OrganizationUserAuthenticationMethodsListResponse:
+      - method
+    OrganizationMemberGroupsListResponse:
       type: object
-      description: OrganizationUserAuthenticationMethodsListResponse
+      description: OrganizationMemberGroupsListResponse
       properties:
-        authentication_methods:
+        user_groups:
           type: array
-          description: List of authentication methods for the organization user
+          description: User Groups
           items:
             type: object
             properties:
-              is_enabled_2fa:
-                type: boolean
-                description: Verifies if 2FA is enabled for the user
-                default: false
-              last_used_time:
+              create_time:
                 type: string
                 maxLength: 36
-                description: Last activity time with the authentication method
-              local_provider_id:
+                description: User group creation time
+              description:
                 type: string
-                description: Local authentication method provider resource ID
-              method_id:
+                maxLength: 4096
+                description: Description
+              managed_by_scim:
+                type: boolean
+                description: Managed By Scim
+              update_time:
                 type: string
-                description: User authentication method ID
-              name:
+                maxLength: 36
+                description: User group last update time
+              user_group_id:
                 type: string
-                description: Name of the organization authentication method
-              organization_id:
+                maxLength: 36
+                description: User Group ID
+              user_group_name:
                 type: string
-                description: Organization ID
-              remote_provider_id:
-                type: string
-                description: Remote authentication method provider ID
-              type:
-                type: string
-                description: Type of the organization authentication method
-              user_email:
-                type: string
-                description: User's email address for the authentication method
-              user_id:
-                type: string
-                description: User ID
+                maxLength: 128
+                description: User Group Name
             required:
-            - remote_provider_id
+            - create_time
+            - description
+            - managed_by_scim
+            - update_time
+            - user_group_id
+            - user_group_name
       required:
-      - authentication_methods
+      - user_groups
+    OrganizationUserUpdateRequestBody:
+      type: object
+      description: OrganizationUserUpdateRequestBody
+      properties:
+        city:
+          type: string
+          maxLength: 512
+          description: City
+        country:
+          type: string
+          description: Country
+        department:
+          type: string
+          description: Department
+        is_super_admin:
+          type: boolean
+          description: Alters super admin state of the organization user
+        job_title:
+          type: string
+          description: Job Title
+        real_name:
+          type: string
+          maxLength: 256
+          description: Real Name
+        state:
+          type: string
+          description: An enumeration.
+          title: State of the user in the organization
+          enum:
+          - active
+          - deactivated
+          - deleted
+    UserPasswordResetRequestResponse:
+      type: object
+      description: UserPasswordResetRequestResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    UserPasswordResetResponse:
+      type: object
+      description: UserPasswordResetResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
+    UserPasswordResetRequestBody:
+      type: object
+      description: UserPasswordResetRequestBody
+      properties:
+        new_password:
+          type: string
+          maxLength: 256
+          description: New password
+      required:
+      - new_password
+    UserLogoutResponse:
+      type: object
+      description: UserLogoutResponse
+      properties:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
+          type: string
+          description: Printable result of the request
     OrganizationMemberPermissionsListResponse:
       type: object
       description: OrganizationMemberPermissionsListResponse
@@ -1607,97 +2064,56 @@ components:
             - resource_type
       required:
       - permissions
-    OrganizationUserGetResponse:
+    ValidateReferralCodeResponse:
       type: object
-      description: OrganizationUserGetResponse
+      description: ValidateReferralCodeResponse
       properties:
-        is_super_admin:
-          type: boolean
-          description: Super admin state of the organization user
-        join_time:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
           type: string
-          maxLength: 36
-          description: Join time
-        last_activity_time:
-          type: string
-          maxLength: 36
-          description: Last activity time
-        user_id:
-          type: string
-          description: User ID
-        user_info:
-          type: object
-          description: OrganizationUserInfo
-          properties:
-            city:
-              type: string
-              maxLength: 512
-              description: City
-            country:
-              type: string
-              description: Country
-            create_time:
-              type: string
-              maxLength: 36
-              description: Creation time
-            department:
-              type: string
-              description: Department
-            is_application_user:
-              type: boolean
-              description: Is Application User
-            job_title:
-              type: string
-              description: Job Title
-            managed_by_scim:
-              type: boolean
-              description: Managed By Scim
-            managing_organization_id:
-              type: string
-              maxLength: 36
-              description: Managing Organization ID
-            real_name:
-              type: string
-              maxLength: 256
-              description: Real Name
-            state:
-              type: string
-              description: State
-            user_email:
-              type: string
-              maxLength: 254
-              description: User Email
-          required:
-          - create_time
-          - is_application_user
-          - managed_by_scim
-          - real_name
-          - state
-          - user_email
-      required:
-      - is_super_admin
-      - join_time
-      - last_activity_time
-      - user_id
-      - user_info
-    CheckPasswordStrengthNewUserRequestBody:
+          description: Printable result of the request
+    AccessTokenRevokeResponse:
       type: object
-      description: CheckPasswordStrengthNewUserRequestBody
+      description: AccessTokenRevokeResponse
       properties:
-        email:
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        message:
           type: string
-          maxLength: 254
-          description: User email address
-        password:
-          type: string
-          maxLength: 256
-          description: New password
-        real_name:
-          type: string
-          maxLength: 256
-          description: User real name
-      required:
-      - password
+          description: Printable result of the request
     UserInfoResponse:
       type: object
       description: UserInfoResponse
@@ -1959,331 +2375,79 @@ components:
             - user_info
       required:
       - users
-    OrganizationUserTokensListResponse:
+    OrganizationUserUpdateResponse:
       type: object
-      description: OrganizationUserTokensListResponse
+      description: OrganizationUserUpdateResponse
       properties:
-        tokens:
-          type: array
-          description: List of user tokens accessible to the organization
-          items:
-            type: object
-            properties:
-              description:
-                type: string
-                description: Description
-              ip_allowlist:
-                type: array
-                description: List of IP addresses that are allowed to use the token
-                items:
-                  type: string
-              last_ip:
-                type: string
-                description: Last-used IP
-              last_used_time:
-                type: string
-                maxLength: 36
-                description: Last-used time
-              last_user_agent:
-                type: string
-                description: Last-used user agent
-              token_prefix:
-                type: string
-                description: Token prefix
-            required:
-            - description
-            - ip_allowlist
-            - last_ip
-            - last_used_time
-            - last_user_agent
-            - token_prefix
-      required:
-      - tokens
-    TwoFactorAuthConfigureResponse:
-      type: object
-      description: TwoFactorAuthConfigureResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        method:
-          type: string
-          maxLength: 32
-          description: Two-factor authentication method being used, if any
-        qrcode:
-          type: string
-          description: QR code describing the TOTP as a base64-encoded PNG
-        uri:
-          type: string
-          maxLength: 2048
-          description: URI describing the TOTP
-      required:
-      - method
-    UserAccountInvitesRejectResponse:
-      type: object
-      description: UserAccountInvitesRejectResponse
-      properties:
-        account_invites:
-          type: array
-          description: List of invites
-          items:
-            type: object
-            properties:
-              account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              account_name:
-                type: string
-                maxLength: 83
-                description: Account name
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              invited_by_user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-              team_id:
-                type: string
-                maxLength: 32
-                description: Team ID
-              team_name:
-                type: string
-                maxLength: 128
-                description: Team name
-              user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-            required:
-            - account_id
-            - account_name
-            - create_time
-            - invited_by_user_email
-            - team_id
-            - team_name
-            - user_email
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - account_invites
-    CheckPasswordStrengthNewUserResponse:
-      type: object
-      description: CheckPasswordStrengthNewUserResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        password_strength:
-          type: object
-          description: Password strength
-          properties:
-            is_acceptable:
-              type: boolean
-              description: True if the password is acceptable
-            message:
-              type: string
-              description: Password strength message
-            score:
-              type: integer
-              minimum: 0
-              maximum: 4
-              description: Password strength score
-          required:
-          - message
-          - score
-      required:
-      - password_strength
-    UserAuthLoginOptionsRequestBody:
-      type: object
-      description: UserAuthLoginOptionsRequestBody
-      properties:
-        email:
-          type: string
-          maxLength: 254
-          description: User email address
-    UserAuthenticationMethodDeleteResponse:
-      type: object
-      description: UserAuthenticationMethodDeleteResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    UserPasswordResetRequestResponse:
-      type: object
-      description: UserPasswordResetRequestResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    UserAuthRequestBody:
-      type: object
-      description: UserAuthRequestBody
-      properties:
-        email:
-          type: string
-          maxLength: 254
-          description: User email address
-        otp:
-          type: string
-          maxLength: 6
-          description: One-time password
-        password:
-          type: string
-          maxLength: 256
-          description: User password
-      required:
-      - email
-      - password
-    UserPasswordResetResponse:
-      type: object
-      description: UserPasswordResetResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    AccessTokenCreateRequestBody:
-      type: object
-      description: AccessTokenCreateRequestBody
-      properties:
-        description:
-          type: string
-          maxLength: 1000
-          description: Name / description of an access token
-        extend_when_used:
+        is_super_admin:
           type: boolean
-          description: Extend token expiration time when token is used. Only applicable if max_age_seconds is specified.
-          default: false
-        ip_allowlist:
-          type: array
-          maxItems: 100
-          description: List of allowed IP ranges
-          items:
-            type: string
-        max_age_seconds:
-          type: number
-          minimum: 600
-          maximum: 315360000
-          description: Time the token remains valid since creation (or since last use if extend_when_used is true)
-        scopes:
-          type: array
-          maxItems: 100
-          description: Scopes this token is restricted to, if specified
-          items:
-            type: string
+          description: Super admin state of the organization user
+        join_time:
+          type: string
+          maxLength: 36
+          description: Join time
+        last_activity_time:
+          type: string
+          maxLength: 36
+          description: Last activity time
+        user_id:
+          type: string
+          description: User ID
+        user_info:
+          type: object
+          description: OrganizationUserInfo
+          properties:
+            city:
+              type: string
+              maxLength: 512
+              description: City
+            country:
+              type: string
+              description: Country
+            create_time:
+              type: string
+              maxLength: 36
+              description: Creation time
+            department:
+              type: string
+              description: Department
+            is_application_user:
+              type: boolean
+              description: Is Application User
+            job_title:
+              type: string
+              description: Job Title
+            managed_by_scim:
+              type: boolean
+              description: Managed By Scim
+            managing_organization_id:
+              type: string
+              maxLength: 36
+              description: Managing Organization ID
+            real_name:
+              type: string
+              maxLength: 256
+              description: Real Name
+            state:
+              type: string
+              description: State
+            user_email:
+              type: string
+              maxLength: 254
+              description: User Email
+          required:
+          - create_time
+          - is_application_user
+          - managed_by_scim
+          - real_name
+          - state
+          - user_email
       required:
-      - description
+      - is_super_admin
+      - join_time
+      - last_activity_time
+      - user_id
+      - user_info
     CheckPasswordStrengthExistingUserResponse:
       type: object
       description: CheckPasswordStrengthExistingUserResponse
@@ -2329,142 +2493,6 @@ components:
           - score
       required:
       - password_strength
-    OrganizationUserUpdateRequestBody:
-      type: object
-      description: OrganizationUserUpdateRequestBody
-      properties:
-        city:
-          type: string
-          maxLength: 512
-          description: City
-        country:
-          type: string
-          description: Country
-        department:
-          type: string
-          description: Department
-        is_super_admin:
-          type: boolean
-          description: Alters super admin state of the organization user
-        job_title:
-          type: string
-          description: Job Title
-        real_name:
-          type: string
-          maxLength: 256
-          description: Real Name
-        state:
-          type: string
-          description: An enumeration.
-          title: State of the user in the organization
-          enum:
-          - active
-          - deactivated
-          - deleted
-    ValidateReferralCodeResponse:
-      type: object
-      description: ValidateReferralCodeResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-    UserPasswordResetRequestRequestBody:
-      type: object
-      description: UserPasswordResetRequestRequestBody
-      properties:
-        email:
-          type: string
-          maxLength: 254
-          description: User email address
-      required:
-      - email
-    UserAccountInvitesAcceptResponse:
-      type: object
-      description: UserAccountInvitesAcceptResponse
-      properties:
-        account_invites:
-          type: array
-          description: List of invites
-          items:
-            type: object
-            properties:
-              account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              account_name:
-                type: string
-                maxLength: 83
-                description: Account name
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              invited_by_user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-              team_id:
-                type: string
-                maxLength: 32
-                description: Team ID
-              team_name:
-                type: string
-                maxLength: 128
-                description: Team name
-              user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-            required:
-            - account_id
-            - account_name
-            - create_time
-            - invited_by_user_email
-            - team_id
-            - team_name
-            - user_email
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - account_invites
     TwoFactorAuthConfigureOTPResponse:
       type: object
       description: TwoFactorAuthConfigureOTPResponse
@@ -2500,294 +2528,32 @@ components:
       required:
       - method
       - token
-    UserAccountInvitesListResponse:
+    CheckPasswordStrengthNewUserRequestBody:
       type: object
-      description: UserAccountInvitesListResponse
+      description: CheckPasswordStrengthNewUserRequestBody
       properties:
-        account_invites:
-          type: array
-          description: List of invites
-          items:
-            type: object
-            properties:
-              account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              account_name:
-                type: string
-                maxLength: 83
-                description: Account name
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              invited_by_user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-              team_id:
-                type: string
-                maxLength: 32
-                description: Team ID
-              team_name:
-                type: string
-                maxLength: 128
-                description: Team name
-              user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-            required:
-            - account_id
-            - account_name
-            - create_time
-            - invited_by_user_email
-            - team_id
-            - team_name
-            - user_email
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - account_invites
-    CheckPasswordStrengthExistingUserRequestBody:
-      type: object
-      description: CheckPasswordStrengthExistingUserRequestBody
-      properties:
-        new_password:
-          type: string
-          maxLength: 256
-          description: New password
-        old_password:
-          type: string
-          maxLength: 256
-          description: User password
-      required:
-      - new_password
-      - old_password
-    OrganizationMemberGroupsListResponse:
-      type: object
-      description: OrganizationMemberGroupsListResponse
-      properties:
-        user_groups:
-          type: array
-          description: User Groups
-          items:
-            type: object
-            properties:
-              create_time:
-                type: string
-                maxLength: 36
-                description: User group creation time
-              description:
-                type: string
-                maxLength: 4096
-                description: Description
-              managed_by_scim:
-                type: boolean
-                description: Managed By Scim
-              update_time:
-                type: string
-                maxLength: 36
-                description: User group last update time
-              user_group_id:
-                type: string
-                maxLength: 36
-                description: User Group ID
-              user_group_name:
-                type: string
-                maxLength: 128
-                description: User Group Name
-            required:
-            - create_time
-            - description
-            - managed_by_scim
-            - update_time
-            - user_group_id
-            - user_group_name
-      required:
-      - user_groups
-    UserPasswordChangeRequestBody:
-      type: object
-      description: UserPasswordChangeRequestBody
-      properties:
-        new_password:
-          type: string
-          maxLength: 256
-          description: New password
-        password:
-          type: string
-          maxLength: 256
-          description: Current password
-      required:
-      - new_password
-      - password
-    UserPasswordResetRequestBody:
-      type: object
-      description: UserPasswordResetRequestBody
-      properties:
-        new_password:
-          type: string
-          maxLength: 256
-          description: New password
-      required:
-      - new_password
-    UserAuthenticationMethodsListResponse:
-      type: object
-      description: UserAuthenticationMethodsListResponse
-      properties:
-        authentication_methods:
-          type: array
-          description: List of linked authentication methods
-          items:
-            type: object
-            properties:
-              authentication_method_account_id:
-                type: string
-                maxLength: 36
-                description: Account ID
-              create_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              currently_active:
-                type: boolean
-                description: true if API was accessed with this authentication method
-              delete_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              last_used_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              method_id:
-                type: string
-                description: Unique ID for authentication method
-              name:
-                type: string
-                maxLength: 128
-                description: Authentication method name
-              public_remote_identity:
-                type: string
-                description: Identity on remote provider, if available. May be email address, but not necessarily.
-              remote_provider_id:
-                type: string
-                description: Provider ID
-              state:
-                type: string
-                description: State for authentication method
-                enum:
-                - active
-                - deleted
-              update_time:
-                type: string
-                maxLength: 36
-                description: Timestamp in ISO 8601 format, always in UTC
-              user_email:
-                type: string
-                maxLength: 254
-                description: User email address
-            required:
-            - authentication_method_account_id
-            - create_time
-            - currently_active
-            - delete_time
-            - last_used_time
-            - method_id
-            - public_remote_identity
-            - remote_provider_id
-            - state
-            - update_time
-            - user_email
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - authentication_methods
-    UserAuthResponse:
-      type: object
-      description: UserAuthResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        message:
-          type: string
-          description: Printable result of the request
-        return_url:
-          type: string
-          description: Return URL
-        state:
-          type: string
-          description: User account state
-        tenant:
-          type: string
-          maxLength: 64
-          description: Tenant identifier
-        token:
-          type: string
-          description: API session authentication token
-        user_email:
+        email:
           type: string
           maxLength: 254
           description: User email address
+        password:
+          type: string
+          maxLength: 256
+          description: New password
+        real_name:
+          type: string
+          maxLength: 256
+          description: User real name
       required:
-      - state
-      - token
-      - user_email
+      - password
+    UserAuthLoginOptionsRequestBody:
+      type: object
+      description: UserAuthLoginOptionsRequestBody
+      properties:
+        email:
+          type: string
+          maxLength: 254
+          description: User email address
     UserAuthLoginOptionsResponse:
       type: object
       description: UserAuthLoginOptionsResponse
@@ -2823,9 +2589,35 @@ components:
           description: Redirect URL for signing in
       required:
       - action
-    UserExpireTokensResponse:
+    UserUpdateRequestBody:
       type: object
-      description: UserExpireTokensResponse
+      description: UserUpdateRequestBody
+      properties:
+        city:
+          type: string
+          maxLength: 256
+          description: City
+        country:
+          type: string
+          maxLength: 256
+          description: Country code ISO 3166-1 alpha-2
+        department:
+          type: string
+          maxLength: 256
+          description: Job department
+        job_title:
+          type: string
+          maxLength: 256
+          description: Job title
+        real_name:
+          type: string
+          maxLength: 256
+          description: User real name
+      required:
+      - real_name
+    CheckPasswordStrengthNewUserResponse:
+      type: object
+      description: CheckPasswordStrengthNewUserResponse
       properties:
         errors:
           type: array
@@ -2848,6 +2640,251 @@ components:
         message:
           type: string
           description: Printable result of the request
+        password_strength:
+          type: object
+          description: Password strength
+          properties:
+            is_acceptable:
+              type: boolean
+              description: True if the password is acceptable
+            message:
+              type: string
+              description: Password strength message
+            score:
+              type: integer
+              minimum: 0
+              maximum: 4
+              description: Password strength score
+          required:
+          - message
+          - score
+      required:
+      - password_strength
+    AccessTokenCreateResponse:
+      type: object
+      description: AccessTokenCreateResponse
+      properties:
+        create_time:
+          type: string
+          description: Timestamp when the access token was created
+        created_manually:
+          type: boolean
+          description: True for tokens explicitly created via the access_tokens API, false for tokens created via login.
+        currently_active:
+          type: boolean
+          description: true if API request was made with this access token
+        description:
+          type: string
+          maxLength: 1000
+          description: Name / description of an access token
+        errors:
+          type: array
+          description: List of errors occurred during request processing
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Printable error message
+              more_info:
+                type: string
+                description: URL to the documentation of the error
+              status:
+                type: integer
+                description: HTTP error status code
+            required:
+            - message
+            - status
+        expiry_time:
+          type: string
+          description: Timestamp when the access token will expire unless extended, if ever
+        extend_when_used:
+          type: boolean
+          description: Extend token expiration time when token is used. Only applicable if max_age_seconds is specified.
+        full_token:
+          type: string
+          description: This full access token can be used to make API calls. This can also be used to update or revoke tokens. Note that when using this token with the update and revoke APIs it must be URL encoded because it may contain /, + and = characters (/ =&gt; %2F, + =&gt; %2B, = =&gt; %3D).
+        ip_allowlist:
+          type: array
+          maxItems: 100
+          description: List of allowed IP ranges
+          items:
+            type: string
+        last_ip:
+          type: string
+          description: IP address the access token was last used from in case it has ever been used
+        last_used_time:
+          type: string
+          description: Timestamp when the access token was last used, if ever
+        last_user_agent:
+          type: string
+          description: User agent string of the client that last used the token in case it has ever been used
+        last_user_agent_human_readable:
+          type: string
+          description: Human readable user agent string of the client that last used the token in case user agent is known
+        max_age_seconds:
+          type: number
+          minimum: 600
+          maximum: 315360000
+          description: Time the token remains valid since creation (or since last use if extend_when_used is true)
+        message:
+          type: string
+          description: Printable result of the request
+        scopes:
+          type: array
+          maxItems: 100
+          description: Scopes this token is restricted to, if specified
+          items:
+            type: string
+        token_prefix:
+          type: string
+          description: First characters of the actual token value. Full value is only exposed after creation. This value is used when updating or revoking tokens. Note that the value may contain /, + and = characters and must be URL encoded when used (/ =&gt; %2F, + =&gt; %2B, = =&gt; %3D).
+      required:
+      - create_time
+      - created_manually
+      - extend_when_used
+      - full_token
+      - max_age_seconds
+      - token_prefix
+    TwoFactorAuthConfigureOTPRequestBody:
+      type: object
+      description: TwoFactorAuthConfigureOTPRequestBody
+      properties:
+        otp:
+          type: string
+          maxLength: 6
+          description: One-time password
+        password:
+          type: string
+          maxLength: 256
+          description: Current password
+        uri:
+          type: string
+          maxLength: 2048
+          description: URI describing the TOTP
+      required:
+      - otp
+      - password
+      - uri
+    OrganizationUserAuthenticationMethodsListResponse:
+      type: object
+      description: OrganizationUserAuthenticationMethodsListResponse
+      properties:
+        authentication_methods:
+          type: array
+          description: List of authentication methods for the organization user
+          items:
+            type: object
+            properties:
+              is_enabled_2fa:
+                type: boolean
+                description: Verifies if 2FA is enabled for the user
+                default: false
+              last_used_time:
+                type: string
+                maxLength: 36
+                description: Last activity time with the authentication method
+              local_provider_id:
+                type: string
+                description: Local authentication method provider resource ID
+              method_id:
+                type: string
+                description: User authentication method ID
+              name:
+                type: string
+                description: Name of the organization authentication method
+              organization_id:
+                type: string
+                description: Organization ID
+              remote_provider_id:
+                type: string
+                description: Remote authentication method provider ID
+              type:
+                type: string
+                description: Type of the organization authentication method
+              user_email:
+                type: string
+                description: User's email address for the authentication method
+              user_id:
+                type: string
+                description: User ID
+            required:
+            - remote_provider_id
+      required:
+      - authentication_methods
+    OrganizationUserGetResponse:
+      type: object
+      description: OrganizationUserGetResponse
+      properties:
+        is_super_admin:
+          type: boolean
+          description: Super admin state of the organization user
+        join_time:
+          type: string
+          maxLength: 36
+          description: Join time
+        last_activity_time:
+          type: string
+          maxLength: 36
+          description: Last activity time
+        user_id:
+          type: string
+          description: User ID
+        user_info:
+          type: object
+          description: OrganizationUserInfo
+          properties:
+            city:
+              type: string
+              maxLength: 512
+              description: City
+            country:
+              type: string
+              description: Country
+            create_time:
+              type: string
+              maxLength: 36
+              description: Creation time
+            department:
+              type: string
+              description: Department
+            is_application_user:
+              type: boolean
+              description: Is Application User
+            job_title:
+              type: string
+              description: Job Title
+            managed_by_scim:
+              type: boolean
+              description: Managed By Scim
+            managing_organization_id:
+              type: string
+              maxLength: 36
+              description: Managing Organization ID
+            real_name:
+              type: string
+              maxLength: 256
+              description: Real Name
+            state:
+              type: string
+              description: State
+            user_email:
+              type: string
+              maxLength: 254
+              description: User Email
+          required:
+          - create_time
+          - is_application_user
+          - managed_by_scim
+          - real_name
+          - state
+          - user_email
+      required:
+      - is_super_admin
+      - join_time
+      - last_activity_time
+      - user_id
+      - user_info
     AccessTokenListResponse:
       type: object
       description: AccessTokenListResponse
@@ -2938,51 +2975,7 @@ components:
             - token_prefix
       required:
       - tokens
-    UserVerifyEmailResponse:
-      type: object
-      description: UserVerifyEmailResponse
-      properties:
-        errors:
-          type: array
-          description: List of errors occurred during request processing
-          items:
-            type: object
-            properties:
-              message:
-                type: string
-                description: Printable error message
-              more_info:
-                type: string
-                description: URL to the documentation of the error
-              status:
-                type: integer
-                description: HTTP error status code
-            required:
-            - message
-            - status
-        invite_details:
-          type: object
-          description: Details of verified invite
-          properties:
-            user_email:
-              type: string
-              maxLength: 254
-              description: User email address
-          required:
-          - user_email
-        message:
-          type: string
-          description: Printable result of the request
-      required:
-      - invite_details
   parameters:
-    credit_code:
-      in: path
-      name: credit_code
-      description: Credit Code
-      schema:
-        type: string
-      required: true
     verification_code:
       in: path
       name: verification_code
@@ -2990,10 +2983,10 @@ components:
       schema:
         type: string
       required: true
-    user_authentication_method_id:
+    credit_code:
       in: path
-      name: user_authentication_method_id
-      description: User authentication method ID
+      name: credit_code
+      description: Credit Code
       schema:
         type: string
       required: true
@@ -3004,20 +2997,6 @@ components:
       schema:
         type: string
       required: true
-    referral_code:
-      in: path
-      name: referral_code
-      description: Referral Code
-      schema:
-        type: string
-      required: true
-    user_id:
-      in: path
-      name: user_id
-      description: User ID
-      schema:
-        type: string
-      required: true
     token_prefix:
       in: path
       name: token_prefix
@@ -3025,10 +3004,31 @@ components:
       schema:
         type: string
       required: true
+    referral_code:
+      in: path
+      name: referral_code
+      description: Referral Code
+      schema:
+        type: string
+      required: true
+    user_authentication_method_id:
+      in: path
+      name: user_authentication_method_id
+      description: User authentication method ID
+      schema:
+        type: string
+      required: true
     member_user_id:
       in: path
       name: member_user_id
       description: ID of the organization's user
+      schema:
+        type: string
+      required: true
+    user_id:
+      in: path
+      name: user_id
+      description: User ID
       schema:
         type: string
       required: true
